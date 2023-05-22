@@ -1,14 +1,14 @@
 import axios, { CreateAxiosDefaults } from 'axios'
 
 interface CreateHttpClientConfig extends CreateAxiosDefaults {
-	sourceToken?:  () => Promise<void>;
+	getToken?:  () => Promise<string | null>;
 }
 
-export const createHttpClient = ({ sourceToken, ...config }: CreateHttpClientConfig = {}) => {
+export const createHttpClient = ({ getToken, ...config }: CreateHttpClientConfig = {}) => {
 	const client = axios.create(config);
 
 	client.interceptors.request.use(async config => {
-		const token = await sourceToken?.();
+		const token = await getToken?.();
 
 		if (token) {
 			config.headers.Authorization = `Bearer ${token}`;
@@ -18,4 +18,6 @@ export const createHttpClient = ({ sourceToken, ...config }: CreateHttpClientCon
 	}, (error) => {
 		return Promise.reject(error)
 	})
+
+	return client
 }
