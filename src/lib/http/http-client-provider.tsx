@@ -11,7 +11,7 @@ export const HttpClientProvider: FC<PropsWithChildren> = ({ children }) => {
 	}, [getToken])
 
 	return (
-		<httpContext.Provider value={{ client }}>
+		<httpContext.Provider value={client}>
 			{children}
 		</httpContext.Provider>
 	)
