@@ -1,10 +1,11 @@
-import { FC } from 'react'
-import { RouterProvider } from '@/lib/router'
-import { QueryClientProvider } from '@/lib/queries'
+import { FC } from 'react';
+
+import { HttpClientProvider } from '@/lib/http';
+import { QueryClientProvider } from '@/lib/queries';
+import { RouterProvider } from '@/lib/router';
+import { ThemeProvider } from '@/lib/theme';
 
 import { AuthProvider } from '../../lib/auth';
-import { HttpClientProvider } from '@/lib/http';
-import { ThemeProvider } from '@/lib/theme';
 
 export const App: FC = () => {
 	return (
@@ -17,5 +18,5 @@ export const App: FC = () => {
 				</QueryClientProvider>
 			</HttpClientProvider>
 		</AuthProvider>
-	)
-}
+	);
+};

@@ -1,7 +1,6 @@
+import { UserButton } from '@clerk/clerk-react';
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
-import { UserButton } from '@clerk/clerk-react'
-
 
 export const MenuLayout: FC = () => {
 	return (
@@ -14,5 +13,5 @@ export const MenuLayout: FC = () => {
 				<Outlet />
 			</main>
 		</div>
-	)
-}
+	);
+};
