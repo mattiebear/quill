@@ -1,17 +1,24 @@
-import { MenuLayout } from '@/components/layout/menu';
+import {
+	RedirectToSignIn,
+	SignIn,
+	SignUp,
+	SignedIn,
+	SignedOut,
+} from '@clerk/clerk-react';
 import { createBrowserRouter } from 'react-router-dom';
-import { Profile } from '@/components/profile';
+
 import { Home } from '@/components/home';
-import { RedirectToSignIn, SignIn, SignUp, SignedIn, SignedOut } from '@clerk/clerk-react';
+import { MenuLayout } from '@/components/layout/menu';
+import { Profile } from '@/components/profile';
 
 export const router = createBrowserRouter([
 	{
 		path: '/sign-in/*',
-		element: <SignIn routing="path" path='/sign-in' />
+		element: <SignIn routing="path" path="/sign-in" />,
 	},
 	{
 		path: '/sign-up/*',
-		element: <SignUp routing="path" path='/sign-up' />
+		element: <SignUp routing="path" path="/sign-up" />,
 	},
 	{
 		path: '/',
@@ -19,15 +26,21 @@ export const router = createBrowserRouter([
 		children: [
 			{
 				path: '/',
-				element: <Home />
+				element: <Home />,
 			},
 			{
 				path: '/profile',
-				element: <>
-					<SignedIn><Profile /></SignedIn>
-					<SignedOut><RedirectToSignIn /></SignedOut>
-				</>
-			}
-		]
-	}
-])
+				element: (
+					<>
+						<SignedIn>
+							<Profile />
+						</SignedIn>
+						<SignedOut>
+							<RedirectToSignIn />
+						</SignedOut>
+					</>
+				),
+			},
+		],
+	},
+]);
