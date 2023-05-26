@@ -10,16 +10,16 @@ import { AuthProvider } from '../../lib/auth';
 
 export const App: FC = () => {
 	return (
-		<AuthProvider>
-			<HttpClientProvider>
+		<I18nProvider>
+			<ThemeProvider>
 				<QueryClientProvider>
-					<ThemeProvider>
-						<I18nProvider>
+					<AuthProvider>
+						<HttpClientProvider>
 							<RouterProvider />
-						</I18nProvider>
-					</ThemeProvider>
+						</HttpClientProvider>
+					</AuthProvider>
 				</QueryClientProvider>
-			</HttpClientProvider>
-		</AuthProvider>
+			</ThemeProvider>
+		</I18nProvider>
 	);
 };
