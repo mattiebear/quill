@@ -20,6 +20,15 @@ export const RailLink: FC<RailLinkProps> = ({ children, to, ...rest }) => {
 							borderLeftWidth={2}
 							color={isActive ? 'text.cover.focus' : 'text.cover.muted'}
 							justify="center"
+							transitionDuration="normal"
+							transitionProperty="common"
+							_hover={{
+								color: 'text.cover.peek',
+								_active: {
+									color: 'text.cover.focus',
+								},
+							}}
+							{...(isActive && { ['data-active']: true })}
 						>
 							{cloneElement(children, { boxSize: 6 })}
 						</Flex>

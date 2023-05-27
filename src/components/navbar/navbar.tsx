@@ -12,7 +12,7 @@ import {
 	RailTop,
 } from '@/components/rail';
 
-import { HomeIcon } from '../icon';
+import { HomeIcon, UserIcon } from '../icon';
 
 export const Navbar: FC = () => {
 	return (
@@ -28,6 +28,10 @@ export const Navbar: FC = () => {
 				<RailGroup title="Home">
 					<RailLink title="Home" to="/">
 						<HomeIcon />
+					</RailLink>
+
+					<RailLink title="Profile" to="/profile">
+						<UserIcon />
 					</RailLink>
 				</RailGroup>
 			</RailContent>

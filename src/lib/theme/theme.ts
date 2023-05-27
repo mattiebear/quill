@@ -31,6 +31,7 @@ export const theme = extendTheme({
 				},
 				cover: {
 					muted: 'gray.600',
+					peek: 'gray.500',
 					focus: 'gray.200',
 				},
 				link: {
