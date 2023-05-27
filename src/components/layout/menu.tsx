@@ -1,17 +1,17 @@
-import { UserButton } from '@clerk/clerk-react';
+import { Box, Grid } from '@chakra-ui/react';
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 
+import { Navbar } from '../navbar';
+
 export const MenuLayout: FC = () => {
 	return (
-		<div>
-			<nav>
-				<UserButton />
-			</nav>
+		<Grid bg="background.base" h="full" p={2} templateColumns="6rem 1fr">
+			<Navbar />
 
-			<main>
+			<Box as="main">
 				<Outlet />
-			</main>
-		</div>
+			</Box>
+		</Grid>
 	);
 };
