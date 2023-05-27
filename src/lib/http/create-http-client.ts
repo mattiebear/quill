@@ -11,7 +11,7 @@ export const createHttpClient = ({
 	const client = axios.create(config);
 
 	client.interceptors.request.use(
-		async config => {
+		async (config) => {
 			const token = await getToken?.();
 
 			if (token) {
@@ -20,7 +20,7 @@ export const createHttpClient = ({
 
 			return config;
 		},
-		error => {
+		(error) => {
 			return Promise.reject(error);
 		}
 	);

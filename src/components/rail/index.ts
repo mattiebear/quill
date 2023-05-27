@@ -4,4 +4,5 @@ export * from './rail-content';
 export * from './rail-group';
 export * from './rail-icon';
 export * from './rail-item';
+export * from './rail-link';
 export * from './rail-top';

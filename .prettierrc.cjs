@@ -1,5 +1,5 @@
 module.exports = {
-	arrowParens: 'avoid',
+	arrowParens: 'always',
 	importOrder: ['<THIRD_PARTY_MODULES>', '^@/(.*)$', '^[./]'],
 	importOrderSeparation: true,
 	importOrderSortSpecifiers: true,
