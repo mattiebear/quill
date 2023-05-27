@@ -1,8 +1,11 @@
 import { extendTheme } from '@chakra-ui/react';
 
+import { Tooltip } from './tooltip';
+
 export const theme = extendTheme({
 	radii: {
 		none: '0',
+		xs: '0.5rem',
 		sm: '0.75rem',
 		base: '1rem',
 		md: '1.25rem',
@@ -22,6 +25,7 @@ export const theme = extendTheme({
 			background: {
 				base: 'gray.900',
 				cover: 'gray.800',
+				float: 'gray.700',
 			},
 
 			// Typography
@@ -49,5 +53,8 @@ export const theme = extendTheme({
 				h: 'full',
 			},
 		},
+	},
+	components: {
+		Tooltip,
 	},
 });

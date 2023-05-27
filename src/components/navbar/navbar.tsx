@@ -25,12 +25,12 @@ export const Navbar: FC = () => {
 			</RailTop>
 
 			<RailContent>
-				<RailGroup title="Home">
-					<RailLink title="Home" to="/">
+				<RailGroup label="Home">
+					<RailLink label="Home" to="/">
 						<HomeIcon />
 					</RailLink>
 
-					<RailLink title="Profile" to="/profile">
+					<RailLink label="Profile" to="/profile">
 						<UserIcon />
 					</RailLink>
 				</RailGroup>

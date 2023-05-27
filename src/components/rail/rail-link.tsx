@@ -1,14 +1,19 @@
-import { Box, Flex, StyleProps } from '@chakra-ui/react';
+import { Box, Flex, StyleProps, Tooltip } from '@chakra-ui/react';
 import { FC, ReactElement, cloneElement } from 'react';
 import { NavLink, NavLinkProps } from 'react-router-dom';
 
 interface RailLinkProps extends Pick<NavLinkProps, 'to'>, StyleProps {
 	children: ReactElement;
-	title: string;
+	label: string;
 	to: string;
 }
 
-export const RailLink: FC<RailLinkProps> = ({ children, to, ...rest }) => {
+export const RailLink: FC<RailLinkProps> = ({
+	children,
+	label,
+	to,
+	...rest
+}) => {
 	return (
 		<Box as={NavLink} to={to} {...rest}>
 			{({ isActive }: { isActive: boolean }) => {
@@ -30,7 +35,9 @@ export const RailLink: FC<RailLinkProps> = ({ children, to, ...rest }) => {
 							}}
 							{...(isActive && { ['data-active']: true })}
 						>
-							{cloneElement(children, { boxSize: 6 })}
+							<Tooltip label={label} placement="right">
+								{cloneElement(children, { boxSize: 6 })}
+							</Tooltip>
 						</Flex>
 					</Box>
 				);

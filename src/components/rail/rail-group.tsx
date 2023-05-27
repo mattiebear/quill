@@ -2,10 +2,10 @@ import { Flex, Text } from '@chakra-ui/react';
 import { FC, PropsWithChildren } from 'react';
 
 interface RailGroupProps extends PropsWithChildren {
-	title: string;
+	label: string;
 }
 
-export const RailGroup: FC<RailGroupProps> = ({ children, title }) => {
+export const RailGroup: FC<RailGroupProps> = ({ children, label }) => {
 	return (
 		<Flex direction="column">
 			<Text
@@ -14,7 +14,7 @@ export const RailGroup: FC<RailGroupProps> = ({ children, title }) => {
 				textAlign="center"
 				textTransform="uppercase"
 			>
-				{title}
+				{label}
 			</Text>
 			{children}
 		</Flex>
