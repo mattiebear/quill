@@ -50,6 +50,10 @@ export const theme = extendTheme({
 					peek: 'gray.500',
 					focus: 'gray.200',
 				},
+				form: {
+					input: 'gray.200',
+					label: 'gray.300',
+				},
 				link: {
 					active: 'purple.300',
 				},
