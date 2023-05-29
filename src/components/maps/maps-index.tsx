@@ -1,5 +1,6 @@
 import { Container, Heading, SimpleGrid } from '@chakra-ui/react';
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 import { AddMapButton } from './add-map-button';
 
@@ -12,7 +13,9 @@ export const MapsIndex: FC = () => {
 
 			<Container maxW="container.lg">
 				<SimpleGrid columns={4} spacing={4}>
-					<AddMapButton />
+					<Link to="/maps/new">
+						<AddMapButton />
+					</Link>
 				</SimpleGrid>
 			</Container>
 		</>

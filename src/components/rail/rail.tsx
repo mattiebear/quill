@@ -7,7 +7,7 @@ export const Rail: FC<RailProps> = (props) => {
 	return (
 		<Flex
 			bg="background.cover"
-			borderRadius="lg"
+			borderRadius="3xl"
 			direction="column"
 			p={1.5}
 			rowGap={8}
