@@ -22,6 +22,10 @@
 					"placeholder": "Enter a name",
 					"requiredError": "This map needs a name"
 				}
+			},
+			"create": {
+				"successTitle": "New map created",
+				"successDescription": "You can now edit your map \"{{name}}\"."
 			}
 		}
 	}

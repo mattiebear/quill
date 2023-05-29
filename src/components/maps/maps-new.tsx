@@ -40,8 +40,8 @@ export const MapsNew: FC = () => {
 		{
 			onSuccess: (_data, form) => {
 				toast({
-					title: 'New map created',
-					description: `Your new map "${form.name}" has been created`,
+					title: t('maps.create.successTitle'),
+					description: t('maps.create.successDescription', { name: form.name }),
 					status: 'success',
 				});
 				navigate('/maps');
