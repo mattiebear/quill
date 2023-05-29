@@ -49,7 +49,7 @@ export const MapsNew: FC = () => {
 		}
 	);
 
-	const onSubmit = (data: FormState) => mutate(data);
+	const submitForm = (data: FormState) => mutate(data);
 
 	return (
 		<>
@@ -64,7 +64,7 @@ export const MapsNew: FC = () => {
 			</Heading>
 
 			<Container maxW="container.lg">
-				<Box as="form" onSubmit={handleSubmit(onSubmit)}>
+				<Box as="form" onSubmit={handleSubmit(submitForm)}>
 					<FormControl isInvalid={!!errors.name}>
 						<FormLabel color="text.form.label">
 							{t('maps.field.name.label')}
