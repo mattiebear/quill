@@ -1,8 +1,28 @@
 {
 	"translation": {
-		"home": "Home",
+		"common": {
+			"create": "Create",
+			"submit": "Submit"
+		},
+		"navigation": {
+			"groupAssets": "My stuff",
+			"home": "Home",
+			"maps": "Maps"
+		},
+		"home": {
+			"title": "Home"
+		},
 		"maps": {
-			"newMapLabel": "Add map"
+			"indexTitle": "Maps",
+			"newMapTitle": "Create new map",
+			"newMapLabel": "Add map",
+			"field": {
+				"name": {
+					"label": "Name",
+					"placeholder": "Enter a name",
+					"requiredError": "This map needs a name"
+				}
+			}
 		}
 	}
 }

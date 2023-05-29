@@ -12,6 +12,7 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { useHttpClient } from '@/lib/http';
@@ -21,6 +22,7 @@ interface FormState {
 }
 
 export const MapsNew: FC = () => {
+	const { t } = useTranslation();
 	const navigate = useNavigate();
 	const http = useHttpClient();
 	const toast = useToast();
@@ -51,14 +53,22 @@ export const MapsNew: FC = () => {
 
 	return (
 		<>
-			<Heading color="text.heading" fontWeight="medium" size="md" py={8}>
-				Create New Map
+			<Heading
+				color="text.heading"
+				fontWeight="medium"
+				size="md"
+				py={8}
+				textTransform="capitalize"
+			>
+				{t('maps.newMapTitle')}
 			</Heading>
 
 			<Container maxW="container.lg">
 				<Box as="form" onSubmit={handleSubmit(onSubmit)}>
 					<FormControl isInvalid={!!errors.name}>
-						<FormLabel color="text.form.label">Name</FormLabel>
+						<FormLabel color="text.form.label">
+							{t('maps.field.name.label')}
+						</FormLabel>
 						<Input
 							borderRadius="xl"
 							color="text.form.input"
@@ -67,7 +77,9 @@ export const MapsNew: FC = () => {
 						/>
 
 						{errors.name && (
-							<FormErrorMessage>Every map needs a name</FormErrorMessage>
+							<FormErrorMessage>
+								{t('maps.field.name.requiredError')}
+							</FormErrorMessage>
 						)}
 					</FormControl>
 
@@ -78,7 +90,7 @@ export const MapsNew: FC = () => {
 						mt={4}
 						type="submit"
 					>
-						Submit
+						{t('common.create')}
 					</Button>
 				</Box>
 			</Container>
