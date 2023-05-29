@@ -3,6 +3,9 @@ import { extendTheme } from '@chakra-ui/react';
 import { Tooltip } from './tooltip';
 
 export const theme = extendTheme({
+	fonts: {
+		body: `'Poppins', sans-serif`,
+	},
 	radii: {
 		none: '0',
 		xs: '0.5rem',
@@ -47,6 +50,7 @@ export const theme = extendTheme({
 	styles: {
 		global: {
 			'html, body': {
+				fontFamily: 'body',
 				h: 'full',
 			},
 			'#root': {
