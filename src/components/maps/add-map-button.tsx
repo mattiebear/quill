@@ -10,9 +10,10 @@ export const AddMapButton: FC = () => {
 	return (
 		<Card
 			bg="transparent"
-			borderWidth="1px"
-			borderStyle="solid"
 			borderColor="button.cta.light"
+			borderRadius="3xl"
+			borderStyle="solid"
+			borderWidth="1px"
 			color="button.cta.light"
 			transitionDuration="normal"
 			transitionProperty="common"

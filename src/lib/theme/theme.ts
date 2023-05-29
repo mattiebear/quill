@@ -7,15 +7,6 @@ export const theme = extendTheme({
 		body: `'Poppins', sans-serif`,
 		heading: `'Poppins', sans-serif`,
 	},
-	radii: {
-		none: '0',
-		xs: '0.5rem',
-		sm: '0.75rem',
-		base: '1rem',
-		md: '1.25rem',
-		lg: '1.5rem',
-		full: '9999px',
-	},
 	semanticTokens: {
 		colors: {
 			// Brand

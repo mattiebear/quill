@@ -19,7 +19,7 @@ export const Navbar: FC = () => {
 			<RailTop>
 				<RailIcon>
 					{/* TODO: Add logo */}
-					<Box w="full" h="full" bg="purple.500" borderRadius="lg" />
+					<Box w="full" h="full" bg="purple.500" borderRadius="3xl" />
 				</RailIcon>
 			</RailTop>
 
