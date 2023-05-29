@@ -2,6 +2,7 @@ import { Box } from '@chakra-ui/react';
 import { UserButton } from '@clerk/clerk-react';
 import { FC } from 'react';
 
+import { HomeIcon, MapIcon, UserIcon } from '@/components/icon';
 import {
 	Rail,
 	RailBottom,
@@ -11,8 +12,6 @@ import {
 	RailLink,
 	RailTop,
 } from '@/components/rail';
-
-import { HomeIcon, UserIcon } from '../icon';
 
 export const Navbar: FC = () => {
 	return (
@@ -28,6 +27,10 @@ export const Navbar: FC = () => {
 				<RailGroup label="Home">
 					<RailLink label="Home" to="/">
 						<HomeIcon />
+					</RailLink>
+
+					<RailLink label="Maps" to="/maps">
+						<MapIcon />
 					</RailLink>
 
 					<RailLink label="Profile" to="/profile">
