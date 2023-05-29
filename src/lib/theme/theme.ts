@@ -5,6 +5,7 @@ import { Tooltip } from './tooltip';
 export const theme = extendTheme({
 	fonts: {
 		body: `'Poppins', sans-serif`,
+		heading: `'Poppins', sans-serif`,
 	},
 	radii: {
 		none: '0',
@@ -31,6 +32,14 @@ export const theme = extendTheme({
 				float: 'gray.700',
 			},
 
+			// Button
+			button: {
+				cta: {
+					light: 'white',
+					active: 'purple.300',
+				},
+			},
+
 			// Typography
 			text: {
 				body: {
@@ -43,6 +52,9 @@ export const theme = extendTheme({
 				},
 				link: {
 					active: 'purple.300',
+				},
+				heading: {
+					default: 'gray.300',
 				},
 			},
 		},

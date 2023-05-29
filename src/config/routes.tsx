@@ -1,14 +1,9 @@
-import {
-	RedirectToSignIn,
-	SignIn,
-	SignUp,
-	SignedIn,
-	SignedOut,
-} from '@clerk/clerk-react';
+import { SignIn, SignUp } from '@clerk/clerk-react';
 import { createBrowserRouter } from 'react-router-dom';
 
 import { Home } from '@/components/home';
-import { MainLayout } from '@/components/layout/main';
+import { AuthMainLayout } from '@/components/layout/main';
+import { MapsIndex } from '@/components/maps';
 import { Profile } from '@/components/profile';
 
 export const router = createBrowserRouter([
@@ -22,24 +17,19 @@ export const router = createBrowserRouter([
 	},
 	{
 		path: '/',
-		element: <MainLayout />,
+		element: <AuthMainLayout />,
 		children: [
 			{
 				path: '/',
 				element: <Home />,
 			},
 			{
+				path: '/maps',
+				element: <MapsIndex />,
+			},
+			{
 				path: '/profile',
-				element: (
-					<>
-						<SignedIn>
-							<Profile />
-						</SignedIn>
-						<SignedOut>
-							<RedirectToSignIn />
-						</SignedOut>
-					</>
-				),
+				element: <Profile />,
 			},
 		],
 	},
