@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import { Home } from '@/components/home';
 import { AuthMainLayout } from '@/components/layout/main';
+import { MapsIndex } from '@/components/maps';
 import { Profile } from '@/components/profile';
 
 export const router = createBrowserRouter([
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/',
 				element: <Home />,
+			},
+			{
+				path: '/maps',
+				element: <MapsIndex />,
 			},
 			{
 				path: '/profile',
