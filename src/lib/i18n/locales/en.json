@@ -1,5 +1,8 @@
 {
 	"translation": {
-		"home": "Home"
+		"home": "Home",
+		"maps": {
+			"newMapLabel": "Add map"
+		}
 	}
 }

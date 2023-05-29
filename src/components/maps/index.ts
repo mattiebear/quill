@@ -1,1 +1,1 @@
-export * from './MapsIndex';
+export * from './maps-index';
