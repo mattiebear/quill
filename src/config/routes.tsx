@@ -8,7 +8,7 @@ import {
 import { createBrowserRouter } from 'react-router-dom';
 
 import { Home } from '@/components/home';
-import { MenuLayout } from '@/components/layout/menu';
+import { MainLayout } from '@/components/layout/main';
 import { Profile } from '@/components/profile';
 
 export const router = createBrowserRouter([
@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
 	},
 	{
 		path: '/',
-		element: <MenuLayout />,
+		element: <MainLayout />,
 		children: [
 			{
 				path: '/',
