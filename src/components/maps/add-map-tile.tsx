@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { PlusCircleIcon } from '../icon';
 
-export const AddMapButton: FC = () => {
+export const AddMapTile: FC = () => {
 	const { t } = useTranslation();
 
 	return (
@@ -22,16 +22,16 @@ export const AddMapButton: FC = () => {
 				color: 'button.cta.active',
 			}}
 		>
-			<CardBody color="inherit">
-				<AspectRatio ratio={2 / 3}>
+			<AspectRatio ratio={2 / 3}>
+				<CardBody color="inherit">
 					<VStack spacing={6}>
 						<PlusCircleIcon boxSize={10} color="inherit" />
 						<Text color="inherit" textTransform="capitalize">
 							{t('maps.newMapLabel')}
 						</Text>
 					</VStack>
-				</AspectRatio>
-			</CardBody>
+				</CardBody>
+			</AspectRatio>
 		</Card>
 	);
 };

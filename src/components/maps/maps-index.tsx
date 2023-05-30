@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 
 import { useMapsList } from '@/api/maps';
 
-import { AddMapButton } from './add-map-button';
+import { AddMapTile } from './add-map-tile';
+import { MapDetailTile } from './map-detail-tile';
 
 export const MapsIndex: FC = () => {
 	const { t } = useTranslation();
@@ -26,8 +27,12 @@ export const MapsIndex: FC = () => {
 			<Container maxW="container.lg">
 				<SimpleGrid columns={{ base: 2, sm: 3, md: 4 }} spacing={4}>
 					<Link to="/maps/new">
-						<AddMapButton />
+						<AddMapTile />
 					</Link>
+
+					{data?.data.map((map: any) => {
+						return <MapDetailTile key={map.id} map={map} />;
+					})}
 				</SimpleGrid>
 			</Container>
 		</>
