@@ -4,6 +4,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { fetchMapsList } from '@/api/maps';
 import { Home } from '@/components/home';
 import { AuthMainLayout } from '@/components/layout/main';
+import { MapEditor } from '@/components/map-editor';
 import { MapsIndex } from '@/components/maps';
 import { MapsNew } from '@/components/maps/maps-new';
 import { Profile } from '@/components/profile';
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/maps/new',
 				element: <MapsNew />,
+			},
+			{
+				path: '/maps/:id',
+				element: <MapEditor />,
 			},
 			{
 				path: '/profile',
