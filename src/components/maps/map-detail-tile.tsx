@@ -1,23 +1,33 @@
 import { AspectRatio, Card, CardBody, Text, VStack } from '@chakra-ui/react';
 import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
 
-import { PlusCircleIcon } from '../icon';
+import { MapIcon } from '../icon';
 
 interface MapDetailTileProps {
 	map: any;
 }
 
 export const MapDetailTile: FC<MapDetailTileProps> = ({ map }) => {
-	const { t } = useTranslation();
-
 	return (
-		<Card>
+		<Card
+			bg="gray.800"
+			borderColor="blue.400"
+			borderRadius="3xl"
+			borderStyle="solid"
+			borderWidth="1px"
+			color="blue.400"
+			transitionDuration="normal"
+			transitionProperty="common"
+			_hover={{
+				borderColor: 'blue.200',
+				color: 'blue.200',
+			}}
+		>
 			<AspectRatio ratio={2 / 3}>
 				<CardBody color="inherit">
 					<VStack spacing={6}>
-						<PlusCircleIcon boxSize={10} color="inherit" />
-						<Text color="inherit" textTransform="capitalize">
+						<MapIcon boxSize={10} color="inherit" />
+						<Text color="inherit" textAlign="center" textTransform="capitalize">
 							{map.name}
 						</Text>
 					</VStack>
