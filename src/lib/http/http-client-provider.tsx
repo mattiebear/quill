@@ -2,6 +2,7 @@ import { useAuth } from '@clerk/clerk-react';
 import { FC, PropsWithChildren, useMemo } from 'react';
 
 import { createHttpClient } from '.';
+import { StaticStore } from '../store/static-store';
 import { httpContext } from './http-context';
 
 export const HttpClientProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -13,6 +14,8 @@ export const HttpClientProvider: FC<PropsWithChildren> = ({ children }) => {
 			getToken,
 		});
 	}, [getToken]);
+
+	StaticStore.set('http', client);
 
 	return <httpContext.Provider value={client}>{children}</httpContext.Provider>;
 };

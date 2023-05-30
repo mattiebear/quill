@@ -1,6 +1,7 @@
 import { SignIn, SignUp } from '@clerk/clerk-react';
 import { createBrowserRouter } from 'react-router-dom';
 
+import { fetchMapsList } from '@/api/maps';
 import { Home } from '@/components/home';
 import { AuthMainLayout } from '@/components/layout/main';
 import { MapsIndex } from '@/components/maps';
@@ -27,6 +28,7 @@ export const router = createBrowserRouter([
 			{
 				path: '/maps',
 				element: <MapsIndex />,
+				loader: () => fetchMapsList(),
 			},
 			{
 				path: '/maps/new',

@@ -3,10 +3,13 @@ import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import { useMapsList } from '@/api/maps';
+
 import { AddMapButton } from './add-map-button';
 
 export const MapsIndex: FC = () => {
 	const { t } = useTranslation();
+	const { data } = useMapsList();
 
 	return (
 		<>
@@ -21,7 +24,7 @@ export const MapsIndex: FC = () => {
 			</Heading>
 
 			<Container maxW="container.lg">
-				<SimpleGrid columns={4} spacing={4}>
+				<SimpleGrid columns={{ base: 2, sm: 3, md: 4 }} spacing={4}>
 					<Link to="/maps/new">
 						<AddMapButton />
 					</Link>
