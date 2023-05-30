@@ -1,6 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import { UserButton } from '@clerk/clerk-react';
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { HomeIcon, MapIcon, UserIcon } from '@/components/icon';
 import {
@@ -14,6 +15,8 @@ import {
 } from '@/components/rail';
 
 export const Navbar: FC = () => {
+	const { t } = useTranslation();
+
 	return (
 		<Rail as="nav">
 			<RailTop>
@@ -24,15 +27,16 @@ export const Navbar: FC = () => {
 			</RailTop>
 
 			<RailContent>
-				<RailGroup label="Home">
-					<RailLink label="Home" to="/">
+				<RailGroup label={t('navigation.groupAssets')}>
+					<RailLink label={t('navigation.home')} to="/">
 						<HomeIcon />
 					</RailLink>
 
-					<RailLink label="Maps" to="/maps">
+					<RailLink label={t('navigation.maps')} to="/maps">
 						<MapIcon />
 					</RailLink>
 
+					{/* TODO: This is just for testing */}
 					<RailLink label="Profile" to="/profile">
 						<UserIcon />
 					</RailLink>
