@@ -1,1 +1,1 @@
-export * from './url-path';
+export * from './var-path';

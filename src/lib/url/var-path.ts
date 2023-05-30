@@ -2,7 +2,7 @@ interface IDRecord {
 	id: string;
 }
 
-export class URLPath {
+export class VarPath {
 	private _record?: IDRecord;
 	private _path: string;
 
