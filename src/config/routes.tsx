@@ -39,10 +39,6 @@ export const router = createBrowserRouter([
 				path: '/maps/:id',
 				element: <MapEditor />,
 			},
-			{
-				path: '/profile',
-				element: <Profile />,
-			},
 		],
 	},
 ]);

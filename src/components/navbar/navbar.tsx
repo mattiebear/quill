@@ -35,11 +35,6 @@ export const Navbar: FC = () => {
 					<RailLink label={t('navigation.maps')} to="/maps">
 						<MapIcon />
 					</RailLink>
-
-					{/* TODO: This is just for testing */}
-					<RailLink label="Profile" to="/profile">
-						<UserIcon />
-					</RailLink>
 				</RailGroup>
 			</RailContent>
 
