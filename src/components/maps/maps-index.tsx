@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { useMapsList } from '@/api/maps';
-import { VarPath } from '@/lib/url/var-path';
+import { DynamicPath } from '@/lib/url/dynamic-path';
 
 import { AddMapTile } from './add-map-tile';
 import { MapDetailTile } from './map-detail-tile';
@@ -33,7 +33,7 @@ export const MapsIndex: FC = () => {
 
 					{data?.data.map((map: any) => {
 						return (
-							<Link to={new VarPath('/maps/:id').for(map).toString()}>
+							<Link to={new DynamicPath('/maps/:id').for(map).toString()}>
 								<MapDetailTile key={map.id} map={map} />
 							</Link>
 						);

@@ -2,7 +2,7 @@ interface IDRecord {
 	id: string;
 }
 
-export class VarPath {
+export class DynamicPath {
 	private _record?: IDRecord;
 	private _path: string;
 

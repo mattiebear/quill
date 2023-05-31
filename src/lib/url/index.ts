@@ -1,1 +1,1 @@
-export * from './var-path';
+export * from './dynamic-path';
