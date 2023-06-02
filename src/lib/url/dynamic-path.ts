@@ -10,8 +10,13 @@ export class DynamicPath {
 		this._path = path;
 	}
 
-	for<T extends IDRecord>(record: T) {
-		this._record = record;
+	for<T extends IDRecord>(record: T | string) {
+		if (typeof record === 'string') {
+			this._record = { id: record };
+		} else {
+			this._record = record;
+		}
+
 		return this;
 	}
 

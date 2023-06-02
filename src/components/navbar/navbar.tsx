@@ -3,7 +3,7 @@ import { UserButton } from '@clerk/clerk-react';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { HomeIcon, MapIcon, UserIcon } from '@/components/icon';
+import { HomeIcon, MapIcon } from '@/components/icon';
 import {
 	Rail,
 	RailBottom,

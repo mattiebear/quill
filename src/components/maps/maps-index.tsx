@@ -33,8 +33,11 @@ export const MapsIndex: FC = () => {
 
 					{data?.data.map((map: any) => {
 						return (
-							<Link to={new DynamicPath('/maps/:id').for(map).toString()}>
-								<MapDetailTile key={map.id} map={map} />
+							<Link
+								key={map.id}
+								to={new DynamicPath('/maps/:id').for(map).toString()}
+							>
+								<MapDetailTile map={map} />
 							</Link>
 						);
 					})}
