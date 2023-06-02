@@ -1,8 +1,11 @@
 import { Text } from '@chakra-ui/react';
-import { useParams } from 'react-router-dom';
+
+import { useMapDetail } from '@/api/maps';
+import { useIdParam } from '@/lib/router/use-id-param';
 
 export const MapEditor = () => {
-	const { id } = useParams<{ id: string }>();
+	const id = useIdParam();
+	const { data } = useMapDetail(id);
 
 	// Get map data from API
 	// Crate a new quill engine instance with map data. Store in a ref for now

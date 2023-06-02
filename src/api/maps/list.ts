@@ -26,6 +26,7 @@ export const fetchMapsList = async () => {
 	});
 };
 
+// TODO: Pass query options for select
 export const useMapsList = () => {
 	const http = useHttpClient();
 

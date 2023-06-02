@@ -3,10 +3,11 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import { fetchMapDetail, fetchMapsList } from '@/api/maps';
 import { Home } from '@/components/home';
-import { AuthMainLayout } from '@/components/layout/main';
+import { MainLayout } from '@/components/layout/main';
 import { MapEditor } from '@/components/map-editor';
 import { MapsIndex } from '@/components/maps';
 import { MapsNew } from '@/components/maps/maps-new';
+import { Protected } from '@/lib/auth';
 
 export const router = createBrowserRouter([
 	{
@@ -19,7 +20,11 @@ export const router = createBrowserRouter([
 	},
 	{
 		path: '/',
-		element: <AuthMainLayout />,
+		element: (
+			<Protected>
+				<MainLayout />
+			</Protected>
+		),
 		children: [
 			{
 				path: '/',
