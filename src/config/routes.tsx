@@ -1,12 +1,12 @@
 import { SignIn, SignUp } from '@clerk/clerk-react';
 import { createBrowserRouter } from 'react-router-dom';
 
-import { fetchMapsList } from '@/api/maps';
+import { fetchMapDetail, fetchMapsList } from '@/api/maps';
 import { Home } from '@/components/home';
-import { AuthMainLayout } from '@/components/layout/main';
-import { MapsIndex } from '@/components/maps';
-import { MapsNew } from '@/components/maps/maps-new';
-import { Profile } from '@/components/profile';
+import { MainLayout } from '@/components/layout/main';
+import { MapEditor } from '@/components/map-editor';
+import { MapsIndex, MapsNew } from '@/components/maps';
+import { Protected } from '@/lib/auth';
 
 export const router = createBrowserRouter([
 	{
@@ -19,7 +19,11 @@ export const router = createBrowserRouter([
 	},
 	{
 		path: '/',
-		element: <AuthMainLayout />,
+		element: (
+			<Protected>
+				<MainLayout />
+			</Protected>
+		),
 		children: [
 			{
 				path: '/',
@@ -35,8 +39,10 @@ export const router = createBrowserRouter([
 				element: <MapsNew />,
 			},
 			{
-				path: '/profile',
-				element: <Profile />,
+				path: '/maps/:id',
+				element: <MapEditor />,
+				// TODO: Fix this typing
+				loader: ({ params }) => fetchMapDetail(params.id as string),
 			},
 		],
 	},

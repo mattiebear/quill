@@ -2,8 +2,6 @@ import { Box, Grid } from '@chakra-ui/react';
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { withAuthRequired } from '@/lib/auth';
-
 import { Navbar } from '../navbar';
 
 export const MainLayout: FC = () => {
@@ -23,5 +21,3 @@ export const MainLayout: FC = () => {
 		</Grid>
 	);
 };
-
-export const AuthMainLayout = withAuthRequired(MainLayout);
