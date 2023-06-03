@@ -5,8 +5,7 @@ import { fetchMapDetail, fetchMapsList } from '@/api/maps';
 import { Home } from '@/components/home';
 import { MainLayout } from '@/components/layout/main';
 import { MapEditor } from '@/components/map-editor';
-import { MapsIndex } from '@/components/maps';
-import { MapsNew } from '@/components/maps/maps-new';
+import { MapsIndex, MapsNew } from '@/components/maps';
 import { Protected } from '@/lib/auth';
 
 export const router = createBrowserRouter([

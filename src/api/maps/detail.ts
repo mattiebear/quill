@@ -23,7 +23,7 @@ export const fetchMapDetail = async (id: string) => {
 	const queryClient = await getQueryClient();
 
 	return queryClient.fetchQuery(buildKey(id), () => {
-		return http.get<MapData[]>(buildPath(id));
+		return http.get<MapData>(buildPath(id));
 	});
 };
 
@@ -31,6 +31,6 @@ export const useMapDetail = (id: string) => {
 	const http = useHttpClient();
 
 	return useQuery(buildKey(id), () => {
-		return http.get<MapData[]>(buildPath(id));
+		return http.get<MapData>(buildPath(id));
 	});
 };
