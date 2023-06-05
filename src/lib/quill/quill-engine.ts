@@ -13,6 +13,7 @@ export class QuillEngine {
 		const app = new PIXI.Application<HTMLCanvasElement>({
 			resizeTo: window,
 			autoDensity: true,
+			// TODO: Get color from theme somehow
 			backgroundColor: 0x171923,
 		});
 
