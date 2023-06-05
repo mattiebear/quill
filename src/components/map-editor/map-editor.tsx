@@ -5,6 +5,8 @@ import { PageLoading } from '@/components/loading';
 import { QuillEngine } from '@/lib/quill';
 import { useIdParam } from '@/lib/router';
 
+import { EditorUI } from '.';
+
 export const MapEditor = () => {
 	const id = useIdParam();
 	const { data } = useMapDetail(id);
@@ -25,5 +27,5 @@ export const MapEditor = () => {
 		return <PageLoading />;
 	}
 
-	return <></>;
+	return <EditorUI />;
 };
