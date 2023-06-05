@@ -1,4 +1,3 @@
-import { Text } from '@chakra-ui/react';
 import { useEffect, useRef } from 'react';
 
 import { useMapDetail } from '@/api/maps';
@@ -26,5 +25,5 @@ export const MapEditor = () => {
 		return <PageLoading />;
 	}
 
-	return <Text>Map editor for {id}</Text>;
+	return <></>;
 };

@@ -8,16 +8,21 @@ export class QuillEngine {
 	private _app: PIXI.Application<HTMLCanvasElement>;
 
 	initialize() {
-		// TODO: Set size based on current screen size
-		this._app = new PIXI.Application({
-			width: 640,
-			height: 360,
+		PIXI.settings.RESOLUTION = window.devicePixelRatio || 1;
+
+		const app = new PIXI.Application<HTMLCanvasElement>({
+			resizeTo: window,
+			autoDensity: true,
+			backgroundColor: 0x171923,
 		});
 
-		document.body.appendChild(this.app.view);
+		// TODO: Pass by ref?
+		document.getElementById('root')?.appendChild(app.view);
 
 		const sprite = PIXI.Sprite.from(sampleUrl);
-		this.app.stage.addChild(sprite);
+		app.stage.addChild(sprite);
+
+		this._app = app;
 
 		return this;
 	}
