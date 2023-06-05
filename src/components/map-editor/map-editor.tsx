@@ -1,10 +1,11 @@
-import { Text } from '@chakra-ui/react';
 import { useEffect, useRef } from 'react';
 
 import { useMapDetail } from '@/api/maps';
 import { PageLoading } from '@/components/loading';
 import { QuillEngine } from '@/lib/quill';
 import { useIdParam } from '@/lib/router';
+
+import { EditorUI } from '.';
 
 export const MapEditor = () => {
 	const id = useIdParam();
@@ -26,5 +27,5 @@ export const MapEditor = () => {
 		return <PageLoading />;
 	}
 
-	return <Text>Map editor for {id}</Text>;
+	return <EditorUI />;
 };
