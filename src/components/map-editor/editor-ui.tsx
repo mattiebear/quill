@@ -6,6 +6,7 @@ export const EditorUI: FC = () => {
 	return (
 		<Box position="absolute">
 			{/* TODO: Create a menu component that encapsulates all of this */}
+			{/* TODO: Save position to local storage */}
 			<Draggable defaultPosition={{ x: 40, y: 40 }}>
 				<Flex
 					bg="background.float"
