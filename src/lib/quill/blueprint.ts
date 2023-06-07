@@ -1,11 +1,5 @@
 import { CardinalSprite } from './cardinal-sprite';
-
-export enum StructureType {
-	Floor,
-	Wall,
-	Door,
-	Decoration,
-}
+import { StructureType } from './types';
 
 export class Blueprint {
 	private _name: string;

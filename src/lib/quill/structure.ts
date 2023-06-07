@@ -1,5 +1,5 @@
-import { Blueprint } from '.';
-import { Direction } from './cardinal-sprite';
+import { Blueprint } from './blueprint';
+import { Direction } from './types';
 
 /**
  * Structure
@@ -12,5 +12,21 @@ export class Structure {
 	constructor(blueprint: Blueprint, direction: Direction) {
 		this._blueprint = blueprint;
 		this._direction = direction;
+	}
+
+	get type() {
+		return this._blueprint.type;
+	}
+
+	get direction() {
+		return this._direction;
+	}
+
+	get blueprint() {
+		return this._blueprint;
+	}
+
+	get image() {
+		return this.blueprint.sprite.image(this.direction);
 	}
 }

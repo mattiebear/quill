@@ -1,9 +1,4 @@
-export enum Direction {
-	North,
-	East,
-	South,
-	West,
-}
+import { Direction } from './types';
 
 /**
  * CardinalSprite
@@ -25,7 +20,7 @@ export class CardinalSprite {
 		this.setSprite(Direction.West, west);
 	}
 
-	sprite(direction: Direction) {
+	image(direction: Direction) {
 		return this.sprites.get(direction);
 	}
 
@@ -38,19 +33,19 @@ export class CardinalSprite {
 	}
 
 	get north() {
-		return this.sprite(Direction.North);
+		return this.image(Direction.North);
 	}
 
 	get east() {
-		return this.sprite(Direction.East);
+		return this.image(Direction.East);
 	}
 
 	get south() {
-		return this.sprite(Direction.South);
+		return this.image(Direction.South);
 	}
 
 	get west() {
-		return this.sprite(Direction.West);
+		return this.image(Direction.West);
 	}
 
 	public static from(imagePath: string) {
