@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-import sampleUrl from '@/assets/sample.png';
+// import sampleUrl from '@/assets/sample.png';
 
 // Primary engine for rendering and interacting with map data. This is the
 // bridge between the UI, map rendering, REST API, and websocket connections.
@@ -20,8 +20,8 @@ export class QuillEngine {
 		// TODO: Pass by ref?
 		document.getElementById('root')?.appendChild(app.view);
 
-		const sprite = PIXI.Sprite.from(sampleUrl);
-		app.stage.addChild(sprite);
+		// const sprite = PIXI.Sprite.from(sampleUrl);
+		// app.stage.addChild(sprite);
 
 		this._app = app;
 
