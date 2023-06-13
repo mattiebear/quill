@@ -4,7 +4,7 @@ import { Direction } from './types';
  * CardinalSprite
  * @description A container for a single tile entity with multiple sprites representing the different cardinal directions.
  */
-export class CardinalSprite {
+export class DirectionalSprite {
 	private _sprites: Map<Direction, string>;
 
 	/**
@@ -50,9 +50,9 @@ export class CardinalSprite {
 
 	public static from(imagePath: string) {
 		const paths = ['N', 'E', 'S', 'W'].map((direction) => {
-			return `${imagePath}_${direction}`;
+			return `${imagePath}_${direction}.png`;
 		}) as [string, string, string, string];
 
-		return new CardinalSprite(...paths);
+		return new DirectionalSprite(...paths);
 	}
 }
