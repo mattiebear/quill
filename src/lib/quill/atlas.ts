@@ -25,7 +25,24 @@ export class Atlas {
 	}
 
 	add(x: number, y: number, blueprint: Blueprint, direction: Direction) {
+		if (!this.has(x, y)) {
+			this.set(x, y, new Tile());
+		}
+
 		const tile = this.get(x, y);
+		tile?.add(blueprint, direction);
+	}
+
+	has(x: number, y: number) {
+		const key = this.coord(x, y);
+		return this._tiles.has(key);
+	}
+
+	each(callback: (tile: Tile, x: number, y: number) => void) {
+		this._tiles.forEach((tile, key) => {
+			const [x, y] = key.split(',').map((coord) => parseInt(coord));
+			callback(tile, x, y);
+		});
 	}
 
 	private coord(x: number, y: number) {
