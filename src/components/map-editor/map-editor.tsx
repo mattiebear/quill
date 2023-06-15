@@ -9,7 +9,7 @@ import {
 	DirectionalSprite,
 	QuillEngine,
 	StructureType,
-} from '@/lib/quill';
+} from '@/lib/quill/deprecated';
 import { useIdParam } from '@/lib/router';
 
 import { EditorUI } from './editor-ui';

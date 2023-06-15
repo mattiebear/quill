@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 
-import { StructureType } from '.';
 import { Atlas } from './atlas';
+import { StructureType } from './index';
 
 // import sampleUrl from '@/assets/sample.png';
 

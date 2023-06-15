@@ -1,12 +1,9 @@
-export enum Direction {
-	North,
-	East,
-	South,
-	West,
+export type Listener = (data: any) => void;
+
+export interface SubscriptionRelay {
+	subscribe: (event: string, listener: Listener) => VoidFunction;
 }
 
-export enum StructureType {
-	Floor,
-	Wall,
-	Feature,
+export interface Subscriber {
+	link: (source: SubscriptionRelay) => void;
 }
