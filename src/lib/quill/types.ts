@@ -7,3 +7,10 @@ export interface SubscriptionRelay {
 export interface Subscriber {
 	link: (source: SubscriptionRelay) => void;
 }
+
+export enum Direction {
+	N = 'N',
+	E = 'E',
+	S = 'S',
+	W = 'W',
+}
