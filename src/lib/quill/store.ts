@@ -1,4 +1,3 @@
-import { Relay } from '@/lib/quill/relay';
 import { Listener } from '@/lib/quill/types';
 
 /**
@@ -7,11 +6,11 @@ import { Listener } from '@/lib/quill/types';
  */
 export class Store {
 	private data: Map<string, any>;
-	private relay: Relay;
+	private subscriptions: Map<string, Listener[]>;
 
 	constructor() {
 		this.data = new Map<string, any>();
-		this.relay = new Relay();
+		this.subscriptions = new Map<string, Listener[]>();
 	}
 
 	/**
@@ -32,7 +31,7 @@ export class Store {
 		const current = this.get(key);
 
 		if (current !== value) {
-			this.relay.send(key, value);
+			this.send(key, value);
 		}
 
 		this.data.set(key, value);
@@ -42,8 +41,52 @@ export class Store {
 	 * Subscribes a listener to value changes
 	 * @param key
 	 * @param listener
+	 * @returns unsubscribe
 	 */
 	subscribe(key: string, listener: Listener): VoidFunction {
-		return this.relay.subscribe(key, listener);
+		const subscriptions = this.getSubscriptions(key);
+
+		subscriptions.push(listener);
+
+		if (this.data.has(key)) {
+			listener(this.data.get(key));
+		}
+
+		return () => this.unsubscribe(key, listener);
+	}
+
+	/**
+	 * Removes a listener for a specific data key
+	 * @param key
+	 * @param listener
+	 */
+	unsubscribe(key: string, listener: Listener) {
+		const subscriptions = this.getSubscriptions(key);
+
+		const filteredSubscriptions = subscriptions.filter(
+			(sub) => sub !== listener
+		);
+
+		this.subscriptions.set(key, filteredSubscriptions);
+	}
+
+	private getSubscriptions(key: string): Listener[] {
+		if (!this.subscriptions.has(key)) {
+			this.subscriptions.set(key, []);
+		}
+
+		const subscriptions = this.subscriptions.get(key);
+
+		if (subscriptions === undefined) {
+			throw new Error('No subscriptions found for key');
+		}
+
+		return subscriptions;
+	}
+
+	private send(key: string, value: any) {
+		const subscriptions = this.getSubscriptions(key);
+
+		subscriptions.forEach((listener) => listener(value));
 	}
 }

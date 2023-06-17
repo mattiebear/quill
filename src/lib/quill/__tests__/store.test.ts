@@ -36,3 +36,28 @@ it('emits change events to subscribers', () => {
 	expect(listener).toHaveBeenCalledWith(2);
 	expect(listener).toHaveBeenCalledTimes(2);
 });
+
+it('emits the value immediately if subscribed after a value is set', () => {
+	const listener = vi.fn();
+
+	const store = new Store();
+
+	store.set('key', 1);
+
+	store.subscribe('key', listener);
+
+	expect(listener).toHaveBeenCalledWith(1);
+});
+
+it('unsubscribes listeners', () => {
+	const listener = vi.fn();
+
+	const store = new Store();
+
+	store.subscribe('key', listener);
+	store.unsubscribe('key', listener);
+
+	store.set('key', 1);
+
+	expect(listener).not.toHaveBeenCalled();
+});

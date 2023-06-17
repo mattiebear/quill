@@ -3,7 +3,8 @@ import { Store } from './store';
 
 export class Engine {
 	private relay: Relay;
-	private store: Store;
+
+	public store: Store;
 
 	constructor() {
 		this.relay = new Relay();
