@@ -14,3 +14,9 @@ export enum Direction {
 	S = 'S',
 	W = 'W',
 }
+
+export enum StructureType {
+	Floor,
+	Wall,
+	Object,
+}
