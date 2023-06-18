@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -59,6 +59,9 @@ dependencies:
   react-router-dom:
     specifier: ^6.11.2
     version: 6.11.2(react-dom@18.2.0)(react@18.2.0)
+  uuid:
+    specifier: ^9.0.0
+    version: 9.0.0
 
 devDependencies:
   '@ianvs/prettier-plugin-sort-imports':
@@ -82,6 +85,9 @@ devDependencies:
   '@types/testing-library__jest-dom':
     specifier: ^5.14.6
     version: 5.14.6
+  '@types/uuid':
+    specifier: ^9.0.2
+    version: 9.0.2
   '@typescript-eslint/eslint-plugin':
     specifier: ^5.57.1
     version: 5.57.1(@typescript-eslint/parser@5.57.1)(eslint@8.38.0)(typescript@5.0.2)
@@ -2511,6 +2517,10 @@ packages:
     resolution: {integrity: sha512-FkHXCb+ikSoUP4Y4rOslzTdX5sqYwMxfefKh1GmZ8ce1GOkEHntSp6b5cGadmNfp5e4BMEWOMx+WSKd5/MqlDA==}
     dependencies:
       '@types/jest': 29.5.1
+    dev: true
+
+  /@types/uuid@9.0.2:
+    resolution: {integrity: sha512-kNnC1GFBLuhImSnV7w4njQkUiJi0ZXUycu1rUaouPqiKlXkh77JKgdRnTAp1x5eBwcIwbtI+3otwzuIDEuDoxQ==}
     dev: true
 
   /@types/yargs-parser@21.0.0:
@@ -5074,6 +5084,11 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /uuid@9.0.0:
+    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
+    hasBin: true
     dev: false
 
   /vite-node@0.31.1(@types/node@20.2.1):
