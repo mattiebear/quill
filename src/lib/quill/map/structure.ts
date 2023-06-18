@@ -1,5 +1,5 @@
 import { Crypto } from '@/lib/crypto';
-import { StructureBlueprint } from '@/lib/quill/structure-blueprint';
+import { StructureBlueprint } from '@/lib/quill/map/structure-blueprint';
 import { Direction } from '@/lib/quill/types';
 
 /**

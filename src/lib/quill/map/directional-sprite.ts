@@ -1,4 +1,4 @@
-import { Direction } from './types';
+import { Direction } from '../types';
 
 /**
  * A collection of 2D images representing a 3D object's isometric cardinal views

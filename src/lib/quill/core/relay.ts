@@ -1,5 +1,5 @@
-import type { Listener, SubscriptionRelay } from './types';
-import { Subscriber } from './types';
+import type { Listener, SubscriptionRelay } from '../types';
+import { Subscriber } from '../types';
 
 /**
  * @class Relay

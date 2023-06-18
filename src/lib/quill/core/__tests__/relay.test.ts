@@ -1,7 +1,7 @@
 import { expect, it, vi } from 'vitest';
 
+import { SubscriptionRelay } from '../../types';
 import { Relay } from '../relay';
-import { SubscriptionRelay } from '../types';
 
 it('dispatches events to listeners', () => {
 	const relay = new Relay();

@@ -1,8 +1,8 @@
 import { expect, it } from 'vitest';
 
-import { DirectionalSprite } from '@/lib/quill/directional-sprite';
+import { DirectionalSprite } from '@/lib/quill/map/directional-sprite';
 
-import { Direction } from '../types';
+import { Direction } from '../../types';
 
 it('creates an instance from source path', () => {
 	const directionalSprite = DirectionalSprite.from('/path/image');
