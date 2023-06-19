@@ -11,12 +11,9 @@ import { Position } from '@/lib/quill/utility/position';
  * Representation of a single tile at an x, y, z coordinate within a map, storing multiple structures
  */
 export class MapNode {
-	public readonly position: Position;
-
 	private structures: Map<string, Structure>;
 
-	constructor(x: number, y: number, z: number) {
-		this.position = new Position(x, y, z);
+	constructor(public readonly position: Position) {
 		this.structures = new Map();
 	}
 

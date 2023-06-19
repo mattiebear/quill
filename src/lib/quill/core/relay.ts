@@ -1,11 +1,11 @@
-import type { Listener, SubscriptionRelay } from '../types';
+import type { Listener } from '../types';
 import { Subscriber } from '../types';
 
 /**
  * @class Relay
  * @description Receives events and dispatches them to subscribed listeners
  */
-export class Relay implements SubscriptionRelay {
+export class Relay {
 	private subscriptions: Map<string, Listener[]>;
 
 	constructor() {

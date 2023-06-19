@@ -8,12 +8,14 @@ import {
 	StructureType,
 } from '@/lib/quill/map/structure-blueprint';
 import { Direction } from '@/lib/quill/types';
+import { Position } from '@/lib/quill/utility/position';
 
+const position = new Position(0, 0, 0);
 const sprite = DirectionalSprite.from('test');
 const blueprint = new StructureBlueprint('test', StructureType.Floor, sprite);
 
 it('returns a changeset for adding a new structure', () => {
-	const node = new MapNode(0, 0, 0);
+	const node = new MapNode(position);
 
 	const result = node.add(blueprint, Direction.N);
 
@@ -23,7 +25,7 @@ it('returns a changeset for adding a new structure', () => {
 });
 
 it('returns a changeset for replacing a structure', () => {
-	const node = new MapNode(0, 0, 0);
+	const node = new MapNode(position);
 
 	node.add(blueprint, Direction.N);
 
@@ -34,7 +36,7 @@ it('returns a changeset for replacing a structure', () => {
 });
 
 it('does not remove a wall unless it faces the same direction', () => {
-	const node = new MapNode(0, 0, 0);
+	const node = new MapNode(position);
 	const blueprint = new StructureBlueprint('test', StructureType.Wall, sprite);
 
 	node.add(blueprint, Direction.N);
@@ -46,7 +48,7 @@ it('does not remove a wall unless it faces the same direction', () => {
 });
 
 it('returns a changeset for removing a structure', () => {
-	const node = new MapNode(0, 0, 0);
+	const node = new MapNode(position);
 
 	const changeset = node.add(blueprint, Direction.N);
 

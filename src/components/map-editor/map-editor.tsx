@@ -19,9 +19,20 @@ export const MapEditor = () => {
 	// TODO: Store in a custom hook
 	useEffect(() => {
 		if (data && !engineRef.current) {
-			const engine = new Quill.Engine();
+			const sprite = Quill.DirectionalSprite.from('/images/tiles/stoneTile');
+			const blueprint = new Quill.StructureBlueprint(
+				'1',
+				Quill.StructureType.Floor,
+				sprite
+			);
 
+			const engine = new Quill.Engine();
+			const atlas = new Quill.Atlas();
+
+			engine.load(atlas);
 			engine.initialize();
+
+			atlas.add(new Quill.Position(0, 0, 0), blueprint, Quill.Direction.N);
 
 			engineRef.current = engine;
 		}

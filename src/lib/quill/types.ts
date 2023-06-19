@@ -1,11 +1,9 @@
+import { Relay } from '@/lib/quill/core/relay';
+
 export type Listener = (data: any) => void;
 
-export interface SubscriptionRelay {
-	subscribe: (event: string, listener: Listener) => VoidFunction;
-}
-
 export interface Subscriber {
-	link: (source: SubscriptionRelay) => void;
+	link: (source: Relay) => void;
 }
 
 export enum Direction {
@@ -13,4 +11,8 @@ export enum Direction {
 	E = 'E',
 	S = 'S',
 	W = 'W',
+}
+
+export enum MapEvent {
+	MapAltered = 'map-altered',
 }
