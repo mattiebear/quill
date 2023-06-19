@@ -35,6 +35,7 @@ export const MapEditor = () => {
 
 			// TODO: Need to be able to add all tiles prior to initialization for persisted map loading
 			atlas.add(new Quill.Position(0, 0, 0), blueprint, Quill.Direction.N);
+			atlas.add(new Quill.Position(1, 0, 0), blueprint, Quill.Direction.W);
 
 			engineRef.current = engine;
 		}
