@@ -1,7 +1,4 @@
-export * from './atlas';
-export * from './blueprint';
-export * from './directional-sprite';
-export * from './quill-engine';
-export * from './structure';
-export * from './tile';
-export * from './types';
+export * from './core';
+export * from './map';
+export { Direction } from './types';
+export * from './utility';
