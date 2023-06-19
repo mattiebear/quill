@@ -58,7 +58,7 @@ export class Relay {
 	 * Run the `link()` handler in the provided modules with the relay instance
 	 * @param modules
 	 */
-	public link<T extends Subscriber>(...modules: T[]) {
+	public link(...modules: Subscriber[]) {
 		modules.forEach((module) => module.link(this));
 	}
 
