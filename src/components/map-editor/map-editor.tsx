@@ -7,6 +7,13 @@ import { useIdParam } from '@/lib/router';
 
 import { EditorUI } from './editor-ui';
 
+const sprite = Quill.DirectionalSprite.from('/images/tiles/stoneTile');
+const blueprint = new Quill.StructureBlueprint(
+	'1',
+	Quill.StructureType.Floor,
+	sprite
+);
+
 export const MapEditor = () => {
 	// TODO: Create an element and append it to the body
 	const elRef = useRef<HTMLDivElement>(
@@ -19,13 +26,6 @@ export const MapEditor = () => {
 	// TODO: Store in a custom hook
 	useEffect(() => {
 		if (data && !engineRef.current) {
-			const sprite = Quill.DirectionalSprite.from('/images/tiles/stoneTile');
-			const blueprint = new Quill.StructureBlueprint(
-				'1',
-				Quill.StructureType.Floor,
-				sprite
-			);
-
 			const engine = new Quill.Engine();
 			const atlas = new Quill.Atlas();
 

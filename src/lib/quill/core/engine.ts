@@ -31,5 +31,7 @@ export class Engine {
 		}
 
 		this.relay.link(this.atlas, this.renderer);
+
+		this.renderer.initialize();
 	}
 }

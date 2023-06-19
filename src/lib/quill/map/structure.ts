@@ -29,6 +29,13 @@ export class Structure {
 		return this.blueprint.type;
 	}
 
+	/**
+	 * The image of the structure based on the blueprint and facing direction
+	 */
+	get view() {
+		return this.blueprint.sprite.face(this.direction);
+	}
+
 	private generateUniqueId() {
 		return Crypto.uniqueId();
 	}

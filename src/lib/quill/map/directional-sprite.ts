@@ -21,7 +21,13 @@ export class DirectionalSprite {
 	 * @returns string
 	 */
 	face(direction: Direction) {
-		return this.sprites.get(direction);
+		const view = this.sprites.get(direction);
+
+		if (!view) {
+			throw new Error('Sprite not initialized with face for direction');
+		}
+
+		return view;
 	}
 
 	/**
