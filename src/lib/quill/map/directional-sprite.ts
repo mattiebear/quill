@@ -1,17 +1,19 @@
+import { Texture } from 'pixi.js';
+
 import { Direction } from '../types';
 
 /**
  * A collection of 2D images representing a 3D object's isometric cardinal views
  */
 export class DirectionalSprite {
-	private sprites: Map<Direction, string>;
+	private sprites: Map<Direction, Texture>;
 
 	constructor(n: string, e: string, s: string, w: string) {
-		this.sprites = new Map<Direction, string>([
-			[Direction.N, n],
-			[Direction.E, e],
-			[Direction.S, s],
-			[Direction.W, w],
+		this.sprites = new Map([
+			[Direction.N, Texture.from(n)],
+			[Direction.E, Texture.from(e)],
+			[Direction.S, Texture.from(s)],
+			[Direction.W, Texture.from(w)],
 		]);
 	}
 

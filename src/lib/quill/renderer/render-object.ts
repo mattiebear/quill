@@ -1,19 +1,17 @@
-import * as PIXI from 'pixi.js';
+import { Sprite, Texture } from 'pixi.js';
 
 import { Direction, StructureType } from '@/lib/quill';
 import { Structure } from '@/lib/quill/map/structure';
 
 export class RenderObject {
-	public readonly sprite: PIXI.Sprite;
+	public readonly sprite: Sprite;
 
 	constructor(
 		public readonly id: string,
-		public readonly view: string,
+		public readonly texture: Texture,
 		public readonly order: number
 	) {
-		// TODO: Do we need to store textures globally for optimization?
-		const texture = PIXI.Texture.from(view);
-		this.sprite = new PIXI.Sprite(texture);
+		this.sprite = new Sprite(texture);
 	}
 
 	public static fromStructure(structure: Structure) {
@@ -35,6 +33,6 @@ export class RenderObject {
 			}
 		}
 
-		return new RenderObject(structure.id, structure.view, order);
+		return new RenderObject(structure.id, structure.texture, order);
 	}
 }

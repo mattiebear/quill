@@ -26,9 +26,8 @@ export class Renderer implements Subscriber {
 			);
 		}
 
-		this.app = this.createApp();
-		this.container = this.createMainContainer(this.app);
-		this.el.appendChild(this.app.view);
+		this.createApp();
+		this.createNodeContainer();
 	}
 
 	link(relay: Relay) {
@@ -73,19 +72,18 @@ export class Renderer implements Subscriber {
 	private createApp() {
 		PIXI.settings.RESOLUTION = window.devicePixelRatio || 1;
 
-		return new PIXI.Application<HTMLCanvasElement>({
+		this.app = new PIXI.Application<HTMLCanvasElement>({
 			resizeTo: window,
 			autoDensity: true,
 			// TODO: Get color from theme somehow
 			backgroundColor: 0x171923,
 		});
+
+		this.el.appendChild(this.app.view);
 	}
 
-	private createMainContainer(app: PIXI.Application) {
-		const container = new PIXI.Container();
-
-		app.stage.addChild(container);
-
-		return container;
+	private createNodeContainer() {
+		this.container = new PIXI.Container();
+		this.app.stage.addChild(this.container);
 	}
 }
