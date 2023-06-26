@@ -1,8 +1,15 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
 import { FC } from 'react';
 import Draggable from 'react-draggable';
+import { useTranslation } from 'react-i18next';
+
+import { ZoomInIcon, ZoomOutIcon } from '@/components/icon';
+import { useIO } from '@/components/map-editor/hooks/use-io';
 
 export const EditorUI: FC = () => {
+	const { t } = useTranslation();
+	const io = useIO();
+
 	return (
 		<Box position="absolute">
 			{/* TODO: Create a menu component that encapsulates all of this */}
@@ -19,6 +26,19 @@ export const EditorUI: FC = () => {
 					<Text color="text.body" fontSize="xl">
 						Build
 					</Text>
+
+					<Flex columnGap={2} direction="row">
+						<IconButton
+							aria-label={t('editor.zoomOut')}
+							icon={<ZoomOutIcon />}
+							onClick={io.decreaseZoom}
+						/>
+						<IconButton
+							aria-label={t('editor.zoomIn')}
+							icon={<ZoomInIcon />}
+							onClick={io.increaseZoom}
+						/>
+					</Flex>
 				</Flex>
 			</Draggable>
 		</Box>

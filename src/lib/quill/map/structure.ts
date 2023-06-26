@@ -32,7 +32,7 @@ export class Structure {
 	/**
 	 * The image of the structure based on the blueprint and facing direction
 	 */
-	get view() {
+	get texture() {
 		return this.blueprint.sprite.face(this.direction);
 	}
 
