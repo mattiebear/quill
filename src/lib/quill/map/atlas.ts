@@ -1,7 +1,8 @@
 import { StructureBlueprint } from '@/lib/quill';
-import { Relay } from '@/lib/quill/core/relay';
+import { Relay, Subscriber } from '@/lib/quill/core/relay';
+import { MapEvent } from '@/lib/quill/event';
 import { MapNode } from '@/lib/quill/map/map-node';
-import { Direction, MapEvent, Subscriber } from '@/lib/quill/types';
+import { Direction } from '@/lib/quill/types';
 import { Position } from '@/lib/quill/utility/position';
 
 export class Atlas implements Subscriber {

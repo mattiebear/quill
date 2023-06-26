@@ -1,5 +1,8 @@
 import type { Listener } from '../types';
-import { Subscriber } from '../types';
+
+export interface Subscriber {
+	link: (source: Relay) => void;
+}
 
 /**
  * @class Relay

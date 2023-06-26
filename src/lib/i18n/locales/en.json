@@ -27,6 +27,10 @@
 				"successTitle": "New map created",
 				"successDescription": "You can now edit your map \"{{name}}\"."
 			}
+		},
+		"editor": {
+			"zoomIn": "Zoom in",
+			"zoomOut": "Zoom out"
 		}
 	}
 }

@@ -1,11 +1,11 @@
 import * as PIXI from 'pixi.js';
 
 import { Position } from '@/lib/quill';
-import { Relay } from '@/lib/quill/core/relay';
+import { Relay, Subscriber } from '@/lib/quill/core/relay';
+import { MapEvent, RenderEvent } from '@/lib/quill/event';
 import { Changeset, NodeChange } from '@/lib/quill/map/changeset';
 import { RenderNode } from '@/lib/quill/renderer/render-node';
 import { RenderObject } from '@/lib/quill/renderer/render-object';
-import { MapEvent, Subscriber } from '@/lib/quill/types';
 
 export class Renderer implements Subscriber {
 	public el: HTMLElement;
@@ -13,7 +13,6 @@ export class Renderer implements Subscriber {
 	private app: PIXI.Application<HTMLCanvasElement>;
 	private container: PIXI.Container;
 	private nodes: Map<string, RenderNode>;
-	// private relay: Relay;
 
 	constructor() {
 		this.nodes = new Map();
@@ -31,10 +30,16 @@ export class Renderer implements Subscriber {
 	}
 
 	link(relay: Relay) {
-		// this.relay = relay;
-
 		relay.subscribe(MapEvent.MapAltered, (changeset: Changeset) => {
 			this.drawChangeset(changeset);
+		});
+
+		relay.subscribe(RenderEvent.IncreaseZoom, () => {
+			this.changeZoom(10);
+		});
+
+		relay.subscribe(RenderEvent.DecreaseZoom, () => {
+			this.changeZoom(-10);
 		});
 	}
 
@@ -85,5 +90,11 @@ export class Renderer implements Subscriber {
 	private createNodeContainer() {
 		this.container = new PIXI.Container();
 		this.app.stage.addChild(this.container);
+	}
+
+	private changeZoom(value: number) {
+		const delta = value / 100;
+		this.container.scale.x += delta;
+		this.container.scale.y += delta;
 	}
 }
