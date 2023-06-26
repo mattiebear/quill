@@ -1,5 +1,5 @@
 import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
-import { FC } from 'react';
+import { FC, useRef } from 'react';
 import Draggable from 'react-draggable';
 import { useTranslation } from 'react-i18next';
 
@@ -7,6 +7,7 @@ import { ZoomInIcon, ZoomOutIcon } from '@/components/icon';
 import { useIO } from '@/components/map-editor/hooks/use-io';
 
 export const EditorUI: FC = () => {
+	const nodeRef = useRef<HTMLDivElement>(null);
 	const { t } = useTranslation();
 	const io = useIO();
 
@@ -14,8 +15,9 @@ export const EditorUI: FC = () => {
 		<Box position="absolute">
 			{/* TODO: Create a menu component that encapsulates all of this */}
 			{/* TODO: Save position to local storage */}
-			<Draggable defaultPosition={{ x: 40, y: 40 }}>
+			<Draggable defaultPosition={{ x: 40, y: 40 }} nodeRef={nodeRef}>
 				<Flex
+					ref={nodeRef}
 					bg="background.float"
 					borderRadius="3xl"
 					cursor="grab"
