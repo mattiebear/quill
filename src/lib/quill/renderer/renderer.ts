@@ -6,6 +6,7 @@ import { MapEvent, RenderEvent } from '@/lib/quill/event';
 import { Changeset, NodeChange } from '@/lib/quill/map/changeset';
 import { RenderNode } from '@/lib/quill/renderer/render-node';
 import { RenderObject } from '@/lib/quill/renderer/render-object';
+import { clamp } from '@/utils/number';
 
 export class Renderer implements Subscriber {
 	public el: HTMLElement;
@@ -13,6 +14,8 @@ export class Renderer implements Subscriber {
 	private app: PIXI.Application<HTMLCanvasElement>;
 	private container: PIXI.Container;
 	private nodes: Map<string, RenderNode>;
+
+	private zoom = 1;
 
 	constructor() {
 		this.nodes = new Map();
@@ -94,7 +97,9 @@ export class Renderer implements Subscriber {
 
 	private changeZoom(value: number) {
 		const delta = value / 100;
-		this.container.scale.x += delta;
-		this.container.scale.y += delta;
+		this.zoom = clamp(this.zoom + delta, 0.5, 1);
+
+		this.container.scale.x = this.zoom;
+		this.container.scale.y = this.zoom;
 	}
 }
