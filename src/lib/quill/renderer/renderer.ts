@@ -2,10 +2,11 @@ import * as PIXI from 'pixi.js';
 
 import { Position } from '@/lib/quill';
 import { Relay, Subscriber } from '@/lib/quill/core/relay';
-import { MapEvent, RenderEvent } from '@/lib/quill/event';
 import { Changeset, NodeChange } from '@/lib/quill/map/changeset';
 import { RenderNode } from '@/lib/quill/renderer/render-node';
 import { RenderObject } from '@/lib/quill/renderer/render-object';
+import { MapEvent, RenderEvent } from '@/lib/quill/types/event';
+import { findOrCreateByKey } from '@/utils/map';
 import { clamp } from '@/utils/number';
 
 export class Renderer implements Subscriber {
@@ -60,16 +61,7 @@ export class Renderer implements Subscriber {
 
 	private findOrCreateNodeByPosition(position: Position) {
 		const key = position.toString();
-
-		if (!this.nodes.has(key)) {
-			this.nodes.set(key, new RenderNode(position));
-		}
-
-		const node = this.nodes.get(key);
-
-		if (!node) {
-			throw new Error(`Render node does not exist for ke ${key}`);
-		}
+		const node = findOrCreateByKey(this.nodes, key, new RenderNode(position));
 
 		this.container.addChild(node.view);
 

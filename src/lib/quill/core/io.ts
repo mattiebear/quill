@@ -1,19 +1,24 @@
+import { KeyboardController } from '@/lib/quill/augments/keyboard-controller';
 import { Relay, Subscriber } from '@/lib/quill/core/relay';
-import { RenderEvent } from '@/lib/quill/event';
+import { RenderEvent } from '@/lib/quill/types/event';
 
-export class IO implements Subscriber {
+// enum Key {
+// 	A = 'a',
+// }
+
+//
+
+export class IO extends KeyboardController implements Subscriber {
 	private relay: Relay;
+
+	// constructor() {
+	// super();
+	//
+	// this.channel(RenderEvent.ScrollLeft).to(relay).whileKeyDown(Key.A);
+	// }
 
 	link(relay: Relay) {
 		this.relay = relay;
-	}
-
-	initialize() {
-		console.log('init');
-	}
-
-	destroy() {
-		console.log('destroy');
 	}
 
 	private send(event: string, data?: any) {

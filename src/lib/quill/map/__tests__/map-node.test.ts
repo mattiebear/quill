@@ -7,7 +7,7 @@ import {
 	StructureBlueprint,
 	StructureType,
 } from '@/lib/quill/map/structure-blueprint';
-import { Direction } from '@/lib/quill/types';
+import { Direction } from '@/lib/quill/types/types';
 import { Position } from '@/lib/quill/utility/position';
 
 const position = new Position(0, 0, 0);

@@ -1,3 +1,5 @@
+import { expect, it } from 'vitest';
+
 import { clamp } from '../number';
 
 it.each([

@@ -4,6 +4,9 @@ import { Relay } from '@/lib/quill/core/relay';
 import { Store } from '@/lib/quill/core/store';
 import { Renderer } from '@/lib/quill/renderer/renderer';
 
+/**
+ * The primary container for the Quill rendering engine, containing and organizing all inner modules
+ */
 export class Engine {
 	private atlas: Atlas;
 
@@ -31,7 +34,6 @@ export class Engine {
 		this.relay.link(this.atlas, this.renderer, this.io);
 
 		this.renderer.initialize();
-		this.io.initialize();
 
 		return this;
 	}

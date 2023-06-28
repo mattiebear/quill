@@ -6,7 +6,7 @@ import { Position } from '@/lib/quill/utility/position';
  * A collection of map alterations
  */
 export class Changeset {
-	private changes: NodeChange[];
+	private readonly changes: NodeChange[];
 
 	constructor(...changes: NodeChange[]) {
 		this.changes = changes;
