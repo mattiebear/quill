@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef } from 'react';
 
 import * as Quill from '@/lib/quill';
 
+// TODO: remove this once data is loaded from DB
 const sprite = Quill.DirectionalSprite.from('/images/tiles/stoneTile');
 const blueprint = new Quill.StructureBlueprint(
 	'1',
@@ -11,6 +12,7 @@ const blueprint = new Quill.StructureBlueprint(
 
 export const useQuill = () => {
 	const engineRef = useRef<Quill.Engine>(new Quill.Engine());
+	// TODO: Pass in el
 	const elRef = useRef<HTMLDivElement>(
 		document.getElementById('root') as HTMLDivElement
 	);
@@ -27,7 +29,7 @@ export const useQuill = () => {
 		atlas.add(new Quill.Position(1, 1, 0), blueprint, Quill.Direction.S);
 
 		return () => {
-			engineRef.current.destroy();
+			engine.destroy();
 		};
 	}, []);
 
