@@ -17,12 +17,6 @@ export const useQuill = () => {
 
 	useLayoutEffect(() => {
 		const engine = engineRef.current;
-
-		// Check is included due to multiple renders in strict mode
-		if (engine.isRunning) {
-			return;
-		}
-
 		const atlas = new Quill.Atlas();
 
 		engine.drawTo(elRef.current).load(atlas).initialize();
@@ -31,6 +25,10 @@ export const useQuill = () => {
 		atlas.add(new Quill.Position(1, 0, 0), blueprint, Quill.Direction.W);
 		atlas.add(new Quill.Position(0, 1, 0), blueprint, Quill.Direction.E);
 		atlas.add(new Quill.Position(1, 1, 0), blueprint, Quill.Direction.S);
+
+		return () => {
+			engineRef.current.destroy();
+		};
 	}, []);
 
 	return engineRef.current;

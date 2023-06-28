@@ -1,4 +1,4 @@
-import type { Listener } from '../types';
+type Listener = (value: any) => void;
 
 export interface Subscriber {
 	link: (source: Relay) => void;
@@ -9,11 +9,7 @@ export interface Subscriber {
  * @description Receives events and dispatches them to subscribed listeners
  */
 export class Relay {
-	private subscriptions: Map<string, Listener[]>;
-
-	constructor() {
-		this.subscriptions = new Map<string, Listener[]>();
-	}
+	private subscriptions = new Map<string, Listener[]>();
 
 	/**
 	 * Subscribe to an event. Event data will be passed in the callback's first argument

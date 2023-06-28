@@ -1,17 +1,12 @@
-import { Listener } from '@/lib/quill/types';
+type Listener = (value: any) => void;
 
 /**
  * @class Store
  * @description Stores data in a key:value pair map with functionality to subscribe to changes
  */
 export class Store {
-	private data: Map<string, any>;
-	private subscriptions: Map<string, Listener[]>;
-
-	constructor() {
-		this.data = new Map<string, any>();
-		this.subscriptions = new Map<string, Listener[]>();
-	}
+	private data = new Map<string, any>();
+	private subscriptions = new Map<string, Listener[]>();
 
 	/**
 	 * Fetch a value from the store

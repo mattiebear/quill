@@ -4,19 +4,14 @@ import { Position } from '@/lib/quill';
 import { RenderObject } from '@/lib/quill/renderer/render-object';
 
 export class RenderNode {
-	private objects: RenderObject[];
-	public readonly view: PIXI.Container;
+	private objects: RenderObject[] = [];
+
+	public readonly view = new PIXI.Container();
 
 	constructor(public readonly position: Position) {
-		this.objects = [];
-
-		const container = new PIXI.Container();
-
-		container.x = position.screenX;
-		container.y = position.screenY;
-		container.zIndex = position.zIndex;
-
-		this.view = container;
+		this.view.x = position.screenX;
+		this.view.y = position.screenY;
+		this.view.zIndex = position.zIndex;
 	}
 
 	add(object: RenderObject) {

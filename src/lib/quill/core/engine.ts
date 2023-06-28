@@ -1,32 +1,17 @@
 import { Atlas } from '@/lib/quill';
+import { IO } from '@/lib/quill/core/io';
+import { Relay } from '@/lib/quill/core/relay';
+import { Store } from '@/lib/quill/core/store';
 import { Renderer } from '@/lib/quill/renderer/renderer';
-
-import { IO } from './io';
-import { Relay } from './relay';
-import { Store } from './store';
-
-enum EngineState {
-	Pending,
-	Running,
-}
 
 export class Engine {
 	private atlas: Atlas;
-	private state: EngineState;
 
-	private readonly renderer: Renderer;
-	private readonly relay: Relay;
+	private readonly renderer = new Renderer();
+	private readonly relay = new Relay();
 
-	public readonly io: IO;
-	public readonly store: Store;
-
-	constructor() {
-		this.io = new IO();
-		this.relay = new Relay();
-		this.renderer = new Renderer();
-		this.store = new Store();
-		this.state = EngineState.Pending;
-	}
+	public readonly io = new IO();
+	public readonly store = new Store();
 
 	load(atlas: Atlas) {
 		this.atlas = atlas;
@@ -44,13 +29,15 @@ export class Engine {
 		}
 
 		this.relay.link(this.atlas, this.renderer, this.io);
+
 		this.renderer.initialize();
-		this.state = EngineState.Running;
+		this.io.initialize();
 
 		return this;
 	}
 
-	get isRunning() {
-		return this.state === EngineState.Running;
+	destroy() {
+		this.renderer.destroy();
+		this.io.destroy();
 	}
 }

@@ -13,13 +13,9 @@ export class Renderer implements Subscriber {
 
 	private app: PIXI.Application<HTMLCanvasElement>;
 	private container: PIXI.Container;
-	private nodes: Map<string, RenderNode>;
+	private nodes = new Map<string, RenderNode>();
 
 	private zoom = 1;
-
-	constructor() {
-		this.nodes = new Map();
-	}
 
 	initialize() {
 		if (!this.el) {
@@ -46,6 +42,11 @@ export class Renderer implements Subscriber {
 		});
 	}
 
+	destroy() {
+		this.app.destroy(true);
+	}
+
+	// Internal handlers
 	private drawChangeset(changeset: Changeset) {
 		changeset.additive.forEach((change) => {
 			this.addStructureFromChange(change);

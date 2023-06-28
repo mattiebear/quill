@@ -6,12 +6,8 @@ import { Direction } from '@/lib/quill/types';
 import { Position } from '@/lib/quill/utility/position';
 
 export class Atlas implements Subscriber {
-	private nodes: Map<string, MapNode>;
+	private nodes = new Map<string, MapNode>();
 	private relay: Relay;
-
-	constructor() {
-		this.nodes = new Map();
-	}
 
 	add(position: Position, blueprint: StructureBlueprint, direction: Direction) {
 		const node = this.findOrCreateNodeByPosition(position);

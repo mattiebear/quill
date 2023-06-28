@@ -8,15 +8,26 @@ export class IO implements Subscriber {
 		this.relay = relay;
 	}
 
-	decreaseZoom = () => {
-		this.send(RenderEvent.DecreaseZoom);
-	};
+	initialize() {
+		console.log('init');
+	}
 
-	increaseZoom = () => {
-		this.send(RenderEvent.IncreaseZoom);
-	};
+	destroy() {
+		console.log('destroy');
+	}
 
 	private send(event: string, data?: any) {
 		this.relay?.send(event, data);
 	}
+
+	/**
+	 * Mouse handlers
+	 */
+	onClickZoomOut = () => {
+		this.send(RenderEvent.DecreaseZoom);
+	};
+
+	onClickZoomIn = () => {
+		this.send(RenderEvent.IncreaseZoom);
+	};
 }

@@ -33,12 +33,12 @@ export const EditorUI: FC = () => {
 						<IconButton
 							aria-label={t('editor.zoomOut')}
 							icon={<ZoomOutIcon />}
-							onClick={io.decreaseZoom}
+							onClick={io.onClickZoomOut}
 						/>
 						<IconButton
 							aria-label={t('editor.zoomIn')}
 							icon={<ZoomInIcon />}
-							onClick={io.increaseZoom}
+							onClick={io.onClickZoomIn}
 						/>
 					</Flex>
 				</Flex>
