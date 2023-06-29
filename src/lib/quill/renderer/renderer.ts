@@ -30,6 +30,7 @@ export class Renderer implements Subscriber {
 	}
 
 	link(relay: Relay) {
+		// TODO: Clean this up somehow
 		relay.subscribe(MapEvent.MapAltered, (changeset: Changeset) => {
 			this.drawChangeset(changeset);
 		});
@@ -40,6 +41,22 @@ export class Renderer implements Subscriber {
 
 		relay.subscribe(RenderEvent.DecreaseZoom, () => {
 			this.changeZoom(-10);
+		});
+
+		relay.subscribe(RenderEvent.ScrollLeft, () => {
+			this.container.x += 10;
+		});
+
+		relay.subscribe(RenderEvent.ScrollRight, () => {
+			this.container.x -= 10;
+		});
+
+		relay.subscribe(RenderEvent.ScrollUp, () => {
+			this.container.y += 10;
+		});
+
+		relay.subscribe(RenderEvent.ScrollDown, () => {
+			this.container.y -= 10;
 		});
 	}
 

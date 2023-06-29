@@ -1,28 +1,50 @@
-import { KeyboardController } from '@/lib/quill/augments/keyboard-controller';
 import { Relay, Subscriber } from '@/lib/quill/core/relay';
 import { RenderEvent } from '@/lib/quill/types/event';
 
-// enum Key {
-// 	A = 'a',
-// }
+enum Key {
+	A = 'a',
+	W = 'w',
+	D = 'd',
+	S = 's',
+}
 
-//
+const EventMap = new Map<string, RenderEvent>([
+	[Key.W, RenderEvent.ScrollUp],
+	[Key.A, RenderEvent.ScrollLeft],
+	[Key.S, RenderEvent.ScrollDown],
+	[Key.D, RenderEvent.ScrollRight],
+]);
 
-export class IO extends KeyboardController implements Subscriber {
+export class IO implements Subscriber {
 	private relay: Relay;
+	private keydown: (e: KeyboardEvent) => void;
 
-	// constructor() {
-	// super();
-	//
-	// this.channel(RenderEvent.ScrollLeft).to(relay).whileKeyDown(Key.A);
-	// }
+	initialize() {
+		this.initScrollListeners();
+	}
 
 	link(relay: Relay) {
 		this.relay = relay;
 	}
 
+	destroy() {
+		document.removeEventListener('keydown', this.keydown);
+	}
+
 	private send(event: string, data?: any) {
 		this.relay?.send(event, data);
+	}
+
+	private initScrollListeners() {
+		this.keydown = (e: KeyboardEvent) => {
+			const event = EventMap.get(e.key);
+
+			if (event) {
+				this.send(event);
+			}
+		};
+
+		document.addEventListener('keydown', this.keydown);
 	}
 
 	/**

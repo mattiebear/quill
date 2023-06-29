@@ -34,6 +34,7 @@ export class Engine {
 		this.relay.link(this.atlas, this.renderer, this.io);
 
 		this.renderer.initialize();
+		this.io.initialize();
 
 		return this;
 	}
