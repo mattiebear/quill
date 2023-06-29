@@ -1,17 +1,13 @@
-import { StructureBlueprint } from '@/lib/quill';
+import { Direction, StructureBlueprint } from '@/lib/quill';
 import { Relay, Subscriber } from '@/lib/quill/core/relay';
-import { MapEvent } from '@/lib/quill/event';
 import { MapNode } from '@/lib/quill/map/map-node';
-import { Direction } from '@/lib/quill/types';
+import { MapEvent } from '@/lib/quill/types/event';
 import { Position } from '@/lib/quill/utility/position';
+import { findOrCreateByKey } from '@/utils/map';
 
 export class Atlas implements Subscriber {
-	private nodes: Map<string, MapNode>;
+	private nodes = new Map<string, MapNode>();
 	private relay: Relay;
-
-	constructor() {
-		this.nodes = new Map();
-	}
 
 	add(position: Position, blueprint: StructureBlueprint, direction: Direction) {
 		const node = this.findOrCreateNodeByPosition(position);
@@ -31,17 +27,6 @@ export class Atlas implements Subscriber {
 
 	private findOrCreateNodeByPosition(position: Position) {
 		const key = position.toString();
-
-		if (!this.nodes.has(key)) {
-			this.nodes.set(key, new MapNode(position));
-		}
-
-		const node = this.nodes.get(key);
-
-		if (!node) {
-			throw new Error('No node found for position');
-		}
-
-		return node;
+		return findOrCreateByKey(this.nodes, key, new MapNode(position));
 	}
 }

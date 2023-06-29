@@ -1,6 +1,6 @@
 import { Crypto } from '@/lib/crypto';
 import { StructureBlueprint } from '@/lib/quill/map/structure-blueprint';
-import { Direction } from '@/lib/quill/types';
+import { Direction } from '@/lib/quill/types/types';
 
 /**
  * A single instance of a structure on the map and the direction it faces

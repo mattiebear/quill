@@ -2,21 +2,21 @@ import * as PIXI from 'pixi.js';
 
 import { Position } from '@/lib/quill';
 import { Relay, Subscriber } from '@/lib/quill/core/relay';
-import { MapEvent, RenderEvent } from '@/lib/quill/event';
 import { Changeset, NodeChange } from '@/lib/quill/map/changeset';
 import { RenderNode } from '@/lib/quill/renderer/render-node';
 import { RenderObject } from '@/lib/quill/renderer/render-object';
+import { MapEvent, RenderEvent } from '@/lib/quill/types/event';
+import { findOrCreateByKey } from '@/utils/map';
+import { clamp } from '@/utils/number';
 
 export class Renderer implements Subscriber {
 	public el: HTMLElement;
 
 	private app: PIXI.Application<HTMLCanvasElement>;
 	private container: PIXI.Container;
-	private nodes: Map<string, RenderNode>;
+	private nodes = new Map<string, RenderNode>();
 
-	constructor() {
-		this.nodes = new Map();
-	}
+	private zoom = 1;
 
 	initialize() {
 		if (!this.el) {
@@ -30,6 +30,7 @@ export class Renderer implements Subscriber {
 	}
 
 	link(relay: Relay) {
+		// TODO: Clean this up somehow
 		relay.subscribe(MapEvent.MapAltered, (changeset: Changeset) => {
 			this.drawChangeset(changeset);
 		});
@@ -41,8 +42,29 @@ export class Renderer implements Subscriber {
 		relay.subscribe(RenderEvent.DecreaseZoom, () => {
 			this.changeZoom(-10);
 		});
+
+		relay.subscribe(RenderEvent.ScrollLeft, () => {
+			this.container.x += 10;
+		});
+
+		relay.subscribe(RenderEvent.ScrollRight, () => {
+			this.container.x -= 10;
+		});
+
+		relay.subscribe(RenderEvent.ScrollUp, () => {
+			this.container.y += 10;
+		});
+
+		relay.subscribe(RenderEvent.ScrollDown, () => {
+			this.container.y -= 10;
+		});
 	}
 
+	destroy() {
+		this.app.destroy(true);
+	}
+
+	// Internal handlers
 	private drawChangeset(changeset: Changeset) {
 		changeset.additive.forEach((change) => {
 			this.addStructureFromChange(change);
@@ -56,16 +78,7 @@ export class Renderer implements Subscriber {
 
 	private findOrCreateNodeByPosition(position: Position) {
 		const key = position.toString();
-
-		if (!this.nodes.has(key)) {
-			this.nodes.set(key, new RenderNode(position));
-		}
-
-		const node = this.nodes.get(key);
-
-		if (!node) {
-			throw new Error(`Render node does not exist for ke ${key}`);
-		}
+		const node = findOrCreateByKey(this.nodes, key, new RenderNode(position));
 
 		this.container.addChild(node.view);
 
@@ -94,7 +107,9 @@ export class Renderer implements Subscriber {
 
 	private changeZoom(value: number) {
 		const delta = value / 100;
-		this.container.scale.x += delta;
-		this.container.scale.y += delta;
+		this.zoom = clamp(this.zoom + delta, 0.5, 1);
+
+		this.container.scale.x = this.zoom;
+		this.container.scale.y = this.zoom;
 	}
 }
