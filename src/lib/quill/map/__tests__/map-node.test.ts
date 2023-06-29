@@ -7,7 +7,7 @@ import {
 	StructureBlueprint,
 	StructureType,
 } from '@/lib/quill/map/structure-blueprint';
-import { Direction } from '@/lib/quill/types/types';
+import { Direction } from '@/lib/quill/types/map';
 import { Position } from '@/lib/quill/utility/position';
 
 const position = new Position(0, 0, 0);
@@ -52,9 +52,7 @@ it('returns a changeset for removing a structure', () => {
 
 	const changeset = node.add(blueprint, Direction.N);
 
-	const structure = changeset.all[0].structure;
-
-	const result = node.remove(structure.id);
+	const result = node.remove(changeset.all[0].structure.id);
 
 	expect(result.additive).toHaveLength(0);
 	expect(result.subtractive).toHaveLength(1);

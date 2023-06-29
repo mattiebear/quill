@@ -1,6 +1,6 @@
 import { Texture } from 'pixi.js';
 
-import { Direction } from '../types/map';
+import { Direction } from '@/lib/quill';
 
 /**
  * A collection of 2D images representing a 3D object's isometric cardinal views
