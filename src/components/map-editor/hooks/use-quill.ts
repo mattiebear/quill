@@ -11,11 +11,8 @@ const blueprint = new Quill.StructureBlueprint(
 );
 
 export const useQuill = () => {
-	const engineRef = useRef<Quill.Engine>(new Quill.Engine());
-	// TODO: Pass in el
-	const elRef = useRef<HTMLDivElement>(
-		document.getElementById('root') as HTMLDivElement
-	);
+	const engineRef = useRef(new Quill.Engine());
+	const elRef = useRef(document.getElementById('root') as HTMLDivElement);
 
 	useLayoutEffect(() => {
 		const engine = engineRef.current;

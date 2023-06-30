@@ -4,7 +4,7 @@ import {
 	StructureBlueprint,
 	StructureType,
 } from '@/lib/quill/map/structure-blueprint';
-import { Direction } from '@/lib/quill/types/types';
+import { Direction } from '@/lib/quill/types/map';
 import { Position } from '@/lib/quill/utility/position';
 
 /**

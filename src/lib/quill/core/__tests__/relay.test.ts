@@ -1,6 +1,5 @@
 import { expect, it, vi } from 'vitest';
 
-import { SubscriptionRelay } from '../../types/types';
 import { Relay } from '../relay';
 
 it('dispatches events to listeners', () => {
@@ -29,7 +28,7 @@ it('initializes linked modules', () => {
 	const listener = vi.fn();
 
 	class Stub {
-		link(relay: SubscriptionRelay) {
+		link(relay: Relay) {
 			relay.subscribe('event', listener);
 		}
 	}

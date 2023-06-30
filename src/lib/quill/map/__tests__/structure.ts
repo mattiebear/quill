@@ -3,10 +3,10 @@ import { expect, it } from 'vitest';
 import {
 	Direction,
 	DirectionalSprite,
-	Structure,
 	StructureBlueprint,
 	StructureType,
 } from '@/lib/quill';
+import { Structure } from '@/lib/quill/map/structure';
 
 const sprite = DirectionalSprite.from('/image/tile');
 
