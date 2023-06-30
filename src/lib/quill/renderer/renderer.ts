@@ -73,7 +73,7 @@ export class Renderer implements Subscriber {
 
 	private addStructureFromChange(change: NodeChange) {
 		const node = this.findOrCreateNodeByPosition(change.position);
-		node.add(RenderObject.fromStructure(change.structure));
+		node.add(RenderObject.fromStructure(change.tile));
 	}
 
 	private findOrCreateNodeByPosition(position: Position) {

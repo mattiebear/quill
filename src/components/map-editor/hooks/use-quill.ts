@@ -4,11 +4,7 @@ import * as Quill from '@/lib/quill';
 
 // TODO: remove this once data is loaded from DB
 const sprite = Quill.DirectionalSprite.from('/images/tiles/stoneTile');
-const blueprint = new Quill.StructureBlueprint(
-	'1',
-	Quill.StructureType.Floor,
-	sprite
-);
+const blueprint = new Quill.TileBlueprint('1', Quill.TileType.Floor, sprite);
 
 export const useQuill = () => {
 	const engineRef = useRef(new Quill.Engine());

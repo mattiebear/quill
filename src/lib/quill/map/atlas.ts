@@ -1,4 +1,4 @@
-import { Direction, StructureBlueprint } from '@/lib/quill';
+import { Direction, TileBlueprint } from '@/lib/quill';
 import { Relay, Subscriber } from '@/lib/quill/core/relay';
 import { MapNode } from '@/lib/quill/map/map-node';
 import { MapEvent } from '@/lib/quill/types/event';
@@ -9,7 +9,7 @@ export class Atlas implements Subscriber {
 	private nodes = new Map<string, MapNode>();
 	private relay: Relay;
 
-	add(position: Position, blueprint: StructureBlueprint, direction: Direction) {
+	add(position: Position, blueprint: TileBlueprint, direction: Direction) {
 		const node = this.findOrCreateNodeByPosition(position);
 
 		const changeset = node.add(blueprint, direction);

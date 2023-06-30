@@ -1,5 +1,5 @@
 import { ChangeType, NodeChange } from '@/lib/quill/map/changeset/node-change';
-import { Structure } from '@/lib/quill/map/structure';
+import { Tile } from '@/lib/quill/map/tile';
 import { Position } from '@/lib/quill/utility/position';
 
 /**
@@ -12,12 +12,12 @@ export class Changeset {
 		this.changes = changes;
 	}
 
-	add(position: Position, structure: Structure) {
-		this.changes.push(NodeChange.add(position, structure));
+	add(position: Position, tile: Tile) {
+		this.changes.push(NodeChange.add(position, tile));
 	}
 
-	remove(position: Position, structure: Structure) {
-		this.changes.push(NodeChange.remove(position, structure));
+	remove(position: Position, tile: Tile) {
+		this.changes.push(NodeChange.remove(position, tile));
 	}
 
 	get all() {

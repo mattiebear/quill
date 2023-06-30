@@ -1,3 +1,3 @@
 export * from './atlas';
 export * from './directional-sprite';
-export * from './structure-blueprint';
+export * from './tile-blueprint';

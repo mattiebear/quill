@@ -1,18 +1,18 @@
 import { DirectionalSprite } from '@/lib/quill/map/directional-sprite';
 
-export enum StructureType {
+export enum TileType {
 	Floor,
 	Wall,
 	Object,
 }
 
 /**
- * Blueprint for a single structure to be displayed on the map (ex. floor, wall, door, table, etc.)
+ * Blueprint for a single tile to be displayed on the map (ex. floor, wall, door, table, etc.)
  */
-export class StructureBlueprint {
+export class TileBlueprint {
 	constructor(
 		public readonly id: string,
-		public readonly type: StructureType,
+		public readonly type: TileType,
 		public readonly sprite: DirectionalSprite
 	) {}
 }

@@ -3,24 +3,24 @@ import { expect, it } from 'vitest';
 import {
 	Direction,
 	DirectionalSprite,
-	StructureBlueprint,
-	StructureType,
+	TileBlueprint,
+	TileType,
 } from '@/lib/quill';
-import { Structure } from '@/lib/quill/map/structure';
+import { Tile } from '@/lib/quill/map/tile';
 
 const sprite = DirectionalSprite.from('/image/tile');
 
-const blueprint = new StructureBlueprint('tile', StructureType.Object, sprite);
+const blueprint = new TileBlueprint('tile', TileType.Object, sprite);
 
 it('returns the sprite image for the provided direction', () => {
-	const structure = new Structure(blueprint, Direction.S);
+	const tile = new Tile(blueprint, Direction.S);
 
-	expect(structure.sprite).toBe('/image/tile_S.png');
+	expect(tile.sprite).toBe('/image/tile_S.png');
 });
 
 it('generates a unique id', () => {
-	const structure1 = new Structure(blueprint, Direction.S);
-	const structure2 = new Structure(blueprint, Direction.N);
+	const tile1 = new Tile(blueprint, Direction.S);
+	const tile2 = new Tile(blueprint, Direction.N);
 
-	expect(structure1.id).not.toBe(structure2.id);
+	expect(tile1.id).not.toBe(tile2.id);
 });
