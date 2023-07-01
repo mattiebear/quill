@@ -1,45 +1,30 @@
 import { useLayoutEffect, useRef } from 'react';
 
 import { useTileset } from '@/components/map-editor/hooks/use-tileset';
-import {
-	Atlas,
-	Direction,
-	DirectionalSprite,
-	Engine,
-	Position,
-	TileBlueprint,
-	TileType,
-} from '@/lib/quill';
+import { Atlas, Engine } from '@/lib/quill';
+import { MapData } from '@/types/map';
 
-// TODO: remove this once data is loaded from DB
-const sprite = DirectionalSprite.from('/images/tiles/stoneTile');
-const blueprint = new TileBlueprint('1', TileType.Floor, sprite);
-
-export const useQuill = () => {
-	const tileset = useTileset();
-
+// TODO: Maybe imperatively set map data
+export const useQuill = (initialData?: MapData) => {
 	const engineRef = useRef(new Engine());
 	const elRef = useRef(document.getElementById('root') as HTMLDivElement);
 
+	const tileset = useTileset();
+
 	useLayoutEffect(() => {
-		if (!tileset) {
+		if (!tileset || !initialData) {
 			return;
 		}
 
 		const engine = engineRef.current;
-		const atlas = new Atlas();
+		const atlas = new Atlas(tileset).load(initialData);
 
-		engine.drawTo(elRef.current).load(atlas).initialize();
-
-		atlas.add(new Position(0, 0, 0), blueprint, Direction.N);
-		atlas.add(new Position(1, 0, 0), blueprint, Direction.W);
-		atlas.add(new Position(0, 1, 0), blueprint, Direction.E);
-		atlas.add(new Position(1, 1, 0), blueprint, Direction.S);
+		engine.drawTo(elRef.current).load(atlas, tileset).initialize();
 
 		return () => {
 			engine.destroy();
 		};
-	}, [tileset]);
+	}, [initialData, tileset]);
 
 	return engineRef.current;
 };

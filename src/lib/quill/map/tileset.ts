@@ -17,12 +17,16 @@ export class Tileset {
 		this.tiles.set(blueprint.id, blueprint);
 	}
 
+	get(id: string) {
+		return this.tiles.get(id);
+	}
+
 	static from(manifest: TileSchema[], options: FromOptions = {}) {
 		const { imageBaseURL = '/' } = options;
 		const tileset = new Tileset();
 
 		manifest.forEach(({ id, image, type }) => {
-			const imageURL = joinPaths(imageBaseURL, image),
+			const imageURL = joinPaths('/', imageBaseURL, image),
 				sprite = DirectionalSprite.from(imageURL),
 				blueprint = new TileBlueprint(id, type, sprite);
 

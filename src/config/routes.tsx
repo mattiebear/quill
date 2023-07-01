@@ -2,7 +2,7 @@ import { SignIn, SignUp } from '@clerk/clerk-react';
 import { createBrowserRouter } from 'react-router-dom';
 
 import { fetchMapDetail, fetchMapsList } from '@/api/maps';
-import { fetchMTileManifest } from '@/api/tiles/meta';
+import { fetchTileManifest } from '@/api/tiles/meta';
 import { Home } from '@/components/home';
 import { MainLayout } from '@/components/layout/main';
 import { MapEditor } from '@/components/map-editor';
@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
 		loader: ({ params }) => {
 			return Promise.all([
 				fetchMapDetail(params.id as string),
-				fetchMTileManifest(),
+				fetchTileManifest(),
 			]);
 		},
 	},

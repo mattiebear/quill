@@ -2,7 +2,10 @@ import { Atlas } from '@/lib/quill';
 import { IO } from '@/lib/quill/core/io';
 import { Relay } from '@/lib/quill/core/relay';
 import { Store } from '@/lib/quill/core/store';
+import { Tileset } from '@/lib/quill/map/tileset';
 import { Renderer } from '@/lib/quill/renderer/renderer';
+
+type Loadable = Atlas | Tileset;
 
 /**
  * The primary container for the Quill rendering engine, containing and organizing all inner modules
@@ -16,8 +19,13 @@ export class Engine {
 	public readonly io = new IO();
 	public readonly store = new Store();
 
-	load(atlas: Atlas) {
-		this.atlas = atlas;
+	load(...modules: Loadable[]) {
+		modules.forEach((module) => {
+			if (module instanceof Atlas) {
+				this.atlas = module;
+			}
+		});
+
 		return this;
 	}
 
@@ -35,6 +43,7 @@ export class Engine {
 
 		this.renderer.initialize();
 		this.io.initialize();
+		this.atlas.sync();
 
 		return this;
 	}

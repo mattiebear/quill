@@ -11,6 +11,6 @@ export const useTileset = () => {
 			return undefined;
 		}
 
-		return Tileset.from(data.data);
+		return Tileset.from(data.data, { imageBaseURL: '/images/tiles' });
 	}, [data]);
 };

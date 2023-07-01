@@ -12,7 +12,7 @@ const buildPath = () => {
 	return 'tile-manifest.json';
 };
 
-export const fetchMTileManifest = async () => {
+export const fetchTileManifest = async () => {
 	const http = await getHttpClient();
 	const queryClient = await getQueryClient();
 
