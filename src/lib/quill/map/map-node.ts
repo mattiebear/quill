@@ -1,67 +1,61 @@
 import { Changeset } from '@/lib/quill/map/changeset';
-import { Structure } from '@/lib/quill/map/structure';
-import {
-	StructureBlueprint,
-	StructureType,
-} from '@/lib/quill/map/structure-blueprint';
-import { Direction } from '@/lib/quill/types/types';
+import { Tile } from '@/lib/quill/map/tile';
+import { TileBlueprint, TileType } from '@/lib/quill/map/tile-blueprint';
+import { Direction } from '@/lib/quill/types/map';
 import { Position } from '@/lib/quill/utility/position';
 
 /**
- * Representation of a single tile at an x, y, z coordinate within a map, storing multiple structures
+ * Representation of a single tile at an x, y, z coordinate within a map, storing multiple tiles
  */
 export class MapNode {
-	private structures: Map<string, Structure>;
+	private tiles: Map<string, Tile>;
 
 	constructor(public readonly position: Position) {
-		this.structures = new Map();
+		this.tiles = new Map();
 	}
 
-	add(blueprint: StructureBlueprint, direction: Direction) {
+	add(blueprint: TileBlueprint, direction: Direction) {
 		const changeset = new Changeset();
-		const structure = new Structure(blueprint, direction);
+		const tile = new Tile(blueprint, direction);
 
-		const existing = this.findExistingStructures(structure);
+		const existing = this.findExistingStructures(tile);
 
-		existing.forEach((structure) => {
-			changeset.remove(this.position, structure);
-			this.structures.delete(structure.id);
+		existing.forEach((tile) => {
+			changeset.remove(this.position, tile);
+			this.tiles.delete(tile.id);
 		});
 
-		changeset.add(this.position, structure);
+		changeset.add(this.position, tile);
 
-		this.structures.set(structure.id, structure);
+		this.tiles.set(tile.id, tile);
 
 		return changeset;
 	}
 
 	remove(id: string) {
-		const structure = this.structures.get(id);
+		const tile = this.tiles.get(id);
 
 		const changeset = new Changeset();
 
-		if (!structure) {
+		if (!tile) {
 			return changeset;
 		}
 
-		changeset.remove(this.position, structure);
-		this.structures.delete(id);
+		changeset.remove(this.position, tile);
+		this.tiles.delete(id);
 
 		return changeset;
 	}
 
 	// TODO: I think this can be cleaned up to be much more flexible
-	private findExistingStructures(source: Structure) {
-		if (source.type === StructureType.Wall) {
-			return [...this.structures.values()].filter(
-				(structure) =>
-					structure.type === source.type &&
-					structure.direction === source.direction
+	private findExistingStructures(source: Tile) {
+		if (source.type === TileType.Wall) {
+			return [...this.tiles.values()].filter(
+				(tile) =>
+					tile.type === source.type && tile.direction === source.direction
 			);
 		}
 
-		return [...this.structures.values()].filter(
-			(structure) => structure.type === source.type
-		);
+		return [...this.tiles.values()].filter((tile) => tile.type === source.type);
 	}
 }

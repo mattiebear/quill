@@ -1,8 +1,8 @@
-import { Structure } from '@/lib/quill/map/structure';
+import { Tile } from '@/lib/quill/map/tile';
 import { Position } from '@/lib/quill/utility/position';
 
 /**
- * A single map change, denoting a structure to be added or removed on a single node
+ * A single map change, denoting a tile to be added or removed on a single node
  */
 export enum ChangeType {
 	Add,
@@ -13,14 +13,14 @@ export class NodeChange {
 	constructor(
 		public readonly type: ChangeType,
 		public readonly position: Position,
-		public readonly structure: Structure
+		public readonly tile: Tile
 	) {}
 
-	public static add(position: Position, structure: Structure) {
-		return new NodeChange(ChangeType.Add, position, structure);
+	public static add(position: Position, tile: Tile) {
+		return new NodeChange(ChangeType.Add, position, tile);
 	}
 
-	public static remove(position: Position, structure: Structure) {
-		return new NodeChange(ChangeType.Remove, position, structure);
+	public static remove(position: Position, tile: Tile) {
+		return new NodeChange(ChangeType.Remove, position, tile);
 	}
 }

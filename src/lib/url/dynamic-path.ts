@@ -1,33 +1,29 @@
+import { joinPaths } from '@/utils/path';
+
 interface IDRecord {
 	id: string;
 }
 
 export class DynamicPath {
-	private _record?: IDRecord;
-	private _path: string;
+	private record?: IDRecord;
 
-	constructor(path: string) {
-		this._path = path;
-	}
+	constructor(private readonly path: string) {}
 
 	for<T extends IDRecord>(record: T | string) {
 		if (typeof record === 'string') {
-			this._record = { id: record };
+			this.record = { id: record };
 		} else {
-			this._record = record;
+			this.record = record;
 		}
 
 		return this;
 	}
 
 	toString() {
-		const path = this._record
-			? this._path.replace(':id', this._record.id)
-			: this._path;
-		return this.cleanPath(path);
-	}
+		const path = this.record
+			? this.path.replace(':id', this.record.id)
+			: this.path;
 
-	private cleanPath(path: string) {
-		return '/' + path.replaceAll(/(^\/|\/$)/g, '');
+		return joinPaths('/', path);
 	}
 }

@@ -1,37 +1,30 @@
 import { useLayoutEffect, useRef } from 'react';
 
-import * as Quill from '@/lib/quill';
+import { useTileset } from '@/components/map-editor/hooks/use-tileset';
+import { Atlas, Engine } from '@/lib/quill';
+import { MapData } from '@/types/map';
 
-// TODO: remove this once data is loaded from DB
-const sprite = Quill.DirectionalSprite.from('/images/tiles/stoneTile');
-const blueprint = new Quill.StructureBlueprint(
-	'1',
-	Quill.StructureType.Floor,
-	sprite
-);
+// TODO: Maybe imperatively set map data
+export const useQuill = (initialData?: MapData) => {
+	const engineRef = useRef(new Engine());
+	const elRef = useRef(document.getElementById('root') as HTMLDivElement);
 
-export const useQuill = () => {
-	const engineRef = useRef<Quill.Engine>(new Quill.Engine());
-	// TODO: Pass in el
-	const elRef = useRef<HTMLDivElement>(
-		document.getElementById('root') as HTMLDivElement
-	);
+	const tileset = useTileset();
 
 	useLayoutEffect(() => {
+		if (!tileset || !initialData) {
+			return;
+		}
+
 		const engine = engineRef.current;
-		const atlas = new Quill.Atlas();
+		const atlas = new Atlas(tileset).load(initialData);
 
-		engine.drawTo(elRef.current).load(atlas).initialize();
-
-		atlas.add(new Quill.Position(0, 0, 0), blueprint, Quill.Direction.N);
-		atlas.add(new Quill.Position(1, 0, 0), blueprint, Quill.Direction.W);
-		atlas.add(new Quill.Position(0, 1, 0), blueprint, Quill.Direction.E);
-		atlas.add(new Quill.Position(1, 1, 0), blueprint, Quill.Direction.S);
+		engine.drawTo(elRef.current).load(atlas, tileset).initialize();
 
 		return () => {
 			engine.destroy();
 		};
-	}, []);
+	}, [initialData, tileset]);
 
 	return engineRef.current;
 };
