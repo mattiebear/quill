@@ -1,11 +1,21 @@
 /**
  * A 3D position
  */
+import { Point } from '@/lib/quill/utility/point';
+import { Vector2 } from '@/lib/quill/utility/vector2';
+import { degToRad } from '@/utils/math';
 
+const TILE_WIDTH = 256;
+const TILE_HEIGHT = 128;
+
+const WIDTH_HALF = TILE_WIDTH / 2;
+const HEIGHT_HALF = TILE_HEIGHT / 2;
+
+const SQUARE_SIZE = Math.sin(degToRad(45)) * 256;
+
+// TODO: Rename to something else
 export class Position {
 	// TODO: Set from config
-	private TILE_WIDTH = 256;
-	private TILE_HEIGHT = 128;
 
 	constructor(
 		public readonly x: number,
@@ -23,14 +33,32 @@ export class Position {
 	}
 
 	get screenX() {
-		const widthOffset = this.TILE_WIDTH / 2;
+		const widthOffset = WIDTH_HALF;
 
 		return (this.x - this.y) * widthOffset;
 	}
 
 	get screenY() {
-		const heightOffset = this.TILE_HEIGHT / 2;
+		const heightOffset = HEIGHT_HALF;
 
 		return (this.x + this.y) * heightOffset;
+	}
+
+	static atPoint(x: number, y: number, z: number) {
+		const point = Vector2.connect(Point.origin(), new Point(x, y * 2)).rotate(
+			-45
+		).endpoint;
+
+		// console.log(point.x, ',', point.y);
+
+		// // For testing
+		// return new Position(Math.floor(point.x), Math.floor(point.y), z);
+
+		// Width is the rotated full tile width
+		return new Position(
+			Math.floor(point.x / SQUARE_SIZE),
+			Math.floor(point.y / SQUARE_SIZE),
+			z
+		);
 	}
 }
