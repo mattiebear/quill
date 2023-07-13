@@ -11,7 +11,7 @@ const TILE_HEIGHT = 128;
 const WIDTH_HALF = TILE_WIDTH / 2;
 const HEIGHT_HALF = TILE_HEIGHT / 2;
 
-const SQUARE_SIZE = Math.sin(degToRad(45)) * 256;
+const SQUARE_SIZE = Math.sin(degToRad(45)) * TILE_WIDTH;
 
 // TODO: Rename to something else
 export class Position {
@@ -48,11 +48,6 @@ export class Position {
 		const point = Vector2.connect(Point.origin(), new Point(x, y * 2)).rotate(
 			-45
 		).endpoint;
-
-		// console.log(point.x, ',', point.y);
-
-		// // For testing
-		// return new Position(Math.floor(point.x), Math.floor(point.y), z);
 
 		// Width is the rotated full tile width
 		return new Position(

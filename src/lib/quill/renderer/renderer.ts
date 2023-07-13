@@ -10,8 +10,6 @@ import { findOrCreateByKey } from '@/utils/map';
 import { degToRad } from '@/utils/math';
 import { clamp } from '@/utils/number';
 
-const size = Math.sin(degToRad(45)) * 256;
-
 export class Renderer implements Subscriber {
 	public el: HTMLElement;
 
@@ -24,7 +22,7 @@ export class Renderer implements Subscriber {
 	private ui: PIXI.Container;
 
 	// Elements
-	private highlight: PIXI.Graphics;
+	private highlight: PIXI.Container;
 
 	private zoom = 1;
 
@@ -123,53 +121,20 @@ export class Renderer implements Subscriber {
 		map.addChild(tiles, ui);
 		map.interactive = true;
 
-		// TODO: Remove. This is for testing
-		// Will need to add this
-
-		for (let x = 0; x <= 3; x++) {
-			const line = new PIXI.Graphics();
-			line.lineStyle(1, 0x8059d4);
-			line.moveTo(x * size, 0);
-			line.lineTo(x * size, size * 3);
-			ui.addChild(line);
-		}
-
-		for (let y = 0; y <= 3; y++) {
-			const line = new PIXI.Graphics();
-			line.lineStyle(1, 0x8059d4);
-			line.moveTo(0, y * size);
-			line.lineTo(size * 3, size * y);
-			ui.addChild(line);
-		}
-
-		const dot = new PIXI.Graphics();
-		dot.beginFill(0xf32a0c);
-		dot.drawCircle(0, 0, 2);
-		ui.addChild(dot);
-
-		// End testing
-
+		// TODO: Optimize calls if needed?
 		map.on('mousemove', (e) => {
 			const local = map.toLocal(e.global);
 			const pos = Position.atPoint(local.x, local.y, 0);
 
-			console.log(pos.x, pos.y);
-
-			dot.x = pos.x * size;
-			dot.y = pos.y * size;
-
-			// console.log('loc', local.x, local.y);
-			// console.log('pos', position.x, position.y);
-
-			// this.highlight.x = position.screenX;
-			// this.highlight.y = position.screenX;
+			this.highlight.x = pos.screenX;
+			this.highlight.y = pos.screenY;
 		});
 
 		this.map = map;
 		this.tiles = tiles;
 		this.ui = ui;
 
-		// TODO: base on screen side
+		// TODO: base position on screen side to center it.
 		this.map.x = 500;
 		this.map.y = 300;
 
@@ -177,14 +142,22 @@ export class Renderer implements Subscriber {
 	}
 
 	private createHighlight() {
+		// TODO: Also used in Position. DRY up
+		const size = Math.sin(degToRad(45)) * 256;
+
 		const rect = new PIXI.Graphics();
 		rect.beginFill(0x8059d4);
-		rect.drawRect(-128, 0, 256, 128);
+		rect.drawRect(0, 0, size, size);
+		rect.rotation += degToRad(45);
 		rect.alpha = 0.3;
 
-		this.highlight = rect;
+		const container = new PIXI.Container();
+		container.addChild(rect);
+		container.scale.y = 0.5;
 
-		this.ui.addChild(rect);
+		this.highlight = container;
+
+		this.ui.addChild(container);
 	}
 
 	private changeZoom(value: number) {
