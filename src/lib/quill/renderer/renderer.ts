@@ -7,14 +7,22 @@ import { RenderNode } from '@/lib/quill/renderer/render-node';
 import { RenderObject } from '@/lib/quill/renderer/render-object';
 import { MapEvent, RenderEvent } from '@/lib/quill/types/event';
 import { findOrCreateByKey } from '@/utils/map';
+import { degToRad } from '@/utils/math';
 import { clamp } from '@/utils/number';
 
 export class Renderer implements Subscriber {
 	public el: HTMLElement;
 
 	private app: PIXI.Application<HTMLCanvasElement>;
-	private container: PIXI.Container;
 	private nodes = new Map<string, RenderNode>();
+
+	// Map layers
+	private map: PIXI.Container;
+	private tiles: PIXI.Container;
+	private ui: PIXI.Container;
+
+	// Elements
+	private highlight: PIXI.Container;
 
 	private zoom = 1;
 
@@ -26,7 +34,8 @@ export class Renderer implements Subscriber {
 		}
 
 		this.createApp();
-		this.createNodeContainer();
+		this.createMapContainers();
+		this.createHighlight();
 	}
 
 	link(relay: Relay) {
@@ -35,6 +44,7 @@ export class Renderer implements Subscriber {
 			this.drawChangeset(changeset);
 		});
 
+		// TODO: Pass data instead of different events ex Event.Zoom, { direction: -1 }
 		relay.subscribe(RenderEvent.IncreaseZoom, () => {
 			this.changeZoom(10);
 		});
@@ -44,19 +54,19 @@ export class Renderer implements Subscriber {
 		});
 
 		relay.subscribe(RenderEvent.ScrollLeft, () => {
-			this.container.x += 10;
+			this.map.x += 10;
 		});
 
 		relay.subscribe(RenderEvent.ScrollRight, () => {
-			this.container.x -= 10;
+			this.map.x -= 10;
 		});
 
 		relay.subscribe(RenderEvent.ScrollUp, () => {
-			this.container.y += 10;
+			this.map.y += 10;
 		});
 
 		relay.subscribe(RenderEvent.ScrollDown, () => {
-			this.container.y -= 10;
+			this.map.y -= 10;
 		});
 	}
 
@@ -80,7 +90,7 @@ export class Renderer implements Subscriber {
 		const key = position.toString();
 		const node = findOrCreateByKey(this.nodes, key, new RenderNode(position));
 
-		this.container.addChild(node.view);
+		this.tiles.addChild(node.view);
 
 		return node;
 	}
@@ -100,16 +110,61 @@ export class Renderer implements Subscriber {
 		this.el.appendChild(this.app.view);
 	}
 
-	private createNodeContainer() {
-		this.container = new PIXI.Container();
-		this.app.stage.addChild(this.container);
+	private createMapContainers() {
+		const map = new PIXI.Container();
+		const tiles = new PIXI.Container();
+		const ui = new PIXI.Container();
+
+		tiles.zIndex = 0;
+		ui.zIndex = 1;
+
+		map.addChild(tiles, ui);
+		map.interactive = true;
+
+		// TODO: Optimize calls if needed?
+		map.on('mousemove', (e) => {
+			const local = map.toLocal(e.global);
+			const pos = Position.atPoint(local.x, local.y, 0);
+
+			this.highlight.x = pos.screenX;
+			this.highlight.y = pos.screenY;
+		});
+
+		this.map = map;
+		this.tiles = tiles;
+		this.ui = ui;
+
+		// TODO: base position on screen side to center it.
+		this.map.x = 500;
+		this.map.y = 300;
+
+		this.app.stage.addChild(map);
+	}
+
+	private createHighlight() {
+		// TODO: Also used in Position. DRY up
+		const size = Math.sin(degToRad(45)) * 256;
+
+		const rect = new PIXI.Graphics();
+		rect.beginFill(0x8059d4);
+		rect.drawRect(0, 0, size, size);
+		rect.rotation += degToRad(45);
+		rect.alpha = 0.3;
+
+		const container = new PIXI.Container();
+		container.addChild(rect);
+		container.scale.y = 0.5;
+
+		this.highlight = container;
+
+		this.ui.addChild(container);
 	}
 
 	private changeZoom(value: number) {
 		const delta = value / 100;
 		this.zoom = clamp(this.zoom + delta, 0.5, 1);
 
-		this.container.scale.x = this.zoom;
-		this.container.scale.y = this.zoom;
+		this.map.scale.x = this.zoom;
+		this.map.scale.y = this.zoom;
 	}
 }
