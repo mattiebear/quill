@@ -17,6 +17,7 @@ export class Renderer implements Subscriber {
 	private nodes = new Map<string, RenderNode>();
 
 	// Map layers
+	// private main: PIXI.Container; // Not accessed beyond initial setup for now
 	private map: PIXI.Container;
 	private tiles: PIXI.Container;
 	private ui: PIXI.Container;
@@ -111,6 +112,7 @@ export class Renderer implements Subscriber {
 	}
 
 	private createMapContainers() {
+		const main = new PIXI.Container();
 		const map = new PIXI.Container();
 		const tiles = new PIXI.Container();
 		const ui = new PIXI.Container();
@@ -118,11 +120,14 @@ export class Renderer implements Subscriber {
 		tiles.zIndex = 0;
 		ui.zIndex = 1;
 
+		main.addChild(map);
 		map.addChild(tiles, ui);
-		map.interactive = true;
+
+		main.interactive = true;
+		main.hitArea = this.app.screen;
 
 		// TODO: Optimize calls if needed?
-		map.on('mousemove', (e) => {
+		main.on('mousemove', (e) => {
 			const local = map.toLocal(e.global);
 			const pos = Position.atPoint(local.x, local.y, 0);
 
@@ -130,6 +135,7 @@ export class Renderer implements Subscriber {
 			this.highlight.y = pos.screenY;
 		});
 
+		// this.main = main;
 		this.map = map;
 		this.tiles = tiles;
 		this.ui = ui;
@@ -138,7 +144,7 @@ export class Renderer implements Subscriber {
 		this.map.x = 500;
 		this.map.y = 300;
 
-		this.app.stage.addChild(map);
+		this.app.stage.addChild(main);
 	}
 
 	private createHighlight() {
