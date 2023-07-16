@@ -19,7 +19,7 @@ export class Tile {
 	 * The sprite image for the tile dependent on the current direction
 	 */
 	get sprite() {
-		return this.blueprint.sprite.face(this.direction);
+		return this.blueprint.sprite.image(this.direction);
 	}
 
 	/**
@@ -33,7 +33,7 @@ export class Tile {
 	 * The image of the tile based on the blueprint and facing direction
 	 */
 	get texture() {
-		return this.blueprint.sprite.face(this.direction);
+		return this.blueprint.sprite.image(this.direction);
 	}
 
 	private generateUniqueId() {

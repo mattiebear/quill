@@ -11,7 +11,8 @@ interface FromOptions {
  * metadata such as a name and tags for use throughout the UI
  */
 export class Tileset {
-	private tiles = new Map<string, TileBlueprint>();
+	private asArray: TileBlueprint[] = [];
+	public readonly tiles = new Map<string, TileBlueprint>();
 
 	add(blueprint: TileBlueprint) {
 		this.tiles.set(blueprint.id, blueprint);
@@ -19,6 +20,14 @@ export class Tileset {
 
 	get(id: string) {
 		return this.tiles.get(id);
+	}
+
+	get all() {
+		if (!this.asArray.length) {
+			this.tiles.forEach((tile) => this.asArray.push(tile));
+		}
+
+		return this.asArray;
 	}
 
 	static from(manifest: TileSchema[], options: FromOptions = {}) {

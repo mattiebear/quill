@@ -125,7 +125,7 @@ export class Renderer implements Subscriber {
 
 		this.map.addChild(this.tiles, this.ui);
 
-		this.main.interactive = true;
+		this.main.eventMode = 'static';
 		this.main.hitArea = this.app.screen;
 		this.main.addChild(this.map);
 

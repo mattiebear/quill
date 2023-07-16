@@ -1,15 +1,27 @@
-import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
+import {
+	AspectRatio,
+	Box,
+	Button,
+	Flex,
+	IconButton,
+	Image,
+	SimpleGrid,
+	Text,
+} from '@chakra-ui/react';
 import { FC, useRef } from 'react';
 import Draggable from 'react-draggable';
 import { useTranslation } from 'react-i18next';
 
 import { ZoomInIcon, ZoomOutIcon } from '@/components/icon';
+import { useEngine } from '@/components/map-editor/hooks/use-engine';
 import { useIO } from '@/components/map-editor/hooks/use-io';
+import { Direction } from '@/lib/quill';
 
 export const EditorUI: FC = () => {
 	const nodeRef = useRef<HTMLDivElement>(null);
 	const { t } = useTranslation();
 	const io = useIO();
+	const engine = useEngine();
 
 	return (
 		<Box position="absolute">
@@ -29,7 +41,7 @@ export const EditorUI: FC = () => {
 						Build
 					</Text>
 
-					<Flex columnGap={2} direction="row">
+					<Flex columnGap={2} direction="row" mb={2}>
 						<IconButton
 							aria-label={t('editor.zoomOut')}
 							icon={<ZoomOutIcon />}
@@ -41,6 +53,19 @@ export const EditorUI: FC = () => {
 							onClick={io.onClickZoomIn}
 						/>
 					</Flex>
+
+					<SimpleGrid columns={3} spacing={2}>
+						{engine.tileset.all.map((tile) => (
+							<Button key={tile.id} h="auto" p={2}>
+								<AspectRatio w="full" ratio={1}>
+									<Image
+										objectPosition="bottom center"
+										src={tile.sprite.source(Direction.N)}
+									/>
+								</AspectRatio>
+							</Button>
+						))}
+					</SimpleGrid>
 				</Flex>
 			</Draggable>
 		</Box>

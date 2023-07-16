@@ -19,22 +19,6 @@ export const router = createBrowserRouter([
 		element: <SignUp routing="path" path="/sign-up" />,
 	},
 	{
-		path: '/maps/:id',
-		element: (
-			<Protected>
-				<MapEditor />
-			</Protected>
-		),
-		// TODO: Fix this typing. Also, how should we handle the loader for this route?
-		// TODO: Move loaders to separate file
-		loader: ({ params }) => {
-			return Promise.all([
-				fetchMapDetail(params.id as string),
-				fetchTileManifest(),
-			]);
-		},
-	},
-	{
 		path: '/',
 		element: (
 			<Protected>
@@ -54,6 +38,18 @@ export const router = createBrowserRouter([
 			{
 				path: '/maps/new',
 				element: <MapsNew />,
+			},
+			{
+				path: '/maps/:id',
+				element: <MapEditor />,
+				// TODO: Fix this typing. Also, how should we handle the loader for this route?
+				// TODO: Move loaders to separate file
+				loader: ({ params }) => {
+					return Promise.all([
+						fetchMapDetail(params.id as string),
+						fetchTileManifest(),
+					]);
+				},
 			},
 		],
 	},
