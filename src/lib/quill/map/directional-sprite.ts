@@ -11,8 +11,6 @@ interface DirectionalTexture {
  * A collection of 2D images representing a 3D object's isometric cardinal views
  */
 export class DirectionalSprite {
-	// private sources: Map<Direction, string>;
-	// private sprites: Map<Direction, Texture>;
 	private faces = new Map<Direction, DirectionalTexture>();
 
 	constructor(n: string, e: string, s: string, w: string) {
