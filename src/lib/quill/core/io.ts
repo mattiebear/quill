@@ -1,6 +1,8 @@
 import { Position } from '@/lib/quill';
 import { Relay, Subscriber } from '@/lib/quill/core/relay';
+import { Store } from '@/lib/quill/core/store';
 import { RenderEvent } from '@/lib/quill/types/event';
+import { StoreKey } from '@/lib/quill/types/store';
 
 enum Key {
 	A = 'a',
@@ -20,6 +22,8 @@ const EventMap = new Map<string, RenderEvent>([
  * Input listener that converts actions into relay events
  */
 export class IO implements Subscriber {
+	public store: Store;
+
 	private relay: Relay;
 	private keydown: (e: KeyboardEvent) => void;
 
@@ -74,6 +78,6 @@ export class IO implements Subscriber {
 	};
 
 	selectBlueprint = (id: string) => {
-		console.log('id', id);
+		this.store.set(StoreKey.SelectedBlueprint, id);
 	};
 }

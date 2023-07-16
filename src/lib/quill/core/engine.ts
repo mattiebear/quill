@@ -49,7 +49,9 @@ export class Engine {
 		}
 
 		this.renderer.io = this.io;
+		this.io.store = this.store;
 
+		// TODO: This is unnecessary. The engine can do this.
 		this.relay.link(this.atlas, this.renderer, this.io);
 
 		this.renderer.initialize();

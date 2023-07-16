@@ -15,13 +15,16 @@ import { useTranslation } from 'react-i18next';
 import { ZoomInIcon, ZoomOutIcon } from '@/components/icon';
 import { useEngine } from '@/components/map-editor/hooks/use-engine';
 import { useIO } from '@/components/map-editor/hooks/use-io';
+import { useStoreValue } from '@/components/map-editor/hooks/use-store-value';
 import { Direction } from '@/lib/quill';
+import { StoreKey } from '@/lib/quill/types/store';
 
 export const EditorUI: FC = () => {
 	const nodeRef = useRef<HTMLDivElement>(null);
 	const { t } = useTranslation();
 	const io = useIO();
 	const engine = useEngine();
+	const selectedBlueprintId = useStoreValue(StoreKey.SelectedBlueprint);
 
 	return (
 		<Box position="absolute">
@@ -55,17 +58,24 @@ export const EditorUI: FC = () => {
 					</Flex>
 
 					<SimpleGrid columns={3} spacing={2}>
-						{engine.tileset.all.map((tile) => (
+						{engine.tileset.all.map((blueprint) => (
 							<Button
-								key={tile.id}
+								key={blueprint.id}
 								h="auto"
 								p={2}
-								onClick={() => io.selectBlueprint(tile.id)}
+								onClick={() => io.selectBlueprint(blueprint.id)}
+								{...(blueprint.id === selectedBlueprintId && {
+									// TODO: Use semantic value
+									bg: 'green.500',
+									_hover: {
+										bg: 'green.500',
+									},
+								})}
 							>
 								<AspectRatio w="full" ratio={1}>
 									<Image
 										objectPosition="bottom center"
-										src={tile.sprite.source(Direction.N)}
+										src={blueprint.sprite.source(Direction.N)}
 									/>
 								</AspectRatio>
 							</Button>
