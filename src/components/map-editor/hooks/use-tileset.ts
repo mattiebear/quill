@@ -8,7 +8,7 @@ export const useTileset = () => {
 
 	return useMemo(() => {
 		if (!data) {
-			return undefined;
+			throw new Error('No tileset data found');
 		}
 
 		return Tileset.from(data.data, { imageBaseURL: '/images/tiles' });

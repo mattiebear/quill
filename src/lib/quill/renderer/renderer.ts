@@ -10,6 +10,7 @@ import { MapEvent, RenderEvent } from '@/lib/quill/types/event';
 import { findOrCreateByKey } from '@/utils/map';
 import { degToRad } from '@/utils/math';
 import { clamp } from '@/utils/number';
+import { assertPresence } from '@/utils/runtime';
 
 export class Renderer implements Subscriber {
 	public el: HTMLElement;
@@ -31,11 +32,10 @@ export class Renderer implements Subscriber {
 	private zoom = 1;
 
 	initialize() {
-		if (!this.el) {
-			throw new Error(
-				'Renderer has not been assigned an element on which to draw'
-			);
-		}
+		assertPresence(
+			this.el,
+			'Renderer has not been assigned an element on which to draw'
+		);
 
 		this.createApp();
 		this.setupRenderLayers();
@@ -125,7 +125,7 @@ export class Renderer implements Subscriber {
 
 		this.map.addChild(this.tiles, this.ui);
 
-		this.main.interactive = true;
+		this.main.eventMode = 'static';
 		this.main.hitArea = this.app.screen;
 		this.main.addChild(this.map);
 
@@ -144,7 +144,7 @@ export class Renderer implements Subscriber {
 
 		this.main.on('mousedown', (e) => {
 			const { x, y } = this.map.toLocal(e.global);
-			this.io.click(x, y);
+			this.io.clickTile(x, y);
 		});
 	}
 
