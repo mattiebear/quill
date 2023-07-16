@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import { Position } from '@/lib/quill';
+import { IO } from '@/lib/quill/core/io';
 import { Relay, Subscriber } from '@/lib/quill/core/relay';
 import { Changeset, NodeChange } from '@/lib/quill/map/changeset';
 import { RenderNode } from '@/lib/quill/renderer/render-node';
@@ -12,19 +13,21 @@ import { clamp } from '@/utils/number';
 
 export class Renderer implements Subscriber {
 	public el: HTMLElement;
+	public io: IO;
 
 	private app: PIXI.Application<HTMLCanvasElement>;
 	private nodes = new Map<string, RenderNode>();
 
 	// Map layers
-	// private main: PIXI.Container; // Not accessed beyond initial setup for now
-	private map: PIXI.Container;
-	private tiles: PIXI.Container;
-	private ui: PIXI.Container;
+	private main = new PIXI.Container();
+	private map = new PIXI.Container();
+	private tiles = new PIXI.Container();
+	private ui = new PIXI.Container();
 
 	// Elements
-	private highlight: PIXI.Container;
+	private highlight = new PIXI.Container();
 
+	// State
 	private zoom = 1;
 
 	initialize() {
@@ -35,8 +38,9 @@ export class Renderer implements Subscriber {
 		}
 
 		this.createApp();
-		this.createMapContainers();
+		this.setupRenderLayers();
 		this.createHighlight();
+		this.initializeListeners();
 	}
 
 	link(relay: Relay) {
@@ -68,6 +72,10 @@ export class Renderer implements Subscriber {
 
 		relay.subscribe(RenderEvent.ScrollDown, () => {
 			this.map.y -= 10;
+		});
+
+		relay.subscribe(RenderEvent.HighlightTile, (pos: Position) => {
+			this.setHighlightPosition(pos);
 		});
 	}
 
@@ -111,40 +119,33 @@ export class Renderer implements Subscriber {
 		this.el.appendChild(this.app.view);
 	}
 
-	private createMapContainers() {
-		const main = new PIXI.Container();
-		const map = new PIXI.Container();
-		const tiles = new PIXI.Container();
-		const ui = new PIXI.Container();
+	private setupRenderLayers() {
+		this.tiles.zIndex = 0;
+		this.ui.zIndex = 1;
 
-		tiles.zIndex = 0;
-		ui.zIndex = 1;
+		this.map.addChild(this.tiles, this.ui);
 
-		main.addChild(map);
-		map.addChild(tiles, ui);
-
-		main.interactive = true;
-		main.hitArea = this.app.screen;
-
-		// TODO: Optimize calls if needed?
-		main.on('mousemove', (e) => {
-			const local = map.toLocal(e.global);
-			const pos = Position.atPoint(local.x, local.y, 0);
-
-			this.highlight.x = pos.screenX;
-			this.highlight.y = pos.screenY;
-		});
-
-		// this.main = main;
-		this.map = map;
-		this.tiles = tiles;
-		this.ui = ui;
+		this.main.interactive = true;
+		this.main.hitArea = this.app.screen;
+		this.main.addChild(this.map);
 
 		// TODO: base position on screen side to center it.
 		this.map.x = 500;
 		this.map.y = 300;
 
-		this.app.stage.addChild(main);
+		this.app.stage.addChild(this.main);
+	}
+
+	private initializeListeners() {
+		this.main.on('mousemove', (e) => {
+			const { x, y } = this.map.toLocal(e.global);
+			this.io.moveMouse(x, y);
+		});
+
+		this.main.on('mousedown', (e) => {
+			const { x, y } = this.map.toLocal(e.global);
+			this.io.click(x, y);
+		});
 	}
 
 	private createHighlight() {
@@ -157,13 +158,15 @@ export class Renderer implements Subscriber {
 		rect.rotation += degToRad(45);
 		rect.alpha = 0.3;
 
-		const container = new PIXI.Container();
-		container.addChild(rect);
-		container.scale.y = 0.5;
+		this.highlight.addChild(rect);
+		this.highlight.scale.y = 0.5;
 
-		this.highlight = container;
+		this.ui.addChild(this.highlight);
+	}
 
-		this.ui.addChild(container);
+	private setHighlightPosition(pos: Position) {
+		this.highlight.x = pos.screenX;
+		this.highlight.y = pos.screenY;
 	}
 
 	private changeZoom(value: number) {

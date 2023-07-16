@@ -5,6 +5,7 @@ export enum RenderEvent {
 	ScrollLeft = 'scroll-left',
 	ScrollUp = 'scroll-up',
 	ScrollDown = 'scroll-down',
+	HighlightTile = 'highlight-tile',
 }
 
 export enum MapEvent {
