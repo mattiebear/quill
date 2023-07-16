@@ -39,6 +39,8 @@ export class Engine {
 			throw new Error('Quill.Engine not initialized with an Atlas');
 		}
 
+		this.renderer.io = this.io;
+
 		this.relay.link(this.atlas, this.renderer, this.io);
 
 		this.renderer.initialize();

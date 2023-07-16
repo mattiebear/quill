@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import { Position } from '@/lib/quill';
+import { IO } from '@/lib/quill/core/io';
 import { Relay, Subscriber } from '@/lib/quill/core/relay';
 import { Changeset, NodeChange } from '@/lib/quill/map/changeset';
 import { RenderNode } from '@/lib/quill/renderer/render-node';
@@ -12,6 +13,7 @@ import { clamp } from '@/utils/number';
 
 export class Renderer implements Subscriber {
 	public el: HTMLElement;
+	public io: IO;
 
 	private app: PIXI.Application<HTMLCanvasElement>;
 	private nodes = new Map<string, RenderNode>();
@@ -25,6 +27,7 @@ export class Renderer implements Subscriber {
 	// Elements
 	private highlight = new PIXI.Container();
 
+	// State
 	private zoom = 1;
 
 	initialize() {
@@ -69,6 +72,10 @@ export class Renderer implements Subscriber {
 
 		relay.subscribe(RenderEvent.ScrollDown, () => {
 			this.map.y -= 10;
+		});
+
+		relay.subscribe(RenderEvent.HighlightTile, (pos: Position) => {
+			this.setHighlightPosition(pos);
 		});
 	}
 
@@ -131,11 +138,13 @@ export class Renderer implements Subscriber {
 
 	private initializeListeners() {
 		this.main.on('mousemove', (e) => {
-			const local = this.map.toLocal(e.global);
-			const pos = Position.atPoint(local.x, local.y, 0);
+			const { x, y } = this.map.toLocal(e.global);
+			this.io.moveMouse(x, y);
+		});
 
-			this.highlight.x = pos.screenX;
-			this.highlight.y = pos.screenY;
+		this.main.on('mousedown', (e) => {
+			const { x, y } = this.map.toLocal(e.global);
+			this.io.click(x, y);
 		});
 	}
 
@@ -153,6 +162,11 @@ export class Renderer implements Subscriber {
 		this.highlight.scale.y = 0.5;
 
 		this.ui.addChild(this.highlight);
+	}
+
+	private setHighlightPosition(pos: Position) {
+		this.highlight.x = pos.screenX;
+		this.highlight.y = pos.screenY;
 	}
 
 	private changeZoom(value: number) {
