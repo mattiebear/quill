@@ -12,6 +12,7 @@ type Loadable = Atlas | Tileset;
  */
 export class Engine {
 	private atlas: Atlas;
+	private _tileset: Tileset;
 
 	private readonly renderer = new Renderer();
 	private readonly relay = new Relay();
@@ -19,10 +20,18 @@ export class Engine {
 	public readonly io = new IO();
 	public readonly store = new Store();
 
+	get tileset() {
+		return this._tileset;
+	}
+
 	load(...modules: Loadable[]) {
 		modules.forEach((module) => {
 			if (module instanceof Atlas) {
 				this.atlas = module;
+			}
+
+			if (module instanceof Tileset) {
+				this._tileset = module;
 			}
 		});
 

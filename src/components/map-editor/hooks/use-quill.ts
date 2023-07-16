@@ -13,6 +13,7 @@ export const useQuill = (initialData?: MapData) => {
 
 	useLayoutEffect(() => {
 		if (!tileset || !initialData) {
+			// NOTE: This should never be the case but is needed to satisfy typing from React query
 			return;
 		}
 
