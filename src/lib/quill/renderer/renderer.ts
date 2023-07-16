@@ -144,7 +144,7 @@ export class Renderer implements Subscriber {
 
 		this.main.on('mousedown', (e) => {
 			const { x, y } = this.map.toLocal(e.global);
-			this.io.click(x, y);
+			this.io.clickTile(x, y);
 		});
 	}
 

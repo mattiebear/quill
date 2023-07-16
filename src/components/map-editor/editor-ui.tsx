@@ -56,7 +56,12 @@ export const EditorUI: FC = () => {
 
 					<SimpleGrid columns={3} spacing={2}>
 						{engine.tileset.all.map((tile) => (
-							<Button key={tile.id} h="auto" p={2}>
+							<Button
+								key={tile.id}
+								h="auto"
+								p={2}
+								onClick={() => io.selectBlueprint(tile.id)}
+							>
 								<AspectRatio w="full" ratio={1}>
 									<Image
 										objectPosition="bottom center"

@@ -67,9 +67,13 @@ export class IO implements Subscriber {
 		this.relay.send(RenderEvent.HighlightTile, pos);
 	};
 
-	click = (x: number, y: number) => {
+	clickTile = (x: number, y: number) => {
 		const pos = Position.atPoint(x, y, 0);
 
 		console.log('tile clicked at', pos.x, pos.y);
+	};
+
+	selectBlueprint = (id: string) => {
+		console.log('id', id);
 	};
 }
