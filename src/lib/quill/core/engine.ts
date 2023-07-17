@@ -1,9 +1,10 @@
-import { Atlas } from '@/lib/quill';
+import { Atlas, Direction } from '@/lib/quill';
 import { IO } from '@/lib/quill/core/io';
 import { Relay } from '@/lib/quill/core/relay';
 import { Store } from '@/lib/quill/core/store';
 import { Tileset } from '@/lib/quill/map/tileset';
 import { Renderer } from '@/lib/quill/renderer/renderer';
+import { StoreKey } from '@/lib/quill/types/store';
 
 type Loadable = Atlas | Tileset;
 
@@ -47,6 +48,11 @@ export class Engine {
 		if (!this.atlas) {
 			throw new Error('Quill.Engine not initialized with an Atlas');
 		}
+
+		this.store.initialize({
+			[StoreKey.SelectedBlueprint]: null,
+			[StoreKey.SelectedDirection]: Direction.N,
+		});
 
 		this.renderer.io = this.io;
 		this.io.store = this.store;

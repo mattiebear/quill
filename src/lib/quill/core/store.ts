@@ -9,6 +9,16 @@ export class Store {
 	private subscriptions = new Map<string, Listener[]>();
 
 	/**
+	 * Set multiple values in the store from an object
+	 * @param values
+	 */
+	initialize(values: Record<string, any>) {
+		for (const [key, value] of Object.entries(values)) {
+			this.set(key, value);
+		}
+	}
+
+	/**
 	 * Fetch a value from the store
 	 * @param {string} key
 	 * @returns any
