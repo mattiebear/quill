@@ -169,9 +169,12 @@ export class Renderer implements Subscriber {
 		this.highlight.y = pos.screenY;
 	}
 
+	// TODO: Save zoom as integer and update via custom setter
 	private changeZoom(value: number) {
 		const delta = value / 100;
 		this.zoom = clamp(this.zoom + delta, 0.5, 1);
+
+		console.log('zom', this.zoom);
 
 		this.map.scale.x = this.zoom;
 		this.map.scale.y = this.zoom;

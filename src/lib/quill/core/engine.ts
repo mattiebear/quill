@@ -25,6 +25,7 @@ export class Engine {
 		return this._tileset;
 	}
 
+	// TODO: Just assign this stuff directly
 	load(...modules: Loadable[]) {
 		modules.forEach((module) => {
 			if (module instanceof Atlas) {

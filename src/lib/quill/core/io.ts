@@ -1,14 +1,20 @@
-import { Position } from '@/lib/quill';
+import { Direction, Position } from '@/lib/quill';
 import { Relay, Subscriber } from '@/lib/quill/core/relay';
 import { Store } from '@/lib/quill/core/store';
 import { RenderEvent } from '@/lib/quill/types/event';
 import { StoreKey } from '@/lib/quill/types/store';
+import { find, shift } from '@/utils/array';
 
 enum Key {
 	A = 'a',
 	W = 'w',
 	D = 'd',
 	S = 's',
+}
+
+enum Rotate {
+	Right = 1,
+	Left = -1,
 }
 
 const EventMap = new Map<string, RenderEvent>([
@@ -79,5 +85,23 @@ export class IO implements Subscriber {
 
 	selectBlueprint = (id: string) => {
 		this.store.set(StoreKey.SelectedBlueprint, id);
+	};
+
+	rotateRight = () => {
+		this.rotateDirection(Rotate.Right);
+	};
+
+	rotateLeft = () => {
+		this.rotateDirection(Rotate.Left);
+	};
+
+	private rotateDirection = (places: number) => {
+		const directions = Object.values(Direction);
+
+		const selected = this.store.get(StoreKey.SelectedDirection);
+		const index = find(directions, selected);
+		const value = shift(directions)(index, places);
+
+		this.store.set(StoreKey.SelectedDirection, value);
 	};
 }
