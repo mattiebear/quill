@@ -46,14 +46,18 @@ export class Atlas implements Subscriber {
 	}
 
 	load(mapData: MapData) {
-		mapData.forEach((tile) => {
-			const blueprint = this.tileset.get(tile.t);
+		mapData.forEach((node) => {
+			const position = new Position(...node.p);
 
-			if (!blueprint) {
-				return;
-			}
+			node.t.forEach((tile) => {
+				const blueprint = this.tileset.get(tile.i);
 
-			this.add(new Position(...tile.p), blueprint, tile.d);
+				if (!blueprint) {
+					return;
+				}
+
+				this.add(position, blueprint, tile.d);
+			});
 		});
 
 		return this;

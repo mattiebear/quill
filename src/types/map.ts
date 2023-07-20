@@ -1,9 +1,13 @@
 import { Direction } from '@/lib/quill';
 
 interface PersistedTile {
-	p: [number, number, number];
-	t: string;
+	i: string;
 	d: Direction;
 }
 
-export type MapData = PersistedTile[];
+interface PersistedNode {
+	p: [number, number, number];
+	t: PersistedTile[];
+}
+
+export type MapData = PersistedNode[];
