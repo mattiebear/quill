@@ -11,6 +11,11 @@
   },
   {
     "id": "3",
+    "image": "stoneWall",
+    "type": 1
+  },
+  {
+    "id": "4",
     "image": "barrelsStacked",
     "type": "2"
   }
