@@ -12,7 +12,12 @@ import { FC, useRef } from 'react';
 import Draggable from 'react-draggable';
 import { useTranslation } from 'react-i18next';
 
-import { ZoomInIcon, ZoomOutIcon } from '@/components/icon';
+import {
+	ArrowUturnLeftIcon,
+	ArrowUturnRightIcon,
+	ZoomInIcon,
+	ZoomOutIcon,
+} from '@/components/icon';
 import { useEngine } from '@/components/map-editor/hooks/use-engine';
 import { useIO } from '@/components/map-editor/hooks/use-io';
 import { useStoreValue } from '@/components/map-editor/hooks/use-store-value';
@@ -24,7 +29,9 @@ export const EditorUI: FC = () => {
 	const { t } = useTranslation();
 	const io = useIO();
 	const engine = useEngine();
-	const selectedBlueprintId = useStoreValue(StoreKey.SelectedBlueprint);
+
+	const blueprintId = useStoreValue<string>(StoreKey.SelectedBlueprint);
+	const direction = useStoreValue<Direction>(StoreKey.SelectedDirection);
 
 	return (
 		<Box position="absolute">
@@ -48,12 +55,25 @@ export const EditorUI: FC = () => {
 						<IconButton
 							aria-label={t('editor.zoomOut')}
 							icon={<ZoomOutIcon />}
-							onClick={io.onClickZoomOut}
+							onClick={() => io.onClickZoomOut()}
 						/>
 						<IconButton
 							aria-label={t('editor.zoomIn')}
 							icon={<ZoomInIcon />}
-							onClick={io.onClickZoomIn}
+							onClick={() => io.onClickZoomIn()}
+						/>
+					</Flex>
+
+					<Flex columnGap={2} direction="row" mb={2}>
+						<IconButton
+							aria-label={t('editor.rotateLeft')}
+							icon={<ArrowUturnRightIcon />}
+							onClick={() => io.rotateRight()}
+						/>
+						<IconButton
+							aria-label={t('editor.rotateRight')}
+							icon={<ArrowUturnLeftIcon />}
+							onClick={() => io.rotateLeft()}
 						/>
 					</Flex>
 
@@ -64,7 +84,7 @@ export const EditorUI: FC = () => {
 								h="auto"
 								p={2}
 								onClick={() => io.selectBlueprint(blueprint.id)}
-								{...(blueprint.id === selectedBlueprintId && {
+								{...(blueprint.id === blueprintId && {
 									// TODO: Use semantic value
 									bg: 'green.500',
 									_hover: {
@@ -75,7 +95,7 @@ export const EditorUI: FC = () => {
 								<AspectRatio w="full" ratio={1}>
 									<Image
 										objectPosition="bottom center"
-										src={blueprint.sprite.source(Direction.N)}
+										src={blueprint.sprite.source(direction)}
 									/>
 								</AspectRatio>
 							</Button>

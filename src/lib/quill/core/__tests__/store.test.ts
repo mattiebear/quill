@@ -61,3 +61,15 @@ it('unsubscribes listeners', () => {
 
 	expect(listener).not.toHaveBeenCalled();
 });
+
+it('initializes with a set of values', () => {
+	const store = new Store();
+
+	store.initialize({
+		a: 1,
+		b: 2,
+	});
+
+	expect(store.get('a')).toBe(1);
+	expect(store.get('b')).toBe(2);
+});

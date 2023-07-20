@@ -8,5 +8,10 @@
     "id": "2",
     "image": "stone",
     "type": 0
+  },
+  {
+    "id": "3",
+    "image": "barrelsStacked",
+    "type": "2"
   }
 ]

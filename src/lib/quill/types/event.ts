@@ -10,4 +10,5 @@ export enum RenderEvent {
 
 export enum MapEvent {
 	MapAltered = 'map-altered',
+	PlaceTile = 'place-tile',
 }

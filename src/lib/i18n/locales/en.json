@@ -30,7 +30,9 @@
 		},
 		"editor": {
 			"zoomIn": "Zoom in",
-			"zoomOut": "Zoom out"
+			"zoomOut": "Zoom out",
+			"rotateRight": "Rotate right",
+			"rotateLeft": "Rotate left"
 		}
 	}
 }

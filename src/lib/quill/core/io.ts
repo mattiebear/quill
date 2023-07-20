@@ -1,14 +1,21 @@
-import { Position } from '@/lib/quill';
+import { Direction, Position } from '@/lib/quill';
 import { Relay, Subscriber } from '@/lib/quill/core/relay';
 import { Store } from '@/lib/quill/core/store';
-import { RenderEvent } from '@/lib/quill/types/event';
+import { Tileset } from '@/lib/quill/map/tileset';
+import { MapEvent, RenderEvent } from '@/lib/quill/types/event';
 import { StoreKey } from '@/lib/quill/types/store';
+import { find, shift } from '@/utils/array';
 
 enum Key {
 	A = 'a',
 	W = 'w',
 	D = 'd',
 	S = 's',
+}
+
+enum Rotate {
+	Right = 1,
+	Left = -1,
 }
 
 const EventMap = new Map<string, RenderEvent>([
@@ -23,6 +30,7 @@ const EventMap = new Map<string, RenderEvent>([
  */
 export class IO implements Subscriber {
 	public store: Store;
+	public tileset: Tileset;
 
 	private relay: Relay;
 	private keydown: (e: KeyboardEvent) => void;
@@ -58,26 +66,55 @@ export class IO implements Subscriber {
 	/**
 	 * Mouse handlers
 	 */
-	onClickZoomOut = () => {
+	onClickZoomOut() {
 		this.send(RenderEvent.DecreaseZoom);
-	};
+	}
 
-	onClickZoomIn = () => {
+	onClickZoomIn() {
 		this.send(RenderEvent.IncreaseZoom);
-	};
+	}
 
-	moveMouse = (x: number, y: number) => {
+	moveMouse(x: number, y: number) {
 		const pos = Position.atPoint(x, y, 0);
 		this.relay.send(RenderEvent.HighlightTile, pos);
-	};
+	}
 
-	clickTile = (x: number, y: number) => {
-		const pos = Position.atPoint(x, y, 0);
+	clickTile(x: number, y: number) {
+		const position = Position.atPoint(x, y, 0);
 
-		console.log('tile clicked at', pos.x, pos.y);
-	};
+		const id = this.store.get(StoreKey.SelectedBlueprint);
+		const direction = this.store.get(StoreKey.SelectedDirection);
 
-	selectBlueprint = (id: string) => {
+		if (id) {
+			const blueprint = this.tileset.get(id);
+
+			this.relay.send(MapEvent.PlaceTile, {
+				blueprint,
+				direction,
+				position,
+			});
+		}
+	}
+
+	selectBlueprint(id: string) {
 		this.store.set(StoreKey.SelectedBlueprint, id);
-	};
+	}
+
+	rotateRight() {
+		this.rotateDirection(Rotate.Right);
+	}
+
+	rotateLeft() {
+		this.rotateDirection(Rotate.Left);
+	}
+
+	private rotateDirection(places: number) {
+		const directions = Object.values(Direction);
+
+		const selected = this.store.get(StoreKey.SelectedDirection);
+		const index = find(directions, selected);
+		const value = shift(directions)(index, places);
+
+		this.store.set(StoreKey.SelectedDirection, value);
+	}
 }
