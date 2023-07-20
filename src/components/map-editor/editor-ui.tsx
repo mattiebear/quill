@@ -55,12 +55,12 @@ export const EditorUI: FC = () => {
 						<IconButton
 							aria-label={t('editor.zoomOut')}
 							icon={<ZoomOutIcon />}
-							onClick={io.onClickZoomOut}
+							onClick={() => io.onClickZoomOut()}
 						/>
 						<IconButton
 							aria-label={t('editor.zoomIn')}
 							icon={<ZoomInIcon />}
-							onClick={io.onClickZoomIn}
+							onClick={() => io.onClickZoomIn()}
 						/>
 					</Flex>
 
@@ -68,12 +68,12 @@ export const EditorUI: FC = () => {
 						<IconButton
 							aria-label={t('editor.rotateLeft')}
 							icon={<ArrowUturnRightIcon />}
-							onClick={io.rotateRight}
+							onClick={() => io.rotateRight()}
 						/>
 						<IconButton
 							aria-label={t('editor.rotateRight')}
 							icon={<ArrowUturnLeftIcon />}
-							onClick={io.rotateLeft}
+							onClick={() => io.rotateLeft()}
 						/>
 					</Flex>
 

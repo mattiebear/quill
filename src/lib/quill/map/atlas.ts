@@ -8,6 +8,13 @@ import { Position } from '@/lib/quill/utility/position';
 import { MapData } from '@/types/map';
 import { findOrCreateByKey } from '@/utils/map';
 
+// TODO: Need to come up with a better system to link events
+interface PlaceTileEvent {
+	blueprint: TileBlueprint;
+	direction: Direction;
+	position: Position;
+}
+
 export class Atlas implements Subscriber {
 	private nodes = new Map<string, MapNode>();
 	private relay: Relay;
@@ -31,6 +38,14 @@ export class Atlas implements Subscriber {
 
 	link(relay: Relay) {
 		this.relay = relay;
+
+		// TODO: Replace if floor or decoration
+		this.relay.subscribe(
+			MapEvent.PlaceTile,
+			({ blueprint, direction, position }: PlaceTileEvent) => {
+				this.add(position, blueprint, direction);
+			}
+		);
 
 		// 	TODO: Add subscriptions
 	}
