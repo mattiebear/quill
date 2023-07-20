@@ -11,23 +11,19 @@ import { EditorUI } from './editor-ui';
 const mockData: MapData = [
 	{
 		p: [0, 0, 0],
-		t: '1',
-		d: Direction.N,
+		t: [{ i: '1', d: Direction.N }],
 	},
 	{
 		p: [1, 0, 0],
-		t: '1',
-		d: Direction.W,
+		t: [{ i: '1', d: Direction.W }],
 	},
 	{
 		p: [0, 1, 0],
-		t: '1',
-		d: Direction.E,
+		t: [{ i: '1', d: Direction.E }],
 	},
 	{
 		p: [1, 1, 0],
-		t: '1',
-		d: Direction.S,
+		t: [{ i: '1', d: Direction.S }],
 	},
 ];
 
