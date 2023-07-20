@@ -29,7 +29,7 @@ export class Renderer implements Subscriber {
 	private highlight = new PIXI.Container();
 
 	// State
-	private zoom = 1;
+	private zoom = 100;
 
 	initialize() {
 		assertPresence(
@@ -181,12 +181,11 @@ export class Renderer implements Subscriber {
 
 	// TODO: Save zoom as integer and update via custom setter
 	private changeZoom(value: number) {
-		const delta = value / 100;
-		this.zoom = clamp(this.zoom + delta, 0.5, 1);
+		this.zoom = clamp(this.zoom + value, 50, 100);
 
-		console.log('zom', this.zoom);
+		const scale = this.zoom / 100;
 
-		this.map.scale.x = this.zoom;
-		this.map.scale.y = this.zoom;
+		this.map.scale.x = scale;
+		this.map.scale.y = scale;
 	}
 }

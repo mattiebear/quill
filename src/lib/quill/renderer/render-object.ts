@@ -6,8 +6,8 @@ import { Tile } from '@/lib/quill/map/tile';
 // NOTE: Offset is to account for sprite height of 512 while only 128 are the actual tile at bottom of image
 // The 20 is because the tiles sit "up" a few to give the perception of depth
 // TODO: Get from config or something
-const TILE_BUFFER = 128 * 3 - 20;
-const TILE_IMAGE_HEIGHT = 128 * 4;
+const TILE_BASE = 128;
+const TILE_IMAGE_HEIGHT = TILE_BASE * 4;
 
 export class RenderObject {
 	public readonly sprite: Sprite;
@@ -15,17 +15,23 @@ export class RenderObject {
 	constructor(
 		public readonly id: string,
 		public readonly texture: Texture,
-		public readonly order: number
+		public readonly order: number,
+		public readonly baseThickness = 0
 	) {
 		this.sprite = new Sprite(texture);
-		this.sprite.anchor.set(0.5, TILE_BUFFER / TILE_IMAGE_HEIGHT);
+
+		// Anchor is set at a decimal percentage based on the full height of the tile.
+		const buffer = TILE_BASE * 3 - this.baseThickness;
+		this.sprite.anchor.set(0.5, buffer / TILE_IMAGE_HEIGHT);
 	}
 
 	public static fromTile(tile: Tile) {
 		// TODO: Put this somewhere else
-		let order;
+		let baseThickness, order;
 
 		if (tile.type === TileType.Floor) {
+			// TODO: Get from config?
+			baseThickness = 20;
 			order = 0;
 		} else if (tile.type === TileType.Object) {
 			order = 2;
@@ -37,6 +43,6 @@ export class RenderObject {
 			}
 		}
 
-		return new RenderObject(tile.id, tile.texture, order);
+		return new RenderObject(tile.id, tile.texture, order, baseThickness);
 	}
 }
