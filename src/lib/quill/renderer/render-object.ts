@@ -21,7 +21,7 @@ export class RenderObject {
 		this.sprite.anchor.set(0.5, TILE_BUFFER / TILE_IMAGE_HEIGHT);
 	}
 
-	public static fromStructure(tile: Tile) {
+	public static fromTile(tile: Tile) {
 		// TODO: Put this somewhere else
 		let order;
 

@@ -34,20 +34,15 @@ export class Atlas implements Subscriber {
 		}
 	}
 
-	// TODO: Remove tile
-
 	link(relay: Relay) {
 		this.relay = relay;
 
-		// TODO: Replace if floor or decoration
 		this.relay.subscribe(
 			MapEvent.PlaceTile,
 			({ blueprint, direction, position }: PlaceTileEvent) => {
 				this.add(position, blueprint, direction);
 			}
 		);
-
-		// 	TODO: Add subscriptions
 	}
 
 	load(mapData: MapData) {

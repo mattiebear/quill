@@ -86,13 +86,17 @@ export class Renderer implements Subscriber {
 	// Internal handlers
 	private drawChangeset(changeset: Changeset) {
 		changeset.additive.forEach((change) => {
-			this.addStructureFromChange(change);
+			this.addTileFromChange(change);
+		});
+
+		changeset.subtractive.forEach((change) => {
+			this.removeTile(change);
 		});
 	}
 
-	private addStructureFromChange(change: NodeChange) {
+	private addTileFromChange(change: NodeChange) {
 		const node = this.findOrCreateNodeByPosition(change.position);
-		node.add(RenderObject.fromStructure(change.tile));
+		node.add(RenderObject.fromTile(change.tile));
 	}
 
 	private findOrCreateNodeByPosition(position: Position) {
@@ -104,7 +108,11 @@ export class Renderer implements Subscriber {
 		return node;
 	}
 
-	// private removeStructure() {}
+	private removeTile(change: NodeChange) {
+		const key = change.position.toString();
+		const node = this.nodes.get(key);
+		node?.remove(change.tile.id);
+	}
 
 	private createApp() {
 		PIXI.settings.RESOLUTION = window.devicePixelRatio || 1;
@@ -121,6 +129,8 @@ export class Renderer implements Subscriber {
 
 	private setupRenderLayers() {
 		this.tiles.zIndex = 0;
+		this.tiles.sortableChildren = true;
+
 		this.ui.zIndex = 1;
 
 		this.map.addChild(this.tiles, this.ui);

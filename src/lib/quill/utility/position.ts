@@ -29,19 +29,15 @@ export class Position {
 	}
 
 	get zIndex() {
-		return Math.max(this.x, this.y);
+		return this.x + this.y;
 	}
 
 	get screenX() {
-		const widthOffset = WIDTH_HALF;
-
-		return (this.x - this.y) * widthOffset;
+		return (this.x - this.y) * WIDTH_HALF;
 	}
 
 	get screenY() {
-		const heightOffset = HEIGHT_HALF;
-
-		return (this.x + this.y) * heightOffset;
+		return (this.x + this.y) * HEIGHT_HALF;
 	}
 
 	static atPoint(x: number, y: number, z: number) {
