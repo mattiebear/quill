@@ -15,6 +15,7 @@ type Loadable = Atlas | Tileset;
  */
 export class Engine {
 	public atlas: Atlas;
+	// TODO: Save this in config
 	public tileset: Tileset;
 
 	private readonly renderer = new Renderer();
@@ -23,6 +24,8 @@ export class Engine {
 
 	public readonly io = new IO();
 	public readonly store = new Store();
+
+	constructor(public map: any) {}
 
 	// TODO: Just assign this stuff directly
 	load(...modules: Loadable[]) {
@@ -51,6 +54,11 @@ export class Engine {
 		return this;
 	}
 
+	on(event: string, listener: VoidFunction) {
+		this.relay.subscribe(event, listener);
+		return this;
+	}
+
 	initialize() {
 		if (!this.atlas) {
 			throw new Error('Quill.Engine not initialized with an Atlas');
@@ -67,6 +75,7 @@ export class Engine {
 		this.io.tileset = this.tileset;
 
 		this.sync.atlas = this.atlas;
+		this.sync.map = this.map;
 
 		// TODO: This is unnecessary. The engine can do this.
 		this.relay.link(this.atlas, this.renderer, this.io, this.sync);

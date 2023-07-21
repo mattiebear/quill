@@ -22,15 +22,27 @@ export const fetchMapDetail = async (id: string) => {
 	const http = await getHttpClient();
 	const queryClient = await getQueryClient();
 
-	return queryClient.fetchQuery(buildKey(id), () => {
-		return http.get<MapData>(buildPath(id));
-	});
+	return queryClient.fetchQuery(
+		buildKey(id),
+		() => {
+			return http.get<MapData>(buildPath(id));
+		},
+		{
+			staleTime: Infinity,
+		}
+	);
 };
 
 export const useMapDetail = (id: string) => {
 	const http = useHttpClient();
 
-	return useQuery(buildKey(id), () => {
-		return http.get<MapData>(buildPath(id));
-	});
+	return useQuery(
+		buildKey(id),
+		() => {
+			return http.get<MapData>(buildPath(id));
+		},
+		{
+			staleTime: Infinity,
+		}
+	);
 };
