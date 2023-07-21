@@ -1,5 +1,7 @@
 import axios, { CreateAxiosDefaults } from 'axios';
 
+import { HttpClient } from '@/lib/http/types';
+
 interface CreateHttpClientConfig extends CreateAxiosDefaults {
 	getToken?: () => Promise<string | null>;
 }
@@ -7,7 +9,7 @@ interface CreateHttpClientConfig extends CreateAxiosDefaults {
 export const createHttpClient = ({
 	getToken,
 	...config
-}: CreateHttpClientConfig = {}) => {
+}: CreateHttpClientConfig = {}): HttpClient => {
 	const client = axios.create(config);
 
 	client.interceptors.request.use(

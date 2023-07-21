@@ -1,4 +1,6 @@
+import { HttpClient } from '@/lib/http/types';
 import { Atlas, Direction } from '@/lib/quill';
+import { HttpSync } from '@/lib/quill/core/http-sync';
 import { IO } from '@/lib/quill/core/io';
 import { Relay } from '@/lib/quill/core/relay';
 import { Store } from '@/lib/quill/core/store';
@@ -17,6 +19,7 @@ export class Engine {
 
 	private readonly renderer = new Renderer();
 	private readonly relay = new Relay();
+	private readonly sync = new HttpSync();
 
 	public readonly io = new IO();
 	public readonly store = new Store();
@@ -36,8 +39,15 @@ export class Engine {
 		return this;
 	}
 
+	// TODO: Use custom getter instead
 	drawTo(el: HTMLElement) {
 		this.renderer.el = el;
+		return this;
+	}
+
+	// TODO: Same here
+	persistTo(http: HttpClient) {
+		this.sync.http = http;
 		return this;
 	}
 
@@ -56,8 +66,10 @@ export class Engine {
 		this.io.store = this.store;
 		this.io.tileset = this.tileset;
 
+		this.sync.atlas = this.atlas;
+
 		// TODO: This is unnecessary. The engine can do this.
-		this.relay.link(this.atlas, this.renderer, this.io);
+		this.relay.link(this.atlas, this.renderer, this.io, this.sync);
 
 		this.renderer.initialize();
 		this.io.initialize();

@@ -3,6 +3,7 @@ import { Tile } from '@/lib/quill/map/tile';
 import { TileBlueprint, TileType } from '@/lib/quill/map/tile-blueprint';
 import { Direction } from '@/lib/quill/types/map';
 import { Position } from '@/lib/quill/utility/position';
+import { PersistedTile } from '@/types/map';
 
 /**
  * Representation of a single tile at an x, y, z coordinate within a map, storing multiple tiles
@@ -45,6 +46,19 @@ export class MapNode {
 		this.tiles.delete(id);
 
 		return changeset;
+	}
+
+	toJSON() {
+		const data: PersistedTile[] = [];
+
+		for (const tile of this.tiles.values()) {
+			data.push({
+				i: tile.blueprint.id,
+				d: tile.direction,
+			});
+		}
+
+		return data;
 	}
 
 	// TODO: I think this can be cleaned up to be much more flexible
