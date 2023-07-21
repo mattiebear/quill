@@ -1,4 +1,6 @@
-import axios, { AxiosInstance } from 'axios';
+import axios from 'axios';
 import { createContext } from 'react';
 
-export const httpContext = createContext<AxiosInstance>(axios.create());
+import { HttpClient } from '@/lib/http/types';
+
+export const httpContext = createContext<HttpClient>(axios.create());

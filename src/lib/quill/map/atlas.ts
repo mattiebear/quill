@@ -5,7 +5,7 @@ import { MapNode } from '@/lib/quill/map/map-node';
 import { Tileset } from '@/lib/quill/map/tileset';
 import { MapEvent } from '@/lib/quill/types/event';
 import { Position } from '@/lib/quill/utility/position';
-import { MapData } from '@/types/map';
+import { MapData, PersistedNode } from '@/types/map';
 import { findOrCreateByKey } from '@/utils/map';
 
 // TODO: Need to come up with a better system to link events
@@ -75,6 +75,21 @@ export class Atlas implements Subscriber {
 				this.sendChangeset(changeset);
 			}
 		}
+	}
+
+	toJSON() {
+		const data: PersistedNode[] = [];
+
+		for (const node of this.nodes.values()) {
+			const pos = node.position;
+
+			data.push({
+				p: [pos.x, pos.y, pos.z],
+				t: node.toJSON(),
+			});
+		}
+
+		return data;
 	}
 
 	private sendChangeset(changeset: Changeset) {

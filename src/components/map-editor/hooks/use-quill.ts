@@ -1,19 +1,37 @@
+import { useToast } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 
 import { useTileset } from '@/components/map-editor/hooks/use-tileset';
+import { useHttpClient } from '@/lib/http';
 import { Atlas, Engine } from '@/lib/quill';
-import { MapData } from '@/types/map';
+import { MapEvent } from '@/lib/quill/types/event';
 
 // TODO: Maybe imperatively set map data
-export const useQuill = (initialData: MapData) => {
+export const useQuill = (map: any) => {
 	const elRef = useRef(document.getElementById('root') as HTMLDivElement);
 	const tileset = useTileset();
+	const http = useHttpClient();
+	const toast = useToast();
+
+	const createSaveToast = () => {
+		toast({
+			status: 'success',
+			title: 'Map saved',
+			duration: 2000,
+		});
+	};
 
 	const [engine] = useState(() => {
-		const engine = new Engine();
-		const atlas = new Atlas(tileset).load(initialData);
+		const engine = new Engine(map);
+		// TODO: Map always should come back with version and data
+		const atlas = new Atlas(tileset).load(map.atlas?.data || []);
 
-		engine.drawTo(elRef.current).load(atlas, tileset).initialize();
+		engine
+			.drawTo(elRef.current)
+			.persistTo(http)
+			.load(atlas, tileset)
+			.on(MapEvent.MapSaved, createSaveToast)
+			.initialize();
 
 		return engine;
 	});

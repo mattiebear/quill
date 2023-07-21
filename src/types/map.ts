@@ -1,11 +1,11 @@
 import { Direction } from '@/lib/quill';
 
-interface PersistedTile {
+export interface PersistedTile {
 	i: string;
 	d: Direction;
 }
 
-interface PersistedNode {
+export interface PersistedNode {
 	p: [number, number, number];
 	t: PersistedTile[];
 }
