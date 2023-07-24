@@ -37,6 +37,7 @@ export const useMapDetail = (id: string) => {
 			return http.get<ModuleMapDetailData>(buildPath(id));
 		},
 		{
+			select: (data) => data.data,
 			staleTime: Infinity,
 		}
 	);
