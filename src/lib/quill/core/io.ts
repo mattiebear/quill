@@ -11,24 +11,22 @@ import {
 } from '@/lib/quill';
 import { find, shift } from '@/utils/array';
 
-enum Key {
-	A = 'a',
-	W = 'w',
-	D = 'd',
-	S = 's',
-}
+const ScrollEventMap = new Map([
+	['w', 'up'],
+	['a', 'left'],
+	['s', 'down'],
+	['d', 'right'],
+]);
 
 enum Rotate {
 	Right = 1,
 	Left = -1,
 }
 
-const EventMap = new Map<string, RenderEvent>([
-	[Key.W, RenderEvent.ScrollUp],
-	[Key.A, RenderEvent.ScrollLeft],
-	[Key.S, RenderEvent.ScrollDown],
-	[Key.D, RenderEvent.ScrollRight],
-]);
+enum Zoom {
+	In = 10,
+	Out = -10,
+}
 
 /**
  * Input listener that converts actions into relay events
@@ -58,10 +56,10 @@ export class IO implements Subscriber {
 
 	private initScrollListeners() {
 		this.keydown = (e: KeyboardEvent) => {
-			const event = EventMap.get(e.key);
+			const event = ScrollEventMap.get(e.key);
 
 			if (event) {
-				this.send(event);
+				this.send(RenderEvent.ScrollMap, event);
 			}
 		};
 
@@ -72,11 +70,11 @@ export class IO implements Subscriber {
 	 * Mouse handlers
 	 */
 	onClickZoomOut() {
-		this.send(RenderEvent.DecreaseZoom);
+		this.send(RenderEvent.ChangeZoom, Zoom.Out);
 	}
 
 	onClickZoomIn() {
-		this.send(RenderEvent.IncreaseZoom);
+		this.send(RenderEvent.ChangeZoom, Zoom.In);
 	}
 
 	moveMouse(x: number, y: number) {

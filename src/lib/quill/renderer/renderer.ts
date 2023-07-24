@@ -49,34 +49,16 @@ export class Renderer implements Subscriber {
 	}
 
 	link(relay: Relay) {
-		// TODO: Clean this up somehow
 		relay.subscribe(MapEvent.MapAltered, (changeset: Changeset) => {
 			this.drawChangeset(changeset);
 		});
 
-		// TODO: Pass data instead of different events ex Event.Zoom, { direction: -1 }
-		relay.subscribe(RenderEvent.IncreaseZoom, () => {
-			this.changeZoom(10);
+		relay.subscribe(RenderEvent.ChangeZoom, (value: number) => {
+			this.changeZoom(value);
 		});
 
-		relay.subscribe(RenderEvent.DecreaseZoom, () => {
-			this.changeZoom(-10);
-		});
-
-		relay.subscribe(RenderEvent.ScrollLeft, () => {
-			this.map.x += 10;
-		});
-
-		relay.subscribe(RenderEvent.ScrollRight, () => {
-			this.map.x -= 10;
-		});
-
-		relay.subscribe(RenderEvent.ScrollUp, () => {
-			this.map.y += 10;
-		});
-
-		relay.subscribe(RenderEvent.ScrollDown, () => {
-			this.map.y -= 10;
+		relay.subscribe(RenderEvent.ScrollMap, (dir: string) => {
+			this.scrollMap(dir);
 		});
 
 		relay.subscribe(RenderEvent.HighlightTile, (pos: Position) => {
@@ -184,7 +166,6 @@ export class Renderer implements Subscriber {
 		this.highlight.y = pos.screenY;
 	}
 
-	// TODO: Save zoom as integer and update via custom setter
 	private changeZoom(value: number) {
 		this.zoom = clamp(this.zoom + value, 50, 100);
 
@@ -192,5 +173,25 @@ export class Renderer implements Subscriber {
 
 		this.map.scale.x = scale;
 		this.map.scale.y = scale;
+	}
+
+	private scrollMap(dir: string) {
+		switch (dir) {
+			case 'up':
+				this.map.y += 10;
+				break;
+
+			case 'down':
+				this.map.y -= 10;
+				break;
+
+			case 'right':
+				this.map.x -= 10;
+				break;
+
+			case 'left':
+				this.map.x += 10;
+				break;
+		}
 	}
 }
