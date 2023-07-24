@@ -1,56 +1,37 @@
-import { HttpClient } from '@/lib/http/types';
 import { Atlas, Direction } from '@/lib/quill';
-import { HttpSync } from '@/lib/quill/core/http-sync';
+import { EngineConfig } from '@/lib/quill/core/engine-config';
 import { IO } from '@/lib/quill/core/io';
 import { Relay } from '@/lib/quill/core/relay';
 import { Store } from '@/lib/quill/core/store';
-import { Tileset } from '@/lib/quill/map/tileset';
+import { Sync } from '@/lib/quill/core/sync';
 import { Renderer } from '@/lib/quill/renderer/renderer';
 import { StoreKey } from '@/lib/quill/types/store';
-
-type Loadable = Atlas | Tileset;
 
 /**
  * The primary container for the Quill rendering engine, containing and organizing all inner modules
  */
 export class Engine {
 	public atlas: Atlas;
-	// TODO: Save this in config
-	public tileset: Tileset;
 
 	private readonly renderer = new Renderer();
 	private readonly relay = new Relay();
-	private readonly sync = new HttpSync();
+	private readonly sync = new Sync();
 
 	public readonly io = new IO();
 	public readonly store = new Store();
 
-	constructor(public map: any) {}
-
-	// TODO: Just assign this stuff directly
-	load(...modules: Loadable[]) {
-		modules.forEach((module) => {
-			if (module instanceof Atlas) {
-				this.atlas = module;
-			}
-
-			if (module instanceof Tileset) {
-				this.tileset = module;
-			}
-		});
-
-		return this;
+	constructor(public readonly config: EngineConfig) {
+		this.buildAtlas();
 	}
 
-	// TODO: Use custom getter instead
+	buildAtlas() {
+		this.atlas = new Atlas(this.config.tileset).load(
+			this.config.map.atlas.data || []
+		);
+	}
+
 	drawTo(el: HTMLElement) {
 		this.renderer.el = el;
-		return this;
-	}
-
-	// TODO: Same here
-	persistTo(http: HttpClient) {
-		this.sync.http = http;
 		return this;
 	}
 
@@ -60,24 +41,20 @@ export class Engine {
 	}
 
 	initialize() {
-		if (!this.atlas) {
-			throw new Error('Quill.Engine not initialized with an Atlas');
-		}
-
 		this.store.initialize({
 			[StoreKey.SelectedBlueprint]: null,
 			[StoreKey.SelectedDirection]: Direction.N,
 		});
 
+		// TODO: Cleanup all of this
 		this.renderer.io = this.io;
 
 		this.io.store = this.store;
-		this.io.tileset = this.tileset;
+		this.io.tileset = this.config.tileset;
 
+		this.sync.config = this.config;
 		this.sync.atlas = this.atlas;
-		this.sync.map = this.map;
 
-		// TODO: This is unnecessary. The engine can do this.
 		this.relay.link(this.atlas, this.renderer, this.io, this.sync);
 
 		this.renderer.initialize();

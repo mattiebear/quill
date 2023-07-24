@@ -3,14 +3,9 @@ import { useQuery } from '@tanstack/react-query';
 import { getHttpClient, useHttpClient } from '@/lib/http';
 import { getQueryClient } from '@/lib/queries';
 import { DynamicPath } from '@/lib/url';
+import { ModuleMapDetailData } from '@/types/map';
 
 import { Resource } from '../types';
-
-interface MapData {
-	id: string;
-	name: string;
-	userId: string;
-}
 
 const buildKey = (id: string) => [Resource.Map, id];
 
@@ -25,7 +20,7 @@ export const fetchMapDetail = async (id: string) => {
 	return queryClient.fetchQuery(
 		buildKey(id),
 		() => {
-			return http.get<MapData>(buildPath(id));
+			return http.get<ModuleMapDetailData>(buildPath(id));
 		},
 		{
 			staleTime: Infinity,
@@ -39,7 +34,7 @@ export const useMapDetail = (id: string) => {
 	return useQuery(
 		buildKey(id),
 		() => {
-			return http.get<MapData>(buildPath(id));
+			return http.get<ModuleMapDetailData>(buildPath(id));
 		},
 		{
 			staleTime: Infinity,

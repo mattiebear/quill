@@ -78,7 +78,7 @@ export const EditorUI: FC = () => {
 					</Flex>
 
 					<SimpleGrid columns={3} spacing={2}>
-						{engine.tileset.all.map((blueprint) => (
+						{engine.config.tileset.all.map((blueprint) => (
 							<Button
 								key={blueprint.id}
 								h="auto"

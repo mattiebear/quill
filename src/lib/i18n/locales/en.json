@@ -32,7 +32,8 @@
 			"zoomIn": "Zoom in",
 			"zoomOut": "Zoom out",
 			"rotateRight": "Rotate right",
-			"rotateLeft": "Rotate left"
+			"rotateLeft": "Rotate left",
+			"mapSaved": "Map saved"
 		}
 	}
 }

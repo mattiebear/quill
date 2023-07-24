@@ -2,14 +2,9 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getHttpClient, useHttpClient } from '@/lib/http';
 import { getQueryClient } from '@/lib/queries';
+import { ModuleMapListData } from '@/types/map';
 
 import { Resource } from '../types';
-
-interface MapData {
-	id: string;
-	name: string;
-	userId: string;
-}
 
 const buildKey = () => [Resource.Map];
 
@@ -22,7 +17,7 @@ export const fetchMapsList = async () => {
 	const queryClient = await getQueryClient();
 
 	return queryClient.fetchQuery(buildKey(), () => {
-		return http.get<MapData[]>(buildPath());
+		return http.get<ModuleMapListData[]>(buildPath());
 	});
 };
 
@@ -32,6 +27,6 @@ export const useMapsList = () => {
 
 	// TODO: Add some kind of pagination
 	return useQuery(buildKey(), () => {
-		return http.get<MapData[]>(buildPath());
+		return http.get<ModuleMapListData[]>(buildPath());
 	});
 };
