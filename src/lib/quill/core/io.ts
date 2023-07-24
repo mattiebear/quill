@@ -1,9 +1,14 @@
-import { Direction, Position } from '@/lib/quill';
-import { Relay, Subscriber } from '@/lib/quill/core/relay';
-import { Store } from '@/lib/quill/core/store';
-import { Tileset } from '@/lib/quill/map/tileset';
-import { MapEvent, RenderEvent } from '@/lib/quill/types/event';
-import { StoreKey } from '@/lib/quill/types/store';
+import {
+	Direction,
+	MapEvent,
+	Position,
+	Relay,
+	RenderEvent,
+	Store,
+	StoreKey,
+	Subscriber,
+	Tileset,
+} from '@/lib/quill';
 import { find, shift } from '@/utils/array';
 
 enum Key {

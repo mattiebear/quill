@@ -1,5 +1,5 @@
 import { HttpClient } from '@/lib/http/types';
-import { Tileset } from '@/lib/quill/map/tileset';
+import { Tileset } from '@/lib/quill';
 import { ModuleMapDetailData } from '@/types/map';
 
 interface ConfigValues {

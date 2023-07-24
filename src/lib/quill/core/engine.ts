@@ -1,11 +1,14 @@
-import { Atlas, Direction } from '@/lib/quill';
-import { EngineConfig } from '@/lib/quill/core/engine-config';
-import { IO } from '@/lib/quill/core/io';
-import { Relay } from '@/lib/quill/core/relay';
-import { Store } from '@/lib/quill/core/store';
-import { Sync } from '@/lib/quill/core/sync';
-import { Renderer } from '@/lib/quill/renderer/renderer';
-import { StoreKey } from '@/lib/quill/types/store';
+import {
+	Atlas,
+	Direction,
+	EngineConfig,
+	IO,
+	Relay,
+	Renderer,
+	Store,
+	StoreKey,
+	Sync,
+} from '@/lib/quill';
 
 /**
  * The primary container for the Quill rendering engine, containing and organizing all inner modules

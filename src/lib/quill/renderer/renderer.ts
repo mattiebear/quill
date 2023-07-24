@@ -1,12 +1,17 @@
 import * as PIXI from 'pixi.js';
 
-import { Position } from '@/lib/quill';
-import { IO } from '@/lib/quill/core/io';
-import { Relay, Subscriber } from '@/lib/quill/core/relay';
-import { Changeset, NodeChange } from '@/lib/quill/map/changeset';
-import { RenderNode } from '@/lib/quill/renderer/render-node';
-import { RenderObject } from '@/lib/quill/renderer/render-object';
-import { MapEvent, RenderEvent } from '@/lib/quill/types/event';
+import {
+	Changeset,
+	IO,
+	MapEvent,
+	NodeChange,
+	Position,
+	Relay,
+	RenderEvent,
+	RenderNode,
+	RenderObject,
+	Subscriber,
+} from '@/lib/quill';
 import { findOrCreateByKey } from '@/utils/map';
 import { degToRad } from '@/utils/math';
 import { clamp } from '@/utils/number';

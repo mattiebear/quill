@@ -1,7 +1,6 @@
 import { Sprite, Texture } from 'pixi.js';
 
-import { Direction, TileType } from '@/lib/quill';
-import { Tile } from '@/lib/quill/map/tile';
+import { Direction, Tile, TileType } from '@/lib/quill';
 
 // NOTE: Offset is to account for sprite height of 512 while only 128 are the actual tile at bottom of image
 // The 20 is because the tiles sit "up" a few to give the perception of depth

@@ -1,7 +1,4 @@
-import { Atlas } from '@/lib/quill';
-import { EngineConfig } from '@/lib/quill/core/engine-config';
-import { Relay, Subscriber } from '@/lib/quill/core/relay';
-import { MapEvent } from '@/lib/quill/types/event';
+import { Atlas, EngineConfig, MapEvent, Relay, Subscriber } from '@/lib/quill';
 import { DynamicPath } from '@/lib/url';
 
 const PERSIST_DEBOUNCE = 3000;

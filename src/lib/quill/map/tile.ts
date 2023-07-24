@@ -1,6 +1,5 @@
 import { Crypto } from '@/lib/crypto';
-import { TileBlueprint } from '@/lib/quill/map/tile-blueprint';
-import { Direction } from '@/lib/quill/types/map';
+import { Direction, TileBlueprint } from '@/lib/quill';
 
 /**
  * A single instance of a tile from blueprint on the map and the direction it faces

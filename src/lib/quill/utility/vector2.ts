@@ -1,4 +1,4 @@
-import { Point } from '@/lib/quill/utility/point';
+import { Point } from '@/lib/quill';
 import { degToRad, div, radToDeg } from '@/utils/math';
 
 export class Vector2 {
