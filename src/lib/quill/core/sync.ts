@@ -26,10 +26,13 @@ export class Sync implements Subscriber {
 	}
 
 	async persistMap() {
+		// TODO: Need to make sure map is updated correctly in state
 		const url = new DynamicPath('/maps/:id').for(this.config.map).toString();
-		const data = this.atlas.toJSON();
+		const atlas = Object.assign({}, this.config.map.atlas);
 
-		await this.config.http.patch(url, { atlas: { data } });
+		atlas.data = this.atlas.toJSON();
+
+		await this.config.http.patch(url, { atlas });
 
 		this.relay.send(MapEvent.MapSaved);
 	}

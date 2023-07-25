@@ -29,7 +29,7 @@ export class Engine {
 
 	buildAtlas() {
 		this.atlas = new Atlas(this.config.tileset).load(
-			this.config.map.atlas.data || []
+			this.config.map.atlas.data
 		);
 	}
 
@@ -49,7 +49,7 @@ export class Engine {
 			[StoreKey.SelectedDirection]: Direction.N,
 		});
 
-		// TODO: Cleanup all of this
+		// TODO: Clean up all of this
 		this.renderer.io = this.io;
 
 		this.io.store = this.store;
