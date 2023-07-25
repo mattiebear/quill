@@ -1,8 +1,11 @@
-import { Changeset } from '@/lib/quill/map/changeset';
-import { Tile } from '@/lib/quill/map/tile';
-import { TileBlueprint, TileType } from '@/lib/quill/map/tile-blueprint';
-import { Direction } from '@/lib/quill/types/map';
-import { Position } from '@/lib/quill/utility/position';
+import {
+	Changeset,
+	Direction,
+	Position,
+	Tile,
+	TileBlueprint,
+	TileType,
+} from '@/lib/quill';
 import { PersistedTile } from '@/types/map';
 
 /**

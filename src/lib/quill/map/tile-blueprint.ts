@@ -1,4 +1,4 @@
-import { DirectionalSprite } from '@/lib/quill/map/directional-sprite';
+import { DirectionalSprite } from '@/lib/quill';
 
 export enum TileType {
 	Floor,

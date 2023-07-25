@@ -1,11 +1,15 @@
-import { Direction, TileBlueprint } from '@/lib/quill';
-import { Relay, Subscriber } from '@/lib/quill/core/relay';
-import { Changeset } from '@/lib/quill/map/changeset';
-import { MapNode } from '@/lib/quill/map/map-node';
-import { Tileset } from '@/lib/quill/map/tileset';
-import { MapEvent } from '@/lib/quill/types/event';
-import { Position } from '@/lib/quill/utility/position';
-import { MapData, PersistedNode } from '@/types/map';
+import {
+	Changeset,
+	Direction,
+	MapEvent,
+	MapNode,
+	Position,
+	Relay,
+	Subscriber,
+	TileBlueprint,
+	Tileset,
+} from '@/lib/quill';
+import { AtlasData, PersistedNode } from '@/types/map';
 import { findOrCreateByKey } from '@/utils/map';
 
 // TODO: Need to come up with a better system to link events
@@ -45,7 +49,7 @@ export class Atlas implements Subscriber {
 		);
 	}
 
-	load(mapData: MapData) {
+	load(mapData: AtlasData) {
 		mapData.forEach((node) => {
 			const position = new Position(...node.p);
 

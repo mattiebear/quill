@@ -1,4 +1,4 @@
-import { Point } from '@/lib/quill/utility/point';
+import { Point } from '@/lib/quill';
 import { degToRad, div, radToDeg } from '@/utils/math';
 
 export class Vector2 {
@@ -26,14 +26,12 @@ export class Vector2 {
 	}
 
 	get endpoint() {
-		// console.log(this.angle);
 		const rad = degToRad(this.angle);
 
-		const x = this.magnitude * Math.cos(rad);
-		const y = this.magnitude * Math.sin(rad);
+		const x = this.magnitude * Math.cos(rad) || 0;
+		const y = this.magnitude * Math.sin(rad) || 0;
 
-		// The +0 is to coerce any -0 instances to unsigned 0
-		return new Point(x + 0, y + 0);
+		return new Point(x, y);
 	}
 
 	rotate(degrees: number) {

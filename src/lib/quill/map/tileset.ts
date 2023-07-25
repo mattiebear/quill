@@ -1,5 +1,4 @@
-import { DirectionalSprite, TileBlueprint } from '@/lib/quill';
-import { TileSchema } from '@/lib/quill/types/map';
+import { DirectionalSprite, TileBlueprint, TileSchema } from '@/lib/quill';
 import { joinPaths } from '@/utils/path';
 
 interface FromOptions {

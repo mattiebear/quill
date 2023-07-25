@@ -10,4 +10,20 @@ export interface PersistedNode {
 	t: PersistedTile[];
 }
 
-export type MapData = PersistedNode[];
+export type AtlasData = PersistedNode[];
+
+export interface MapAtlas {
+	data: AtlasData;
+	version: string;
+}
+
+export interface ModuleMapData {
+	id: string;
+	atlas: MapAtlas;
+	name: string;
+	userId: string;
+}
+
+export type ModuleMapDetailData = ModuleMapData;
+
+export type ModuleMapListData = Omit<ModuleMapData, 'atlas'>;

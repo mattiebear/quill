@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-import { Position } from '@/lib/quill';
-import { RenderObject } from '@/lib/quill/renderer/render-object';
+import { Position, RenderObject } from '@/lib/quill';
 
 export class RenderNode {
 	private objects: RenderObject[] = [];

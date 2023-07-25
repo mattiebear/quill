@@ -8,11 +8,11 @@ import { EditorUI } from './editor-ui';
 
 export const MapEditor = () => {
 	const id = useIdParam();
-	// TODO: Add typing
 	const { data } = useMapDetail(id);
-	const engine = useQuill((data as any).data);
 
 	assertPresence(data);
+
+	const engine = useQuill(data);
 
 	return (
 		<EditorContext value={{ engine }}>
