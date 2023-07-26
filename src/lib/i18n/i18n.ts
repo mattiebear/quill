@@ -9,6 +9,9 @@ const initialize = () => {
 			en,
 		},
 		fallbackLng: 'en',
+		interpolation: {
+			escapeValue: false,
+		},
 	});
 };
 

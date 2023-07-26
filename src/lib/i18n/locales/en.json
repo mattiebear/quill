@@ -25,7 +25,7 @@
 			},
 			"create": {
 				"successTitle": "New map created",
-				"successDescription": "You can now edit your map \"{{name}}\"."
+				"successDescription": "You can now edit your map \"{{name}}\""
 			}
 		},
 		"editor": {
