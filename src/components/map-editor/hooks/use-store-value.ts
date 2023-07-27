@@ -15,7 +15,7 @@ export const useStoreValue = <T = unknown>(key: string) => {
 		store.subscribe(key, listener);
 
 		return () => store.unsubscribe(key, listener);
-	}, []);
+	}, [key, store]);
 
 	return currentValue;
 };
