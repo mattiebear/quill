@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import { fetchMapDetail, fetchMapsList } from '@/api/maps';
 import { fetchTileManifest } from '@/api/tiles/meta';
+import { ErrorBoundary } from '@/components/error';
 import { Home } from '@/components/home';
 import { MainLayout } from '@/components/layout/main';
 import { MapEditor } from '@/components/map-editor';
@@ -11,49 +12,55 @@ import { Protected } from '@/lib/auth';
 
 export const router = createBrowserRouter([
 	{
-		path: '/sign-in/*',
-		element: <SignIn routing="path" path="/sign-in" />,
-	},
-	{
-		path: '/sign-up/*',
-		element: <SignUp routing="path" path="/sign-up" />,
-	},
-	{
-		path: '/maps/:id',
-		element: (
-			<Protected>
-				<MapEditor />
-			</Protected>
-		),
-		// TODO: Fix this typing. Also, how should we handle the loader for this route?
-		// TODO: Move loaders to separate file
-		loader: ({ params }) => {
-			return Promise.all([
-				fetchMapDetail(params.id as string),
-				fetchTileManifest(),
-			]);
-		},
-	},
-	{
 		path: '/',
-		element: (
-			<Protected>
-				<MainLayout />
-			</Protected>
-		),
+		errorElement: <ErrorBoundary />,
 		children: [
 			{
+				path: '/sign-in/*',
+				element: <SignIn routing="path" path="/sign-in" />,
+			},
+			{
+				path: '/sign-up/*',
+				element: <SignUp routing="path" path="/sign-up" />,
+			},
+			{
+				path: '/maps/:id',
+				element: (
+					<Protected>
+						<MapEditor />
+					</Protected>
+				),
+				// TODO: Fix this typing. Also, how should we handle the loader for this route?
+				// TODO: Move loaders to separate file
+				loader: ({ params }) => {
+					return Promise.all([
+						fetchMapDetail(params.id as string),
+						fetchTileManifest(),
+					]);
+				},
+			},
+			{
 				path: '/',
-				element: <Home />,
-			},
-			{
-				path: '/maps',
-				element: <MapsIndex />,
-				loader: () => fetchMapsList(),
-			},
-			{
-				path: '/maps/new',
-				element: <MapsNew />,
+				element: (
+					<Protected>
+						<MainLayout />
+					</Protected>
+				),
+				children: [
+					{
+						path: '/',
+						element: <Home />,
+					},
+					{
+						path: '/maps',
+						element: <MapsIndex />,
+						loader: () => fetchMapsList(),
+					},
+					{
+						path: '/maps/new',
+						element: <MapsNew />,
+					},
+				],
 			},
 		],
 	},
