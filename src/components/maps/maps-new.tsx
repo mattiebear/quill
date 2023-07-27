@@ -15,7 +15,9 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
+import { fetchMapsList, useInvalidateMaps } from '@/api/maps';
 import { useHttpClient } from '@/lib/http';
+import { ModuleMapDetailData } from '@/types/map';
 
 interface FormState {
 	name: string;
@@ -26,6 +28,7 @@ export const MapsNew: FC = () => {
 	const navigate = useNavigate();
 	const http = useHttpClient();
 	const toast = useToast();
+	const invalidate = useInvalidateMaps();
 
 	const {
 		register,
@@ -35,15 +38,19 @@ export const MapsNew: FC = () => {
 
 	const { mutate, isLoading } = useMutation(
 		(data: FormState) => {
-			return http.post('/maps', data);
+			return http.post<ModuleMapDetailData>('/maps', data);
 		},
 		{
-			onSuccess: (_data, form) => {
+			onSuccess: async (_data, form) => {
+				await invalidate();
+				await fetchMapsList();
+
 				toast({
 					title: t('maps.create.successTitle'),
 					description: t('maps.create.successDescription', { name: form.name }),
 					status: 'success',
 				});
+
 				navigate('/maps');
 			},
 		}
@@ -64,7 +71,7 @@ export const MapsNew: FC = () => {
 			</Heading>
 
 			<Container maxW="container.lg">
-				<Box as="form" onSubmit={handleSubmit(submitForm)}>
+				<Box as="form" autoComplete="off" onSubmit={handleSubmit(submitForm)}>
 					<FormControl isInvalid={!!errors.name}>
 						<FormLabel color="text.form.label">
 							{t('maps.field.name.label')}

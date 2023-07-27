@@ -1,4 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useCallback } from 'react';
 
 import { getHttpClient, useHttpClient } from '@/lib/http';
 import { getQueryClient } from '@/lib/queries';
@@ -29,4 +30,12 @@ export const useMapsList = () => {
 	return useQuery(buildKey(), () => {
 		return http.get<ModuleMapListData[]>(buildPath());
 	});
+};
+
+export const useInvalidateMaps = () => {
+	const queryClient = useQueryClient();
+
+	return useCallback(async () => {
+		await queryClient.invalidateQueries(buildKey());
+	}, [queryClient]);
 };
