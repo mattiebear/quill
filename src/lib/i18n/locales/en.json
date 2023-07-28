@@ -7,7 +7,8 @@
 		"navigation": {
 			"groupAssets": "My stuff",
 			"home": "Home",
-			"maps": "Maps"
+			"maps": "Maps",
+			"friends": "Friends"
 		},
 		"home": {
 			"title": "Home"
@@ -27,6 +28,9 @@
 				"successTitle": "New map created",
 				"successDescription": "You can now edit your map \"{{name}}\""
 			}
+		},
+		"friends": {
+			"indexTitle": "Friends"
 		},
 		"editor": {
 			"zoomIn": "Zoom in",
