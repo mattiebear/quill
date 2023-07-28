@@ -4,6 +4,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { fetchMapDetail, fetchMapsList } from '@/api/maps';
 import { fetchTileManifest } from '@/api/tiles/meta';
 import { ErrorBoundary } from '@/components/error';
+import { FriendsIndex } from '@/components/friends';
 import { Home } from '@/components/home';
 import { MainLayout } from '@/components/layout/main';
 import { MapEditor } from '@/components/map-editor';
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
 					{
 						path: '/maps/new',
 						element: <MapsNew />,
+					},
+					{
+						path: '/friends',
+						element: <FriendsIndex />,
 					},
 				],
 			},

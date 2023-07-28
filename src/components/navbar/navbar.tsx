@@ -3,7 +3,7 @@ import { UserButton } from '@clerk/clerk-react';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { HomeIcon, MapIcon } from '@/components/icon';
+import { HomeIcon, MapIcon, UserGroupIcon } from '@/components/icon';
 import {
 	Rail,
 	RailBottom,
@@ -34,6 +34,10 @@ export const Navbar: FC = () => {
 
 					<RailLink label={t('navigation.maps')} to="/maps">
 						<MapIcon />
+					</RailLink>
+
+					<RailLink label={t('navigation.friends')} to="/friends">
+						<UserGroupIcon />
 					</RailLink>
 				</RailGroup>
 			</RailContent>
