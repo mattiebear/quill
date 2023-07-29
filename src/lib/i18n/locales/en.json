@@ -2,6 +2,7 @@
 	"translation": {
 		"common": {
 			"create": "Create",
+			"search": "Search",
 			"submit": "Submit"
 		},
 		"navigation": {
@@ -30,7 +31,8 @@
 			}
 		},
 		"friends": {
-			"indexTitle": "Friends"
+			"indexTitle": "Friends",
+			"addFriendButton": "Add friend"
 		},
 		"editor": {
 			"zoomIn": "Zoom in",

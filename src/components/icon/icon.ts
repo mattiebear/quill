@@ -3,6 +3,7 @@ import {
 	ArrowUturnLeftIcon as ArrowUturnLeftIconBase,
 	ArrowUturnRightIcon as ArrowUturnRightIconBase,
 	HomeIcon as HomeIconBase,
+	MagnifyingGlassIcon as MagnifyingGlassIconBase,
 	MagnifyingGlassMinusIcon,
 	MagnifyingGlassPlusIcon,
 	MapIcon as MapIconBase,
@@ -14,6 +15,7 @@ import {
 export const ArrowUturnLeftIcon = chakra(ArrowUturnLeftIconBase);
 export const ArrowUturnRightIcon = chakra(ArrowUturnRightIconBase);
 export const HomeIcon = chakra(HomeIconBase);
+export const MagnifyingGlassIcon = chakra(MagnifyingGlassIconBase);
 export const MapIcon = chakra(MapIconBase);
 export const PlusCircleIcon = chakra(PlusCircleIconBase);
 export const UserGroupIcon = chakra(UserGroupIconBase);
