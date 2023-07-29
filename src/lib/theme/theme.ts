@@ -11,6 +11,7 @@ export const theme = extendTheme({
 		colors: {
 			// Brand
 			primary: 'purple.500',
+			secondary: 'blue.400',
 
 			// Feedback
 			error: 'red.500',

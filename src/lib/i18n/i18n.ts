@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next';
 import en from './locales/en.json';
 
 const initialize = () => {
-	i18n.use(initReactI18next).init({
+	return i18n.use(initReactI18next).init({
 		resources: {
 			en,
 		},
@@ -17,7 +17,7 @@ const initialize = () => {
 
 export const createI18nInstance = () => {
 	if (!i18n.isInitialized) {
-		initialize();
+		initialize().then();
 	}
 
 	return i18n;
