@@ -32,7 +32,15 @@
 		},
 		"friends": {
 			"indexTitle": "Friends",
-			"addFriendButton": "Add friend"
+			"addFriendButton": "Add friend",
+			"addFriendTitle": "Add friend",
+			"field": {
+				"username": {
+					"label": "Search by friend's username",
+					"placeholder": "Username"
+				}
+			},
+			"addFriendSubmit": "Send request"
 		},
 		"editor": {
 			"zoomIn": "Zoom in",
