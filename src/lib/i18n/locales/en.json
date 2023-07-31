@@ -3,7 +3,8 @@
 		"common": {
 			"create": "Create",
 			"search": "Search",
-			"submit": "Submit"
+			"submit": "Submit",
+			"unknownError": "An unknown error occurred"
 		},
 		"navigation": {
 			"groupAssets": "My stuff",
@@ -37,7 +38,16 @@
 			"field": {
 				"username": {
 					"label": "Search by friend's username",
-					"placeholder": "Username"
+					"placeholder": "Username",
+					"requiredError": "Enter a username to send an invitation"
+				}
+			},
+			"create": {
+				"successTitle": "Invite sent",
+				"successDescription": "Invite sent to {{name}}. Hold tight!",
+				"error": {
+					"username_not-found": "Nobody found with that username",
+					"connection_already-exists": "You've already sent an invite to them!"
 				}
 			},
 			"addFriendSubmit": "Send request"
