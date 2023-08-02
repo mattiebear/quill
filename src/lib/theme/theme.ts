@@ -52,6 +52,9 @@ export const theme = extendTheme({
 				heading: {
 					default: 'gray.300',
 				},
+				table: {
+					default: 'gray.200',
+				},
 			},
 		},
 	},

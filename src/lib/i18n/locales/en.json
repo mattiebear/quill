@@ -50,7 +50,12 @@
 					"connection_already-exists": "You've already sent an invite to them!"
 				}
 			},
-			"addFriendSubmit": "Send request"
+			"addFriendSubmit": "Send request",
+			"pending": {
+				"tableTitle": "Pending Invitations",
+				"accept": "Accept",
+				"reject": "Reject"
+			}
 		},
 		"editor": {
 			"zoomIn": "Zoom in",

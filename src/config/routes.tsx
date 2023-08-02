@@ -1,6 +1,7 @@
 import { SignIn, SignUp } from '@clerk/clerk-react';
 import { createBrowserRouter } from 'react-router-dom';
 
+import { fetchConnectionsList } from '@/api/connections';
 import { fetchMapDetail, fetchMapsList } from '@/api/maps';
 import { fetchTileManifest } from '@/api/tiles/meta';
 import { ErrorBoundary } from '@/components/error';
@@ -64,6 +65,7 @@ export const router = createBrowserRouter([
 					{
 						path: '/friends',
 						element: <FriendsIndex />,
+						loader: () => fetchConnectionsList(),
 					},
 				],
 			},

@@ -13,6 +13,7 @@ import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AddFriendModal } from '@/components/friends/add-friend-modal';
+import { PendingInvitationsTable } from '@/components/friends/pending-invitations-table';
 import { MagnifyingGlassIcon } from '@/components/icon';
 
 export const FriendsIndex: FC = () => {
@@ -32,7 +33,7 @@ export const FriendsIndex: FC = () => {
 			</Heading>
 
 			<Container maxW="container.lg">
-				<VStack alignItems="flex-end" spacing={4}>
+				<VStack alignItems="flex-end" spacing={8}>
 					<Flex justifyContent="flex-end">
 						<Button colorScheme="blue" onClick={onOpen}>
 							{t('friends.addFriendButton')}
@@ -45,6 +46,8 @@ export const FriendsIndex: FC = () => {
 							<MagnifyingGlassIcon boxSize={6} />
 						</InputRightElement>
 					</InputGroup>
+
+					<PendingInvitationsTable />
 				</VStack>
 			</Container>
 
