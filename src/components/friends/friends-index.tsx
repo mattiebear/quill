@@ -12,6 +12,7 @@ import {
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { ActiveConnectionsTable } from '@/components/friends/active-connections-table';
 import { AddFriendModal } from '@/components/friends/add-friend-modal';
 import { PendingInvitationsTable } from '@/components/friends/pending-invitations-table';
 import { MagnifyingGlassIcon } from '@/components/icon';
@@ -48,6 +49,7 @@ export const FriendsIndex: FC = () => {
 					</InputGroup>
 
 					<PendingInvitationsTable />
+					<ActiveConnectionsTable />
 				</VStack>
 			</Container>
 
