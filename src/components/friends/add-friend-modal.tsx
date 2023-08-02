@@ -99,7 +99,12 @@ export const AddFriendModal: FC<AddFriendModalProps> = ({
 				</ModalHeader>
 				<ModalCloseButton color="white" />
 				<ModalBody>
-					<Box as="form" autoComplete="off">
+					{/*TODO: Try to wrap all in a form*/}
+					<Box
+						as="form"
+						autoComplete="off"
+						onSubmit={(e) => e.preventDefault()}
+					>
 						<FormControl isInvalid={!!errors.username}>
 							<FormLabel color="text.form.label">
 								{t('friends.field.username.label')}

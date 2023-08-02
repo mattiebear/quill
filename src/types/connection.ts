@@ -1,3 +1,5 @@
+import { User } from '@/types/user';
+
 export enum ConnectionStatus {
 	PendingAcceptance = 'pending',
 	AwaitingResponse = 'awaiting',
@@ -14,4 +16,12 @@ export interface ConnectionData {
 	updatedAt: string;
 }
 
+interface ConnectionWithUser {
+	connectedUser: User;
+}
+
 export type ConnectionDetailData = ConnectionData;
+
+export interface ConnectionListData
+	extends ConnectionData,
+		ConnectionWithUser {}
