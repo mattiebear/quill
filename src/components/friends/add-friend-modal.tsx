@@ -1,5 +1,4 @@
 import {
-	Box,
 	Button,
 	FormControl,
 	FormErrorMessage,
@@ -93,38 +92,36 @@ export const AddFriendModal: FC<AddFriendModalProps> = ({
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
 			<ModalOverlay />
-			<ModalContent bg="background.cover">
+			<ModalContent
+				as="form"
+				bg="background.cover"
+				autoComplete="off"
+				onSubmit={(e) => e.preventDefault()}
+			>
 				<ModalHeader color="text.heading">
 					{t('friends.addFriendTitle')}
 				</ModalHeader>
 				<ModalCloseButton color="white" />
 				<ModalBody>
-					{/*TODO: Try to wrap all in a form*/}
-					<Box
-						as="form"
-						autoComplete="off"
-						onSubmit={(e) => e.preventDefault()}
-					>
-						<FormControl isInvalid={!!errors.username}>
-							<FormLabel color="text.form.label">
-								{t('friends.field.username.label')}
-							</FormLabel>
-							<Input
-								autoFocus
-								borderRadius="xl"
-								color="text.form.input"
-								placeholder={t('friends.field.username.placeholder')}
-								type="text"
-								{...register('username', { required: true })}
-							/>
+					<FormControl isInvalid={!!errors.username}>
+						<FormLabel color="text.form.label">
+							{t('friends.field.username.label')}
+						</FormLabel>
+						<Input
+							autoFocus
+							borderRadius="xl"
+							color="text.form.input"
+							placeholder={t('friends.field.username.placeholder')}
+							type="text"
+							{...register('username', { required: true })}
+						/>
 
-							{errors.username && (
-								<FormErrorMessage>
-									{t('friends.field.username.requiredError')}
-								</FormErrorMessage>
-							)}
-						</FormControl>
-					</Box>
+						{errors.username && (
+							<FormErrorMessage>
+								{t('friends.field.username.requiredError')}
+							</FormErrorMessage>
+						)}
+					</FormControl>
 				</ModalBody>
 
 				<ModalFooter>
@@ -132,6 +129,7 @@ export const AddFriendModal: FC<AddFriendModalProps> = ({
 						colorScheme="purple"
 						isLoading={isLoading}
 						onClick={handleSubmit(submitForm)}
+						type="submit"
 					>
 						{t('friends.addFriendSubmit')}
 					</Button>
