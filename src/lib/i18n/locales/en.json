@@ -55,6 +55,11 @@
 				"tableTitle": "Pending Invitations",
 				"accept": "Accept",
 				"reject": "Reject"
+			},
+			"active": {
+				"tableTitle": "Friends ({{count, number}})",
+				"menuLabel": "Options menu for {{username}}",
+				"menuRemove": "Remove"
 			}
 		},
 		"editor": {

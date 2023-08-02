@@ -16,24 +16,24 @@ import { useTranslation } from 'react-i18next';
 import { useConnections } from '@/components/friends/hooks/use-connections';
 
 export const PendingInvitationsTable: FC = () => {
-	const { pendingConnections } = useConnections();
+	const { pendingConnections: connections } = useConnections();
 	const { t } = useTranslation();
 
-	if (!pendingConnections.length) {
+	if (!connections.length) {
 		return null;
 	}
 
 	return (
 		<TableContainer color="text.table" w="full">
-			<Heading as="h4" fontSize="xl" fontWeight="medium">
+			<Heading as="h4" fontSize="lg" fontWeight="medium">
 				{t('friends.pending.tableTitle')}
 			</Heading>
 			<Table variant="simple">
 				<Tbody>
-					{pendingConnections.map((connection) => {
+					{connections.map((connection) => {
 						return (
 							<Tr>
-								<Td>
+								<Td pl={0}>
 									<Avatar src={connection.connectedUser.profileImageUrl} />
 								</Td>
 								<Td w="full">
@@ -50,17 +50,6 @@ export const PendingInvitationsTable: FC = () => {
 											{t('friends.pending.accept')}
 										</Button>
 									</HStack>
-									{/*<IconButton*/}
-									{/*	aria-label="Search database"*/}
-									{/*	colorScheme="cyan"*/}
-									{/*	icon={<EllipsisHorizontalIcon />}*/}
-									{/*	isRound*/}
-									{/*	size="sm"*/}
-									{/*	variant="outline"*/}
-									{/*	_hover={{*/}
-									{/*		bg: 'blue.900',*/}
-									{/*	}}*/}
-									{/*/>*/}
 								</Td>
 							</Tr>
 						);
