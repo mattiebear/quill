@@ -30,7 +30,7 @@ export const ActiveConnectionsTable: FC = () => {
 	return (
 		<TableContainer color="text.table" w="full">
 			<Heading as="h4" fontSize="lg" fontWeight="medium">
-				{t('friends.active.tableTitle', { count: pendingConnections.length })}
+				{t('friends.active.tableTitle', { count: connections.length })}
 			</Heading>
 			<Table variant="simple">
 				<Tbody>

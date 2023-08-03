@@ -10,25 +10,43 @@ export const theme = extendTheme({
 	semanticTokens: {
 		colors: {
 			// Brand
-			primary: 'purple.500',
-			secondary: 'blue.400',
+			primary: {
+				default: 'purple.500',
+			},
+			secondary: {
+				default: 'blue.400',
+			},
 
 			// Feedback
-			error: 'red.500',
-			success: 'green.500',
+			error: {
+				default: 'red.500',
+			},
+			success: {
+				default: 'green.500',
+			},
 
 			// Background
 			background: {
-				base: 'gray.900',
-				cover: 'gray.800',
-				float: 'gray.700',
+				base: {
+					default: 'gray.900',
+				},
+				cover: {
+					default: 'gray.800',
+				},
+				float: {
+					default: 'gray.700',
+				},
 			},
 
 			// Button
 			button: {
 				cta: {
-					light: 'white',
-					active: 'purple.300',
+					light: {
+						default: 'white',
+					},
+					active: {
+						default: 'purple.300',
+					},
 				},
 			},
 
@@ -38,16 +56,28 @@ export const theme = extendTheme({
 					default: 'gray.200',
 				},
 				cover: {
-					muted: 'gray.600',
-					peek: 'gray.500',
-					focus: 'gray.200',
+					muted: {
+						default: 'gray.600',
+					},
+					peek: {
+						default: 'gray.500',
+					},
+					focus: {
+						default: 'gray.200',
+					},
 				},
 				form: {
-					input: 'gray.200',
-					label: 'gray.300',
+					input: {
+						default: 'gray.200',
+					},
+					label: {
+						default: 'gray.300',
+					},
 				},
 				link: {
-					active: 'purple.300',
+					active: {
+						default: 'purple.300',
+					},
 				},
 				heading: {
 					default: 'gray.300',

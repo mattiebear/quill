@@ -60,6 +60,20 @@
 				"tableTitle": "Friends ({{count, number}})",
 				"menuLabel": "Options menu for {{username}}",
 				"menuRemove": "Remove"
+			},
+			"connection": {
+				"accept": {
+					"title": "Invitation accepted!",
+					"description": "You can now start a session with this player"
+				},
+				"reject": {
+					"title": "Invitation rejected",
+					"description": "They won't be able to send another request for a while",
+					"confirmTitle": "Decline invite?",
+					"confirmDescription": "You won't be able to connect with them for a while",
+					"confirmCancel": "Never mind",
+					"confirmAccept": "Yes. Do it"
+				}
 			}
 		},
 		"editor": {
