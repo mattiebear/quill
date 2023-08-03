@@ -109,7 +109,6 @@ export const AddFriendModal: FC<AddFriendModalProps> = ({
 						</FormLabel>
 						<Input
 							autoFocus
-							borderRadius="xl"
 							color="text.form.input"
 							placeholder={t('friends.field.username.placeholder')}
 							type="text"

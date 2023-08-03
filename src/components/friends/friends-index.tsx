@@ -34,7 +34,7 @@ export const FriendsIndex: FC = () => {
 			</Heading>
 
 			<Container maxW="container.lg">
-				<VStack alignItems="flex-end" spacing={8}>
+				<VStack alignItems="flex-end" spacing={4}>
 					<Flex justifyContent="flex-end">
 						<Button colorScheme="blue" onClick={onOpen}>
 							{t('friends.addFriendButton')}

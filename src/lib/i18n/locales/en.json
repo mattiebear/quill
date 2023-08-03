@@ -73,6 +73,14 @@
 					"confirmDescription": "You won't be able to connect with them for a while",
 					"confirmCancel": "Never mind",
 					"confirmAccept": "Yes. Do it"
+				},
+				"remove": {
+					"title": "Friend removed",
+					"description": "They won't be able to send another request for a while",
+					"confirmTitle": "Remove friend?",
+					"confirmDescription": "You won't be able to connect with them for a while",
+					"confirmCancel": "Never mind",
+					"confirmAccept": "Yes. Do it"
 				}
 			}
 		},
