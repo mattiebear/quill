@@ -5,8 +5,10 @@ import {
 	FormControl,
 	FormErrorMessage,
 	FormLabel,
+	HStack,
 	Heading,
 	Input,
+	Spacer,
 	useToast,
 } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
@@ -77,7 +79,6 @@ export const MapsNew: FC = () => {
 							{t('maps.field.name.label')}
 						</FormLabel>
 						<Input
-							borderRadius="xl"
 							color="text.form.input"
 							type="text"
 							{...register('name', { required: true })}
@@ -90,15 +91,17 @@ export const MapsNew: FC = () => {
 						)}
 					</FormControl>
 
-					<Button
-						borderRadius="xl"
-						colorScheme="purple"
-						isLoading={isLoading}
-						mt={4}
-						type="submit"
-					>
-						{t('common.create')}
-					</Button>
+					<HStack>
+						<Spacer />
+						<Button
+							colorScheme="purple"
+							isLoading={isLoading}
+							mt={4}
+							type="submit"
+						>
+							{t('common.create')}
+						</Button>
+					</HStack>
 				</Box>
 			</Container>
 		</>
