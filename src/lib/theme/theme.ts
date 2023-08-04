@@ -24,6 +24,9 @@ export const theme = extendTheme({
 			success: {
 				default: 'green.500',
 			},
+			alert: {
+				default: 'red.500',
+			},
 
 			// Background
 			background: {

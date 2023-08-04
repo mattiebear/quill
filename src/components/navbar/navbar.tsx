@@ -3,6 +3,8 @@ import { UserButton } from '@clerk/clerk-react';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { CountBadge } from '@/components/counter';
+import { useConnections } from '@/components/friends';
 import { HomeIcon, MapIcon, UserGroupIcon } from '@/components/icon';
 import {
 	Rail,
@@ -16,6 +18,7 @@ import {
 
 export const Navbar: FC = () => {
 	const { t } = useTranslation();
+	const { pendingConnections } = useConnections();
 
 	return (
 		<Rail as="nav">
@@ -37,7 +40,9 @@ export const Navbar: FC = () => {
 					</RailLink>
 
 					<RailLink label={t('navigation.friends')} to="/friends">
-						<UserGroupIcon />
+						<CountBadge count={pendingConnections.length}>
+							<UserGroupIcon />
+						</CountBadge>
 					</RailLink>
 				</RailGroup>
 			</RailContent>

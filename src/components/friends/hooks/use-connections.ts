@@ -3,14 +3,19 @@ import { useMemo } from 'react';
 import { useConnectionsList } from '@/api/connections';
 import { ConnectionStatus } from '@/types/connection';
 import { propEq } from '@/utils/lamba';
-import { assertPresence } from '@/utils/runtime';
 
 export const useConnections = () => {
 	const { data } = useConnectionsList();
 
-	assertPresence(data);
-
 	return useMemo(() => {
+		if (!data) {
+			return {
+				acceptedConnections: [],
+				pendingConnections: [],
+				awaitingConnections: [],
+			};
+		}
+
 		const acceptedConnections = data.data.filter(
 			propEq('status', ConnectionStatus.Accepted)
 		);

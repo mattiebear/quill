@@ -34,20 +34,21 @@ export const FriendsIndex: FC = () => {
 			</Heading>
 
 			<Container maxW="container.lg">
-				<VStack alignItems="flex-end" spacing={4}>
-					<Flex justifyContent="flex-end">
-						<Button colorScheme="blue" onClick={onOpen}>
-							{t('friends.addFriendButton')}
-						</Button>
-					</Flex>
+				<VStack spacing={8}>
+					<VStack alignItems="flex-end" spacing={4} w="full">
+						<Flex justifyContent="flex-end">
+							<Button colorScheme="blue" onClick={onOpen}>
+								{t('friends.addFriendButton')}
+							</Button>
+						</Flex>
 
-					<InputGroup color="text.form.input">
-						<Input placeholder={t('common.search')} />
-						<InputRightElement>
-							<MagnifyingGlassIcon boxSize={6} />
-						</InputRightElement>
-					</InputGroup>
-
+						<InputGroup color="text.form.input">
+							<Input placeholder={t('common.search')} />
+							<InputRightElement>
+								<MagnifyingGlassIcon boxSize={6} />
+							</InputRightElement>
+						</InputGroup>
+					</VStack>
 					<PendingInvitationsTable />
 					<ActiveConnectionsTable />
 				</VStack>
