@@ -12,7 +12,6 @@ export const useConnections = () => {
 			return {
 				acceptedConnections: [],
 				pendingConnections: [],
-				awaitingConnections: [],
 			};
 		}
 
@@ -24,10 +23,6 @@ export const useConnections = () => {
 			propEq('status', ConnectionStatus.PendingAcceptance)
 		);
 
-		const awaitingConnections = data.data.filter(
-			propEq('status', ConnectionStatus.AwaitingResponse)
-		);
-
-		return { acceptedConnections, pendingConnections, awaitingConnections };
+		return { acceptedConnections, pendingConnections };
 	}, [data]);
 };
