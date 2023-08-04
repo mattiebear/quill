@@ -9,17 +9,24 @@ import {
 	VStack,
 	useDisclosure,
 } from '@chakra-ui/react';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ActiveConnectionsTable } from '@/components/friends/active-connections-table';
 import { AddFriendModal } from '@/components/friends/add-friend-modal';
+import { FriendsContext } from '@/components/friends/context';
+import { useConnections } from '@/components/friends/hooks/use-connections';
 import { PendingInvitationsTable } from '@/components/friends/pending-invitations-table';
 import { MagnifyingGlassIcon } from '@/components/icon';
 
 export const FriendsIndex: FC = () => {
 	const { t } = useTranslation();
 	const { isOpen, onClose, onOpen } = useDisclosure();
+	const { acceptedConnections, pendingConnections } = useConnections();
+	const [searchValue, setSearchValue] = useState('');
+
+	const count = acceptedConnections.length + pendingConnections.length;
+	const canSearch = !!count;
 
 	return (
 		<>
@@ -42,15 +49,24 @@ export const FriendsIndex: FC = () => {
 							</Button>
 						</Flex>
 
-						<InputGroup color="text.form.input">
-							<Input placeholder={t('common.search')} />
-							<InputRightElement>
-								<MagnifyingGlassIcon boxSize={6} />
-							</InputRightElement>
-						</InputGroup>
+						{canSearch && (
+							<InputGroup color="text.form.input">
+								<Input
+									onChange={(e) => setSearchValue(e.target.value)}
+									placeholder={t('common.search')}
+									value={searchValue}
+								/>
+								<InputRightElement>
+									<MagnifyingGlassIcon boxSize={6} />
+								</InputRightElement>
+							</InputGroup>
+						)}
 					</VStack>
-					<PendingInvitationsTable />
-					<ActiveConnectionsTable />
+
+					<FriendsContext value={{ searchValue }}>
+						<PendingInvitationsTable />
+						<ActiveConnectionsTable />
+					</FriendsContext>
 				</VStack>
 			</Container>
 

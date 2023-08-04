@@ -1,12 +1,23 @@
 import { Heading, Table, TableContainer, Tbody } from '@chakra-ui/react';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { ActiveConnectionsRow } from '@/components/friends/active-connections-row';
+import { useFriendsContext } from '@/components/friends/context';
 import { useConnections } from '@/components/friends/hooks/use-connections';
+import { matchUsername } from '@/components/friends/utils';
+
+const useActiveConnections = () => {
+	const { acceptedConnections } = useConnections();
+	const { searchValue } = useFriendsContext();
+
+	return useMemo(() => {
+		return acceptedConnections.filter(matchUsername(searchValue));
+	}, [acceptedConnections, searchValue]);
+};
 
 export const ActiveConnectionsTable: FC = () => {
-	const { acceptedConnections: connections } = useConnections();
+	const connections = useActiveConnections();
 	const { t } = useTranslation();
 
 	if (!connections.length) {
