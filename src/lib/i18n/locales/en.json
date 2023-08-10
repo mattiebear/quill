@@ -46,6 +46,7 @@
 				"successTitle": "Invite sent",
 				"successDescription": "Invite sent to {{name}}. Hold tight!",
 				"error": {
+					"username_invalid": "You can't send an invite to yourself",
 					"username_notFound": "Nobody found with that username",
 					"connection_alreadyExists": "You've already sent an invite to them!"
 				}
