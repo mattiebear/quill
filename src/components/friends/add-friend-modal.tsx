@@ -55,7 +55,7 @@ export const AddFriendModal: FC<AddFriendModalProps> = ({
 
 	const { mutate, isLoading } = useMutation(
 		(data: FormState) => {
-			return http.post<ConnectionDetailData>('/connections/request', data);
+			return http.post<ConnectionDetailData>('/connections', data);
 		},
 		{
 			onSuccess: async (_data, form) => {
@@ -74,6 +74,8 @@ export const AddFriendModal: FC<AddFriendModalProps> = ({
 			onError: (err) => {
 				if (isHttpErrorResponse(err)) {
 					getHttpError(err).each((location, code) => {
+						console.log({ location, code });
+
 						toast({
 							description: t(`friends.create.error.${location}`, {
 								context: code,

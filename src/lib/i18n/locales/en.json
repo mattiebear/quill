@@ -46,8 +46,8 @@
 				"successTitle": "Invite sent",
 				"successDescription": "Invite sent to {{name}}. Hold tight!",
 				"error": {
-					"username_not-found": "Nobody found with that username",
-					"connection_already-exists": "You've already sent an invite to them!"
+					"username_notFound": "Nobody found with that username",
+					"connection_alreadyExists": "You've already sent an invite to them!"
 				}
 			},
 			"addFriendSubmit": "Send request",

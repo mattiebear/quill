@@ -33,7 +33,7 @@ export const PendingInvitationsRow: FC<PendingInvitationsRowProps> = ({
 	return (
 		<Tr>
 			<Td pl={0}>
-				<Avatar src={connection.connectedUser.profileImageUrl} />
+				<Avatar src={connection.connectedUser.imageUrl} />
 			</Td>
 			<Td w="full">
 				<Text fontWeight="medium">{connection.connectedUser.username}</Text>
