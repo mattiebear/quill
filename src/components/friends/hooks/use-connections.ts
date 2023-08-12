@@ -20,7 +20,7 @@ export const useConnections = () => {
 		);
 
 		const pendingConnections = data.data.filter(
-			propEq('status', ConnectionStatus.PendingAcceptance)
+			propEq('status', ConnectionStatus.Pending)
 		);
 
 		return { acceptedConnections, pendingConnections };

@@ -1,24 +1,28 @@
+import { Record } from '@/types/entity';
 import { User } from '@/types/user';
 
 export enum ConnectionStatus {
-	PendingAcceptance = 'pending',
-	AwaitingResponse = 'awaiting',
+	Pending = 'pending',
 	Accepted = 'accepted',
-	Rejected = 'rejected',
-	Removed = 'removed',
 }
 
-export interface ConnectionData {
-	id: string;
-	connectedUserId: string;
+export enum ConnectionUserRole {
+	Requester = 'requester',
+	Recipient = 'recipient',
+}
+
+export interface ConnectionData extends Record {
 	status: ConnectionStatus;
+}
+
+interface ConnectionUserData extends Record {
 	userId: string;
-	createdAt: string;
-	updatedAt: string;
+	role: ConnectionUserRole;
+	user: User;
 }
 
 interface ConnectionWithUser {
-	connectedUser: User;
+	connectionUsers: ConnectionUserData[];
 }
 
 export type ConnectionDetailData = ConnectionData;
