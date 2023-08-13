@@ -18,11 +18,11 @@ import { useTranslation } from 'react-i18next';
 import { ConfirmationDialogue } from '@/components/confirmation';
 import { useRemoveConnection } from '@/components/friends/hooks/use-remove-connection';
 import { EllipsisHorizontalIcon, UserMinusIcon } from '@/components/icon';
-import { ConnectionListData } from '@/types/connection';
-import { User } from '@/types/user';
+import { Connection } from '@/entites/connection';
+import { UserData } from '@/types/user';
 
 interface ActiveConnectionsRowProps {
-	connection: ConnectionListData;
+	connection: Connection;
 }
 
 export const ActiveConnectionsRow: FC<ActiveConnectionsRowProps> = ({
@@ -37,7 +37,7 @@ export const ActiveConnectionsRow: FC<ActiveConnectionsRowProps> = ({
 
 	const connectedUser = connection.connectionUsers.find(
 		(connectionUser) => connectionUser.userId !== user?.id
-	) as unknown as User;
+	) as unknown as UserData;
 
 	return (
 		<Tr>

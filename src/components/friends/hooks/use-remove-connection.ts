@@ -3,15 +3,12 @@ import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
 import { useInvalidateConnections } from '@/api/connections';
+import { Connection } from '@/entites/connection';
 import { useHttpClient } from '@/lib/http';
 import { DynamicPath } from '@/lib/url';
-import {
-	ConnectionDetailData,
-	ConnectionListData,
-	ConnectionStatus,
-} from '@/types/connection';
+import { ConnectionDetailData } from '@/types/connection';
 
-export const useRemoveConnection = (connection: ConnectionListData) => {
+export const useRemoveConnection = (connection: Connection) => {
 	const { t } = useTranslation();
 	const http = useHttpClient();
 	const toast = useToast();
@@ -19,9 +16,8 @@ export const useRemoveConnection = (connection: ConnectionListData) => {
 
 	return useMutation(
 		() => {
-			return http.patch<ConnectionDetailData>(
-				new DynamicPath('/connections/:id').for(connection).toString(),
-				{ status: ConnectionStatus.Removed }
+			return http.delete<ConnectionDetailData>(
+				new DynamicPath('/connections/:id').for(connection).toString()
 			);
 		},
 		{

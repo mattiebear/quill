@@ -15,11 +15,11 @@ import { useTranslation } from 'react-i18next';
 import { ConfirmationDialogue } from '@/components/confirmation';
 import { useAcceptInvitation } from '@/components/friends/hooks/use-accept-invitation';
 import { useRejectInvitation } from '@/components/friends/hooks/use-reject-invitation';
-import { ConnectionListData } from '@/types/connection';
-import { User } from '@/types/user';
+import { Connection } from '@/entites/connection';
+import { UserData } from '@/types/user';
 
 interface PendingInvitationsRowProps {
-	connection: ConnectionListData;
+	connection: Connection;
 }
 
 export const PendingInvitationsRow: FC<PendingInvitationsRowProps> = ({
@@ -37,7 +37,7 @@ export const PendingInvitationsRow: FC<PendingInvitationsRowProps> = ({
 
 	const connectedUser = connection.connectionUsers.find(
 		(connectionUser) => connectionUser.userId !== user?.id
-	) as unknown as User;
+	) as unknown as UserData;
 
 	return (
 		<Tr>

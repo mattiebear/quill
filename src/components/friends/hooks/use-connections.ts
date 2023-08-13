@@ -1,28 +1,34 @@
+import { useUser } from '@clerk/clerk-react';
 import { useMemo } from 'react';
 
 import { useConnectionsList } from '@/api/connections';
 import { ConnectionStatus } from '@/types/connection';
-import { propEq } from '@/utils/lamba';
 
 export const useConnections = () => {
-	const { data } = useConnectionsList();
+	const { data: connections } = useConnectionsList();
+	const { user } = useUser();
 
 	return useMemo(() => {
-		if (!data) {
+		if (!connections) {
 			return {
 				acceptedConnections: [],
 				pendingConnections: [],
 			};
 		}
 
-		const acceptedConnections = data.data.filter(
-			propEq('status', ConnectionStatus.Accepted)
+		const acceptedConnections = connections.filter(
+			(conn) => conn.status === ConnectionStatus.Accepted
 		);
 
-		const pendingConnections = data.data.filter(
-			propEq('status', ConnectionStatus.Pending)
+		const pendingConnections = connections.filter(
+			(conn) =>
+				conn.status === ConnectionStatus.Pending &&
+				conn.recipient.id === user?.id
 		);
 
-		return { acceptedConnections, pendingConnections };
-	}, [data]);
+		return {
+			acceptedConnections,
+			pendingConnections,
+		};
+	}, [connections]);
 };

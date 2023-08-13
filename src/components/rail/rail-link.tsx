@@ -1,5 +1,5 @@
 import { Box, Flex, StyleProps, Tooltip } from '@chakra-ui/react';
-import { FC, ReactElement, cloneElement } from 'react';
+import { cloneElement, FC, ReactElement } from 'react';
 import { NavLink, NavLinkProps } from 'react-router-dom';
 
 interface RailLinkProps extends Pick<NavLinkProps, 'to'>, StyleProps {

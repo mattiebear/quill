@@ -1,4 +1,4 @@
-import { Box, StyleProps, forwardRef } from '@chakra-ui/react';
+import { Box, forwardRef, StyleProps } from '@chakra-ui/react';
 import { PropsWithChildren } from 'react';
 
 import { CountCoin } from '@/components/counter/count-coin';

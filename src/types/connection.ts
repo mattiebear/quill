@@ -1,5 +1,5 @@
 import { Record } from '@/types/entity';
-import { User } from '@/types/user';
+import { UserData } from '@/types/user';
 
 export enum ConnectionStatus {
 	Pending = 'pending',
@@ -15,10 +15,10 @@ export interface ConnectionData extends Record {
 	status: ConnectionStatus;
 }
 
-interface ConnectionUserData extends Record {
+export interface ConnectionUserData extends Record {
 	userId: string;
 	role: ConnectionUserRole;
-	user: User;
+	user: UserData;
 }
 
 interface ConnectionWithUser {

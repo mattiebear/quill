@@ -1,4 +1,5 @@
 import { Heading, Table, TableContainer, Tbody } from '@chakra-ui/react';
+import { useUser } from '@clerk/clerk-react';
 import { FC, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -10,9 +11,12 @@ import { matchUsername } from '@/components/friends/utils';
 const useActiveConnections = () => {
 	const { acceptedConnections } = useConnections();
 	const { searchValue } = useFriendsContext();
+	const { user } = useUser();
 
 	return useMemo(() => {
-		return acceptedConnections.filter(matchUsername(searchValue));
+		return acceptedConnections.filter((connection) =>
+			matchUsername(searchValue)(connection.other(user?.id))
+		);
 	}, [acceptedConnections, searchValue]);
 };
 
