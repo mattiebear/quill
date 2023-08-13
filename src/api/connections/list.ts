@@ -1,6 +1,8 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { JsonConvert } from 'json2typescript';
 import { useCallback } from 'react';
 
+import { Connection } from '@/entites/connection';
 import { getHttpClient, useHttpClient } from '@/lib/http';
 import { getQueryClient } from '@/lib/queries';
 import { ConnectionListData } from '@/types/connection';
@@ -25,9 +27,18 @@ export const fetchConnectionsList = async () => {
 export const useConnectionsList = () => {
 	const http = useHttpClient();
 
-	return useQuery(buildKey(), () => {
-		return http.get<ConnectionListData[]>(buildPath());
-	});
+	return useQuery(
+		buildKey(),
+		() => {
+			return http.get<ConnectionListData[]>(buildPath());
+		},
+		{
+			select: (response) => {
+				const convert = new JsonConvert();
+				return convert.deserialize(response.data, Connection) as Connection[];
+			},
+		}
+	);
 };
 
 export const useInvalidateConnections = () => {

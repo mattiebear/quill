@@ -3,15 +3,12 @@ import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
 import { useInvalidateConnections } from '@/api/connections';
+import { Connection } from '@/entites/connection';
 import { useHttpClient } from '@/lib/http';
 import { DynamicPath } from '@/lib/url';
-import {
-	ConnectionDetailData,
-	ConnectionListData,
-	ConnectionStatus,
-} from '@/types/connection';
+import { ConnectionDetailData, ConnectionStatus } from '@/types/connection';
 
-export const useAcceptInvitation = (connection: ConnectionListData) => {
+export const useAcceptInvitation = (connection: Connection) => {
 	const { t } = useTranslation();
 	const http = useHttpClient();
 	const toast = useToast();
