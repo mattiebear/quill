@@ -1,16 +1,16 @@
+import { MapEntity } from '@/entites/map-entity';
 import { HttpClient } from '@/lib/http/types';
 import { Tileset } from '@/lib/quill';
-import { ModuleMapDetailData } from '@/types/map';
 
 interface ConfigValues {
 	http: HttpClient;
-	map: ModuleMapDetailData;
+	map: MapEntity;
 	tileset: Tileset;
 }
 
 export class EngineConfig implements ConfigValues {
 	readonly http: HttpClient;
-	readonly map: ModuleMapDetailData;
+	readonly map: MapEntity;
 	readonly tileset: Tileset;
 
 	constructor(data: ConfigValues) {

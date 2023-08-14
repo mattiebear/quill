@@ -1,9 +1,10 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { JsonConvert } from 'json2typescript';
 import { useCallback } from 'react';
 
+import { MapEntity } from '@/entites/map-entity';
 import { getHttpClient, useHttpClient } from '@/lib/http';
 import { getQueryClient } from '@/lib/queries';
-import { ModuleMapListData } from '@/types/map';
 
 import { Resource } from '../types';
 
@@ -18,7 +19,7 @@ export const fetchMapsList = async () => {
 	const queryClient = await getQueryClient();
 
 	return queryClient.fetchQuery(buildKey(), () => {
-		return http.get<ModuleMapListData[]>(buildPath());
+		return http.get(buildPath());
 	});
 };
 
@@ -27,9 +28,18 @@ export const useMapsList = () => {
 	const http = useHttpClient();
 
 	// TODO: Add some kind of pagination
-	return useQuery(buildKey(), () => {
-		return http.get<ModuleMapListData[]>(buildPath());
-	});
+	return useQuery(
+		buildKey(),
+		() => {
+			return http.get(buildPath());
+		},
+		{
+			select: (response) => {
+				const convert = new JsonConvert();
+				return convert.deserializeArray(response.data, MapEntity);
+			},
+		}
+	);
 };
 
 export const useInvalidateMaps = () => {

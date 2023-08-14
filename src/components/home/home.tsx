@@ -8,11 +8,9 @@ import { Link } from '@/components/link';
 export const Home: FC = () => {
 	const { t } = useTranslation();
 
-	return null;
-
 	return (
 		<>
-			<Heading color="primary">{t('home')}</Heading>
+			<Heading color="primary">{t('home.title')}</Heading>
 
 			<SignedIn>
 				<Link color="text.body" to="/profile">

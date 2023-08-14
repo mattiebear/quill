@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 
 import { useEditorFeedback } from '@/components/map-editor/hooks/use-editor-feedback';
 import { useTileset } from '@/components/map-editor/hooks/use-tileset';
+import { MapEntity } from '@/entites/map-entity';
 import { useHttpClient } from '@/lib/http';
 import { Engine } from '@/lib/quill';
 import { EngineConfig } from '@/lib/quill/core/engine-config';
 import { MapEvent } from '@/lib/quill/types/event';
-import { ModuleMapDetailData } from '@/types/map';
 
-export const useQuill = (map: ModuleMapDetailData) => {
+export const useQuill = (map: MapEntity) => {
 	const elRef = useRef(document.getElementById('root') as HTMLDivElement);
 	const tileset = useTileset();
 	const http = useHttpClient();

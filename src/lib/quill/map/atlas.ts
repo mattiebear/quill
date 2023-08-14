@@ -1,3 +1,4 @@
+import { AtlasData, PersistedNode } from '@/entites/atlas';
 import {
 	Changeset,
 	Direction,
@@ -9,7 +10,6 @@ import {
 	TileBlueprint,
 	Tileset,
 } from '@/lib/quill';
-import { AtlasData, PersistedNode } from '@/types/map';
 import { findOrCreateByKey } from '@/utils/map';
 
 // TODO: Need to come up with a better system to link events

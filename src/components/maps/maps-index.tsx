@@ -31,7 +31,7 @@ export const MapsIndex: FC = () => {
 						<AddMapTile />
 					</Link>
 
-					{data?.data.map((map: any) => {
+					{data?.map((map: any) => {
 						return (
 							<Link
 								key={map.id}

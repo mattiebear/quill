@@ -1,3 +1,4 @@
+import { PersistedTile } from '@/entites/atlas';
 import {
 	Changeset,
 	Direction,
@@ -6,7 +7,6 @@ import {
 	TileBlueprint,
 	TileType,
 } from '@/lib/quill';
-import { PersistedTile } from '@/types/map';
 
 /**
  * Representation of a single tile at an x, y, z coordinate within a map, storing multiple tiles
