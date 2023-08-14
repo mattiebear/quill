@@ -17,7 +17,7 @@ const useActiveConnections = () => {
 		return activeConnections.filter((connection) =>
 			matchUsername(searchValue)(connection.other(user))
 		);
-	}, [activeConnections, searchValue]);
+	}, [activeConnections, searchValue, user]);
 };
 
 export const ActiveConnectionsTable: FC = () => {

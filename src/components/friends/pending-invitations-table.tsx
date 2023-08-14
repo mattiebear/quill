@@ -17,7 +17,7 @@ const usePendingConnections = () => {
 		return pendingConnections.filter((connection) =>
 			matchUsername(searchValue)(connection.other(user))
 		);
-	}, [pendingConnections, searchValue]);
+	}, [pendingConnections, searchValue, user]);
 };
 
 export const PendingInvitationsTable: FC = () => {

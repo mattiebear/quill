@@ -38,5 +38,5 @@ export const useConnections = (): UseConnections => {
 			pendingConnections,
 			totalConnections: connections.length,
 		};
-	}, [connections]);
+	}, [connections, user]);
 };
