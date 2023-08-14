@@ -8,7 +8,6 @@ import {
 	Tr,
 	useDisclosure,
 } from '@chakra-ui/react';
-import { useUser } from '@clerk/clerk-react';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -16,7 +15,7 @@ import { ConfirmationDialogue } from '@/components/confirmation';
 import { useAcceptInvitation } from '@/components/friends/hooks/use-accept-invitation';
 import { useRejectInvitation } from '@/components/friends/hooks/use-reject-invitation';
 import { Connection } from '@/entites/connection';
-import { UserData } from '@/types/user';
+import { useCurrentUser } from '@/lib/auth/use-current-user';
 
 interface PendingInvitationsRowProps {
 	connection: Connection;
@@ -31,13 +30,8 @@ export const PendingInvitationsRow: FC<PendingInvitationsRowProps> = ({
 		useAcceptInvitation(connection);
 	const { mutate: rejectInvitation, isLoading: isLoadingReject } =
 		useRejectInvitation(connection);
-
-	// TODO: Refactor this with data entity
-	const { user } = useUser();
-
-	const connectedUser = connection.connectionUsers.find(
-		(connectionUser) => connectionUser.userId !== user?.id
-	) as unknown as UserData;
+	const user = useCurrentUser();
+	const connectedUser = connection.other(user);
 
 	return (
 		<Tr>

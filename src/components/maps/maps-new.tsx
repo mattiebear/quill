@@ -19,7 +19,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { fetchMapsList, useInvalidateMaps } from '@/api/maps';
 import { useHttpClient } from '@/lib/http';
-import { ModuleMapDetailData } from '@/types/map';
 
 interface FormState {
 	name: string;
@@ -40,7 +39,7 @@ export const MapsNew: FC = () => {
 
 	const { mutate, isLoading } = useMutation(
 		(data: FormState) => {
-			return http.post<ModuleMapDetailData>('/maps', data);
+			return http.post('/maps', data);
 		},
 		{
 			onSuccess: async (_data, form) => {

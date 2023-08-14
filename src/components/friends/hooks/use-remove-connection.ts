@@ -6,7 +6,6 @@ import { useInvalidateConnections } from '@/api/connections';
 import { Connection } from '@/entites/connection';
 import { useHttpClient } from '@/lib/http';
 import { DynamicPath } from '@/lib/url';
-import { ConnectionDetailData } from '@/types/connection';
 
 export const useRemoveConnection = (connection: Connection) => {
 	const { t } = useTranslation();
@@ -16,7 +15,7 @@ export const useRemoveConnection = (connection: Connection) => {
 
 	return useMutation(
 		() => {
-			return http.delete<ConnectionDetailData>(
+			return http.delete(
 				new DynamicPath('/connections/:id').for(connection).toString()
 			);
 		},

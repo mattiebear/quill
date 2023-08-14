@@ -5,7 +5,6 @@ import { useCallback } from 'react';
 import { Connection } from '@/entites/connection';
 import { getHttpClient, useHttpClient } from '@/lib/http';
 import { getQueryClient } from '@/lib/queries';
-import { ConnectionListData } from '@/types/connection';
 
 import { Resource } from '../types';
 
@@ -20,7 +19,7 @@ export const fetchConnectionsList = async () => {
 	const queryClient = await getQueryClient();
 
 	return queryClient.fetchQuery(buildKey(), () => {
-		return http.get<ConnectionListData[]>(buildPath());
+		return http.get(buildPath());
 	});
 };
 
@@ -30,12 +29,12 @@ export const useConnectionsList = () => {
 	return useQuery(
 		buildKey(),
 		() => {
-			return http.get<ConnectionListData[]>(buildPath());
+			return http.get(buildPath());
 		},
 		{
 			select: (response) => {
 				const convert = new JsonConvert();
-				return convert.deserialize(response.data, Connection) as Connection[];
+				return convert.deserializeArray(response.data, Connection);
 			},
 		}
 	);

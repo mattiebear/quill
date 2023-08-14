@@ -1,7 +1,11 @@
 import { JsonObject, JsonProperty } from 'json2typescript';
 
 import { User } from '@/entites/user';
-import { ConnectionUserRole } from '@/types/connection';
+
+export enum ConnectionUserRole {
+	Requester = 'requester',
+	Recipient = 'recipient',
+}
 
 @JsonObject('ConnectionUser')
 export class ConnectionUser {

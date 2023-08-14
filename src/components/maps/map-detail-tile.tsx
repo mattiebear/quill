@@ -1,10 +1,12 @@
 import { AspectRatio, Card, CardBody, Text, VStack } from '@chakra-ui/react';
 import { FC } from 'react';
 
+import { MapEntity } from '@/entites/map-entity';
+
 import { MapIcon } from '../icon';
 
 interface MapDetailTileProps {
-	map: any;
+	map: MapEntity;
 }
 
 export const MapDetailTile: FC<MapDetailTileProps> = ({ map }) => {

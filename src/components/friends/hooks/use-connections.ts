@@ -1,34 +1,42 @@
-import { useUser } from '@clerk/clerk-react';
 import { useMemo } from 'react';
 
 import { useConnectionsList } from '@/api/connections';
-import { ConnectionStatus } from '@/types/connection';
+import { Connection, ConnectionStatus } from '@/entites/connection';
+import { useCurrentUser } from '@/lib/auth/use-current-user';
 
-export const useConnections = () => {
+interface UseConnections {
+	activeConnections: Connection[];
+	pendingConnections: Connection[];
+	totalConnections: number;
+}
+
+export const useConnections = (): UseConnections => {
 	const { data: connections } = useConnectionsList();
-	const { user } = useUser();
+	const user = useCurrentUser();
 
 	return useMemo(() => {
 		if (!connections) {
 			return {
-				acceptedConnections: [],
+				activeConnections: [],
 				pendingConnections: [],
+				totalConnections: 0,
 			};
 		}
 
-		const acceptedConnections = connections.filter(
+		const activeConnections = connections.filter(
 			(conn) => conn.status === ConnectionStatus.Accepted
 		);
 
 		const pendingConnections = connections.filter(
 			(conn) =>
 				conn.status === ConnectionStatus.Pending &&
-				conn.recipient.id === user?.id
+				conn.recipient.id === user.id
 		);
 
 		return {
-			acceptedConnections,
+			activeConnections,
 			pendingConnections,
+			totalConnections: connections.length,
 		};
-	}, [connections]);
+	}, [connections, user]);
 };

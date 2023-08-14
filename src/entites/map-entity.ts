@@ -1,0 +1,21 @@
+import { JsonObject, JsonProperty } from 'json2typescript';
+
+import { Atlas } from '@/entites/atlas';
+
+@JsonObject('MapEntity')
+export class MapEntity {
+	@JsonProperty('id', String)
+	id = '';
+
+	@JsonProperty('name', String)
+	name = '';
+
+	@JsonProperty('userId', String)
+	userId = '';
+
+	@JsonProperty('atlas', Atlas)
+	atlas: Atlas = {
+		version: '1',
+		data: [],
+	};
+}

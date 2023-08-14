@@ -11,16 +11,12 @@ import {
 	ModalFooter,
 	ModalHeader,
 	ModalOverlay,
-	useToast,
 } from '@chakra-ui/react';
-import { useMutation } from '@tanstack/react-query';
 import { FC, useLayoutEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { useInvalidateConnections } from '@/api/connections';
-import { getHttpError, isHttpErrorResponse, useHttpClient } from '@/lib/http';
-import { ConnectionDetailData } from '@/types/connection';
+import { useCreateConnection } from '@/components/friends/hooks/use-create-connection';
 
 interface AddFriendModalProps {
 	isOpen: boolean;
@@ -36,9 +32,6 @@ export const AddFriendModal: FC<AddFriendModalProps> = ({
 	onClose,
 }) => {
 	const { t } = useTranslation();
-	const http = useHttpClient();
-	const toast = useToast();
-	const invalidate = useInvalidateConnections();
 
 	const {
 		register,
@@ -53,41 +46,7 @@ export const AddFriendModal: FC<AddFriendModalProps> = ({
 		}
 	}, [isOpen, reset]);
 
-	const { mutate, isLoading } = useMutation(
-		(data: FormState) => {
-			return http.post<ConnectionDetailData>('/connections', data);
-		},
-		{
-			onSuccess: async (_data, form) => {
-				await invalidate();
-
-				toast({
-					title: t('friends.create.successTitle'),
-					description: t('friends.create.successDescription', {
-						name: form.username,
-					}),
-					status: 'success',
-				});
-
-				onClose();
-			},
-			onError: (err) => {
-				if (isHttpErrorResponse(err)) {
-					getHttpError(err).each((location, code) => {
-						console.log({ location, code });
-
-						toast({
-							description: t(`friends.create.error.${location}`, {
-								context: code,
-								defaultValue: t('common.unknownError'),
-							}),
-							status: 'error',
-						});
-					});
-				}
-			},
-		}
-	);
+	const { mutate, isLoading } = useCreateConnection({ onSuccess: onClose });
 
 	const submitForm = (data: FormState) => mutate(data);
 

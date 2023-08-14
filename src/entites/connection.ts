@@ -1,9 +1,13 @@
 import { JsonObject, JsonProperty } from 'json2typescript';
 
-import { ConnectionUser } from '@/entites/connection-user';
+import { ConnectionUser, ConnectionUserRole } from '@/entites/connection-user';
 import { User } from '@/entites/user';
-import { ConnectionStatus, ConnectionUserRole } from '@/types/connection';
 import { assertPresence } from '@/utils/runtime';
+
+export enum ConnectionStatus {
+	Pending = 'pending',
+	Accepted = 'accepted',
+}
 
 @JsonObject('Connection')
 export class Connection {
@@ -24,12 +28,8 @@ export class Connection {
 		return this.getUserByRole(ConnectionUserRole.Requester);
 	}
 
-	other(id?: string) {
-		if (this.recipient.id === id) {
-			return this.requester;
-		}
-
-		return this.recipient;
+	other(user: User) {
+		return this.recipient.id === user.id ? this.requester : this.recipient;
 	}
 
 	private getUserByRole(role: ConnectionUserRole): User {
