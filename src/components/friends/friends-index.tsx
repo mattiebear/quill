@@ -22,11 +22,10 @@ import { MagnifyingGlassIcon } from '@/components/icon';
 export const FriendsIndex: FC = () => {
 	const { t } = useTranslation();
 	const { isOpen, onClose, onOpen } = useDisclosure();
-	const { acceptedConnections, pendingConnections } = useConnections();
+	const { totalConnections } = useConnections();
 	const [searchValue, setSearchValue] = useState('');
 
-	const count = acceptedConnections.length + pendingConnections.length;
-	const canSearch = !!count;
+	const canSearch = !!totalConnections;
 
 	return (
 		<>

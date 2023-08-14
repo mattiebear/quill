@@ -11,7 +11,6 @@ import {
 	Tr,
 	useDisclosure,
 } from '@chakra-ui/react';
-import { useUser } from '@clerk/clerk-react';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -19,7 +18,7 @@ import { ConfirmationDialogue } from '@/components/confirmation';
 import { useRemoveConnection } from '@/components/friends/hooks/use-remove-connection';
 import { EllipsisHorizontalIcon, UserMinusIcon } from '@/components/icon';
 import { Connection } from '@/entites/connection';
-import { UserData } from '@/types/user';
+import { useCurrentUser } from '@/lib/auth/use-current-user';
 
 interface ActiveConnectionsRowProps {
 	connection: Connection;
@@ -31,13 +30,8 @@ export const ActiveConnectionsRow: FC<ActiveConnectionsRowProps> = ({
 	const { t } = useTranslation();
 	const confirmation = useDisclosure();
 	const { mutate, isLoading } = useRemoveConnection(connection);
-
-	// TODO: Refactor this with data entity
-	const { user } = useUser();
-
-	const connectedUser = connection.connectionUsers.find(
-		(connectionUser) => connectionUser.userId !== user?.id
-	) as unknown as UserData;
+	const user = useCurrentUser();
+	const connectedUser = connection.other(user);
 
 	return (
 		<Tr>

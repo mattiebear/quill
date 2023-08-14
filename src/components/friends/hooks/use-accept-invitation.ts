@@ -3,10 +3,9 @@ import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
 import { useInvalidateConnections } from '@/api/connections';
-import { Connection } from '@/entites/connection';
+import { Connection, ConnectionStatus } from '@/entites/connection';
 import { useHttpClient } from '@/lib/http';
 import { DynamicPath } from '@/lib/url';
-import { ConnectionDetailData, ConnectionStatus } from '@/types/connection';
 
 export const useAcceptInvitation = (connection: Connection) => {
 	const { t } = useTranslation();
@@ -16,7 +15,7 @@ export const useAcceptInvitation = (connection: Connection) => {
 
 	return useMutation(
 		() => {
-			return http.patch<ConnectionDetailData>(
+			return http.patch(
 				new DynamicPath('/connections/:id').for(connection).toString(),
 				{ status: ConnectionStatus.Accepted }
 			);

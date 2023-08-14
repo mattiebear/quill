@@ -69,15 +69,15 @@
 				},
 				"reject": {
 					"title": "Invitation rejected",
-					"description": "They won't be able to send another request for a while",
+					"description": "You will not be a part of their friends list",
 					"confirmTitle": "Decline invite?",
-					"confirmDescription": "You won't be able to connect with them for a while",
+					"confirmDescription": "You won't be able to start a game session with them",
 					"confirmCancel": "Never mind",
 					"confirmAccept": "Yes. Do it"
 				},
 				"remove": {
 					"title": "Friend removed",
-					"description": "They won't be able to send another request for a while",
+					"description": "You have been removed from their friends list",
 					"confirmTitle": "Remove friend?",
 					"confirmDescription": "You won't be able to connect with them for a while",
 					"confirmCancel": "Never mind",
