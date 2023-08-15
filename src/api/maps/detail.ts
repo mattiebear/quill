@@ -53,5 +53,5 @@ export const useInvalidateMap = (map: MapEntity) => {
 
 	return useCallback(async () => {
 		await queryClient.invalidateQueries(buildKey(map.id));
-	}, [queryClient]);
+	}, [queryClient, map.id]);
 };
