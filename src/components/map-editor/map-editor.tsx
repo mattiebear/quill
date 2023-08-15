@@ -8,14 +8,14 @@ import { EditorUI } from './editor-ui';
 
 export const MapEditor = () => {
 	const id = useIdParam();
-	const { data } = useMapDetail(id);
+	const { data: map } = useMapDetail(id);
 
-	assertPresence(data);
+	assertPresence(map);
 
-	const engine = useQuill(data);
+	const engine = useQuill(map);
 
 	return (
-		<EditorContext value={{ engine }}>
+		<EditorContext value={{ engine, map }}>
 			<EditorUI />
 		</EditorContext>
 	);

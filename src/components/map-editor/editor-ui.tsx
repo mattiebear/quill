@@ -11,7 +11,9 @@ import {
 import { FC, useRef } from 'react';
 import Draggable from 'react-draggable';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
+import { useInvalidateMap } from '@/api/maps';
 import {
 	ArrowUturnLeftIcon,
 	ArrowUturnRightIcon,
@@ -20,6 +22,7 @@ import {
 } from '@/components/icon';
 import { useEngine } from '@/components/map-editor/hooks/use-engine';
 import { useIO } from '@/components/map-editor/hooks/use-io';
+import { useMap } from '@/components/map-editor/hooks/use-map';
 import { useStoreValue } from '@/components/map-editor/hooks/use-store-value';
 import { Direction } from '@/lib/quill';
 import { StoreKey } from '@/lib/quill/types/store';
@@ -29,9 +32,17 @@ export const EditorUI: FC = () => {
 	const { t } = useTranslation();
 	const io = useIO();
 	const engine = useEngine();
+	const map = useMap();
+	const invalidate = useInvalidateMap(map);
+	const navigate = useNavigate();
 
 	const blueprintId = useStoreValue<string>(StoreKey.SelectedBlueprint);
 	const direction = useStoreValue<Direction>(StoreKey.SelectedDirection);
+
+	const handleClickDone = async () => {
+		await invalidate();
+		navigate('/maps');
+	};
 
 	return (
 		<Box position="absolute">
@@ -77,7 +88,7 @@ export const EditorUI: FC = () => {
 						/>
 					</Flex>
 
-					<SimpleGrid columns={3} spacing={2}>
+					<SimpleGrid columns={3} spacing={2} mb={2}>
 						{engine.config.tileset.all.map((blueprint) => (
 							<Button
 								key={blueprint.id}
@@ -101,6 +112,14 @@ export const EditorUI: FC = () => {
 							</Button>
 						))}
 					</SimpleGrid>
+
+					<Button
+						colorScheme="green"
+						variant="outline"
+						onClick={handleClickDone}
+					>
+						Done
+					</Button>
 				</Flex>
 			</Draggable>
 		</Box>

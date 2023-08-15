@@ -1,5 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { JsonConvert } from 'json2typescript';
+import { useCallback } from 'react';
 
 import { MapEntity } from '@/entites/map-entity';
 import { getHttpClient, useHttpClient } from '@/lib/http';
@@ -45,4 +46,12 @@ export const useMapDetail = (id: string) => {
 			staleTime: Infinity,
 		}
 	);
+};
+
+export const useInvalidateMap = (map: MapEntity) => {
+	const queryClient = useQueryClient();
+
+	return useCallback(async () => {
+		await queryClient.invalidateQueries(buildKey(map.id));
+	}, [queryClient, map.id]);
 };
