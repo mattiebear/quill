@@ -1,4 +1,8 @@
-import { JsonObject, JsonProperty } from 'json2typescript';
+import {
+	JsonObject,
+	JsonProperty,
+	PropertyConvertingMode,
+} from 'json2typescript';
 
 import { Atlas } from '@/entites/atlas';
 
@@ -13,7 +17,7 @@ export class MapEntity {
 	@JsonProperty('userId', String)
 	userId = '';
 
-	@JsonProperty('atlas', Atlas)
+	@JsonProperty('atlas', Atlas, PropertyConvertingMode.IGNORE_NULLABLE)
 	atlas: Atlas = {
 		version: '1',
 		data: [],
