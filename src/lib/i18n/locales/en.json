@@ -9,6 +9,7 @@
 		"navigation": {
 			"groupAssets": "My stuff",
 			"home": "Home",
+			"playSessions": "Play",
 			"maps": "Maps",
 			"friends": "Friends"
 		},

@@ -10,7 +10,10 @@ import { Home } from '@/components/home';
 import { MainLayout } from '@/components/layout/main';
 import { MapEditor } from '@/components/map-editor';
 import { MapsIndex, MapsNew } from '@/components/maps';
+import { PlaySessionsIndex } from '@/components/play-sessions';
 import { Protected } from '@/lib/auth';
+
+import { Path } from './path';
 
 export const router = createBrowserRouter([
 	{
@@ -18,15 +21,15 @@ export const router = createBrowserRouter([
 		errorElement: <ErrorBoundary />,
 		children: [
 			{
-				path: '/sign-in/*',
-				element: <SignIn routing="path" path="/sign-in" />,
+				path: `${Path.SignIn}/*`,
+				element: <SignIn routing="path" path={Path.SignIn} />,
 			},
 			{
-				path: '/sign-up/*',
-				element: <SignUp routing="path" path="/sign-up" />,
+				path: `${Path.SignUp}/*`,
+				element: <SignUp routing="path" path={Path.SignUp} />,
 			},
 			{
-				path: '/maps/:id',
+				path: Path.Map,
 				element: (
 					<Protected>
 						<MapEditor />
@@ -50,22 +53,26 @@ export const router = createBrowserRouter([
 				),
 				children: [
 					{
-						path: '/',
+						path: Path.Home,
 						element: <Home />,
 					},
 					{
-						path: '/maps',
+						path: Path.Maps,
 						element: <MapsIndex />,
 						loader: () => fetchMapsList(),
 					},
 					{
-						path: '/maps/new',
+						path: Path.NewMap,
 						element: <MapsNew />,
 					},
 					{
-						path: '/friends',
+						path: Path.Friends,
 						element: <FriendsIndex />,
 						loader: () => fetchConnectionsList(),
+					},
+					{
+						path: Path.PlaySessions,
+						element: <PlaySessionsIndex />,
 					},
 				],
 			},
