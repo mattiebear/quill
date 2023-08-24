@@ -9,17 +9,12 @@ import {
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useGameSessionsList } from '@/api/game-sessions';
-
 import { AddGameSessionModal } from './add-game-session-modal';
+import { GameSessionsTable } from './game-sessions-table';
 
 export const GameSessionsIndex: FC = () => {
 	const { t } = useTranslation();
 	const { isOpen, onClose, onOpen } = useDisclosure();
-
-	const { data } = useGameSessionsList();
-
-	console.log({ data });
 
 	return (
 		<>
@@ -40,6 +35,8 @@ export const GameSessionsIndex: FC = () => {
 							{t('gameSessions.addSessionButton')}
 						</Button>
 					</Flex>
+
+					<GameSessionsTable />
 				</VStack>
 			</Container>
 

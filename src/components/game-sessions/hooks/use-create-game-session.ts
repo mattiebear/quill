@@ -2,7 +2,7 @@ import { useToast } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
-// import { useInvalidateConnections } from '@/api/connections';
+import { useInvalidateGameSessions } from '@/api/game-sessions';
 import { getHttpError, isHttpErrorResponse, useHttpClient } from '@/lib/http';
 
 interface FormState {
@@ -18,7 +18,7 @@ export const useCreateGameSession = ({
 	const { t } = useTranslation();
 	const http = useHttpClient();
 	const toast = useToast();
-	// const invalidate = useInvalidateConnections();
+	const invalidate = useInvalidateGameSessions();
 
 	return useMutation(
 		(data: FormState) => {
@@ -26,7 +26,7 @@ export const useCreateGameSession = ({
 		},
 		{
 			onSuccess: async () => {
-				// await invalidate();
+				await invalidate();
 
 				toast({
 					title: t('gameSessions.create.successTitle'),

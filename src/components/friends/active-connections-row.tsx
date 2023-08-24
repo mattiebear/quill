@@ -36,7 +36,7 @@ export const ActiveConnectionsRow: FC<ActiveConnectionsRowProps> = ({
 	return (
 		<Tr>
 			<Td pl={0}>
-				<Avatar src={connectedUser.imageUrl} />
+				<Avatar name={connectedUser.username} src={connectedUser.imageUrl} />
 			</Td>
 			<Td w="full">
 				<Text fontWeight="medium">{connectedUser.username}</Text>

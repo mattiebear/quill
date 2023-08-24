@@ -1,6 +1,8 @@
 import { JsonObject, JsonProperty } from 'json2typescript';
 
-import { Player } from './player';
+import { assertPresence } from '@/utils/runtime';
+
+import { Player, PlayerRole } from './player';
 
 export enum GameSessionStatus {
 	Pending = 'pending',
@@ -21,4 +23,14 @@ export class GameSession {
 
 	@JsonProperty('players', [Player])
 	players: Player[] = [];
+
+	get owner() {
+		const player = this.players.find(
+			(player) => player.role === PlayerRole.Onwer
+		);
+
+		assertPresence(player);
+
+		return player.user;
+	}
 }

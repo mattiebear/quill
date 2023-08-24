@@ -97,7 +97,7 @@ export const AddGameSessionModal: FC<AddPlaySessionModalProps> = ({
 						onClick={handleSubmit(submitForm)}
 						type="submit"
 					>
-						{t('gameSessions.createStorySubmit')}
+						{t('gameSessions.createSessionSubmit')}
 					</Button>
 				</ModalFooter>
 			</ModalContent>

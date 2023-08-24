@@ -11,7 +11,7 @@
 		"navigation": {
 			"groupAssets": "My stuff",
 			"home": "Home",
-			"gameSessions": "Stories",
+			"gameSessions": "Play",
 			"maps": "Maps",
 			"friends": "Friends"
 		},
@@ -105,7 +105,12 @@
 				"successTitle": "Story created",
 				"successDescription": "You can being the story whenever you're ready"
 			},
-			"createStorySubmit": "Create story"
+			"createSessionSubmit": "Create story",
+			"sessionDefaultName": "{{name}}'s Story",
+			"joinSessionButton": "Join",
+			"status_pending": "Not started",
+			"status_active": "In progress",
+			"status_complete": "Complete"
 		},
 		"editor": {
 			"zoomIn": "Zoom in",

@@ -20,6 +20,7 @@ import {
 	RailLink,
 	RailTop,
 } from '@/components/rail';
+import { Path } from '@/config/routes';
 
 export const Navbar: FC = () => {
 	const { t } = useTranslation();
@@ -36,19 +37,19 @@ export const Navbar: FC = () => {
 
 			<RailContent>
 				<RailGroup label={t('navigation.groupAssets')}>
-					<RailLink label={t('navigation.home')} to="/">
+					<RailLink label={t('navigation.home')} to={Path.Home}>
 						<HomeIcon />
 					</RailLink>
 
-					<RailLink label={t('navigation.gameSessions')} to="/play">
+					<RailLink label={t('navigation.gameSessions')} to={Path.gameSessions}>
 						<BookOpenIcon />
 					</RailLink>
 
-					<RailLink label={t('navigation.maps')} to="/maps">
+					<RailLink label={t('navigation.maps')} to={Path.Maps}>
 						<MapIcon />
 					</RailLink>
 
-					<RailLink label={t('navigation.friends')} to="/friends">
+					<RailLink label={t('navigation.friends')} to={Path.Friends}>
 						<CountBadge count={pendingConnections.length}>
 							<UserGroupIcon />
 						</CountBadge>
