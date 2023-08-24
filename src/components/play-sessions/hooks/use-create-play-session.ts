@@ -25,7 +25,7 @@ export const useCreatePlaySession = ({
 			return http.post('/game_sessions', data);
 		},
 		{
-			onSuccess: async (_data, form) => {
+			onSuccess: async () => {
 				// await invalidate();
 
 				toast({
