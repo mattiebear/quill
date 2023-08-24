@@ -73,6 +73,7 @@ export const router = createBrowserRouter([
 					{
 						path: Path.PlaySessions,
 						element: <PlaySessionsIndex />,
+						loader: () => fetchConnectionsList(),
 					},
 				],
 			},

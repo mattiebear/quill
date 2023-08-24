@@ -1,7 +1,9 @@
 {
 	"translation": {
 		"common": {
+			"add": "Add",
 			"create": "Create",
+			"remove": "Remove",
 			"search": "Search",
 			"submit": "Submit",
 			"unknownError": "An unknown error occurred"
@@ -9,7 +11,7 @@
 		"navigation": {
 			"groupAssets": "My stuff",
 			"home": "Home",
-			"playSessions": "Play",
+			"playSessions": "Stories",
 			"maps": "Maps",
 			"friends": "Friends"
 		},
@@ -85,6 +87,25 @@
 					"confirmAccept": "Yes. Do it"
 				}
 			}
+		},
+		"playSessions": {
+			"indexTitle": "Stories",
+			"addSessionButton": "Start a story",
+			"addSessionTitle": "Start a story",
+			"field": {
+				"name": {
+					"label": "Story name",
+					"placeholder": "{{name}}'s Story"
+				},
+				"players": {
+					"label": "Add players"
+				}
+			},
+			"create": {
+				"successTitle": "Story created",
+				"successDescription": "You can being the story whenever you're ready"
+			},
+			"createStorySubmit": "Create story"
 		},
 		"editor": {
 			"zoomIn": "Zoom in",

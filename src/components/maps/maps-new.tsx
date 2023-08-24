@@ -73,7 +73,7 @@ export const MapsNew: FC = () => {
 
 			<Container maxW="container.lg">
 				<Box as="form" autoComplete="off" onSubmit={handleSubmit(submitForm)}>
-					<FormControl isInvalid={!!errors.name}>
+					<FormControl isInvalid={!!errors.name} isRequired>
 						<FormLabel color="text.form.label">
 							{t('maps.field.name.label')}
 						</FormLabel>

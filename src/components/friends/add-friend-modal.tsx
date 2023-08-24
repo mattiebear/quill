@@ -64,7 +64,7 @@ export const AddFriendModal: FC<AddFriendModalProps> = ({
 				</ModalHeader>
 				<ModalCloseButton color="white" />
 				<ModalBody>
-					<FormControl isInvalid={!!errors.username}>
+					<FormControl isInvalid={!!errors.username} isRequired>
 						<FormLabel color="text.form.label">
 							{t('friends.field.username.label')}
 						</FormLabel>
