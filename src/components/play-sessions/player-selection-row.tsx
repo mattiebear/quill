@@ -5,10 +5,18 @@ import { useTranslation } from 'react-i18next';
 import { User } from '@/entites/user';
 
 interface PlayerSelectionRowProps {
+	isSelected: boolean;
+	onAddPlayer: (user: User) => void;
+	onRemovePlayer: (user: User) => void;
 	user: User;
 }
 
-export const PlayerSelectionRow: FC<PlayerSelectionRowProps> = ({ user }) => {
+export const PlayerSelectionRow: FC<PlayerSelectionRowProps> = ({
+	isSelected,
+	onAddPlayer,
+	onRemovePlayer,
+	user,
+}) => {
 	const { t } = useTranslation();
 
 	return (
@@ -20,9 +28,23 @@ export const PlayerSelectionRow: FC<PlayerSelectionRowProps> = ({ user }) => {
 				<Text fontWeight="medium">{user.username}</Text>
 			</Td>
 			<Td pr={0}>
-				<Button colorScheme="cyan" variant="outline">
-					{t('common.add')}
-				</Button>
+				{isSelected ? (
+					<Button
+						colorScheme="blue"
+						onClick={() => onRemovePlayer(user)}
+						variant="solid"
+					>
+						{t('common.remove')}
+					</Button>
+				) : (
+					<Button
+						colorScheme="blue"
+						onClick={() => onAddPlayer(user)}
+						variant="outline"
+					>
+						{t('common.add')}
+					</Button>
+				)}
 			</Td>
 		</Tr>
 	);

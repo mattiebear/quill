@@ -3,6 +3,7 @@
 		"common": {
 			"add": "Add",
 			"create": "Create",
+			"remove": "Remove",
 			"search": "Search",
 			"submit": "Submit",
 			"unknownError": "An unknown error occurred"

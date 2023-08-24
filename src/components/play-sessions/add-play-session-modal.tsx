@@ -20,15 +20,11 @@ import { useCurrentUser } from '@/lib/auth/use-current-user';
 
 import { useCreatePlaySession } from './hooks/use-create-play-session';
 import { PlayerSelectionList } from './player-selection-list';
+import { FormState } from './types';
 
 interface AddPlaySessionModalProps {
 	isOpen: boolean;
 	onClose: VoidFunction;
-}
-
-interface FormState {
-	name: string;
-	userIds: string[];
 }
 
 export const AddPlaySessionModal: FC<AddPlaySessionModalProps> = ({
@@ -38,7 +34,12 @@ export const AddPlaySessionModal: FC<AddPlaySessionModalProps> = ({
 	const { t } = useTranslation();
 	const user = useCurrentUser();
 
-	const { register, reset, handleSubmit } = useForm<FormState>();
+	const { control, register, reset, handleSubmit } = useForm<FormState>({
+		defaultValues: {
+			name: '',
+			userIds: [],
+		},
+	});
 
 	useLayoutEffect(() => {
 		if (isOpen) {
@@ -48,9 +49,7 @@ export const AddPlaySessionModal: FC<AddPlaySessionModalProps> = ({
 
 	const { mutate, isLoading } = useCreatePlaySession({ onSuccess: onClose });
 
-	const submitForm = (data: FormState) => {
-		console.log(data);
-	};
+	const submitForm = (data: FormState) => mutate(data);
 
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
@@ -86,7 +85,7 @@ export const AddPlaySessionModal: FC<AddPlaySessionModalProps> = ({
 							<FormLabel color="text.form.label">
 								{t('playSessions.field.players.label')}
 							</FormLabel>
-							<PlayerSelectionList />
+							<PlayerSelectionList control={control} />
 						</FormControl>
 					</VStack>
 				</ModalBody>
