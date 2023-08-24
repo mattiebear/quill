@@ -40,7 +40,7 @@ export const Navbar: FC = () => {
 						<HomeIcon />
 					</RailLink>
 
-					<RailLink label={t('navigation.playSessions')} to="/play">
+					<RailLink label={t('navigation.gameSessions')} to="/play">
 						<BookOpenIcon />
 					</RailLink>
 

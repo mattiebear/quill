@@ -9,11 +9,17 @@ import {
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { AddPlaySessionModal } from './add-play-session-modal';
+import { useGameSessionsList } from '@/api/game-sessions';
 
-export const PlaySessionsIndex: FC = () => {
+import { AddGameSessionModal } from './add-game-session-modal';
+
+export const GameSessionsIndex: FC = () => {
 	const { t } = useTranslation();
 	const { isOpen, onClose, onOpen } = useDisclosure();
+
+	const { data } = useGameSessionsList();
+
+	console.log({ data });
 
 	return (
 		<>
@@ -24,20 +30,20 @@ export const PlaySessionsIndex: FC = () => {
 				py={8}
 				textTransform="capitalize"
 			>
-				{t('playSessions.indexTitle')}
+				{t('gameSessions.indexTitle')}
 			</Heading>
 
 			<Container maxW="container.lg">
 				<VStack spacing={8}>
 					<Flex justifyContent="flex-end" w="full">
 						<Button colorScheme="blue" onClick={onOpen}>
-							{t('playSessions.addSessionButton')}
+							{t('gameSessions.addSessionButton')}
 						</Button>
 					</Flex>
 				</VStack>
 			</Container>
 
-			<AddPlaySessionModal isOpen={isOpen} onClose={onClose} />
+			<AddGameSessionModal isOpen={isOpen} onClose={onClose} />
 		</>
 	);
 };

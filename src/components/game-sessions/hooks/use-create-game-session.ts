@@ -10,7 +10,7 @@ interface FormState {
 	userIds: string[];
 }
 
-export const useCreatePlaySession = ({
+export const useCreateGameSession = ({
 	onSuccess,
 }: {
 	onSuccess?: VoidFunction;
@@ -29,8 +29,8 @@ export const useCreatePlaySession = ({
 				// await invalidate();
 
 				toast({
-					title: t('playSessions.create.successTitle'),
-					description: t('playSessions.create.successDescription'),
+					title: t('gameSessions.create.successTitle'),
+					description: t('gameSessions.create.successDescription'),
 					status: 'success',
 				});
 
@@ -42,7 +42,7 @@ export const useCreatePlaySession = ({
 						console.log({ location, code });
 
 						toast({
-							description: t(`playSessions.create.error.${location}`, {
+							description: t(`gameSessions.create.error.${location}`, {
 								context: code,
 								defaultValue: t('common.unknownError'),
 							}),

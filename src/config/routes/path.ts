@@ -4,7 +4,7 @@ export enum Path {
 	Map = '/maps/:id',
 	NewMap = '/maps/new',
 	Friends = '/friends',
-	PlaySessions = '/play',
+	gameSessions = '/play',
 	SignIn = '/sign-in',
 	SignUp = '/sign-up',
 }

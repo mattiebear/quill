@@ -18,7 +18,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useCurrentUser } from '@/lib/auth/use-current-user';
 
-import { useCreatePlaySession } from './hooks/use-create-play-session';
+import { useCreateGameSession } from './hooks/use-create-game-session';
 import { PlayerSelectionList } from './player-selection-list';
 import { FormState } from './types';
 
@@ -27,7 +27,7 @@ interface AddPlaySessionModalProps {
 	onClose: VoidFunction;
 }
 
-export const AddPlaySessionModal: FC<AddPlaySessionModalProps> = ({
+export const AddGameSessionModal: FC<AddPlaySessionModalProps> = ({
 	isOpen,
 	onClose,
 }) => {
@@ -47,7 +47,7 @@ export const AddPlaySessionModal: FC<AddPlaySessionModalProps> = ({
 		}
 	}, [isOpen, reset]);
 
-	const { mutate, isLoading } = useCreatePlaySession({ onSuccess: onClose });
+	const { mutate, isLoading } = useCreateGameSession({ onSuccess: onClose });
 
 	const submitForm = (data: FormState) => mutate(data);
 
@@ -61,19 +61,19 @@ export const AddPlaySessionModal: FC<AddPlaySessionModalProps> = ({
 				onSubmit={(e) => e.preventDefault()}
 			>
 				<ModalHeader color="text.heading">
-					{t('playSessions.addSessionTitle')}
+					{t('gameSessions.addSessionTitle')}
 				</ModalHeader>
 				<ModalCloseButton color="white" />
 				<ModalBody>
 					<VStack spacing={6}>
 						<FormControl>
 							<FormLabel color="text.form.label">
-								{t('playSessions.field.name.label')}
+								{t('gameSessions.field.name.label')}
 							</FormLabel>
 							<Input
 								autoFocus
 								color="text.form.input"
-								placeholder={t('playSessions.field.name.placeholder', {
+								placeholder={t('gameSessions.field.name.placeholder', {
 									name: user.username,
 								})}
 								type="text"
@@ -83,7 +83,7 @@ export const AddPlaySessionModal: FC<AddPlaySessionModalProps> = ({
 
 						<FormControl>
 							<FormLabel color="text.form.label">
-								{t('playSessions.field.players.label')}
+								{t('gameSessions.field.players.label')}
 							</FormLabel>
 							<PlayerSelectionList control={control} />
 						</FormControl>
@@ -97,7 +97,7 @@ export const AddPlaySessionModal: FC<AddPlaySessionModalProps> = ({
 						onClick={handleSubmit(submitForm)}
 						type="submit"
 					>
-						{t('playSessions.createStorySubmit')}
+						{t('gameSessions.createStorySubmit')}
 					</Button>
 				</ModalFooter>
 			</ModalContent>
