@@ -92,6 +92,9 @@
 			"indexTitle": "Stories",
 			"addSessionButton": "Start a story",
 			"addSessionTitle": "Start a story",
+			"active": {
+				"tableTitle": "Playable Stories"
+			},
 			"field": {
 				"name": {
 					"label": "Story name",

@@ -12,7 +12,7 @@ export const GameSessionsTable: FC = () => {
 	return (
 		<TableContainer color="text.table" w="full">
 			<Heading as="h4" fontSize="lg" fontWeight="medium">
-				Playable Stories
+				{t('gameSessions.active.tableTitle')}
 			</Heading>
 			<Table variant="simple">
 				<Tbody>
