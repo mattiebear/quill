@@ -72,7 +72,7 @@ export const router = createBrowserRouter([
 						loader: () => fetchConnectionsList(),
 					},
 					{
-						path: Path.gameSessions,
+						path: Path.GameSessions,
 						element: <GameSessionsIndex />,
 						loader: () => {
 							return Promise.all([

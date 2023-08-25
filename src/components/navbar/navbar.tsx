@@ -41,7 +41,7 @@ export const Navbar: FC = () => {
 						<HomeIcon />
 					</RailLink>
 
-					<RailLink label={t('navigation.gameSessions')} to={Path.gameSessions}>
+					<RailLink label={t('navigation.gameSessions')} to={Path.GameSessions}>
 						<BookOpenIcon />
 					</RailLink>
 
