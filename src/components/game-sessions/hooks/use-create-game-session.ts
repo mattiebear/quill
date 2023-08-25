@@ -2,7 +2,7 @@ import { useToast } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
-// import { useInvalidateConnections } from '@/api/connections';
+import { useInvalidateGameSessions } from '@/api/game-sessions';
 import { getHttpError, isHttpErrorResponse, useHttpClient } from '@/lib/http';
 
 interface FormState {
@@ -10,7 +10,7 @@ interface FormState {
 	userIds: string[];
 }
 
-export const useCreatePlaySession = ({
+export const useCreateGameSession = ({
 	onSuccess,
 }: {
 	onSuccess?: VoidFunction;
@@ -18,7 +18,7 @@ export const useCreatePlaySession = ({
 	const { t } = useTranslation();
 	const http = useHttpClient();
 	const toast = useToast();
-	// const invalidate = useInvalidateConnections();
+	const invalidate = useInvalidateGameSessions();
 
 	return useMutation(
 		(data: FormState) => {
@@ -26,11 +26,11 @@ export const useCreatePlaySession = ({
 		},
 		{
 			onSuccess: async () => {
-				// await invalidate();
+				await invalidate();
 
 				toast({
-					title: t('playSessions.create.successTitle'),
-					description: t('playSessions.create.successDescription'),
+					title: t('gameSessions.create.successTitle'),
+					description: t('gameSessions.create.successDescription'),
 					status: 'success',
 				});
 
@@ -42,7 +42,7 @@ export const useCreatePlaySession = ({
 						console.log({ location, code });
 
 						toast({
-							description: t(`playSessions.create.error.${location}`, {
+							description: t(`gameSessions.create.error.${location}`, {
 								context: code,
 								defaultValue: t('common.unknownError'),
 							}),
