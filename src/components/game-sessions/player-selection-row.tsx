@@ -22,7 +22,7 @@ export const PlayerSelectionRow: FC<PlayerSelectionRowProps> = ({
 	return (
 		<Tr>
 			<Td pl={0} pr={2}>
-				<Avatar src={user.imageUrl} />
+				<Avatar name={user.username} src={user.imageUrl} />
 			</Td>
 			<Td w="full" pl={2}>
 				<Text fontWeight="medium">{user.username}</Text>

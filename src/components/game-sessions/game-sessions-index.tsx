@@ -9,9 +9,10 @@ import {
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { AddPlaySessionModal } from './add-play-session-modal';
+import { AddGameSessionModal } from './add-game-session-modal';
+import { GameSessionsTable } from './game-sessions-table';
 
-export const PlaySessionsIndex: FC = () => {
+export const GameSessionsIndex: FC = () => {
 	const { t } = useTranslation();
 	const { isOpen, onClose, onOpen } = useDisclosure();
 
@@ -24,20 +25,22 @@ export const PlaySessionsIndex: FC = () => {
 				py={8}
 				textTransform="capitalize"
 			>
-				{t('playSessions.indexTitle')}
+				{t('gameSessions.indexTitle')}
 			</Heading>
 
 			<Container maxW="container.lg">
 				<VStack spacing={8}>
 					<Flex justifyContent="flex-end" w="full">
 						<Button colorScheme="blue" onClick={onOpen}>
-							{t('playSessions.addSessionButton')}
+							{t('gameSessions.addSessionButton')}
 						</Button>
 					</Flex>
+
+					<GameSessionsTable />
 				</VStack>
 			</Container>
 
-			<AddPlaySessionModal isOpen={isOpen} onClose={onClose} />
+			<AddGameSessionModal isOpen={isOpen} onClose={onClose} />
 		</>
 	);
 };

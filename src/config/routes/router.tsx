@@ -2,15 +2,16 @@ import { SignIn, SignUp } from '@clerk/clerk-react';
 import { createBrowserRouter } from 'react-router-dom';
 
 import { fetchConnectionsList } from '@/api/connections';
+import { fetchGameSessionsList } from '@/api/game-sessions';
 import { fetchMapDetail, fetchMapsList } from '@/api/maps';
 import { fetchTileManifest } from '@/api/tiles/meta';
 import { ErrorBoundary } from '@/components/error';
 import { FriendsIndex } from '@/components/friends';
+import { GameSessionsIndex } from '@/components/game-sessions';
 import { Home } from '@/components/home';
 import { MainLayout } from '@/components/layout/main';
 import { MapEditor } from '@/components/map-editor';
 import { MapsIndex, MapsNew } from '@/components/maps';
-import { PlaySessionsIndex } from '@/components/play-sessions';
 import { Protected } from '@/lib/auth';
 
 import { Path } from './path';
@@ -71,9 +72,14 @@ export const router = createBrowserRouter([
 						loader: () => fetchConnectionsList(),
 					},
 					{
-						path: Path.PlaySessions,
-						element: <PlaySessionsIndex />,
-						loader: () => fetchConnectionsList(),
+						path: Path.GameSessions,
+						element: <GameSessionsIndex />,
+						loader: () => {
+							return Promise.all([
+								fetchConnectionsList(),
+								fetchGameSessionsList(),
+							]);
+						},
 					},
 				],
 			},
