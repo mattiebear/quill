@@ -7,6 +7,7 @@ import { fetchMapDetail, fetchMapsList } from '@/api/maps';
 import { fetchTileManifest } from '@/api/tiles/meta';
 import { ErrorBoundary } from '@/components/error';
 import { FriendsIndex } from '@/components/friends';
+import { GameBoard } from '@/components/game-board';
 import { GameSessionsIndex } from '@/components/game-sessions';
 import { Home } from '@/components/home';
 import { MainLayout } from '@/components/layout/main';
@@ -44,6 +45,14 @@ export const router = createBrowserRouter([
 						fetchTileManifest(),
 					]);
 				},
+			},
+			{
+				path: Path.GameSession,
+				element: (
+					<Protected>
+						<GameBoard />
+					</Protected>
+				),
 			},
 			{
 				path: '/',
