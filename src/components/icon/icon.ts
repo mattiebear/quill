@@ -10,6 +10,7 @@ import {
 	MagnifyingGlassPlusIcon,
 	MapIcon as MapIconBase,
 	PlusCircleIcon as PlusCircleIconBase,
+	TrashIcon as TrashIconBase,
 	UserGroupIcon as UserGroupIconBase,
 	UserMinusIcon as UserMinusIconBase,
 } from '@heroicons/react/24/outline';
@@ -23,6 +24,7 @@ export const HomeIcon = chakra(HomeIconBase);
 export const MagnifyingGlassIcon = chakra(MagnifyingGlassIconBase);
 export const MapIcon = chakra(MapIconBase);
 export const PlusCircleIcon = chakra(PlusCircleIconBase);
+export const TrashIcon = chakra(TrashIconBase);
 export const UserGroupIcon = chakra(UserGroupIconBase);
 export const UserMinusIcon = chakra(UserMinusIconBase);
 export const ZoomOutIcon = chakra(MagnifyingGlassMinusIcon);

@@ -93,7 +93,11 @@
 			"addSessionButton": "Start a story",
 			"addSessionTitle": "Start a story",
 			"active": {
-				"tableTitle": "Playable Stories"
+				"completeButton": "Complete story",
+				"joinButton": "Join",
+				"tableTitle": "Playable stories",
+				"menuLabel": "Options story menu",
+				"menuRemove": "Remove"
 			},
 			"field": {
 				"name": {
@@ -110,10 +114,25 @@
 			},
 			"createSessionSubmit": "Create story",
 			"sessionDefaultName": "{{name}}'s Story",
-			"joinSessionButton": "Join",
 			"status_pending": "Not started",
 			"status_active": "In progress",
-			"status_complete": "Complete"
+			"status_complete": "Complete",
+			"remove": {
+				"title": "Story removed",
+				"description": "The story has been deleted and is no longer playable",
+				"confirmTitle": "Remove story?",
+				"confirmDescription": "You won't be able to join the story or view it in your history",
+				"confirmCancel": "Never mind",
+				"confirmAccept": "Yes. Do it"
+			},
+			"complete": {
+				"title": "Story completed",
+				"description": "The story is over and has been added to your history",
+				"confirmTitle": "Complete story?",
+				"confirmDescription": "This will end the story for all players. You will not be able to re-join.",
+				"confirmCancel": "Never mind",
+				"confirmAccept": "Yes. Do it"
+			}
 		},
 		"editor": {
 			"zoomIn": "Zoom in",
