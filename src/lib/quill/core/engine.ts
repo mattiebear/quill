@@ -1,14 +1,6 @@
-import {
-	Atlas,
-	Direction,
-	EngineConfig,
-	IO,
-	Relay,
-	Renderer,
-	Store,
-	StoreKey,
-	Sync,
-} from '@/lib/quill';
+import { Atlas, EngineConfig, IO, Relay, Renderer, Sync } from '@/lib/quill';
+
+import { resetQuillStore } from '../store';
 
 /**
  * The primary container for the Quill rendering engine, containing and organizing all inner modules
@@ -21,7 +13,6 @@ export class Engine {
 	private readonly sync = new Sync();
 
 	public readonly io = new IO();
-	public readonly store = new Store();
 
 	constructor(public readonly config: EngineConfig) {
 		this.buildAtlas();
@@ -44,15 +35,11 @@ export class Engine {
 	}
 
 	initialize() {
-		this.store.initialize({
-			[StoreKey.SelectedBlueprint]: null,
-			[StoreKey.SelectedDirection]: Direction.N,
-		});
+		resetQuillStore();
 
 		// TODO: Clean up all of this
 		this.renderer.io = this.io;
 
-		this.io.store = this.store;
 		this.io.tileset = this.config.tileset;
 
 		this.sync.config = this.config;

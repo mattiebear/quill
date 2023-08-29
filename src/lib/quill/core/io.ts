@@ -4,12 +4,12 @@ import {
 	Position,
 	Relay,
 	RenderEvent,
-	Store,
-	StoreKey,
 	Subscriber,
 	Tileset,
 } from '@/lib/quill';
 import { find, shift } from '@/utils/array';
+
+import { quillStore } from '../store';
 
 const ScrollEventMap = new Map([
 	['w', 'up'],
@@ -32,7 +32,6 @@ enum Zoom {
  * Input listener that converts actions into relay events
  */
 export class IO implements Subscriber {
-	public store: Store;
 	public tileset: Tileset;
 
 	private relay: Relay;
@@ -85,8 +84,8 @@ export class IO implements Subscriber {
 	clickTile(x: number, y: number) {
 		const position = Position.atPoint(x, y, 0);
 
-		const id = this.store.get(StoreKey.SelectedBlueprint);
-		const direction = this.store.get(StoreKey.SelectedDirection);
+		const { selectedBlueprint: id, selectedDirection: direction } =
+			quillStore.getState();
 
 		if (id) {
 			const blueprint = this.tileset.get(id);
@@ -100,7 +99,7 @@ export class IO implements Subscriber {
 	}
 
 	selectBlueprint(id: string) {
-		this.store.set(StoreKey.SelectedBlueprint, id);
+		quillStore.setState({ selectedBlueprint: id });
 	}
 
 	rotateRight() {
@@ -113,11 +112,11 @@ export class IO implements Subscriber {
 
 	private rotateDirection(places: number) {
 		const directions = Object.values(Direction);
+		const { selectedDirection: selected } = quillStore.getState();
 
-		const selected = this.store.get(StoreKey.SelectedDirection);
 		const index = find(directions, selected);
 		const value = shift(directions)(index, places);
 
-		this.store.set(StoreKey.SelectedDirection, value);
+		quillStore.setState({ selectedDirection: value });
 	}
 }

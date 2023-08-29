@@ -23,9 +23,9 @@ import {
 import { useEngine } from '@/components/map-editor/hooks/use-engine';
 import { useIO } from '@/components/map-editor/hooks/use-io';
 import { useMap } from '@/components/map-editor/hooks/use-map';
-import { useStoreValue } from '@/components/map-editor/hooks/use-store-value';
-import { Direction } from '@/lib/quill';
-import { StoreKey } from '@/lib/quill/types/store';
+import { Path } from '@/config/routes';
+
+import { useEditorState } from './hooks/use-editor-state';
 
 export const EditorUI: FC = () => {
 	const nodeRef = useRef<HTMLDivElement>(null);
@@ -36,12 +36,11 @@ export const EditorUI: FC = () => {
 	const invalidate = useInvalidateMap(map);
 	const navigate = useNavigate();
 
-	const blueprintId = useStoreValue<string>(StoreKey.SelectedBlueprint);
-	const direction = useStoreValue<Direction>(StoreKey.SelectedDirection);
+	const { blueprintId, direction } = useEditorState();
 
 	const handleClickDone = async () => {
 		await invalidate();
-		navigate('/maps');
+		navigate(Path.Maps);
 	};
 
 	return (
