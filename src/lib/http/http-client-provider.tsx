@@ -2,7 +2,7 @@ import { useAuth } from '@clerk/clerk-react';
 import { FC, PropsWithChildren, useMemo } from 'react';
 
 import { createHttpClient } from '.';
-import { staticStore } from '../state';
+import { staticStore } from '../store';
 
 export const HttpClientProvider: FC<PropsWithChildren> = ({ children }) => {
 	const { getToken } = useAuth();
