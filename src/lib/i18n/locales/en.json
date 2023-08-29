@@ -110,7 +110,7 @@
 			},
 			"create": {
 				"successTitle": "Story created",
-				"successDescription": "You can being the story whenever you're ready"
+				"successDescription": "You can begin the story whenever you're ready"
 			},
 			"createSessionSubmit": "Create story",
 			"sessionDefaultName": "{{name}}'s Story",
