@@ -1,7 +1,5 @@
-import { AxiosInstance } from 'axios';
-
-import { StaticStore } from '../store/static-store';
+import { staticStore } from '../state';
 
 export const getHttpClient = () => {
-	return StaticStore.fetch<AxiosInstance>('http');
+	return staticStore.getState().httpClient;
 };

@@ -1,1 +1,1 @@
-export * from './use-static';
+export * from './static-store';

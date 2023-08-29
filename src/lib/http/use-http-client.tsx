@@ -1,7 +1,5 @@
-import { useContext } from 'react';
-
-import { httpContext } from './http-context';
+import { useStaticStore } from '../state';
 
 export const useHttpClient = () => {
-	return useContext(httpContext);
+	return useStaticStore((state) => state.httpClient);
 };
