@@ -8,14 +8,15 @@ import { Engine } from '@/lib/quill';
 import { EngineConfig } from '@/lib/quill/core/engine-config';
 import { MapEvent } from '@/lib/quill/types/event';
 
+import { useDataObserver } from './use-data-observer';
+
 export const useQuill = (map: MapEntity) => {
 	const elRef = useRef(document.getElementById('root') as HTMLDivElement);
 	const tileset = useTileset();
 	const http = useHttpClient();
 	const { createSaveToast } = useEditorFeedback();
 
-	// // TODO: Move this
-	// .on(MapEvent.MapSaved, createSaveToast)
+	useDataObserver(MapEvent.MapSaved, createSaveToast);
 
 	const [engine] = useState(() => {
 		const config = new EngineConfig({

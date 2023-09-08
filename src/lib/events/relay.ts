@@ -7,6 +7,7 @@ export enum Channel {
 
 const relay = new Relay();
 
+relay.create(Channel.Data);
 relay.create(Channel.Editor);
 
 export { relay };
