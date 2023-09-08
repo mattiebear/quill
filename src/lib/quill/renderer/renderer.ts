@@ -1,23 +1,22 @@
 import * as PIXI from 'pixi.js';
 
+import { Channel, relay } from '@/lib/events';
 import {
 	Changeset,
 	IO,
 	MapEvent,
 	NodeChange,
 	Position,
-	Relay,
 	RenderEvent,
 	RenderNode,
 	RenderObject,
-	Subscriber,
 } from '@/lib/quill';
 import { findOrCreateByKey } from '@/utils/map';
 import { degToRad } from '@/utils/math';
 import { clamp } from '@/utils/number';
 import { assertPresence } from '@/utils/runtime';
 
-export class Renderer implements Subscriber {
+export class Renderer {
 	public el: HTMLElement;
 	public io: IO;
 
@@ -36,6 +35,30 @@ export class Renderer implements Subscriber {
 	// State
 	private zoom = 100;
 
+	constructor() {
+		relay
+			.channel(Channel.Editor)
+			.on(MapEvent.MapAltered, (changeset: Changeset) => {
+				this.drawChangeset(changeset);
+			});
+
+		relay
+			.channel(Channel.Editor)
+			.on(RenderEvent.ChangeZoom, (value: number) => {
+				this.changeZoom(value);
+			});
+
+		relay.channel(Channel.Editor).on(RenderEvent.ScrollMap, (dir: string) => {
+			this.scrollMap(dir);
+		});
+
+		relay
+			.channel(Channel.Editor)
+			.on(RenderEvent.HighlightTile, (pos: Position) => {
+				this.setHighlightPosition(pos);
+			});
+	}
+
 	initialize() {
 		assertPresence(
 			this.el,
@@ -46,24 +69,6 @@ export class Renderer implements Subscriber {
 		this.setupRenderLayers();
 		this.createHighlight();
 		this.initializeListeners();
-	}
-
-	link(relay: Relay) {
-		relay.subscribe(MapEvent.MapAltered, (changeset: Changeset) => {
-			this.drawChangeset(changeset);
-		});
-
-		relay.subscribe(RenderEvent.ChangeZoom, (value: number) => {
-			this.changeZoom(value);
-		});
-
-		relay.subscribe(RenderEvent.ScrollMap, (dir: string) => {
-			this.scrollMap(dir);
-		});
-
-		relay.subscribe(RenderEvent.HighlightTile, (pos: Position) => {
-			this.setHighlightPosition(pos);
-		});
 	}
 
 	destroy() {

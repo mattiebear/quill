@@ -1,12 +1,11 @@
 import { AtlasData, PersistedNode } from '@/entites/atlas';
+import { Channel, relay } from '@/lib/events';
 import {
 	Changeset,
 	Direction,
 	MapEvent,
 	MapNode,
 	Position,
-	Relay,
-	Subscriber,
 	TileBlueprint,
 	Tileset,
 } from '@/lib/quill';
@@ -19,34 +18,33 @@ interface PlaceTileEvent {
 	position: Position;
 }
 
-export class Atlas implements Subscriber {
+export class Atlas {
 	private nodes = new Map<string, MapNode>();
-	private relay: Relay;
 	private queue: Changeset[] = [];
 
-	constructor(private readonly tileset: Tileset) {}
+	constructor(private readonly tileset: Tileset) {
+		relay
+			.channel(Channel.Editor)
+			.on(
+				MapEvent.PlaceTile,
+				({ blueprint, direction, position }: PlaceTileEvent) => {
+					this.add(position, blueprint, direction);
+				}
+			);
+	}
 
 	add(position: Position, blueprint: TileBlueprint, direction: Direction) {
 		const node = this.findOrCreateNodeByPosition(position);
 
 		const changeset = node.add(blueprint, direction);
 
-		if (this.relay) {
-			this.sendChangeset(changeset);
-		} else {
-			this.queueChangeset(changeset);
-		}
-	}
+		this.sendChangeset(changeset);
 
-	link(relay: Relay) {
-		this.relay = relay;
-
-		this.relay.subscribe(
-			MapEvent.PlaceTile,
-			({ blueprint, direction, position }: PlaceTileEvent) => {
-				this.add(position, blueprint, direction);
-			}
-		);
+		// if (this.relay) {
+		// 	this.sendChangeset(changeset);
+		// } else {
+		// 	this.queueChangeset(changeset);
+		// }
 	}
 
 	load(mapData: AtlasData) {
@@ -68,9 +66,9 @@ export class Atlas implements Subscriber {
 	}
 
 	sync() {
-		if (!this.relay) {
-			return;
-		}
+		// if (!this.relay) {
+		// 	return;
+		// }
 
 		while (this.queue.length) {
 			const changeset = this.queue.shift();
@@ -97,7 +95,7 @@ export class Atlas implements Subscriber {
 	}
 
 	private sendChangeset(changeset: Changeset) {
-		this.relay.send(MapEvent.MapAltered, changeset);
+		relay.send(MapEvent.MapAltered, changeset).to(Channel.Editor);
 	}
 
 	private queueChangeset(changeset: Changeset) {

@@ -1,20 +1,18 @@
-import { Atlas, EngineConfig, MapEvent, Relay, Subscriber } from '@/lib/quill';
+import { Channel, relay } from '@/lib/events';
+import { Atlas, EngineConfig, MapEvent } from '@/lib/quill';
 import { DynamicPath } from '@/lib/url';
 
 const PERSIST_DEBOUNCE = 3000;
 
-export class Sync implements Subscriber {
+export class Sync {
 	public config: EngineConfig;
 	// TODO: Make atlas available in some other way
 	public atlas: Atlas;
 
-	private relay: Relay;
 	private persistTimeout: ReturnType<typeof setTimeout>;
 
-	link(relay: Relay) {
-		this.relay = relay;
-
-		relay.subscribe(MapEvent.PlaceTile, () => {
+	constructor() {
+		relay.channel(Channel.Editor).on(MapEvent.PlaceTile, () => {
 			if (this.persistTimeout) {
 				clearTimeout(this.persistTimeout);
 			}
@@ -34,6 +32,6 @@ export class Sync implements Subscriber {
 
 		await this.config.http.patch(url, { atlas });
 
-		this.relay.send(MapEvent.MapSaved);
+		relay.send(MapEvent.MapSaved).to(Channel.Data);
 	}
 }

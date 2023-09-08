@@ -23,6 +23,9 @@ dependencies:
   '@heroicons/react':
     specifier: ^2.0.18
     version: 2.0.18(react@18.2.0)
+  '@space-station/relay':
+    specifier: ^0.2.0
+    version: 0.2.0
   '@tanstack/react-query':
     specifier: ^4.32.0
     version: 4.32.0(react-dom@18.2.0)(react@18.2.0)
@@ -2350,6 +2353,10 @@ packages:
   /@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
+
+  /@space-station/relay@0.2.0:
+    resolution: {integrity: sha512-c2vYIM/Y6zBWIq6aqNtaKarHcFpEgNpvlDE2zTTQfSY+A9pxh14D5FAot+TJ+oOAyjhhiTsXbZddN2wS0o8DJg==}
+    dev: false
 
   /@tanstack/match-sorter-utils@8.8.4:
     resolution: {integrity: sha512-rKH8LjZiszWEvmi01NR72QWZ8m4xmXre0OOwlRGnjU01Eqz/QnN+cqpty2PJ0efHblq09+KilvyR7lsbzmXVEw==}

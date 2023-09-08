@@ -1,4 +1,4 @@
-import { Atlas, EngineConfig, IO, Relay, Renderer, Sync } from '@/lib/quill';
+import { Atlas, EngineConfig, IO, Renderer, Sync } from '@/lib/quill';
 
 import { resetQuillStore } from '../store';
 
@@ -9,7 +9,6 @@ export class Engine {
 	public atlas: Atlas;
 
 	private readonly renderer = new Renderer();
-	private readonly relay = new Relay();
 	private readonly sync = new Sync();
 
 	public readonly io = new IO();
@@ -29,11 +28,6 @@ export class Engine {
 		return this;
 	}
 
-	on(event: string, listener: VoidFunction) {
-		this.relay.subscribe(event, listener);
-		return this;
-	}
-
 	initialize() {
 		resetQuillStore();
 
@@ -44,8 +38,6 @@ export class Engine {
 
 		this.sync.config = this.config;
 		this.sync.atlas = this.atlas;
-
-		this.relay.link(this.atlas, this.renderer, this.io, this.sync);
 
 		this.renderer.initialize();
 		this.io.initialize();

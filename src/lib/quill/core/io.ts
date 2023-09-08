@@ -1,10 +1,9 @@
+import { Channel, relay } from '@/lib/events';
 import {
 	Direction,
 	MapEvent,
 	Position,
-	Relay,
 	RenderEvent,
-	Subscriber,
 	Tileset,
 } from '@/lib/quill';
 import { find, shift } from '@/utils/array';
@@ -31,26 +30,17 @@ enum Zoom {
 /**
  * Input listener that converts actions into relay events
  */
-export class IO implements Subscriber {
+export class IO {
 	public tileset: Tileset;
 
-	private relay: Relay;
 	private keydown: (e: KeyboardEvent) => void;
 
 	initialize() {
 		this.initScrollListeners();
 	}
 
-	link(relay: Relay) {
-		this.relay = relay;
-	}
-
 	destroy() {
 		document.removeEventListener('keydown', this.keydown);
-	}
-
-	private send(event: string, data?: any) {
-		this.relay?.send(event, data);
 	}
 
 	private initScrollListeners() {
@@ -58,7 +48,7 @@ export class IO implements Subscriber {
 			const event = ScrollEventMap.get(e.key);
 
 			if (event) {
-				this.send(RenderEvent.ScrollMap, event);
+				relay.send(RenderEvent.ScrollMap, event).to(Channel.Editor);
 			}
 		};
 
@@ -69,16 +59,16 @@ export class IO implements Subscriber {
 	 * Mouse handlers
 	 */
 	onClickZoomOut() {
-		this.send(RenderEvent.ChangeZoom, Zoom.Out);
+		relay.send(RenderEvent.ChangeZoom, Zoom.Out).to(Channel.Editor);
 	}
 
 	onClickZoomIn() {
-		this.send(RenderEvent.ChangeZoom, Zoom.In);
+		relay.send(RenderEvent.ChangeZoom, Zoom.In).to(Channel.Editor);
 	}
 
 	moveMouse(x: number, y: number) {
 		const pos = Position.atPoint(x, y, 0);
-		this.relay.send(RenderEvent.HighlightTile, pos);
+		relay.send(RenderEvent.HighlightTile, pos).to(Channel.Editor);
 	}
 
 	clickTile(x: number, y: number) {
@@ -90,11 +80,13 @@ export class IO implements Subscriber {
 		if (id) {
 			const blueprint = this.tileset.get(id);
 
-			this.relay.send(MapEvent.PlaceTile, {
-				blueprint,
-				direction,
-				position,
-			});
+			relay
+				.send(MapEvent.PlaceTile, {
+					blueprint,
+					direction,
+					position,
+				})
+				.to(Channel.Editor);
 		}
 	}
 

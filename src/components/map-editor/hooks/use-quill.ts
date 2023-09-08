@@ -14,6 +14,9 @@ export const useQuill = (map: MapEntity) => {
 	const http = useHttpClient();
 	const { createSaveToast } = useEditorFeedback();
 
+	// // TODO: Move this
+	// .on(MapEvent.MapSaved, createSaveToast)
+
 	const [engine] = useState(() => {
 		const config = new EngineConfig({
 			map,
@@ -23,10 +26,7 @@ export const useQuill = (map: MapEntity) => {
 
 		const engine = new Engine(config);
 
-		engine
-			.drawTo(elRef.current)
-			.on(MapEvent.MapSaved, createSaveToast)
-			.initialize();
+		engine.drawTo(elRef.current).initialize();
 
 		return engine;
 	});
