@@ -18,6 +18,13 @@ import { assertPresence } from '@/utils/runtime';
 
 import { quillStore } from '../store';
 
+const ScrollEventMap = new Map([
+	['w', 'up'],
+	['a', 'left'],
+	['s', 'down'],
+	['d', 'right'],
+]);
+
 export class Renderer {
 	public config: EngineConfig;
 	public el: HTMLElement;
@@ -36,6 +43,7 @@ export class Renderer {
 
 	// State
 	private zoom = 100;
+	private keydown: any;
 
 	constructor() {
 		relay
@@ -49,10 +57,6 @@ export class Renderer {
 			.on(RenderEvent.ChangeZoom, (value: number) => {
 				this.changeZoom(value);
 			});
-
-		relay.channel(Channel.Editor).on(RenderEvent.ScrollMap, (dir: string) => {
-			this.scrollMap(dir);
-		});
 
 		relay
 			.channel(Channel.Editor)
@@ -75,6 +79,10 @@ export class Renderer {
 
 	destroy() {
 		this.app.destroy(true);
+
+		if (this.keydown) {
+			document.removeEventListener('keydown', this.keydown);
+		}
 	}
 
 	// Internal handlers
@@ -168,6 +176,16 @@ export class Renderer {
 					.to(Channel.Editor);
 			}
 		});
+
+		this.keydown = (e: KeyboardEvent) => {
+			const dir = ScrollEventMap.get(e.key);
+
+			if (dir) {
+				this.scrollMap(dir);
+			}
+		};
+
+		document.addEventListener('keydown', this.keydown);
 	}
 
 	private createHighlight() {

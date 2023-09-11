@@ -28,12 +28,9 @@ import { RenderEvent } from '@/lib/quill';
 import { quillStore } from '@/lib/quill/store';
 
 import { useEditorState } from './hooks/use-editor-state';
-import { useMapScroll } from './hooks/use-map-scroll';
 import { useRotateTile } from './hooks/use-rotate-tile';
 
 export const EditorUI: FC = () => {
-	useMapScroll();
-
 	const nodeRef = useRef<HTMLDivElement>(null);
 	const { t } = useTranslation();
 	const engine = useEngine();
