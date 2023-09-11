@@ -1,4 +1,4 @@
-import { Atlas, EngineConfig, IO, Renderer, Sync } from '@/lib/quill';
+import { Atlas, EngineConfig, Renderer, Sync } from '@/lib/quill';
 
 import { resetQuillStore } from '../store';
 
@@ -11,36 +11,34 @@ export class Engine {
 	private readonly renderer = new Renderer();
 	private readonly sync = new Sync();
 
-	public readonly io = new IO();
-
 	constructor(public readonly config: EngineConfig) {
 		this.buildAtlas();
 	}
 
+	// TODO: Move to atlas through constructor
 	buildAtlas() {
 		this.atlas = new Atlas(this.config.tileset).load(
 			this.config.map.atlas.data
 		);
 	}
 
+	// TODO: Move to renderer through config DI
 	drawTo(el: HTMLElement) {
 		this.renderer.el = el;
 		return this;
 	}
 
 	initialize() {
+		// TODO: Handle in callback
 		resetQuillStore();
 
 		// TODO: Clean up all of this
-		this.renderer.io = this.io;
-
-		this.io.tileset = this.config.tileset;
+		this.renderer.config = this.config;
 
 		this.sync.config = this.config;
 		this.sync.atlas = this.atlas;
 
 		this.renderer.initialize();
-		this.io.initialize();
 		this.atlas.sync();
 
 		return this;
@@ -48,6 +46,5 @@ export class Engine {
 
 	destroy() {
 		this.renderer.destroy();
-		this.io.destroy();
 	}
 }

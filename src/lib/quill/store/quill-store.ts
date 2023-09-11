@@ -1,7 +1,7 @@
 import { shallow } from 'zustand/shallow';
 import { createWithEqualityFn } from 'zustand/traditional';
 
-import { Direction } from '..';
+import { Direction } from '@/lib/quill/types/map';
 
 interface QuillStoreValue {
 	selectedBlueprint: string | null;

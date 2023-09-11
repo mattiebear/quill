@@ -21,20 +21,27 @@ import {
 	ZoomOutIcon,
 } from '@/components/icon';
 import { useEngine } from '@/components/map-editor/hooks/use-engine';
-import { useIO } from '@/components/map-editor/hooks/use-io';
 import { useMap } from '@/components/map-editor/hooks/use-map';
 import { Path } from '@/config/routes';
+import { Channel, useChannel } from '@/lib/events';
+import { RenderEvent } from '@/lib/quill';
+import { quillStore } from '@/lib/quill/store';
 
 import { useEditorState } from './hooks/use-editor-state';
+import { useMapScroll } from './hooks/use-map-scroll';
+import { useRotateTile } from './hooks/use-rotate-tile';
 
 export const EditorUI: FC = () => {
+	useMapScroll();
+
 	const nodeRef = useRef<HTMLDivElement>(null);
 	const { t } = useTranslation();
-	const io = useIO();
 	const engine = useEngine();
 	const map = useMap();
 	const invalidate = useInvalidateMap(map);
 	const navigate = useNavigate();
+	const { send } = useChannel(Channel.Editor);
+	const { rotateLeft, rotateRight } = useRotateTile();
 
 	const { blueprintId, direction } = useEditorState();
 
@@ -65,12 +72,12 @@ export const EditorUI: FC = () => {
 						<IconButton
 							aria-label={t('editor.zoomOut')}
 							icon={<ZoomOutIcon />}
-							onClick={() => io.onClickZoomOut()}
+							onClick={() => send(RenderEvent.ChangeZoom, -10)}
 						/>
 						<IconButton
 							aria-label={t('editor.zoomIn')}
 							icon={<ZoomInIcon />}
-							onClick={() => io.onClickZoomIn()}
+							onClick={() => send(RenderEvent.ChangeZoom, 10)}
 						/>
 					</Flex>
 
@@ -78,12 +85,12 @@ export const EditorUI: FC = () => {
 						<IconButton
 							aria-label={t('editor.rotateLeft')}
 							icon={<ArrowUturnRightIcon />}
-							onClick={() => io.rotateRight()}
+							onClick={rotateRight}
 						/>
 						<IconButton
 							aria-label={t('editor.rotateRight')}
 							icon={<ArrowUturnLeftIcon />}
-							onClick={() => io.rotateLeft()}
+							onClick={rotateLeft}
 						/>
 					</Flex>
 
@@ -93,7 +100,9 @@ export const EditorUI: FC = () => {
 								key={blueprint.id}
 								h="auto"
 								p={2}
-								onClick={() => io.selectBlueprint(blueprint.id)}
+								onClick={() =>
+									quillStore.setState({ selectedBlueprint: blueprint.id })
+								}
 								{...(blueprint.id === blueprintId && {
 									// TODO: Use semantic value
 									bg: 'green.500',

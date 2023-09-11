@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js';
 import { Channel, relay } from '@/lib/events';
 import {
 	Changeset,
-	IO,
+	EngineConfig,
 	MapEvent,
 	NodeChange,
 	Position,
@@ -16,9 +16,11 @@ import { degToRad } from '@/utils/math';
 import { clamp } from '@/utils/number';
 import { assertPresence } from '@/utils/runtime';
 
+import { quillStore } from '../store';
+
 export class Renderer {
+	public config: EngineConfig;
 	public el: HTMLElement;
-	public io: IO;
 
 	private app: PIXI.Application<HTMLCanvasElement>;
 	private nodes = new Map<string, RenderNode>();
@@ -141,12 +143,30 @@ export class Renderer {
 	private initializeListeners() {
 		this.main.on('mousemove', (e) => {
 			const { x, y } = this.map.toLocal(e.global);
-			this.io.moveMouse(x, y);
+
+			const pos = Position.atPoint(x, y, 0);
+			relay.send(RenderEvent.HighlightTile, pos).to(Channel.Editor);
 		});
 
 		this.main.on('mousedown', (e) => {
 			const { x, y } = this.map.toLocal(e.global);
-			this.io.clickTile(x, y);
+
+			const position = Position.atPoint(x, y, 0);
+
+			const { selectedBlueprint: id, selectedDirection: direction } =
+				quillStore.getState();
+
+			if (id) {
+				const blueprint = this.config.tileset.get(id);
+
+				relay
+					.send(MapEvent.PlaceTile, {
+						blueprint,
+						direction,
+						position,
+					})
+					.to(Channel.Editor);
+			}
 		});
 	}
 
