@@ -1,5 +1,4 @@
 export enum RenderEvent {
-	HighlightTile = 'highlight-tile',
 	ChangeZoom = 'change-zoom',
 }
 

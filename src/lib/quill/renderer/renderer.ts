@@ -46,23 +46,15 @@ export class Renderer {
 	private keydown: any;
 
 	constructor() {
-		relay
-			.channel(Channel.Editor)
-			.on(MapEvent.MapAltered, (changeset: Changeset) => {
-				this.drawChangeset(changeset);
-			});
+		const editorChannel = relay.channel(Channel.Editor);
 
-		relay
-			.channel(Channel.Editor)
-			.on(RenderEvent.ChangeZoom, (value: number) => {
-				this.changeZoom(value);
-			});
+		editorChannel.on(MapEvent.MapAltered, (changeset: Changeset) => {
+			this.drawChangeset(changeset);
+		});
 
-		relay
-			.channel(Channel.Editor)
-			.on(RenderEvent.HighlightTile, (pos: Position) => {
-				this.setHighlightPosition(pos);
-			});
+		editorChannel.on(RenderEvent.ChangeZoom, (value: number) => {
+			this.changeZoom(value);
+		});
 	}
 
 	initialize() {
@@ -153,7 +145,7 @@ export class Renderer {
 			const { x, y } = this.map.toLocal(e.global);
 
 			const pos = Position.atPoint(x, y, 0);
-			relay.send(RenderEvent.HighlightTile, pos).to(Channel.Editor);
+			this.setHighlightPosition(pos);
 		});
 
 		this.main.on('mousedown', (e) => {
