@@ -1,7 +1,7 @@
-import { inject, injectable, injectWithTransform } from 'tsyringe';
+import { Container } from '@space-station/hotwire';
 
-export {
-	inject as Inject,
-	injectable as Injectable,
-	injectWithTransform as Infuse,
-};
+export { inject, Lifespan } from '@space-station/hotwire';
+
+export const container = new Container();
+
+export * from './tokens';

@@ -1,17 +1,19 @@
+import { container, DiHttp, inject, Lifespan } from '@/lib/di';
 import { Channel, relay } from '@/lib/events';
+import { HttpClient } from '@/lib/http/types';
 import { Atlas, EngineConfig, MapEvent } from '@/lib/quill';
 import { DynamicPath } from '@/lib/url';
 
 const PERSIST_DEBOUNCE = 3000;
 
 export class Sync {
-	public config: EngineConfig;
-	// TODO: Make atlas available in some other way
-	public atlas: Atlas;
-
 	private persistTimeout: ReturnType<typeof setTimeout>;
 
-	constructor() {
+	constructor(
+		private config: EngineConfig,
+		private http: HttpClient,
+		private atlas: Atlas
+	) {
 		relay.channel(Channel.Editor).on(MapEvent.PlaceTile, () => {
 			if (this.persistTimeout) {
 				clearTimeout(this.persistTimeout);
@@ -30,8 +32,12 @@ export class Sync {
 
 		atlas.data = this.atlas.toJSON();
 
-		await this.config.http.patch(url, { atlas });
+		await this.http.patch(url, { atlas });
 
 		relay.send(MapEvent.MapSaved).to(Channel.Data);
 	}
 }
+
+inject(Sync, [EngineConfig, DiHttp, Atlas]);
+
+container.register(Sync, { class: Sync, lifespan: Lifespan.Resolution });

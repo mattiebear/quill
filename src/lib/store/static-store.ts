@@ -1,10 +1,12 @@
 import { Relay } from '@space-station/relay';
 import { QueryClient } from '@tanstack/react-query';
-import axios, { AxiosInstance } from 'axios';
+import axios from 'axios';
 import { create } from 'zustand';
 
+import { HttpClient } from '../http/types';
+
 interface StaticStoreValue {
-	httpClient: AxiosInstance;
+	httpClient: HttpClient;
 	queryClient: QueryClient;
 	relay: Relay;
 }

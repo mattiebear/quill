@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 
+import { container, inject, Lifespan } from '@/lib/di';
 import { Channel, relay } from '@/lib/events';
 import {
 	Changeset,
@@ -26,9 +27,6 @@ const ScrollEventMap = new Map([
 ]);
 
 export class Renderer {
-	public config: EngineConfig;
-	public el: HTMLElement;
-
 	private app: PIXI.Application<HTMLCanvasElement>;
 	private nodes = new Map<string, RenderNode>();
 
@@ -45,7 +43,7 @@ export class Renderer {
 	private zoom = 100;
 	private keydown: any;
 
-	constructor() {
+	constructor(public config: EngineConfig) {
 		const editorChannel = relay.channel(Channel.Editor);
 
 		editorChannel.on(MapEvent.MapAltered, (changeset: Changeset) => {
@@ -59,7 +57,7 @@ export class Renderer {
 
 	initialize() {
 		assertPresence(
-			this.el,
+			this.config.el,
 			'Renderer has not been assigned an element on which to draw'
 		);
 
@@ -118,7 +116,7 @@ export class Renderer {
 			backgroundColor: 0x171923,
 		});
 
-		this.el.appendChild(this.app.view);
+		this.config.el.appendChild(this.app.view);
 	}
 
 	private setupRenderLayers() {
@@ -230,3 +228,10 @@ export class Renderer {
 		}
 	}
 }
+
+inject(Renderer, [EngineConfig]);
+
+container.register(Renderer, {
+	class: Renderer,
+	lifespan: Lifespan.Resolution,
+});
