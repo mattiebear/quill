@@ -46,7 +46,12 @@ export const GameSessionRow: FC<GameSessionsRowProps> = ({ session }) => {
 			<Td pl={0}>
 				<AvatarGroup>
 					{session.players.map(({ user }) => (
-						<Avatar id={user.id} name={user.username} src={user.imageUrl} />
+						<Avatar
+							key={user.id}
+							id={user.id}
+							name={user.username}
+							src={user.imageUrl}
+						/>
 					))}
 				</AvatarGroup>
 			</Td>

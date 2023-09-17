@@ -1,10 +1,13 @@
 import { JsonObject, JsonProperty } from 'json2typescript';
-import { pick } from 'ramda';
 
 @JsonObject('User')
 export class User {
 	constructor(data: any = {}) {
-		Object.assign(this, pick(['id', 'imageUrl', 'username'], data));
+		Object.assign(this, {
+			id: data.id,
+			imageUrl: data.imageUrl,
+			username: data.username,
+		});
 	}
 
 	@JsonProperty('id', String)

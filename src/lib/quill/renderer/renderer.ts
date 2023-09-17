@@ -1,26 +1,32 @@
 import * as PIXI from 'pixi.js';
 
+import { container, inject, Lifespan } from '@/lib/di';
+import { Channel, relay } from '@/lib/events';
 import {
 	Changeset,
-	IO,
+	EngineConfig,
 	MapEvent,
 	NodeChange,
 	Position,
-	Relay,
 	RenderEvent,
 	RenderNode,
 	RenderObject,
-	Subscriber,
 } from '@/lib/quill';
 import { findOrCreateByKey } from '@/utils/map';
 import { degToRad } from '@/utils/math';
 import { clamp } from '@/utils/number';
 import { assertPresence } from '@/utils/runtime';
 
-export class Renderer implements Subscriber {
-	public el: HTMLElement;
-	public io: IO;
+import { quillStore } from '../store';
 
+const ScrollEventMap = new Map([
+	['w', 'up'],
+	['a', 'left'],
+	['s', 'down'],
+	['d', 'right'],
+]);
+
+export class Renderer {
 	private app: PIXI.Application<HTMLCanvasElement>;
 	private nodes = new Map<string, RenderNode>();
 
@@ -35,10 +41,23 @@ export class Renderer implements Subscriber {
 
 	// State
 	private zoom = 100;
+	private keydown: any;
+
+	constructor(public config: EngineConfig) {
+		const editorChannel = relay.channel(Channel.Editor);
+
+		editorChannel.on(MapEvent.MapAltered, (changeset: Changeset) => {
+			this.drawChangeset(changeset);
+		});
+
+		editorChannel.on(RenderEvent.ChangeZoom, (value: number) => {
+			this.changeZoom(value);
+		});
+	}
 
 	initialize() {
 		assertPresence(
-			this.el,
+			this.config.el,
 			'Renderer has not been assigned an element on which to draw'
 		);
 
@@ -48,26 +67,12 @@ export class Renderer implements Subscriber {
 		this.initializeListeners();
 	}
 
-	link(relay: Relay) {
-		relay.subscribe(MapEvent.MapAltered, (changeset: Changeset) => {
-			this.drawChangeset(changeset);
-		});
-
-		relay.subscribe(RenderEvent.ChangeZoom, (value: number) => {
-			this.changeZoom(value);
-		});
-
-		relay.subscribe(RenderEvent.ScrollMap, (dir: string) => {
-			this.scrollMap(dir);
-		});
-
-		relay.subscribe(RenderEvent.HighlightTile, (pos: Position) => {
-			this.setHighlightPosition(pos);
-		});
-	}
-
 	destroy() {
 		this.app.destroy(true);
+
+		if (this.keydown) {
+			document.removeEventListener('keydown', this.keydown);
+		}
 	}
 
 	// Internal handlers
@@ -111,7 +116,7 @@ export class Renderer implements Subscriber {
 			backgroundColor: 0x171923,
 		});
 
-		this.el.appendChild(this.app.view);
+		this.config.el.appendChild(this.app.view);
 	}
 
 	private setupRenderLayers() {
@@ -136,13 +141,41 @@ export class Renderer implements Subscriber {
 	private initializeListeners() {
 		this.main.on('mousemove', (e) => {
 			const { x, y } = this.map.toLocal(e.global);
-			this.io.moveMouse(x, y);
+
+			const pos = Position.atPoint(x, y, 0);
+			this.setHighlightPosition(pos);
 		});
 
 		this.main.on('mousedown', (e) => {
 			const { x, y } = this.map.toLocal(e.global);
-			this.io.clickTile(x, y);
+
+			const position = Position.atPoint(x, y, 0);
+
+			const { selectedBlueprint: id, selectedDirection: direction } =
+				quillStore.getState();
+
+			if (id) {
+				const blueprint = this.config.tileset.get(id);
+
+				relay
+					.send(MapEvent.PlaceTile, {
+						blueprint,
+						direction,
+						position,
+					})
+					.to(Channel.Editor);
+			}
 		});
+
+		this.keydown = (e: KeyboardEvent) => {
+			const dir = ScrollEventMap.get(e.key);
+
+			if (dir) {
+				this.scrollMap(dir);
+			}
+		};
+
+		document.addEventListener('keydown', this.keydown);
 	}
 
 	private createHighlight() {
@@ -195,3 +228,10 @@ export class Renderer implements Subscriber {
 		}
 	}
 }
+
+inject(Renderer, [EngineConfig]);
+
+container.register(Renderer, {
+	class: Renderer,
+	lifespan: Lifespan.Resolution,
+});

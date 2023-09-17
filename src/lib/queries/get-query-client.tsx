@@ -1,7 +1,5 @@
-import { QueryClient } from '@tanstack/react-query';
-
-import { StaticStore } from '../store/static-store';
+import { staticStore } from '../store';
 
 export const getQueryClient = () => {
-	return StaticStore.fetch<QueryClient>('queryClient');
+	return staticStore.getState().queryClient;
 };

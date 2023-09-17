@@ -1,16 +1,17 @@
 import { AtlasData, PersistedNode } from '@/entites/atlas';
+import { container, inject, Lifespan } from '@/lib/di';
+import { Channel, relay } from '@/lib/events';
 import {
 	Changeset,
 	Direction,
 	MapEvent,
 	MapNode,
 	Position,
-	Relay,
-	Subscriber,
 	TileBlueprint,
-	Tileset,
 } from '@/lib/quill';
 import { findOrCreateByKey } from '@/utils/map';
+
+import { EngineConfig } from '../core/engine-config';
 
 // TODO: Need to come up with a better system to link events
 interface PlaceTileEvent {
@@ -19,34 +20,34 @@ interface PlaceTileEvent {
 	position: Position;
 }
 
-export class Atlas implements Subscriber {
+export class Atlas {
 	private nodes = new Map<string, MapNode>();
-	private relay: Relay;
 	private queue: Changeset[] = [];
+	private sync = false;
 
-	constructor(private readonly tileset: Tileset) {}
+	constructor(private config: EngineConfig) {
+		relay
+			.channel(Channel.Editor)
+			.on(
+				MapEvent.PlaceTile,
+				({ blueprint, direction, position }: PlaceTileEvent) => {
+					this.add(position, blueprint, direction);
+				}
+			);
+
+		this.load(config.map.atlas.data);
+	}
 
 	add(position: Position, blueprint: TileBlueprint, direction: Direction) {
 		const node = this.findOrCreateNodeByPosition(position);
 
 		const changeset = node.add(blueprint, direction);
 
-		if (this.relay) {
+		if (this.sync) {
 			this.sendChangeset(changeset);
 		} else {
 			this.queueChangeset(changeset);
 		}
-	}
-
-	link(relay: Relay) {
-		this.relay = relay;
-
-		this.relay.subscribe(
-			MapEvent.PlaceTile,
-			({ blueprint, direction, position }: PlaceTileEvent) => {
-				this.add(position, blueprint, direction);
-			}
-		);
 	}
 
 	load(mapData: AtlasData) {
@@ -54,7 +55,7 @@ export class Atlas implements Subscriber {
 			const position = new Position(...node.p);
 
 			node.t.forEach((tile) => {
-				const blueprint = this.tileset.get(tile.i);
+				const blueprint = this.config.tileset.get(tile.i);
 
 				if (!blueprint) {
 					return;
@@ -67,10 +68,8 @@ export class Atlas implements Subscriber {
 		return this;
 	}
 
-	sync() {
-		if (!this.relay) {
-			return;
-		}
+	initialize() {
+		this.sync = true;
 
 		while (this.queue.length) {
 			const changeset = this.queue.shift();
@@ -97,7 +96,7 @@ export class Atlas implements Subscriber {
 	}
 
 	private sendChangeset(changeset: Changeset) {
-		this.relay.send(MapEvent.MapAltered, changeset);
+		relay.send(MapEvent.MapAltered, changeset).to(Channel.Editor);
 	}
 
 	private queueChangeset(changeset: Changeset) {
@@ -109,3 +108,7 @@ export class Atlas implements Subscriber {
 		return findOrCreateByKey(this.nodes, key, new MapNode(position));
 	}
 }
+
+inject(Atlas, [EngineConfig]);
+
+container.register(Atlas, { class: Atlas, lifespan: Lifespan.Resolution });
