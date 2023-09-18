@@ -95,6 +95,7 @@
 			"active": {
 				"completeButton": "Complete story",
 				"joinButton": "Join",
+				"startButton": "Begin story",
 				"tableTitle": "Playable stories",
 				"menuLabel": "Options story menu",
 				"menuRemove": "Remove"

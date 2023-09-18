@@ -33,7 +33,8 @@ interface GameSessionsRowProps {
 
 export const GameSessionRow: FC<GameSessionsRowProps> = ({ session }) => {
 	const { t } = useTranslation();
-	const { name, path, isEditable, isCompletable } = useGameSessionRow(session);
+	const { name, path, isEditable, isCompletable, isJoinable, isStartable } =
+		useGameSessionRow(session);
 	const completeConfirm = useDisclosure();
 	const completeRequest = useCompleteGameSession(session);
 	const removeConfirm = useDisclosure();
@@ -63,15 +64,29 @@ export const GameSessionRow: FC<GameSessionsRowProps> = ({ session }) => {
 			</Td>
 			<Td pr={0}>
 				<HStack spacing={4}>
-					<Button
-						as={Link}
-						colorScheme="purple"
-						isDisabled={isAnyLoading}
-						size="sm"
-						to={path}
-					>
-						{t('gameSessions.active.joinButton')}
-					</Button>
+					{isJoinable && (
+						<Button
+							as={Link}
+							colorScheme="purple"
+							isDisabled={isAnyLoading}
+							size="sm"
+							to={path}
+						>
+							{t('gameSessions.active.joinButton')}
+						</Button>
+					)}
+
+					{isStartable && (
+						<Button
+							as={Link}
+							colorScheme="purple"
+							isDisabled={isAnyLoading}
+							size="sm"
+							to={path}
+						>
+							{t('gameSessions.active.startButton')}
+						</Button>
+					)}
 
 					{isCompletable && (
 						<Button

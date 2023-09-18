@@ -1,5 +1,5 @@
-import { t } from 'i18next';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Path } from '@/config/routes';
 import { GameSession } from '@/entites/game-session';
@@ -8,6 +8,7 @@ import { DynamicPath } from '@/lib/url';
 
 export const useGameSessionRow = (session: GameSession) => {
 	const user = useCurrentUser();
+	const { t } = useTranslation();
 
 	return useMemo(() => {
 		const name =
@@ -18,9 +19,17 @@ export const useGameSessionRow = (session: GameSession) => {
 
 		const isEditable = session.isOwnedBy(user);
 
-		// TODO: This is temporary
-		const isCompletable = isEditable && !session.isActive;
+		const isStartable = isEditable && session.isPending;
+		const isCompletable = isEditable && !session.isComplete;
+		const isJoinable = !isStartable;
 
-		return { name, path, isCompletable, isEditable };
-	}, [session, user]);
+		return {
+			name,
+			path,
+			isCompletable,
+			isEditable,
+			isJoinable,
+			isStartable,
+		};
+	}, [session, t, user]);
 };

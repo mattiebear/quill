@@ -33,6 +33,14 @@ export class GameSession {
 		return this.status === GameSessionStatus.Active;
 	}
 
+	get isPending() {
+		return this.status === GameSessionStatus.Pending;
+	}
+
+	get isComplete() {
+		return this.status === GameSessionStatus.Complete;
+	}
+
 	get owner() {
 		const player = this.players.find(
 			(player) => player.role === PlayerRole.Onwer
