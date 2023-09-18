@@ -25,6 +25,7 @@ import { EllipsisHorizontalIcon, TrashIcon } from '../icon';
 import { useCompleteGameSession } from './hooks/use-complete-game-session';
 import { useGameSessionRow } from './hooks/use-game-session-row';
 import { useRemoveGameSession } from './hooks/use-remove-game-session';
+import { useStartGameSession } from './hooks/use-start-game-session';
 import { StatusTag } from './status-tag';
 
 interface GameSessionsRowProps {
@@ -39,8 +40,12 @@ export const GameSessionRow: FC<GameSessionsRowProps> = ({ session }) => {
 	const completeRequest = useCompleteGameSession(session);
 	const removeConfirm = useDisclosure();
 	const removeRequest = useRemoveGameSession(session);
+	const startSession = useStartGameSession(session);
 
-	const isAnyLoading = completeRequest.isLoading || removeRequest.isLoading;
+	const isAnyLoading =
+		completeRequest.isLoading ||
+		removeRequest.isLoading ||
+		startSession.isLoading;
 
 	return (
 		<Tr>
@@ -78,11 +83,10 @@ export const GameSessionRow: FC<GameSessionsRowProps> = ({ session }) => {
 
 					{isStartable && (
 						<Button
-							as={Link}
 							colorScheme="purple"
 							isDisabled={isAnyLoading}
+							onClick={() => startSession.mutate()}
 							size="sm"
-							to={path}
 						>
 							{t('gameSessions.active.startButton')}
 						</Button>

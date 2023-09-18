@@ -11,7 +11,7 @@ import { DynamicPath } from '@/lib/url';
 
 import { useGameSessionName } from './use-game-session-name';
 
-export const useCompleteGameSession = (session: GameSession) => {
+export const useStartGameSession = (session: GameSession) => {
 	const { t } = useTranslation();
 	const http = useHttpClient();
 	const toast = useToast();

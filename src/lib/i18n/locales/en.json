@@ -136,7 +136,7 @@
 			},
 			"start": {
 				"title": "Story started",
-				"description": "Players can now join the story \"{name}\""
+				"description": "Players can now join the story \"{{name}}\""
 			}
 		},
 		"editor": {
