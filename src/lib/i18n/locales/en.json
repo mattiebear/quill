@@ -133,6 +133,10 @@
 				"confirmDescription": "This will end the story for all players. You will not be able to re-join.",
 				"confirmCancel": "Never mind",
 				"confirmAccept": "Yes. Do it"
+			},
+			"start": {
+				"title": "Story started",
+				"description": "Players can now join the story \"{name}\""
 			}
 		},
 		"editor": {

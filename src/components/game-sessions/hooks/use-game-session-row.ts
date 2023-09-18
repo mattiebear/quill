@@ -1,20 +1,17 @@
 import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { Path } from '@/config/routes';
 import { GameSession } from '@/entites/game-session';
 import { useCurrentUser } from '@/lib/auth/use-current-user';
 import { DynamicPath } from '@/lib/url';
 
+import { useGameSessionName } from './use-game-session-name';
+
 export const useGameSessionRow = (session: GameSession) => {
 	const user = useCurrentUser();
-	const { t } = useTranslation();
+	const name = useGameSessionName(session);
 
 	return useMemo(() => {
-		const name =
-			session.name ||
-			t('gameSessions.sessionDefaultName', { name: session.owner.username });
-
 		const path = new DynamicPath(Path.GameSession).for(session).toString();
 
 		const isEditable = session.isOwnedBy(user);
@@ -31,5 +28,5 @@ export const useGameSessionRow = (session: GameSession) => {
 			isJoinable,
 			isStartable,
 		};
-	}, [session, t, user]);
+	}, [name, session, user]);
 };
