@@ -25,6 +25,7 @@ import { EllipsisHorizontalIcon, TrashIcon } from '../icon';
 import { useCompleteGameSession } from './hooks/use-complete-game-session';
 import { useGameSessionRow } from './hooks/use-game-session-row';
 import { useRemoveGameSession } from './hooks/use-remove-game-session';
+import { useStartGameSession } from './hooks/use-start-game-session';
 import { StatusTag } from './status-tag';
 
 interface GameSessionsRowProps {
@@ -33,13 +34,18 @@ interface GameSessionsRowProps {
 
 export const GameSessionRow: FC<GameSessionsRowProps> = ({ session }) => {
 	const { t } = useTranslation();
-	const { name, path, isEditable, isCompletable } = useGameSessionRow(session);
+	const { name, path, isEditable, isCompletable, isJoinable, isStartable } =
+		useGameSessionRow(session);
 	const completeConfirm = useDisclosure();
 	const completeRequest = useCompleteGameSession(session);
 	const removeConfirm = useDisclosure();
 	const removeRequest = useRemoveGameSession(session);
+	const startSession = useStartGameSession(session);
 
-	const isAnyLoading = completeRequest.isLoading || removeRequest.isLoading;
+	const isAnyLoading =
+		completeRequest.isLoading ||
+		removeRequest.isLoading ||
+		startSession.isLoading;
 
 	return (
 		<Tr>
@@ -63,15 +69,28 @@ export const GameSessionRow: FC<GameSessionsRowProps> = ({ session }) => {
 			</Td>
 			<Td pr={0}>
 				<HStack spacing={4}>
-					<Button
-						as={Link}
-						colorScheme="purple"
-						isDisabled={isAnyLoading}
-						size="sm"
-						to={path}
-					>
-						{t('gameSessions.active.joinButton')}
-					</Button>
+					{isJoinable && (
+						<Button
+							as={Link}
+							colorScheme="purple"
+							isDisabled={isAnyLoading}
+							size="sm"
+							to={path}
+						>
+							{t('gameSessions.active.joinButton')}
+						</Button>
+					)}
+
+					{isStartable && (
+						<Button
+							colorScheme="purple"
+							isDisabled={isAnyLoading}
+							onClick={() => startSession.mutate()}
+							size="sm"
+						>
+							{t('gameSessions.active.startButton')}
+						</Button>
+					)}
 
 					{isCompletable && (
 						<Button

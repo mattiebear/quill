@@ -95,6 +95,7 @@
 			"active": {
 				"completeButton": "Complete story",
 				"joinButton": "Join",
+				"startButton": "Begin story",
 				"tableTitle": "Playable stories",
 				"menuLabel": "Options story menu",
 				"menuRemove": "Remove"
@@ -132,6 +133,10 @@
 				"confirmDescription": "This will end the story for all players. You will not be able to re-join.",
 				"confirmCancel": "Never mind",
 				"confirmAccept": "Yes. Do it"
+			},
+			"start": {
+				"title": "Story started",
+				"description": "Players can now join the story \"{{name}}\""
 			}
 		},
 		"editor": {
