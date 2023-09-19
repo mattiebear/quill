@@ -6,12 +6,14 @@ import { create } from 'zustand';
 import { HttpClient } from '../http/types';
 
 interface StaticStoreValue {
+	getToken: () => Promise<string | null>;
 	httpClient: HttpClient;
 	queryClient: QueryClient;
 	relay: Relay;
 }
 
 const staticStore = create<StaticStoreValue>(() => ({
+	getToken: () => Promise.resolve(''),
 	httpClient: axios.create(),
 	queryClient: new QueryClient(),
 	relay: new Relay(),
