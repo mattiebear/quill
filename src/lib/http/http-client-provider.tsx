@@ -14,7 +14,7 @@ export const HttpClientProvider: FC<PropsWithChildren> = ({ children }) => {
 		});
 	}, [getToken]);
 
-	staticStore.setState({ httpClient });
+	staticStore.setState({ getToken, httpClient });
 
 	return <>{children}</>;
 };
