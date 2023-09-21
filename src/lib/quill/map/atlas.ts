@@ -1,8 +1,4 @@
-import {
-	AtlasData,
-	Atlas as AtlasEntity,
-	PersistedNode,
-} from '@/entites/atlas';
+import { Atlas as AtlasEntity, PersistedNode } from '@/entites/atlas';
 import { container, inject, Lifespan } from '@/lib/di';
 import { Channel, relay } from '@/lib/events';
 import {

@@ -1,10 +1,10 @@
 import { container, inject } from '@/lib/di';
 
+import { Broadcast } from '../comms/broadcast';
+import { Sync } from '../comms/sync';
 import { Atlas } from '../map/atlas';
 import { Renderer } from '../renderer';
-import { Broadcast } from './broadcast';
 import { EngineConfig } from './engine-config';
-import { Sync } from './sync';
 
 export class Engine {
 	constructor(

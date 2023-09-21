@@ -2,20 +2,12 @@ import { createConsumer, logger } from '@rails/actioncable';
 
 import { getToken } from '@/lib/auth';
 import { container, inject, Lifespan } from '@/lib/di';
+import { Channel, relay } from '@/lib/events';
 
-import { EngineConfig } from './engine-config';
+import { EngineConfig } from '../core/engine-config';
 
-// Set based on app environment
+// TODO: Set based on app environment
 logger.enabled = true;
-
-type BroadcastEvent<T extends string, U extends Record<string, unknown>> = {
-	event: T;
-	data: U;
-};
-
-type InitialStoryState = BroadcastEvent<'current-story-state', { map: string }>;
-
-type EventType = InitialStoryState;
 
 export class Broadcast {
 	consumer: ReturnType<typeof createConsumer>;
@@ -48,8 +40,8 @@ export class Broadcast {
 				story: this.config.gameSession.id,
 			},
 			{
-				received: (data) => {
-					this.disperseEvent(data);
+				received: ({ event, data }: { event: string; data: any }) => {
+					relay.send(event, data).to(Channel.Story);
 				},
 			}
 		);
@@ -61,14 +53,6 @@ export class Broadcast {
 		this.subscriptions.forEach((sub) => {
 			sub.unsubscribe();
 		});
-	}
-
-	disperseEvent(data: EventType) {
-		switch (data.event) {
-			case 'current-story-state':
-				console.log(data.data);
-				break;
-		}
 	}
 }
 
