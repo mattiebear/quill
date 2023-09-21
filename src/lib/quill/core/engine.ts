@@ -2,6 +2,7 @@ import { container, inject } from '@/lib/di';
 
 import { Atlas } from '../map/atlas';
 import { Renderer } from '../renderer';
+import { Broadcast } from './broadcast';
 import { EngineConfig } from './engine-config';
 import { Sync } from './sync';
 
@@ -10,7 +11,8 @@ export class Engine {
 		public config: EngineConfig,
 		public atlas: Atlas,
 		public renderer: Renderer,
-		public sync: Sync
+		public sync: Sync,
+		public broadcast: Broadcast
 	) {}
 
 	initialize() {
@@ -20,11 +22,13 @@ export class Engine {
 		return this;
 	}
 
+	// Should these be handled in an event?
 	destroy() {
 		this.renderer.destroy();
+		this.broadcast.destroy();
 	}
 }
 
-inject(Engine, [EngineConfig, Atlas, Renderer, Sync]);
+inject(Engine, [EngineConfig, Atlas, Renderer, Sync, Broadcast]);
 
 container.register(Engine);

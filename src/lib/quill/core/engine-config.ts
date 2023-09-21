@@ -25,4 +25,12 @@ export class EngineConfig implements ConfigValues {
 	constructor(data: ConfigValues) {
 		Object.assign(this, data);
 	}
+
+	get isEditorMode() {
+		return this.mode === EngineMode.Editor;
+	}
+
+	get isPlayMode() {
+		return this.mode === EngineMode.Play;
+	}
 }
