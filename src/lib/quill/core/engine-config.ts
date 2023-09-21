@@ -1,15 +1,25 @@
+import { GameSession } from '@/entites/game-session';
 import { MapEntity } from '@/entites/map-entity';
 import { Tileset } from '@/lib/quill';
 
+export enum EngineMode {
+	Editor,
+	Play,
+}
+
 interface ConfigValues {
 	el: HTMLDivElement;
-	map: MapEntity;
+	gameSession?: GameSession;
+	map?: MapEntity;
+	mode: EngineMode;
 	tileset: Tileset;
 }
 
 export class EngineConfig implements ConfigValues {
 	readonly el: HTMLDivElement;
+	readonly gameSession: GameSession;
 	readonly map: MapEntity;
+	readonly mode: EngineMode;
 	readonly tileset: Tileset;
 
 	constructor(data: ConfigValues) {

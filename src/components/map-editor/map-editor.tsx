@@ -1,5 +1,5 @@
 import { useMapDetail } from '@/api/maps';
-import { useQuill } from '@/components/map-editor/hooks/use-quill';
+import { useMapEditor } from '@/components/map-editor/hooks/use-map-editor';
 import { useIdParam } from '@/lib/router';
 import { assertPresence } from '@/utils/runtime';
 
@@ -12,7 +12,7 @@ export const MapEditor = () => {
 
 	assertPresence(map);
 
-	const engine = useQuill(map);
+	const engine = useMapEditor(map);
 
 	return (
 		<EditorContext value={{ engine, map }}>

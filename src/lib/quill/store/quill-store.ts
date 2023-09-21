@@ -8,6 +8,7 @@ interface QuillStoreValue {
 	selectedDirection: Direction;
 }
 
+// TODO: Change to EditorStore. Separate one for PlayStore
 const quillStore = createWithEqualityFn<QuillStoreValue>(
 	() => ({
 		selectedBlueprint: null,

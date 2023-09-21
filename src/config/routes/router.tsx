@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import { fetchConnectionsList } from '@/api/connections';
 import { fetchGameSessionsList } from '@/api/game-sessions';
+import { fetchGameSessionDetail } from '@/api/game-sessions/detail';
 import { fetchMapDetail, fetchMapsList } from '@/api/maps';
 import { fetchTileManifest } from '@/api/tiles/meta';
 import { ErrorBoundary } from '@/components/error';
@@ -53,6 +54,12 @@ export const router = createBrowserRouter([
 						<GameBoard />
 					</Protected>
 				),
+				loader: ({ params }) => {
+					return Promise.all([
+						fetchGameSessionDetail(params.id as string),
+						fetchTileManifest(),
+					]);
+				},
 			},
 			{
 				path: '/',

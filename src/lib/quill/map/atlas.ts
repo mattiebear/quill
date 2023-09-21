@@ -1,4 +1,8 @@
-import { AtlasData, PersistedNode } from '@/entites/atlas';
+import {
+	AtlasData,
+	Atlas as AtlasEntity,
+	PersistedNode,
+} from '@/entites/atlas';
 import { container, inject, Lifespan } from '@/lib/di';
 import { Channel, relay } from '@/lib/events';
 import {
@@ -34,8 +38,6 @@ export class Atlas {
 					this.add(position, blueprint, direction);
 				}
 			);
-
-		this.load(config.map.atlas.data);
 	}
 
 	add(position: Position, blueprint: TileBlueprint, direction: Direction) {
@@ -50,8 +52,8 @@ export class Atlas {
 		}
 	}
 
-	load(mapData: AtlasData) {
-		mapData.forEach((node) => {
+	load(atlas: AtlasEntity) {
+		atlas.data.forEach((node) => {
 			const position = new Position(...node.p);
 
 			node.t.forEach((tile) => {
