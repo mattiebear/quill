@@ -2,9 +2,9 @@ import { createConsumer, logger } from '@rails/actioncable';
 
 import { getToken } from '@/lib/auth';
 import { container, inject, Lifespan } from '@/lib/di';
-import { Channel, relay } from '@/lib/events';
 
 import { EngineConfig } from '../core/engine-config';
+import { Distributor, DistributorEvent } from './distributor';
 
 // TODO: Set based on app environment
 logger.enabled = true;
@@ -13,7 +13,7 @@ export class Broadcast {
 	consumer: ReturnType<typeof createConsumer>;
 	subscriptions: { unsubscribe: VoidFunction }[] = [];
 
-	constructor(private config: EngineConfig) {
+	constructor(private config: EngineConfig, private distributor: Distributor) {
 		this.initChannels();
 	}
 
@@ -40,8 +40,8 @@ export class Broadcast {
 				story: this.config.gameSession.id,
 			},
 			{
-				received: ({ event, data }: { event: string; data: any }) => {
-					relay.send(event, data).to(Channel.Story);
+				received: (event: DistributorEvent) => {
+					this.distributor.emit(event);
 				},
 			}
 		);
@@ -56,7 +56,7 @@ export class Broadcast {
 	}
 }
 
-inject(Broadcast, [EngineConfig]);
+inject(Broadcast, [EngineConfig, Distributor]);
 
 container.register(Broadcast, {
 	class: Broadcast,
