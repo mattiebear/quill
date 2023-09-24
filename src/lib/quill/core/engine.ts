@@ -3,6 +3,7 @@ import { container, inject } from '@/lib/di';
 import { Broadcast } from '../comms/broadcast';
 import { Sync } from '../comms/sync';
 import { Atlas } from '../map/atlas';
+import { MapLoader } from '../map/map-loader';
 import { Renderer } from '../renderer';
 import { EngineConfig } from './engine-config';
 
@@ -12,7 +13,8 @@ export class Engine {
 		public atlas: Atlas,
 		public renderer: Renderer,
 		public sync: Sync,
-		public broadcast: Broadcast
+		public broadcast: Broadcast,
+		public loader: MapLoader
 	) {}
 
 	initialize() {
@@ -29,6 +31,6 @@ export class Engine {
 	}
 }
 
-inject(Engine, [EngineConfig, Atlas, Renderer, Sync, Broadcast]);
+inject(Engine, [EngineConfig, Atlas, Renderer, Sync, Broadcast, MapLoader]);
 
 container.register(Engine);

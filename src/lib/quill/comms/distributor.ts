@@ -30,7 +30,7 @@ export class Distributor {
 		quillStore.setState({ playStage: PlayStage.MapSelect });
 
 		if (data.map) {
-			this.loader.fetch(data.map);
+			this.loader.load(data.map);
 		}
 	}
 }

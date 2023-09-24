@@ -12,6 +12,7 @@ export enum LoadingState {
 export enum PlayStage {
 	Pending,
 	MapSelect,
+	Play,
 }
 
 interface QuillStoreValue {
