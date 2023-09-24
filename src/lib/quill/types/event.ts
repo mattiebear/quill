@@ -7,3 +7,7 @@ export enum MapEvent {
 	MapSaved = 'map-saved',
 	PlaceTile = 'place-tile',
 }
+
+export enum StoryEvent {
+	LoadMap = 'load-map',
+}

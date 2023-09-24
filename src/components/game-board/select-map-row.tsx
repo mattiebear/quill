@@ -14,7 +14,6 @@ interface SelectMapRowProps {
 export const SelectMapRow: FC<SelectMapRowProps> = ({ map }) => {
 	const { t } = useTranslation();
 	const { isLoadingMap } = usePlayState();
-	// TODO: Should this be here or via emit?
 	const loadMap = useLoadMap(map);
 
 	return (

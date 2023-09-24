@@ -3,12 +3,16 @@ import { JsonConvert } from 'json2typescript';
 import { fetchMapDetail } from '@/api/maps';
 import { MapEntity } from '@/entites/map-entity';
 import { container, inject, Lifespan } from '@/lib/di';
+import { Channel, relay } from '@/lib/events';
 
+import { StoryEvent } from '..';
 import { LoadingState, PlayStage, quillStore } from '../store';
 import { Atlas } from './atlas';
 
 export class MapLoader {
-	constructor(private atlas: Atlas) {}
+	constructor(private atlas: Atlas) {
+		this.initRelay();
+	}
 
 	async load(id: string) {
 		if (this.loadedMapId === id) {
@@ -32,6 +36,15 @@ export class MapLoader {
 
 	get loadedMapId() {
 		return quillStore.getState().selectedMapId;
+	}
+
+	initRelay() {
+		// TODO: Add unsubscribes
+		relay
+			.channel(Channel.Story)
+			.on(StoryEvent.LoadMap, ({ map }: { map: MapEntity }) => {
+				this.load(map.id);
+			});
 	}
 }
 

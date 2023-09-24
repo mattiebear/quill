@@ -1,13 +1,11 @@
 import { useCallback } from 'react';
 
 import { MapEntity } from '@/entites/map-entity';
-
-import { useStoryContext } from '../context';
+import { Channel, relay } from '@/lib/events';
+import { StoryEvent } from '@/lib/quill/types/event';
 
 export const useLoadMap = (map: MapEntity) => {
-	const { engine } = useStoryContext();
-
 	return useCallback(() => {
-		engine.loader.load(map.id);
-	}, [engine, map.id]);
+		relay.send(StoryEvent.LoadMap, { map }).to(Channel.Story);
+	}, [map]);
 };

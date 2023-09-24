@@ -1,9 +1,12 @@
 import { createConsumer, logger } from '@rails/actioncable';
 
+import { MapEntity } from '@/entites/map-entity';
 import { getToken } from '@/lib/auth';
 import { container, inject, Lifespan } from '@/lib/di';
+import { Channel, relay } from '@/lib/events';
 
 import { EngineConfig } from '../core/engine-config';
+import { StoryEvent } from '../types/event';
 import { Distributor, DistributorEvent } from './distributor';
 
 // TODO: Set based on app environment
@@ -12,9 +15,11 @@ logger.enabled = true;
 export class Broadcast {
 	consumer: ReturnType<typeof createConsumer>;
 	subscriptions: { unsubscribe: VoidFunction }[] = [];
+	storyChannel: any;
 
 	constructor(private config: EngineConfig, private distributor: Distributor) {
 		this.initChannels();
+		this.initRelay();
 	}
 
 	async initChannels() {
@@ -46,7 +51,18 @@ export class Broadcast {
 			}
 		);
 
+		this.storyChannel = subscription;
+
 		this.subscriptions.push(subscription);
+	}
+
+	initRelay() {
+		// TODO: Add unsubscribes
+		relay
+			.channel(Channel.Story)
+			.on(StoryEvent.LoadMap, ({ map }: { map: MapEntity }) => {
+				this.storyChannel.send({ event: 'select-map-id', id: map.id });
+			});
 	}
 
 	destroy() {
