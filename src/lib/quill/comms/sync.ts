@@ -1,7 +1,8 @@
 import { container, DiHttp, inject, Lifespan } from '@/lib/di';
 import { Channel, relay } from '@/lib/events';
 import { HttpClient } from '@/lib/http/types';
-import { Atlas, EngineConfig, MapEvent } from '@/lib/quill';
+import { EngineConfig, MapEvent } from '@/lib/quill';
+import { Atlas } from '@/lib/quill/map/atlas';
 import { DynamicPath } from '@/lib/url';
 
 const PERSIST_DEBOUNCE = 3000;

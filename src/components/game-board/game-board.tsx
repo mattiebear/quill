@@ -1,43 +1,22 @@
-import { Text } from '@chakra-ui/react';
-import { createConsumer } from '@rails/actioncable';
-import * as ActionCable from '@rails/actioncable';
-import { useCallback, useEffect, useRef } from 'react';
-
-import { getToken } from '@/lib/auth';
+import { useGameSessionDetail } from '@/api/game-sessions/detail';
 import { useIdParam } from '@/lib/router';
+import { assertPresence } from '@/utils/runtime';
 
-// TODO: All of this is temporary to just test the ws connection
-// It will likely be moved to engine sync after initial views are set up
-ActionCable.logger.enabled = true;
-
-const useTestConnection = () => {
-	const id = useIdParam();
-	const subscriptionRef = useRef<ActionCable.Subscription>();
-
-	const setup = useCallback(async () => {
-		const token = await getToken();
-		// TODO: Add to ENV
-		const consumer = createConsumer(
-			`http://localhost:3000/cable?token=${token}`
-		);
-
-		subscriptionRef.current = consumer.subscriptions.create({
-			channel: 'StoryChannel',
-			story: id,
-		});
-	}, [id]);
-
-	useEffect(() => {
-		setup();
-
-		return () => {
-			subscriptionRef.current?.unsubscribe();
-		};
-	}, [setup]);
-};
+import { StoryContext } from './context';
+import { useGameBoard } from './hooks/use-game-board';
+import { PlayUI } from './play-ui';
 
 export const GameBoard = () => {
-	useTestConnection();
+	const id = useIdParam();
+	const { data: gameSession } = useGameSessionDetail(id);
 
-	return <Text color="text.body">Game board</Text>;
+	assertPresence(gameSession);
+
+	const engine = useGameBoard(gameSession);
+
+	return (
+		<StoryContext value={{ engine, gameSession }}>
+			<PlayUI />
+		</StoryContext>
+	);
 };

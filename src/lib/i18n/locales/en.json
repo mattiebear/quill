@@ -5,6 +5,7 @@
 			"create": "Create",
 			"remove": "Remove",
 			"search": "Search",
+			"select": "Select",
 			"submit": "Submit",
 			"unknownError": "An unknown error occurred"
 		},
@@ -138,6 +139,9 @@
 				"title": "Story started",
 				"description": "Players can now join the story \"{{name}}\""
 			}
+		},
+		"selectMap": {
+			"header": "Select map"
 		},
 		"editor": {
 			"zoomIn": "Zoom in",

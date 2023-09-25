@@ -6,13 +6,13 @@ import { MapEntity } from '@/entites/map-entity';
 import { container, DiHttp } from '@/lib/di';
 import { useHttpClient } from '@/lib/http';
 import { Engine } from '@/lib/quill';
-import { EngineConfig } from '@/lib/quill/core/engine-config';
+import { EngineConfig, EngineMode } from '@/lib/quill/core/engine-config';
 import { resetQuillStore } from '@/lib/quill/store';
 import { MapEvent } from '@/lib/quill/types/event';
 
 import { useDataObserver } from './use-data-observer';
 
-export const useQuill = (map: MapEntity) => {
+export const useMapEditor = (map: MapEntity) => {
 	const elRef = useRef(document.getElementById('root') as HTMLDivElement);
 	const tileset = useTileset();
 	const http = useHttpClient();
@@ -24,6 +24,7 @@ export const useQuill = (map: MapEntity) => {
 		const config = new EngineConfig({
 			el: elRef.current,
 			map,
+			mode: EngineMode.Editor,
 			tileset,
 		});
 
@@ -36,7 +37,11 @@ export const useQuill = (map: MapEntity) => {
 
 		container.register(DiHttp, { value: http });
 
-		return container.resolve<Engine>(Engine).initialize();
+		const engine = container.resolve<Engine>(Engine);
+		engine.atlas.load(map.atlas);
+		engine.initialize();
+
+		return engine;
 	});
 
 	useEffect(() => {
