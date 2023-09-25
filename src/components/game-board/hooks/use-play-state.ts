@@ -16,12 +16,9 @@ export const usePlayState = () => {
 	const isUserOwner = gameSession.owner.id === currentUser.id;
 
 	const hasInitialData = state.initialDataState === LoadingState.Complete;
-	const isMapLoaded = state.mapDataState === LoadingState.Complete;
+	const isMapSelected = !!state.mapId;
 
-	const isMapSelectorOpen = isUserOwner && hasInitialData && !isMapLoaded;
-
-	// const isMapSelectorOpen = state.playStage === PlayStage.MapSelect;
-	// const isLoadingMap = state.loadMapState === LoadingState.Loading;
+	const isMapSelectorOpen = isUserOwner && hasInitialData && !isMapSelected;
 
 	return { isLoadingMap: false, isMapSelectorOpen };
 };

@@ -17,9 +17,11 @@ export class Broadcast {
 	connection: Connection;
 	consumer: ReturnType<typeof createConsumer>;
 
+	private subscriptions: VoidFunction[] = [];
+
 	constructor(private config: EngineConfig) {
 		this.initChannels();
-		// this.initRelay();
+		this.initRelay();
 	}
 
 	async initChannels() {
@@ -48,20 +50,21 @@ export class Broadcast {
 		);
 	}
 
-	// initRelay() {
-	// 	// TODO: Add unsubscribes
-	// 	relay
-	// 		.channel(Channel.Story)
-	// 		.on(StoryEvent.LoadMap, (event: { map: MapEntity }) => {
-	// 			// TODO: Fix naming
-	// 			this.channel.send({
-	// 				event: 'select-map-id',
-	// 				data: { id: event.map.id },
-	// 			});
-	// 		});
-	// }
+	initRelay() {
+		const channel = relay.channel(Channel.Story);
+
+		this.subscriptions.push(
+			channel.on(StoryEvent.SelectMap, (event: { map: MapEntity }) => {
+				this.connection.send({
+					event: StoryEvent.SelectMap,
+					data: { id: event.map.id },
+				});
+			})
+		);
+	}
 
 	destroy() {
+		this.subscriptions.forEach((unsubscribe) => unsubscribe());
 		this.connection.unsubscribe();
 	}
 

@@ -6,12 +6,18 @@ import { resetQuillStore, quillStore as store } from './quill-store';
 import { LoadingState } from './types';
 
 export class Store {
+	private subscriptions: VoidFunction[] = [];
+
 	constructor() {
 		this.initRelay();
 	}
 
 	reset() {
 		resetQuillStore();
+	}
+
+	destroy() {
+		this.subscriptions.forEach((unsubscribe) => unsubscribe());
 	}
 
 	loadMap() {
@@ -22,22 +28,25 @@ export class Store {
 		store.setState({ mapDataState: LoadingState.Complete });
 	}
 
-	// TODO: Add unsubs
 	private initRelay() {
 		const channel = relay.channel(Channel.Story);
 
-		channel.on(StoryEvent.CurrentState, (data: CurrentStateData) => {
-			store.setState({
-				initialDataState: LoadingState.Complete,
-				mapId: data.map,
-			});
-		});
+		this.subscriptions.push(
+			channel.on(StoryEvent.CurrentState, (data: CurrentStateData) => {
+				store.setState({
+					initialDataState: LoadingState.Complete,
+					mapId: data.map,
+				});
+			})
+		);
 
-		channel.on(StoryEvent.SelectMap, (data: SelectMapData) => {
-			store.setState({
-				mapId: data.map.id,
-			});
-		});
+		this.subscriptions.push(
+			channel.on(StoryEvent.SelectMap, (data: SelectMapData) => {
+				store.setState({
+					mapId: data.map.id,
+				});
+			})
+		);
 	}
 }
 

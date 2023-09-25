@@ -31,6 +31,7 @@ export class Engine {
 	destroy() {
 		this.renderer.destroy();
 		this.broadcast.destroy();
+		this.store.destroy();
 	}
 }
 
