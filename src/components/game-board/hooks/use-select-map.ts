@@ -4,8 +4,8 @@ import { MapEntity } from '@/entites/map-entity';
 import { Channel, relay } from '@/lib/events';
 import { StoryEvent } from '@/lib/quill/types/event';
 
-export const useLoadMap = (map: MapEntity) => {
+export const useSelectMap = (map: MapEntity) => {
 	return useCallback(() => {
-		relay.send(StoryEvent.LoadMap, { map }).to(Channel.Story);
+		relay.send(StoryEvent.SelectMap, { map }).to(Channel.Story);
 	}, [map]);
 };

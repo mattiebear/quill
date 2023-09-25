@@ -3,33 +3,23 @@ import { createWithEqualityFn } from 'zustand/traditional';
 
 import { Direction } from '@/lib/quill/types/map';
 
-export enum LoadingState {
-	Pending,
-	Loading,
-	Complete,
-}
-
-export enum PlayStage {
-	Pending,
-	MapSelect,
-	Play,
-}
+import { LoadingState } from './types';
 
 interface QuillStoreValue {
-	loadMapState: LoadingState;
-	playStage: PlayStage;
+	initialDataState: LoadingState;
+	mapDataState: LoadingState;
+	mapId: string | null;
 	selectedBlueprint: string | null;
 	selectedDirection: Direction;
-	selectedMapId: string | null;
 }
 
 const quillStore = createWithEqualityFn<QuillStoreValue>(
 	() => ({
-		loadMapState: LoadingState.Pending,
-		playStage: PlayStage.Pending,
+		initialDataState: LoadingState.Pending,
+		mapDataState: LoadingState.Pending,
+		mapId: null,
 		selectedBlueprint: null,
 		selectedDirection: Direction.N,
-		selectedMapId: null,
 	}),
 	shallow
 );

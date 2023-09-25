@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 
 import { MapEntity } from '@/entites/map-entity';
 
-import { useLoadMap } from './hooks/use-load-map';
 import { usePlayState } from './hooks/use-play-state';
+import { useSelectMap } from './hooks/use-select-map';
 
 interface SelectMapRowProps {
 	map: MapEntity;
@@ -14,7 +14,7 @@ interface SelectMapRowProps {
 export const SelectMapRow: FC<SelectMapRowProps> = ({ map }) => {
 	const { t } = useTranslation();
 	const { isLoadingMap } = usePlayState();
-	const loadMap = useLoadMap(map);
+	const loadMap = useSelectMap(map);
 
 	return (
 		<Tr>

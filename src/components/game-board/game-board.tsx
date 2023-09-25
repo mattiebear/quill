@@ -15,7 +15,7 @@ export const GameBoard = () => {
 	const engine = useGameBoard(gameSession);
 
 	return (
-		<StoryContext value={{ engine }}>
+		<StoryContext value={{ engine, gameSession }}>
 			<PlayUI />
 		</StoryContext>
 	);

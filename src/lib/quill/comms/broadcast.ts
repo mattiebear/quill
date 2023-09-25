@@ -7,19 +7,19 @@ import { Channel, relay } from '@/lib/events';
 
 import { EngineConfig } from '../core/engine-config';
 import { StoryEvent } from '../types/event';
-import { Distributor, DistributorEvent } from './distributor';
 
 // TODO: Set based on app environment
 logger.enabled = true;
 
-export class Broadcast {
-	consumer: ReturnType<typeof createConsumer>;
-	subscriptions: { unsubscribe: VoidFunction }[] = [];
-	storyChannel: any;
+type Connection = { send: (data: any) => void; unsubscribe: VoidFunction };
 
-	constructor(private config: EngineConfig, private distributor: Distributor) {
+export class Broadcast {
+	connection: Connection;
+	consumer: ReturnType<typeof createConsumer>;
+
+	constructor(private config: EngineConfig) {
 		this.initChannels();
-		this.initRelay();
+		// this.initRelay();
 	}
 
 	async initChannels() {
@@ -33,46 +33,48 @@ export class Broadcast {
 			throw new Error('Unable to retrieve user token');
 		}
 
-		// TODO: Get from ENV
-		const url = new URL('http://localhost:3000/cable');
-		url.searchParams.append('token', token);
+		this.consumer = createConsumer(this.url(token));
 
-		this.consumer = createConsumer(url.toString());
-
-		const subscription = this.consumer.subscriptions.create(
+		this.connection = this.consumer.subscriptions.create(
 			{
 				channel: 'StoryChannel',
 				story: this.config.gameSession.id,
 			},
 			{
-				received: (event: DistributorEvent) => {
-					this.distributor.emit(event);
+				received: (event: { event: string; data: unknown }) => {
+					relay.channel(Channel.Story).send(event.event, event.data);
 				},
 			}
 		);
-
-		this.storyChannel = subscription;
-
-		this.subscriptions.push(subscription);
 	}
 
-	initRelay() {
-		// TODO: Add unsubscribes
-		relay
-			.channel(Channel.Story)
-			.on(StoryEvent.LoadMap, ({ map }: { map: MapEntity }) => {
-				this.storyChannel.send({ event: 'select-map-id', id: map.id });
-			});
-	}
+	// initRelay() {
+	// 	// TODO: Add unsubscribes
+	// 	relay
+	// 		.channel(Channel.Story)
+	// 		.on(StoryEvent.LoadMap, (event: { map: MapEntity }) => {
+	// 			// TODO: Fix naming
+	// 			this.channel.send({
+	// 				event: 'select-map-id',
+	// 				data: { id: event.map.id },
+	// 			});
+	// 		});
+	// }
 
 	destroy() {
-		this.subscriptions.forEach((sub) => {
-			sub.unsubscribe();
-		});
+		this.connection.unsubscribe();
+	}
+
+	url(token: string) {
+		// TODO: Get from ENV
+		const url = new URL('http://localhost:3000/cable');
+		url.searchParams.append('token', token);
+
+		return url.toString();
 	}
 }
 
-inject(Broadcast, [EngineConfig, Distributor]);
+inject(Broadcast, [EngineConfig]);
 
 container.register(Broadcast, {
 	class: Broadcast,

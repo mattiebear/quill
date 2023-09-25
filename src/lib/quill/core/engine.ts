@@ -5,6 +5,7 @@ import { Sync } from '../comms/sync';
 import { Atlas } from '../map/atlas';
 import { MapLoader } from '../map/map-loader';
 import { Renderer } from '../renderer';
+import { Store } from '../store/store';
 import { EngineConfig } from './engine-config';
 
 export class Engine {
@@ -14,10 +15,12 @@ export class Engine {
 		public renderer: Renderer,
 		public sync: Sync,
 		public broadcast: Broadcast,
-		public loader: MapLoader
+		public loader: MapLoader,
+		public store: Store
 	) {}
 
 	initialize() {
+		this.store.reset();
 		this.renderer.initialize();
 		this.atlas.initialize();
 
@@ -31,6 +34,14 @@ export class Engine {
 	}
 }
 
-inject(Engine, [EngineConfig, Atlas, Renderer, Sync, Broadcast, MapLoader]);
+inject(Engine, [
+	EngineConfig,
+	Atlas,
+	Renderer,
+	Sync,
+	Broadcast,
+	MapLoader,
+	Store,
+]);
 
 container.register(Engine);
