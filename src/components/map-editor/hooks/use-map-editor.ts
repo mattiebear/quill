@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { useEditorFeedback } from '@/components/map-editor/hooks/use-editor-feedback';
-import { useTileset } from '@/components/map-editor/hooks/use-tileset';
 import { MapEntity } from '@/entites/map-entity';
 import { container, DiHttp } from '@/lib/di';
 import { useHttpClient } from '@/lib/http';
-import { Engine } from '@/lib/quill';
+import { Engine, Tileset } from '@/lib/quill';
 import { EngineConfig, EngineMode } from '@/lib/quill/core/engine-config';
+import { useTileset } from '@/lib/quill/hooks/use-tileset';
 import { resetQuillStore } from '@/lib/quill/store';
 import { MapEvent } from '@/lib/quill/types/event';
 
@@ -25,7 +25,6 @@ export const useMapEditor = (map: MapEntity) => {
 			el: elRef.current,
 			map,
 			mode: EngineMode.Editor,
-			tileset,
 		});
 
 		// TODO: Move to resolution callback
@@ -35,6 +34,7 @@ export const useMapEditor = (map: MapEntity) => {
 			value: config,
 		});
 
+		container.register(Tileset, { value: tileset });
 		container.register(DiHttp, { value: http });
 
 		const engine = container.resolve<Engine>(Engine);

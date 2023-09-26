@@ -12,10 +12,10 @@ export const GameBoard = () => {
 
 	assertPresence(gameSession);
 
-	const engine = useGameBoard(gameSession);
+	useGameBoard(gameSession);
 
 	return (
-		<StoryContext value={{ engine, gameSession }}>
+		<StoryContext value={{ gameSession }}>
 			<PlayUI />
 		</StoryContext>
 	);

@@ -20,11 +20,11 @@ import {
 	ZoomInIcon,
 	ZoomOutIcon,
 } from '@/components/icon';
-import { useEngine } from '@/components/map-editor/hooks/use-engine';
 import { useMap } from '@/components/map-editor/hooks/use-map';
 import { Path } from '@/config/routes';
 import { Channel, useChannel } from '@/lib/events';
 import { RenderEvent } from '@/lib/quill';
+import { useTileset } from '@/lib/quill/hooks/use-tileset';
 import { quillStore } from '@/lib/quill/store';
 
 import { useEditorState } from './hooks/use-editor-state';
@@ -33,10 +33,10 @@ import { useRotateTile } from './hooks/use-rotate-tile';
 export const EditorUI: FC = () => {
 	const nodeRef = useRef<HTMLDivElement>(null);
 	const { t } = useTranslation();
-	const engine = useEngine();
 	const map = useMap();
 	const invalidate = useInvalidateMap(map);
 	const navigate = useNavigate();
+	const tileset = useTileset();
 	const { send } = useChannel(Channel.Editor);
 	const { rotateLeft, rotateRight } = useRotateTile();
 
@@ -92,7 +92,7 @@ export const EditorUI: FC = () => {
 					</Flex>
 
 					<SimpleGrid columns={3} spacing={2} mb={2}>
-						{engine.config.tileset.all.map((blueprint) => (
+						{tileset.all.map((blueprint) => (
 							<Button
 								key={blueprint.id}
 								h="auto"

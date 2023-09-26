@@ -1,6 +1,5 @@
 import { GameSession } from '@/entites/game-session';
 import { MapEntity } from '@/entites/map-entity';
-import { Tileset } from '@/lib/quill';
 
 export enum EngineMode {
 	Editor,
@@ -12,7 +11,6 @@ interface ConfigValues {
 	gameSession?: GameSession;
 	map?: MapEntity;
 	mode: EngineMode;
-	tileset: Tileset;
 }
 
 export class EngineConfig implements ConfigValues {
@@ -20,7 +18,6 @@ export class EngineConfig implements ConfigValues {
 	readonly gameSession: GameSession;
 	readonly map: MapEntity;
 	readonly mode: EngineMode;
-	readonly tileset: Tileset;
 
 	constructor(data: ConfigValues) {
 		Object.assign(this, data);
