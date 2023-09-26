@@ -1,6 +1,5 @@
 import { Relay } from '@space-station/relay';
 import { QueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { create } from 'zustand';
 
 import { HttpClient } from '../http/types';
@@ -14,8 +13,8 @@ interface StaticStoreValue {
 
 const staticStore = create<StaticStoreValue>(() => ({
 	getToken: () => Promise.resolve(''),
-	httpClient: axios.create(),
-	queryClient: new QueryClient(),
+	httpClient: null as unknown as HttpClient,
+	queryClient: null as unknown as QueryClient,
 	relay: new Relay(),
 }));
 
