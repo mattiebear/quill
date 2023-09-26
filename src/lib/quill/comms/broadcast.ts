@@ -8,18 +8,18 @@ import { Channel, relay } from '@/lib/events';
 
 import { EngineConfig } from '../core/engine-config';
 import { StoryEvent } from '../types/event';
+import { RelayControl } from './relay-control';
 
 logger.enabled = Application.isDevelopment();
 
 type Connection = { send: (data: any) => void; unsubscribe: VoidFunction };
 
-export class Broadcast {
+export class Broadcast extends RelayControl {
 	connection: Connection;
 	consumer: ReturnType<typeof createConsumer>;
 
-	private subscriptions: VoidFunction[] = [];
-
 	constructor(private config: EngineConfig) {
+		super();
 		this.initChannels();
 		this.initRelay();
 	}
@@ -51,21 +51,21 @@ export class Broadcast {
 	}
 
 	initRelay() {
-		const channel = relay.channel(Channel.Story);
-
-		this.subscriptions.push(
-			channel.on(StoryEvent.SelectMap, (event: { map: MapEntity }) => {
+		this.on(
+			Channel.Story,
+			StoryEvent.SelectMap,
+			(event: { map: MapEntity }) => {
 				this.connection.send({
 					event: StoryEvent.SelectMap,
 					data: { id: event.map.id },
 				});
-			})
+			}
 		);
 	}
 
 	destroy() {
-		this.subscriptions.forEach((unsubscribe) => unsubscribe());
-		this.connection.unsubscribe();
+		this.unsubscribeAll();
+		this.connection?.unsubscribe();
 	}
 
 	url(token: string) {

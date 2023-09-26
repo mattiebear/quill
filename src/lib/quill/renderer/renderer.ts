@@ -17,6 +17,7 @@ import { degToRad } from '@/utils/math';
 import { clamp } from '@/utils/number';
 import { assertPresence } from '@/utils/runtime';
 
+import { RelayControl } from '../comms/relay-control';
 import { quillStore } from '../store';
 
 const ScrollEventMap = new Map([
@@ -26,7 +27,7 @@ const ScrollEventMap = new Map([
 	['d', 'right'],
 ]);
 
-export class Renderer {
+export class Renderer extends RelayControl {
 	private app: PIXI.Application<HTMLCanvasElement>;
 	private nodes = new Map<string, RenderNode>();
 
@@ -44,13 +45,16 @@ export class Renderer {
 	private keydown: any;
 
 	constructor(public config: EngineConfig) {
-		const editorChannel = relay.channel(Channel.Editor);
+		super();
+		this.initRelay();
+	}
 
-		editorChannel.on(MapEvent.MapAltered, (changeset: Changeset) => {
+	initRelay() {
+		this.on(Channel.Editor, MapEvent.MapAltered, (changeset: Changeset) => {
 			this.drawChangeset(changeset);
 		});
 
-		editorChannel.on(RenderEvent.ChangeZoom, (value: number) => {
+		this.on(Channel.Editor, RenderEvent.ChangeZoom, (value: number) => {
 			this.changeZoom(value);
 		});
 	}
@@ -68,6 +72,7 @@ export class Renderer {
 	}
 
 	destroy() {
+		this.unsubscribeAll();
 		this.app.destroy(true);
 
 		if (this.keydown) {
@@ -156,14 +161,13 @@ export class Renderer {
 
 			if (id) {
 				const blueprint = this.config.tileset.get(id);
+				const channel = relay.channel(Channel.Editor);
 
-				relay
-					.send(MapEvent.PlaceTile, {
-						blueprint,
-						direction,
-						position,
-					})
-					.to(Channel.Editor);
+				channel.send(MapEvent.PlaceTile, {
+					blueprint,
+					direction,
+					position,
+				});
 			}
 		});
 

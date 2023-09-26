@@ -11,6 +11,7 @@ import {
 } from '@/lib/quill';
 import { findOrCreateByKey } from '@/utils/map';
 
+import { RelayControl } from '../comms/relay-control';
 import { EngineConfig } from '../core/engine-config';
 
 // TODO: Need to come up with a better system to link events
@@ -20,20 +21,24 @@ interface PlaceTileEvent {
 	position: Position;
 }
 
-export class Atlas {
+export class Atlas extends RelayControl {
 	private nodes = new Map<string, MapNode>();
 	private queue: Changeset[] = [];
 	private sync = false;
 
 	constructor(private config: EngineConfig) {
-		relay
-			.channel(Channel.Editor)
-			.on(
-				MapEvent.PlaceTile,
-				({ blueprint, direction, position }: PlaceTileEvent) => {
-					this.add(position, blueprint, direction);
-				}
-			);
+		super();
+		this.initRelay();
+	}
+
+	initRelay() {
+		this.on(
+			Channel.Editor,
+			MapEvent.PlaceTile,
+			({ blueprint, direction, position }: PlaceTileEvent) => {
+				this.add(position, blueprint, direction);
+			}
+		);
 	}
 
 	add(position: Position, blueprint: TileBlueprint, direction: Direction) {

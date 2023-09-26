@@ -32,6 +32,8 @@ export class Engine {
 		this.renderer.destroy();
 		this.broadcast.destroy();
 		this.store.destroy();
+		this.atlas.destroy();
+		this.sync.destroy();
 	}
 }
 
