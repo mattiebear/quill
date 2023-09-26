@@ -11,6 +11,7 @@ import {
 	RenderEvent,
 	RenderNode,
 	RenderObject,
+	Tileset,
 } from '@/lib/quill';
 import { findOrCreateByKey } from '@/utils/map';
 import { degToRad } from '@/utils/math';
@@ -44,7 +45,7 @@ export class Renderer extends RelayControl {
 	private zoom = 100;
 	private keydown: any;
 
-	constructor(public config: EngineConfig) {
+	constructor(public config: EngineConfig, private tileset: Tileset) {
 		super();
 		this.initRelay();
 	}
@@ -160,7 +161,7 @@ export class Renderer extends RelayControl {
 				quillStore.getState();
 
 			if (id) {
-				const blueprint = this.config.tileset.get(id);
+				const blueprint = this.tileset.get(id);
 				const channel = relay.channel(Channel.Editor);
 
 				channel.send(MapEvent.PlaceTile, {
@@ -233,7 +234,7 @@ export class Renderer extends RelayControl {
 	}
 }
 
-inject(Renderer, [EngineConfig]);
+inject(Renderer, [EngineConfig, Tileset]);
 
 container.register(Renderer, {
 	class: Renderer,

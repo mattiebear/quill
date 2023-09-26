@@ -9,10 +9,10 @@ import {
 	Position,
 	TileBlueprint,
 } from '@/lib/quill';
+import { Tileset } from '@/lib/quill/map/tileset';
 import { findOrCreateByKey } from '@/utils/map';
 
 import { RelayControl } from '../comms/relay-control';
-import { EngineConfig } from '../core/engine-config';
 
 // TODO: Need to come up with a better system to link events
 interface PlaceTileEvent {
@@ -26,7 +26,7 @@ export class Atlas extends RelayControl {
 	private queue: Changeset[] = [];
 	private sync = false;
 
-	constructor(private config: EngineConfig) {
+	constructor(private tileset: Tileset) {
 		super();
 		this.initRelay();
 	}
@@ -58,7 +58,7 @@ export class Atlas extends RelayControl {
 			const position = new Position(...node.p);
 
 			node.t.forEach((tile) => {
-				const blueprint = this.config.tileset.get(tile.i);
+				const blueprint = this.tileset.get(tile.i);
 
 				if (!blueprint) {
 					return;
@@ -112,6 +112,6 @@ export class Atlas extends RelayControl {
 	}
 }
 
-inject(Atlas, [EngineConfig]);
+inject(Atlas, [Tileset]);
 
 container.register(Atlas, { class: Atlas, lifespan: Lifespan.Resolution });

@@ -12,10 +12,10 @@ export const MapEditor = () => {
 
 	assertPresence(map);
 
-	const engine = useMapEditor(map);
+	useMapEditor(map);
 
 	return (
-		<EditorContext value={{ engine, map }}>
+		<EditorContext value={{ map }}>
 			<EditorUI />
 		</EditorContext>
 	);

@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { useTileset } from '@/components/map-editor/hooks/use-tileset';
 import { GameSession } from '@/entites/game-session';
 import { container, DiHttp } from '@/lib/di';
 import { useHttpClient } from '@/lib/http';
-import { Engine } from '@/lib/quill';
+import { Engine, Tileset } from '@/lib/quill';
 import { EngineConfig, EngineMode } from '@/lib/quill/core/engine-config';
+import { useTileset } from '@/lib/quill/hooks/use-tileset';
 import { resetQuillStore } from '@/lib/quill/store';
 
 export const useGameBoard = (gameSession: GameSession) => {
@@ -18,7 +18,6 @@ export const useGameBoard = (gameSession: GameSession) => {
 			el: elRef.current,
 			gameSession,
 			mode: EngineMode.Play,
-			tileset,
 		});
 
 		// TODO: Move to resolution callback
@@ -28,6 +27,7 @@ export const useGameBoard = (gameSession: GameSession) => {
 			value: config,
 		});
 
+		container.register(Tileset, { value: tileset });
 		container.register(DiHttp, { value: http });
 
 		return container.resolve<Engine>(Engine).initialize();
