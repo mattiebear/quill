@@ -2,6 +2,7 @@ import { useAuth } from '@clerk/clerk-react';
 import { FC, PropsWithChildren, useMemo } from 'react';
 
 import { createHttpClient } from '.';
+import { Application } from '../application';
 import { staticStore } from '../store';
 
 export const HttpClientProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -9,7 +10,7 @@ export const HttpClientProvider: FC<PropsWithChildren> = ({ children }) => {
 
 	const httpClient = useMemo(() => {
 		return createHttpClient({
-			baseURL: import.meta.env.VITE_APP_API_BASE_URL,
+			baseURL: Application.ApiBaseURL,
 			getToken,
 		});
 	}, [getToken]);

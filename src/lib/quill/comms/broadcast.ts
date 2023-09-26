@@ -1,6 +1,7 @@
 import { createConsumer, logger } from '@rails/actioncable';
 
 import { MapEntity } from '@/entites/map-entity';
+import { Application } from '@/lib/application';
 import { getToken } from '@/lib/auth';
 import { container, inject, Lifespan } from '@/lib/di';
 import { Channel, relay } from '@/lib/events';
@@ -8,8 +9,7 @@ import { Channel, relay } from '@/lib/events';
 import { EngineConfig } from '../core/engine-config';
 import { StoryEvent } from '../types/event';
 
-// TODO: Set based on app environment
-logger.enabled = true;
+logger.enabled = Application.isDevelopment();
 
 type Connection = { send: (data: any) => void; unsubscribe: VoidFunction };
 
@@ -69,8 +69,7 @@ export class Broadcast {
 	}
 
 	url(token: string) {
-		// TODO: Get from ENV
-		const url = new URL('http://localhost:3000/cable');
+		const url = new URL(Application.WebsocketURL);
 		url.searchParams.append('token', token);
 
 		return url.toString();

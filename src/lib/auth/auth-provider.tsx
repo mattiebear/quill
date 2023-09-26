@@ -1,11 +1,11 @@
 import { ClerkProvider } from '@clerk/clerk-react';
 import { FC, PropsWithChildren } from 'react';
 
+import { Application } from '../application';
+
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 	return (
-		<ClerkProvider
-			publishableKey={import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY}
-		>
+		<ClerkProvider publishableKey={Application.AuthServiceKey}>
 			{children}
 		</ClerkProvider>
 	);
