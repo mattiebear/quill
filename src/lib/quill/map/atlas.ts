@@ -8,8 +8,8 @@ import {
 	MapNode,
 	Position,
 	TileBlueprint,
-	Tileset,
 } from '@/lib/quill';
+import { Tileset } from '@/lib/quill/map/tileset';
 import { findOrCreateByKey } from '@/utils/map';
 
 import { RelayControl } from '../comms/relay-control';
