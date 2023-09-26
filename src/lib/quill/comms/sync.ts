@@ -5,9 +5,11 @@ import { EngineConfig, MapEvent } from '@/lib/quill';
 import { Atlas } from '@/lib/quill/map/atlas';
 import { DynamicPath } from '@/lib/url';
 
+import { RelayControl } from './relay-control';
+
 const PERSIST_DEBOUNCE = 3000;
 
-export class Sync {
+export class Sync extends RelayControl {
 	private persistTimeout: ReturnType<typeof setTimeout>;
 
 	constructor(
@@ -15,7 +17,12 @@ export class Sync {
 		private http: HttpClient,
 		private atlas: Atlas
 	) {
-		relay.channel(Channel.Editor).on(MapEvent.PlaceTile, () => {
+		super();
+		this.initRelay();
+	}
+
+	initRelay() {
+		this.on(Channel.Editor, MapEvent.PlaceTile, () => {
 			if (this.persistTimeout) {
 				clearTimeout(this.persistTimeout);
 			}
