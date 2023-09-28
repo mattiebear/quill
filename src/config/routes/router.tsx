@@ -6,6 +6,7 @@ import { fetchGameSessionsList } from '@/api/game-sessions';
 import { fetchGameSessionDetail } from '@/api/game-sessions/detail';
 import { fetchMapDetail, fetchMapsList } from '@/api/maps';
 import { fetchTileManifest } from '@/api/tiles/meta';
+import { fetchTokenManifest } from '@/api/tokens/meta';
 import { ErrorBoundary } from '@/components/error';
 import { FriendsIndex } from '@/components/friends';
 import { GameBoard } from '@/components/game-board';
@@ -58,6 +59,7 @@ export const router = createBrowserRouter([
 					return Promise.all([
 						fetchGameSessionDetail(params.id as string),
 						fetchTileManifest(),
+						fetchTokenManifest(),
 					]);
 				},
 			},
