@@ -3,6 +3,7 @@
 		"common": {
 			"add": "Add",
 			"create": "Create",
+			"done": "Done",
 			"remove": "Remove",
 			"search": "Search",
 			"select": "Select",

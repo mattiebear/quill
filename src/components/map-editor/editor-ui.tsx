@@ -123,7 +123,7 @@ export const EditorUI: FC = () => {
 						variant="outline"
 						onClick={handleClickDone}
 					>
-						Done
+						{t('common.done')}
 					</Button>
 				</Flex>
 			</Draggable>

@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
+import { JsonConvert } from 'json2typescript';
 
+import { TokenMeta } from '@/entites/token-meta';
 import { getHttpClient, useHttpClient } from '@/lib/http';
 import { getQueryClient } from '@/lib/queries';
 import { TokenSchema } from '@/lib/quill/types/token';
@@ -41,6 +43,10 @@ export const useTokenManifest = () => {
 			});
 		},
 		{
+			select: (response) => {
+				const convert = new JsonConvert();
+				return convert.deserializeArray(response.data, TokenMeta);
+			},
 			staleTime: Infinity,
 		}
 	);
