@@ -23,8 +23,6 @@ interface PlaceTileEvent {
 
 export class Atlas extends RelayControl {
 	private nodes = new Map<string, MapNode>();
-	private queue: Changeset[] = [];
-	private sync = false;
 
 	constructor(private tileset: Tileset) {
 		super();
@@ -46,11 +44,7 @@ export class Atlas extends RelayControl {
 
 		const changeset = node.add(blueprint, direction);
 
-		if (this.sync) {
-			this.sendChangeset(changeset);
-		} else {
-			this.queueChangeset(changeset);
-		}
+		this.sendChangeset(changeset);
 	}
 
 	load(atlas: AtlasEntity) {
@@ -71,18 +65,6 @@ export class Atlas extends RelayControl {
 		return this;
 	}
 
-	initialize() {
-		this.sync = true;
-
-		while (this.queue.length) {
-			const changeset = this.queue.shift();
-
-			if (changeset) {
-				this.sendChangeset(changeset);
-			}
-		}
-	}
-
 	toJSON() {
 		const data: PersistedNode[] = [];
 
@@ -100,10 +82,6 @@ export class Atlas extends RelayControl {
 
 	private sendChangeset(changeset: Changeset) {
 		relay.send(MapEvent.MapAltered, changeset).to(Channel.Editor);
-	}
-
-	private queueChangeset(changeset: Changeset) {
-		this.queue.push(changeset);
 	}
 
 	private findOrCreateNodeByPosition(position: Position) {

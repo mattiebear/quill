@@ -47,7 +47,12 @@ export class Renderer extends RelayControl {
 
 	constructor(public config: EngineConfig, private tileset: Tileset) {
 		super();
+
 		this.initRelay();
+		this.createApp();
+		this.setupRenderLayers();
+		this.createHighlight();
+		this.initializeListeners();
 	}
 
 	initRelay() {
@@ -58,18 +63,6 @@ export class Renderer extends RelayControl {
 		this.on(Channel.Editor, RenderEvent.ChangeZoom, (value: number) => {
 			this.changeZoom(value);
 		});
-	}
-
-	initialize() {
-		assertPresence(
-			this.config.el,
-			'Renderer has not been assigned an element on which to draw'
-		);
-
-		this.createApp();
-		this.setupRenderLayers();
-		this.createHighlight();
-		this.initializeListeners();
 	}
 
 	destroy() {
