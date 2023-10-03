@@ -16,10 +16,10 @@ import {
 import { findOrCreateByKey } from '@/utils/map';
 import { degToRad } from '@/utils/math';
 import { clamp } from '@/utils/number';
-import { assertPresence } from '@/utils/runtime';
 
 import { RelayControl } from '../comms/relay-control';
 import { quillStore } from '../store';
+import { RenderStack } from './render-stack';
 
 const ScrollEventMap = new Map([
 	['w', 'up'],
@@ -32,12 +32,6 @@ export class Renderer extends RelayControl {
 	private app: PIXI.Application<HTMLCanvasElement>;
 	private nodes = new Map<string, RenderNode>();
 
-	// Map layers
-	private main = new PIXI.Container();
-	private map = new PIXI.Container();
-	private tiles = new PIXI.Container();
-	private ui = new PIXI.Container();
-
 	// Elements
 	private highlight = new PIXI.Container();
 
@@ -45,12 +39,16 @@ export class Renderer extends RelayControl {
 	private zoom = 100;
 	private keydown: any;
 
-	constructor(public config: EngineConfig, private tileset: Tileset) {
+	constructor(
+		public config: EngineConfig,
+		private tileset: Tileset,
+		private stack: RenderStack
+	) {
 		super();
 
 		this.initRelay();
 		this.createApp();
-		this.setupRenderLayers();
+		this.connectStack();
 		this.createHighlight();
 		this.initializeListeners();
 	}
@@ -94,7 +92,7 @@ export class Renderer extends RelayControl {
 		const key = position.toString();
 		const node = findOrCreateByKey(this.nodes, key, new RenderNode(position));
 
-		this.tiles.addChild(node.view);
+		this.stack.tiles.addChild(node.view);
 
 		return node;
 	}
@@ -118,35 +116,26 @@ export class Renderer extends RelayControl {
 		this.config.el.appendChild(this.app.view);
 	}
 
-	private setupRenderLayers() {
-		this.tiles.zIndex = 0;
-		this.tiles.sortableChildren = true;
-
-		this.ui.zIndex = 1;
-
-		this.map.addChild(this.tiles, this.ui);
-
-		this.main.eventMode = 'static';
-		this.main.hitArea = this.app.screen;
-		this.main.addChild(this.map);
+	private connectStack() {
+		this.stack.setHitArea(this.app.screen);
 
 		// TODO: base position on screen side to center it.
-		this.map.x = 500;
-		this.map.y = 300;
+		this.stack.map.x = 500;
+		this.stack.map.y = 300;
 
-		this.app.stage.addChild(this.main);
+		this.app.stage.addChild(this.stack.main);
 	}
 
 	private initializeListeners() {
-		this.main.on('mousemove', (e) => {
-			const { x, y } = this.map.toLocal(e.global);
+		this.stack.main.on('mousemove', (e) => {
+			const { x, y } = this.stack.map.toLocal(e.global);
 
 			const pos = Position.atPoint(x, y, 0);
 			this.setHighlightPosition(pos);
 		});
 
-		this.main.on('mousedown', (e) => {
-			const { x, y } = this.map.toLocal(e.global);
+		this.stack.main.on('mousedown', (e) => {
+			const { x, y } = this.stack.map.toLocal(e.global);
 
 			const position = Position.atPoint(x, y, 0);
 
@@ -189,7 +178,7 @@ export class Renderer extends RelayControl {
 		this.highlight.addChild(rect);
 		this.highlight.scale.y = 0.5;
 
-		this.ui.addChild(this.highlight);
+		this.stack.ui.addChild(this.highlight);
 	}
 
 	private setHighlightPosition(pos: Position) {
@@ -202,32 +191,32 @@ export class Renderer extends RelayControl {
 
 		const scale = this.zoom / 100;
 
-		this.map.scale.x = scale;
-		this.map.scale.y = scale;
+		this.stack.map.scale.x = scale;
+		this.stack.map.scale.y = scale;
 	}
 
 	private scrollMap(dir: string) {
 		switch (dir) {
 			case 'up':
-				this.map.y += 10;
+				this.stack.map.y += 10;
 				break;
 
 			case 'down':
-				this.map.y -= 10;
+				this.stack.map.y -= 10;
 				break;
 
 			case 'right':
-				this.map.x -= 10;
+				this.stack.map.x -= 10;
 				break;
 
 			case 'left':
-				this.map.x += 10;
+				this.stack.map.x += 10;
 				break;
 		}
 	}
 }
 
-inject(Renderer, [EngineConfig, Tileset]);
+inject(Renderer, [EngineConfig, Tileset, RenderStack]);
 
 container.register(Renderer, {
 	class: Renderer,
