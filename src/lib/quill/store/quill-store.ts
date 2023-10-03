@@ -5,7 +5,7 @@ import { Direction } from '@/lib/quill/types/map';
 
 import { LoadingState } from './types';
 
-interface QuillStoreValue {
+export interface QuillStoreValue {
 	initialDataState: LoadingState;
 	mapDataState: LoadingState;
 	mapId: string | null;

@@ -1,12 +1,12 @@
 import { container, Lifespan } from '@/lib/di';
 import { Channel } from '@/lib/events';
 
-import { RelayControl } from '../comms/relay-control';
+import { Subscriber } from '../comms/subscriber';
 import { CurrentStateData, SelectMapData, StoryEvent } from '../types/event';
 import { resetQuillStore, quillStore as store } from './quill-store';
 import { LoadingState } from './types';
 
-export class Store extends RelayControl {
+export class Store extends Subscriber {
 	constructor() {
 		super();
 		this.initRelay();
@@ -25,7 +25,7 @@ export class Store extends RelayControl {
 	}
 
 	private initRelay() {
-		this.on(
+		this.onEvent(
 			Channel.Story,
 			StoryEvent.CurrentState,
 			(data: CurrentStateData) => {
@@ -36,7 +36,7 @@ export class Store extends RelayControl {
 			}
 		);
 
-		this.on(Channel.Story, StoryEvent.SelectMap, (data: SelectMapData) => {
+		this.onEvent(Channel.Story, StoryEvent.SelectMap, (data: SelectMapData) => {
 			store.setState({
 				mapId: data.map.id,
 			});

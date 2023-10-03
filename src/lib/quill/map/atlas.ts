@@ -12,7 +12,7 @@ import {
 import { Tileset } from '@/lib/quill/map/tileset';
 import { findOrCreateByKey } from '@/utils/map';
 
-import { RelayControl } from '../comms/relay-control';
+import { Subscriber } from '../comms/subscriber';
 
 // TODO: Need to come up with a better system to link events
 interface PlaceTileEvent {
@@ -21,7 +21,7 @@ interface PlaceTileEvent {
 	position: Position;
 }
 
-export class Atlas extends RelayControl {
+export class Atlas extends Subscriber {
 	private nodes = new Map<string, MapNode>();
 
 	constructor(private tileset: Tileset) {
@@ -30,7 +30,7 @@ export class Atlas extends RelayControl {
 	}
 
 	initRelay() {
-		this.on(
+		this.onEvent(
 			Channel.Editor,
 			MapEvent.PlaceTile,
 			({ blueprint, direction, position }: PlaceTileEvent) => {

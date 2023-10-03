@@ -16,7 +16,7 @@ import {
 import { findOrCreateByKey } from '@/utils/map';
 import { clamp } from '@/utils/number';
 
-import { RelayControl } from '../comms/relay-control';
+import { Subscriber } from '../comms/subscriber';
 import { quillStore } from '../store';
 import { Highlighter } from './highlighter';
 import { RenderStack } from './render-stack';
@@ -28,7 +28,7 @@ const ScrollEventMap = new Map([
 	['d', 'right'],
 ]);
 
-export class Renderer extends RelayControl {
+export class Renderer extends Subscriber {
 	private app: PIXI.Application<HTMLCanvasElement>;
 	private nodes = new Map<string, RenderNode>();
 
@@ -51,11 +51,15 @@ export class Renderer extends RelayControl {
 	}
 
 	initRelay() {
-		this.on(Channel.Editor, MapEvent.MapAltered, (changeset: Changeset) => {
-			this.drawChangeset(changeset);
-		});
+		this.onEvent(
+			Channel.Editor,
+			MapEvent.MapAltered,
+			(changeset: Changeset) => {
+				this.drawChangeset(changeset);
+			}
+		);
 
-		this.on(Channel.Editor, RenderEvent.ChangeZoom, (value: number) => {
+		this.onEvent(Channel.Editor, RenderEvent.ChangeZoom, (value: number) => {
 			this.changeZoom(value);
 		});
 	}

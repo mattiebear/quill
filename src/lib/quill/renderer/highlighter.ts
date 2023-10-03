@@ -3,14 +3,17 @@ import { Container, Graphics } from 'pixi.js';
 import { container, inject, Lifespan } from '@/lib/di';
 import { degToRad } from '@/utils/math';
 
+import { Subscriber } from '../comms/subscriber';
 import { EngineConfig } from '../core/engine-config';
 import { Position } from '../utility/position';
 import { RenderStack } from './render-stack';
 
-export class Highlighter {
+export class Highlighter extends Subscriber {
 	private highlight = new Container();
 
 	constructor(public config: EngineConfig, private stack: RenderStack) {
+		super();
+
 		this.createHighlight();
 		this.initListeners();
 	}
@@ -27,6 +30,7 @@ export class Highlighter {
 
 		this.highlight.addChild(rect);
 		this.highlight.scale.y = 0.5;
+		this.highlight.visible = false;
 
 		this.stack.ui.addChild(this.highlight);
 	}
@@ -38,11 +42,19 @@ export class Highlighter {
 			const pos = Position.atPoint(x, y, 0);
 			this.setHighlightPosition(pos);
 		});
+
+		this.onState('selectedBlueprint', (selected) => {
+			this.setHighlightVisibility(!!selected);
+		});
 	}
 
 	private setHighlightPosition(pos: Position) {
 		this.highlight.x = pos.screenX;
 		this.highlight.y = pos.screenY;
+	}
+
+	private setHighlightVisibility(visible: boolean) {
+		this.highlight.visible = visible;
 	}
 }
 

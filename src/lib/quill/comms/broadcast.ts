@@ -8,13 +8,13 @@ import { Channel, relay } from '@/lib/events';
 
 import { EngineConfig } from '../core/engine-config';
 import { StoryEvent } from '../types/event';
-import { RelayControl } from './relay-control';
+import { Subscriber } from './subscriber';
 
 logger.enabled = Application.isDevelopment();
 
 type Connection = { send: (data: any) => void; unsubscribe: VoidFunction };
 
-export class Broadcast extends RelayControl {
+export class Broadcast extends Subscriber {
 	connection: Connection;
 	consumer: ReturnType<typeof createConsumer>;
 
@@ -51,7 +51,7 @@ export class Broadcast extends RelayControl {
 	}
 
 	initRelay() {
-		this.on(
+		this.onEvent(
 			Channel.Story,
 			StoryEvent.SelectMap,
 			(event: { map: MapEntity }) => {
