@@ -14,11 +14,11 @@ import {
 	Tileset,
 } from '@/lib/quill';
 import { findOrCreateByKey } from '@/utils/map';
-import { degToRad } from '@/utils/math';
 import { clamp } from '@/utils/number';
 
 import { RelayControl } from '../comms/relay-control';
 import { quillStore } from '../store';
+import { Highlighter } from './highlighter';
 import { RenderStack } from './render-stack';
 
 const ScrollEventMap = new Map([
@@ -32,9 +32,6 @@ export class Renderer extends RelayControl {
 	private app: PIXI.Application<HTMLCanvasElement>;
 	private nodes = new Map<string, RenderNode>();
 
-	// Elements
-	private highlight = new PIXI.Container();
-
 	// State
 	private zoom = 100;
 	private keydown: any;
@@ -42,14 +39,14 @@ export class Renderer extends RelayControl {
 	constructor(
 		public config: EngineConfig,
 		private tileset: Tileset,
-		private stack: RenderStack
+		private stack: RenderStack,
+		private highlighter: Highlighter
 	) {
 		super();
 
 		this.initRelay();
 		this.createApp();
 		this.connectStack();
-		this.createHighlight();
 		this.initializeListeners();
 	}
 
@@ -70,6 +67,19 @@ export class Renderer extends RelayControl {
 		if (this.keydown) {
 			document.removeEventListener('keydown', this.keydown);
 		}
+	}
+
+	private createApp() {
+		PIXI.settings.RESOLUTION = window.devicePixelRatio || 1;
+
+		this.app = new PIXI.Application<HTMLCanvasElement>({
+			resizeTo: window,
+			autoDensity: true,
+			// TODO: Get color from theme somehow
+			backgroundColor: 0x171923,
+		});
+
+		this.config.el.appendChild(this.app.view);
 	}
 
 	// Internal handlers
@@ -103,19 +113,6 @@ export class Renderer extends RelayControl {
 		node?.remove(change.tile.id);
 	}
 
-	private createApp() {
-		PIXI.settings.RESOLUTION = window.devicePixelRatio || 1;
-
-		this.app = new PIXI.Application<HTMLCanvasElement>({
-			resizeTo: window,
-			autoDensity: true,
-			// TODO: Get color from theme somehow
-			backgroundColor: 0x171923,
-		});
-
-		this.config.el.appendChild(this.app.view);
-	}
-
 	private connectStack() {
 		this.stack.setHitArea(this.app.screen);
 
@@ -127,13 +124,6 @@ export class Renderer extends RelayControl {
 	}
 
 	private initializeListeners() {
-		this.stack.main.on('mousemove', (e) => {
-			const { x, y } = this.stack.map.toLocal(e.global);
-
-			const pos = Position.atPoint(x, y, 0);
-			this.setHighlightPosition(pos);
-		});
-
 		this.stack.main.on('mousedown', (e) => {
 			const { x, y } = this.stack.map.toLocal(e.global);
 
@@ -163,27 +153,6 @@ export class Renderer extends RelayControl {
 		};
 
 		document.addEventListener('keydown', this.keydown);
-	}
-
-	private createHighlight() {
-		// TODO: Also used in Position. DRY up
-		const size = Math.sin(degToRad(45)) * 256;
-
-		const rect = new PIXI.Graphics();
-		rect.beginFill(0x8059d4);
-		rect.drawRect(0, 0, size, size);
-		rect.rotation += degToRad(45);
-		rect.alpha = 0.3;
-
-		this.highlight.addChild(rect);
-		this.highlight.scale.y = 0.5;
-
-		this.stack.ui.addChild(this.highlight);
-	}
-
-	private setHighlightPosition(pos: Position) {
-		this.highlight.x = pos.screenX;
-		this.highlight.y = pos.screenY;
 	}
 
 	private changeZoom(value: number) {
@@ -216,7 +185,7 @@ export class Renderer extends RelayControl {
 	}
 }
 
-inject(Renderer, [EngineConfig, Tileset, RenderStack]);
+inject(Renderer, [EngineConfig, Tileset, RenderStack, Highlighter]);
 
 container.register(Renderer, {
 	class: Renderer,
