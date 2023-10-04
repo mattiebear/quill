@@ -11,8 +11,8 @@ import { EngineConfig } from './engine-config';
 export class Engine {
 	constructor(
 		public config: EngineConfig,
-		public atlas: Atlas,
 		public renderer: Renderer,
+		public atlas: Atlas,
 		public sync: Sync,
 		public broadcast: Broadcast,
 		public loader: MapLoader,
@@ -21,9 +21,6 @@ export class Engine {
 
 	initialize() {
 		this.store.reset();
-		this.renderer.initialize();
-		this.atlas.initialize();
-
 		return this;
 	}
 
@@ -39,8 +36,8 @@ export class Engine {
 
 inject(Engine, [
 	EngineConfig,
-	Atlas,
 	Renderer,
+	Atlas,
 	Sync,
 	Broadcast,
 	MapLoader,

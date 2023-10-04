@@ -4,11 +4,14 @@ import { LoadingState, useQuillStore } from '@/lib/quill/store';
 import { useGameSession } from './use-game-session';
 
 export const usePlayState = () => {
-	const state = useQuillStore(({ initialDataState, mapDataState, mapId }) => ({
-		initialDataState,
-		mapDataState,
-		mapId,
-	}));
+	const state = useQuillStore(
+		({ initialDataState, mapDataState, mapId, selectedToken }) => ({
+			initialDataState,
+			mapDataState,
+			mapId,
+			selectedToken,
+		})
+	);
 
 	const currentUser = useCurrentUser();
 	const gameSession = useGameSession();
@@ -20,5 +23,5 @@ export const usePlayState = () => {
 
 	const isMapSelectorOpen = isUserOwner && hasInitialData && !isMapSelected;
 
-	return { isLoadingMap: false, isMapSelectorOpen };
+	return { isLoadingMap: false, isMapSelectorOpen, ...state };
 };

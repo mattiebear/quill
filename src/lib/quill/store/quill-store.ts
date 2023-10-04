@@ -5,12 +5,13 @@ import { Direction } from '@/lib/quill/types/map';
 
 import { LoadingState } from './types';
 
-interface QuillStoreValue {
+export interface QuillStoreValue {
 	initialDataState: LoadingState;
 	mapDataState: LoadingState;
 	mapId: string | null;
 	selectedBlueprint: string | null;
 	selectedDirection: Direction;
+	selectedToken: string | null;
 }
 
 const quillStore = createWithEqualityFn<QuillStoreValue>(
@@ -20,6 +21,7 @@ const quillStore = createWithEqualityFn<QuillStoreValue>(
 		mapId: null,
 		selectedBlueprint: null,
 		selectedDirection: Direction.N,
+		selectedToken: null,
 	}),
 	shallow
 );

@@ -12,7 +12,7 @@ import {
 import { Tileset } from '@/lib/quill/map/tileset';
 import { findOrCreateByKey } from '@/utils/map';
 
-import { RelayControl } from '../comms/relay-control';
+import { Subscriber } from '../comms/subscriber';
 
 // TODO: Need to come up with a better system to link events
 interface PlaceTileEvent {
@@ -21,10 +21,8 @@ interface PlaceTileEvent {
 	position: Position;
 }
 
-export class Atlas extends RelayControl {
+export class Atlas extends Subscriber {
 	private nodes = new Map<string, MapNode>();
-	private queue: Changeset[] = [];
-	private sync = false;
 
 	constructor(private tileset: Tileset) {
 		super();
@@ -32,7 +30,7 @@ export class Atlas extends RelayControl {
 	}
 
 	initRelay() {
-		this.on(
+		this.onEvent(
 			Channel.Editor,
 			MapEvent.PlaceTile,
 			({ blueprint, direction, position }: PlaceTileEvent) => {
@@ -46,11 +44,7 @@ export class Atlas extends RelayControl {
 
 		const changeset = node.add(blueprint, direction);
 
-		if (this.sync) {
-			this.sendChangeset(changeset);
-		} else {
-			this.queueChangeset(changeset);
-		}
+		this.sendChangeset(changeset);
 	}
 
 	load(atlas: AtlasEntity) {
@@ -71,18 +65,6 @@ export class Atlas extends RelayControl {
 		return this;
 	}
 
-	initialize() {
-		this.sync = true;
-
-		while (this.queue.length) {
-			const changeset = this.queue.shift();
-
-			if (changeset) {
-				this.sendChangeset(changeset);
-			}
-		}
-	}
-
 	toJSON() {
 		const data: PersistedNode[] = [];
 
@@ -100,10 +82,6 @@ export class Atlas extends RelayControl {
 
 	private sendChangeset(changeset: Changeset) {
 		relay.send(MapEvent.MapAltered, changeset).to(Channel.Editor);
-	}
-
-	private queueChangeset(changeset: Changeset) {
-		this.queue.push(changeset);
 	}
 
 	private findOrCreateNodeByPosition(position: Position) {

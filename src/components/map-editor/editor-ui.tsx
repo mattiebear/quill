@@ -40,7 +40,7 @@ export const EditorUI: FC = () => {
 	const { send } = useChannel(Channel.Editor);
 	const { rotateLeft, rotateRight } = useRotateTile();
 
-	const { blueprintId, direction } = useEditorState();
+	const { selectedBlueprint, selectedDirection } = useEditorState();
 
 	const handleClickDone = async () => {
 		await invalidate();
@@ -100,7 +100,7 @@ export const EditorUI: FC = () => {
 								onClick={() =>
 									quillStore.setState({ selectedBlueprint: blueprint.id })
 								}
-								{...(blueprint.id === blueprintId && {
+								{...(blueprint.id === selectedBlueprint && {
 									// TODO: Use semantic value
 									bg: 'green.500',
 									_hover: {
@@ -111,7 +111,7 @@ export const EditorUI: FC = () => {
 								<AspectRatio w="full" ratio={1}>
 									<Image
 										objectPosition="bottom center"
-										src={blueprint.sprite.source(direction)}
+										src={blueprint.sprite.source(selectedDirection)}
 									/>
 								</AspectRatio>
 							</Button>
@@ -123,7 +123,7 @@ export const EditorUI: FC = () => {
 						variant="outline"
 						onClick={handleClickDone}
 					>
-						Done
+						{t('common.done')}
 					</Button>
 				</Flex>
 			</Draggable>
