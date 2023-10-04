@@ -29,4 +29,12 @@ export class Subscriber {
 			})
 		);
 	}
+
+	getChannel(channel: string) {
+		return relay.channel(channel);
+	}
+
+	get editorChannel() {
+		return this.getChannel(Channel.Editor);
+	}
 }

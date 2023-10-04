@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import { container, inject, Lifespan } from '@/lib/di';
-import { Channel, relay } from '@/lib/events';
+import { Channel } from '@/lib/events';
 import {
 	Changeset,
 	EngineConfig,
@@ -11,14 +11,13 @@ import {
 	RenderEvent,
 	RenderNode,
 	RenderObject,
-	Tileset,
 } from '@/lib/quill';
 import { findOrCreateByKey } from '@/utils/map';
 import { clamp } from '@/utils/number';
 
 import { Subscriber } from '../comms/subscriber';
-import { quillStore } from '../store';
 import { Highlighter } from './highlighter';
+import { Interactor } from './interactor';
 import { RenderStack } from './render-stack';
 
 const ScrollEventMap = new Map([
@@ -38,9 +37,9 @@ export class Renderer extends Subscriber {
 
 	constructor(
 		public config: EngineConfig,
-		private tileset: Tileset,
 		private stack: RenderStack,
-		private highlighter: Highlighter
+		private highlighter: Highlighter,
+		private interactor: Interactor
 	) {
 		super();
 
@@ -67,7 +66,9 @@ export class Renderer extends Subscriber {
 	destroy() {
 		this.unsubscribeAll();
 		this.app.destroy(true);
+
 		this.highlighter.destroy();
+		this.interactor.destroy();
 
 		if (this.keydown) {
 			document.removeEventListener('keydown', this.keydown);
@@ -129,26 +130,6 @@ export class Renderer extends Subscriber {
 	}
 
 	private initializeListeners() {
-		this.stack.main.on('mousedown', (e) => {
-			const { x, y } = this.stack.map.toLocal(e.global);
-
-			const position = Position.atPoint(x, y, 0);
-
-			const { selectedBlueprint: id, selectedDirection: direction } =
-				quillStore.getState();
-
-			if (id) {
-				const blueprint = this.tileset.get(id);
-				const channel = relay.channel(Channel.Editor);
-
-				channel.send(MapEvent.PlaceTile, {
-					blueprint,
-					direction,
-					position,
-				});
-			}
-		});
-
 		this.keydown = (e: KeyboardEvent) => {
 			const dir = ScrollEventMap.get(e.key);
 
@@ -190,7 +171,7 @@ export class Renderer extends Subscriber {
 	}
 }
 
-inject(Renderer, [EngineConfig, Tileset, RenderStack, Highlighter]);
+inject(Renderer, [EngineConfig, RenderStack, Highlighter, Interactor]);
 
 container.register(Renderer, {
 	class: Renderer,
