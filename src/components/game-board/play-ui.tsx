@@ -14,7 +14,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { Path } from '@/config/routes';
 import { useTokenset } from '@/lib/quill/hooks/use-tokenset';
+import { quillStore } from '@/lib/quill/store';
 
+import { usePlayState } from './hooks/use-play-state';
 import { SelectMapModal } from './select-map-modal';
 
 export const PlayUI: FC = () => {
@@ -22,6 +24,7 @@ export const PlayUI: FC = () => {
 	const tokenset = useTokenset();
 	const navigate = useNavigate();
 	const { t } = useTranslation();
+	const { selectedToken } = usePlayState();
 
 	const handleClickDone = async () => {
 		navigate(Path.GameSessions);
@@ -54,16 +57,16 @@ export const PlayUI: FC = () => {
 									key={token.id}
 									h="auto"
 									p={2}
-									// onClick={() =>
-									// 	quillStore.setState({ selectedBlueprint: blueprint.id })
-									// }
-									// {...(blueprint.id === blueprintId && {
-									// 	// TODO: Use semantic value
-									// 	bg: 'green.500',
-									// 	_hover: {
-									// 		bg: 'green.500',
-									// 	},
-									// })}
+									onClick={() =>
+										quillStore.setState({ selectedToken: token.id })
+									}
+									{...(token.id === selectedToken && {
+										// TODO: Use semantic value
+										bg: 'green.500',
+										_hover: {
+											bg: 'green.500',
+										},
+									})}
 								>
 									<AspectRatio w="full" ratio={1}>
 										<Image objectPosition="bottom center" src={token.iconSrc} />

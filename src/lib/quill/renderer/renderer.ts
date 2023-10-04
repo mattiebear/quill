@@ -67,6 +67,7 @@ export class Renderer extends Subscriber {
 	destroy() {
 		this.unsubscribeAll();
 		this.app.destroy(true);
+		this.highlighter.destroy();
 
 		if (this.keydown) {
 			document.removeEventListener('keydown', this.keydown);

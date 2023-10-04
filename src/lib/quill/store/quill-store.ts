@@ -11,6 +11,7 @@ export interface QuillStoreValue {
 	mapId: string | null;
 	selectedBlueprint: string | null;
 	selectedDirection: Direction;
+	selectedToken: string | null;
 }
 
 const quillStore = createWithEqualityFn<QuillStoreValue>(
@@ -20,6 +21,7 @@ const quillStore = createWithEqualityFn<QuillStoreValue>(
 		mapId: null,
 		selectedBlueprint: null,
 		selectedDirection: Direction.N,
+		selectedToken: null,
 	}),
 	shallow
 );

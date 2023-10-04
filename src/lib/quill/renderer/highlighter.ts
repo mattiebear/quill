@@ -43,7 +43,12 @@ export class Highlighter extends Subscriber {
 			this.setHighlightPosition(pos);
 		});
 
+		// TODO: Figure out a way to add selectors
 		this.onState('selectedBlueprint', (selected) => {
+			this.setHighlightVisibility(!!selected);
+		});
+
+		this.onState('selectedToken', (selected) => {
 			this.setHighlightVisibility(!!selected);
 		});
 	}
