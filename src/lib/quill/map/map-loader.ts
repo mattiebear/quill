@@ -6,10 +6,10 @@ import { container, inject, Lifespan } from '@/lib/di';
 
 import { quillStore } from '../store';
 import { Store } from '../store/store';
-import { Atlas } from './atlas';
+import { TileMap } from './tile-map';
 
 export class MapLoader {
-	constructor(private atlas: Atlas, private store: Store) {
+	constructor(private tileMap: TileMap, private store: Store) {
 		this.initStoreSubscription();
 	}
 
@@ -22,7 +22,7 @@ export class MapLoader {
 
 		this.store.mapLoaded();
 
-		this.atlas.load(map.atlas);
+		this.tileMap.load(map.atlas);
 	}
 
 	private initStoreSubscription() {
@@ -34,7 +34,7 @@ export class MapLoader {
 	}
 }
 
-inject(MapLoader, [Atlas, Store]);
+inject(MapLoader, [TileMap, Store]);
 
 container.register(MapLoader, {
 	class: MapLoader,

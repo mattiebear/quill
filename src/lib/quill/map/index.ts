@@ -1,4 +1,4 @@
-export * from './atlas';
+export * from './tile-map';
 export * from './changeset';
 export * from './directional-sprite';
 export * from './map-node';

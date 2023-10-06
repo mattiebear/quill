@@ -21,7 +21,7 @@ interface PlaceTileEvent {
 	position: Position;
 }
 
-export class Atlas extends Subscriber {
+export class TileMap extends Subscriber {
 	private nodes = new Map<string, MapNode>();
 
 	constructor(private tileset: Tileset) {
@@ -90,6 +90,6 @@ export class Atlas extends Subscriber {
 	}
 }
 
-inject(Atlas, [Tileset]);
+inject(TileMap, [Tileset]);
 
-container.register(Atlas, { class: Atlas, lifespan: Lifespan.Resolution });
+container.register(TileMap, { class: TileMap, lifespan: Lifespan.Resolution });

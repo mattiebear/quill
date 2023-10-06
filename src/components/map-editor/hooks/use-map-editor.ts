@@ -38,7 +38,7 @@ export const useMapEditor = (map: MapEntity) => {
 		container.register(DiHttp, { value: http });
 
 		const engine = container.resolve<Engine>(Engine);
-		engine.atlas.load(map.atlas);
+		engine.tileMap.load(map.atlas);
 		engine.initialize();
 
 		return engine;

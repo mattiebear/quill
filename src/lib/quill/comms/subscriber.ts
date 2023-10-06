@@ -34,7 +34,15 @@ export class Subscriber {
 		return relay.channel(channel);
 	}
 
+	get dataChannel() {
+		return this.getChannel(Channel.Data);
+	}
+
 	get editorChannel() {
 		return this.getChannel(Channel.Editor);
+	}
+
+	get storyChannel() {
+		return this.getChannel(Channel.Story);
 	}
 }

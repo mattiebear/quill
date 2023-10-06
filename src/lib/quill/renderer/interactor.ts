@@ -26,10 +26,15 @@ export class Interactor extends Subscriber {
 
 			const position = Position.atPoint(x, y, 0);
 
-			const { selectedBlueprint, selectedDirection } = quillStore.getState();
+			const { selectedBlueprint, selectedDirection, selectedToken } =
+				quillStore.getState();
 
 			if (selectedBlueprint) {
 				this.placeTile(selectedBlueprint, selectedDirection, position);
+			}
+
+			if (selectedToken) {
+				this.placeToken(selectedToken, position);
 			}
 		});
 	}
@@ -42,6 +47,10 @@ export class Interactor extends Subscriber {
 			direction,
 			position,
 		});
+	}
+
+	private placeToken(id: string, position: Position) {
+		console.log('place token', id, position);
 	}
 }
 
