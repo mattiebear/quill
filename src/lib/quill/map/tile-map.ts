@@ -26,10 +26,9 @@ export class TileMap extends Subscriber {
 
 	constructor(private tileset: Tileset) {
 		super();
-		this.initRelay();
 	}
 
-	initRelay() {
+	init() {
 		this.onEvent(
 			Channel.Editor,
 			MapEvent.PlaceTile,

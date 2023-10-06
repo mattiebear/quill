@@ -7,7 +7,6 @@ import { useHttpClient } from '@/lib/http';
 import { Engine, Tileset } from '@/lib/quill';
 import { EngineConfig, EngineMode } from '@/lib/quill/core/engine-config';
 import { useTileset } from '@/lib/quill/hooks/use-tileset';
-import { resetQuillStore } from '@/lib/quill/store';
 import { MapEvent } from '@/lib/quill/types/event';
 
 import { useDataObserver } from './use-data-observer';
@@ -26,9 +25,6 @@ export const useMapEditor = (map: MapEntity) => {
 			map,
 			mode: EngineMode.Editor,
 		});
-
-		// TODO: Move to resolution callback
-		resetQuillStore();
 
 		container.register(EngineConfig, {
 			value: config,
