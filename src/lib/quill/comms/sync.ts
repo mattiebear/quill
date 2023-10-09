@@ -1,5 +1,4 @@
 import { container, DiHttp, inject, Lifespan } from '@/lib/di';
-import { Channel, relay } from '@/lib/events';
 import { HttpClient } from '@/lib/http/types';
 import { EngineConfig, MapEvent } from '@/lib/quill';
 import { TileMap } from '@/lib/quill/map/tile-map';

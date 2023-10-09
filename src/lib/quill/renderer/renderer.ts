@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js';
 
 import { container, inject, Lifespan } from '@/lib/di';
-import { Channel } from '@/lib/events';
 import {
 	Changeset,
 	EngineConfig,

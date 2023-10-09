@@ -2,19 +2,20 @@ import { MapEntity } from '@/entites/map-entity';
 
 // TODO: Clean these up somehow?
 export enum RenderEvent {
-	ChangeZoom = 'change-zoom',
+	ChangeZoom = 'render-change-zoom',
+	AddToken = 'render-add-token',
 }
 
 export enum MapEvent {
 	MapAltered = 'map-altered',
 	MapSaved = 'map-saved',
-	PlaceTile = 'place-tile',
+	PlaceTile = 'map-place-tile',
 }
 
 export enum StoryEvent {
-	CurrentState = 'current-story-state',
-	SelectMap = 'select-map',
-	PlaceToken = 'place-token',
+	CurrentState = 'story-current-story-state',
+	SelectMap = 'story-select-map',
+	PlaceToken = 'story-place-token',
 }
 
 // Websocket event types

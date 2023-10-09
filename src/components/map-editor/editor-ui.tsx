@@ -22,7 +22,7 @@ import {
 } from '@/components/icon';
 import { useMap } from '@/components/map-editor/hooks/use-map';
 import { Path } from '@/config/routes';
-import { Channel, useRelay } from '@/lib/events';
+import { useRelay } from '@/lib/events';
 import { RenderEvent } from '@/lib/quill';
 import { useTileset } from '@/lib/quill/hooks/use-tileset';
 import { quillStore } from '@/lib/quill/store';

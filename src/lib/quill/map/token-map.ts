@@ -4,6 +4,7 @@ import { container, Lifespan } from '@/lib/di';
 import { Subscriber } from '../comms/subscriber';
 import { StoryEvent } from '../types/event';
 import { Position } from '../utility/position';
+import { Token } from './token';
 
 interface PlaceTokenEvent {
 	id: string;
@@ -12,6 +13,8 @@ interface PlaceTokenEvent {
 }
 
 export class TokenMap extends Subscriber {
+	private tokens = new Map<string, Token>();
+
 	constructor() {
 		super();
 		this.init();
@@ -24,7 +27,9 @@ export class TokenMap extends Subscriber {
 	}
 
 	private placeToken({ id, position, user }: PlaceTokenEvent) {
-		console.log({ id, position, user });
+		const token = new Token(user, id, position);
+
+		this.tokens.set(token.id, token);
 	}
 }
 
