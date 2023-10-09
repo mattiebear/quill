@@ -43,7 +43,7 @@ export class Interactor extends Subscriber {
 	private placeTile(id: string, direction: Direction, position: Position) {
 		const blueprint = this.tileset.get(id);
 
-		this.editorChannel.send(MapEvent.PlaceTile, {
+		this.send(MapEvent.PlaceTile, {
 			blueprint,
 			direction,
 			position,
@@ -51,7 +51,7 @@ export class Interactor extends Subscriber {
 	}
 
 	private placeToken(id: string, position: Position) {
-		this.storyChannel.send(StoryEvent.PlaceToken, {
+		this.send(StoryEvent.PlaceToken, {
 			id,
 			position,
 			user: this.user,

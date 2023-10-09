@@ -22,7 +22,7 @@ export class Sync extends Subscriber {
 	}
 
 	initRelay() {
-		this.onEvent(Channel.Editor, MapEvent.PlaceTile, () => {
+		this.onEvent(MapEvent.PlaceTile, () => {
 			if (this.persistTimeout) {
 				clearTimeout(this.persistTimeout);
 			}
@@ -42,7 +42,7 @@ export class Sync extends Subscriber {
 
 		await this.http.patch(url, { atlas });
 
-		relay.send(MapEvent.MapSaved).to(Channel.Data);
+		this.send(MapEvent.MapSaved);
 	}
 }
 

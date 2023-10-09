@@ -1,6 +1,5 @@
 import { User } from '@/entites/user';
 import { container, Lifespan } from '@/lib/di';
-import { Channel } from '@/lib/events';
 
 import { Subscriber } from '../comms/subscriber';
 import { StoryEvent } from '../types/event';
@@ -19,10 +18,8 @@ export class TokenMap extends Subscriber {
 	}
 
 	init() {
-		this.onEvent(
-			Channel.Story,
-			StoryEvent.PlaceToken,
-			(data: PlaceTokenEvent) => this.placeToken(data)
+		this.onEvent(StoryEvent.PlaceToken, (data: PlaceTokenEvent) =>
+			this.placeToken(data)
 		);
 	}
 

@@ -6,6 +6,6 @@ import { StoryEvent } from '@/lib/quill/types/event';
 
 export const useSelectMap = (map: MapEntity) => {
 	return useCallback(() => {
-		relay.send(StoryEvent.SelectMap, { map }).to(Channel.Story);
+		relay.send(StoryEvent.SelectMap, { map }).to(Channel.Quill);
 	}, [map]);
 };

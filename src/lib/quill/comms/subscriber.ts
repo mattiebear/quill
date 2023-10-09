@@ -13,8 +13,8 @@ export class Subscriber {
 		this._subs.forEach((unsub) => unsub());
 	}
 
-	onEvent(channel: Channel, event: string, handler: (data: any) => void) {
-		this._subs.push(relay.channel(channel).on(event, handler));
+	onEvent(event: string, handler: (data: any) => void) {
+		this._subs.push(this.channel.on(event, handler));
 	}
 
 	onState<T extends keyof QuillStoreValue>(
@@ -34,15 +34,15 @@ export class Subscriber {
 		return relay.channel(channel);
 	}
 
-	get dataChannel() {
-		return this.getChannel(Channel.Data);
+	send(event: string, data?: any) {
+		this.channel.send(event, data);
 	}
 
-	get editorChannel() {
-		return this.getChannel(Channel.Editor);
+	private get channel() {
+		return this.relay.channel(Channel.Quill);
 	}
 
-	get storyChannel() {
-		return this.getChannel(Channel.Story);
+	private get relay() {
+		return relay;
 	}
 }

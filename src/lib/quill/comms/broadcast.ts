@@ -44,23 +44,19 @@ export class Broadcast extends Subscriber {
 			},
 			{
 				received: (event: { event: string; data: unknown }) => {
-					relay.channel(Channel.Story).send(event.event, event.data);
+					relay.channel(Channel.Quill).send(event.event, event.data);
 				},
 			}
 		);
 	}
 
 	initRelay() {
-		this.onEvent(
-			Channel.Story,
-			StoryEvent.SelectMap,
-			(event: { map: MapEntity }) => {
-				this.connection.send({
-					event: StoryEvent.SelectMap,
-					data: { id: event.map.id },
-				});
-			}
-		);
+		this.onEvent(StoryEvent.SelectMap, (event: { map: MapEntity }) => {
+			this.connection.send({
+				event: StoryEvent.SelectMap,
+				data: { id: event.map.id },
+			});
+		});
 	}
 
 	destroy() {

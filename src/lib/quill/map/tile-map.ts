@@ -80,7 +80,7 @@ export class TileMap extends Subscriber {
 	}
 
 	private sendChangeset(changeset: Changeset) {
-		relay.send(MapEvent.MapAltered, changeset).to(Channel.Editor);
+		relay.send(MapEvent.MapAltered, changeset).to(Channel.Quill);
 	}
 
 	private findOrCreateNodeByPosition(position: Position) {

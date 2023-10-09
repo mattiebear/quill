@@ -50,15 +50,11 @@ export class Renderer extends Subscriber {
 	}
 
 	initRelay() {
-		this.onEvent(
-			Channel.Editor,
-			MapEvent.MapAltered,
-			(changeset: Changeset) => {
-				this.drawChangeset(changeset);
-			}
-		);
+		this.onEvent(MapEvent.MapAltered, (changeset: Changeset) => {
+			this.drawChangeset(changeset);
+		});
 
-		this.onEvent(Channel.Editor, RenderEvent.ChangeZoom, (value: number) => {
+		this.onEvent(RenderEvent.ChangeZoom, (value: number) => {
 			this.changeZoom(value);
 		});
 	}
