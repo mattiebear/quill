@@ -4,7 +4,6 @@ import { MapEntity } from '@/entites/map-entity';
 import { Application } from '@/lib/application';
 import { getToken } from '@/lib/auth';
 import { container, inject, Lifespan } from '@/lib/di';
-import { Channel, relay } from '@/lib/events';
 
 import { EngineConfig } from '../core/engine-config';
 import { StoryEvent } from '../types/event';
