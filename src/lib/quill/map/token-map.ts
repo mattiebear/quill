@@ -27,11 +27,26 @@ export class TokenMap extends Subscriber {
 	}
 
 	private placeToken({ id, position, user }: PlaceTokenEvent) {
+		if (this.hasTokenAtPosition(position)) {
+			console.log('already exists');
+			return false;
+		}
+
 		const token = new Token(user, id, position);
 
 		this.tokens.set(token.id, token);
 
 		this.send(RenderEvent.AddToken, token);
+	}
+
+	private hasTokenAtPosition(position: Position) {
+		for (const token of this.tokens.values()) {
+			if (token.position.equals(position)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
 
