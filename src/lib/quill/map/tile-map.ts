@@ -26,11 +26,11 @@ export class TileMap extends Subscriber {
 
 	constructor(private tileset: Tileset) {
 		super();
+		this.init();
 	}
 
 	init() {
 		this.onEvent(
-			Channel.Editor,
 			MapEvent.PlaceTile,
 			({ blueprint, direction, position }: PlaceTileEvent) => {
 				this.add(position, blueprint, direction);

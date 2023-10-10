@@ -44,7 +44,7 @@ export class Broadcast extends Subscriber {
 			},
 			{
 				received: (event: { event: string; data: unknown }) => {
-					relay.channel(Channel.Quill).send(event.event, event.data);
+					this.send(event.event, event.data);
 				},
 			}
 		);

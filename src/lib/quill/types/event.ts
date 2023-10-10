@@ -13,9 +13,9 @@ export enum MapEvent {
 }
 
 export enum StoryEvent {
-	CurrentState = 'story-current-story-state',
-	SelectMap = 'story-select-map',
-	PlaceToken = 'story-place-token',
+	CurrentState = 'current-story-state',
+	SelectMap = 'select-map',
+	PlaceToken = 'place-token',
 }
 
 // Websocket event types

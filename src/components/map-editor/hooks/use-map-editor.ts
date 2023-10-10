@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 
 import { useEditorFeedback } from '@/components/map-editor/hooks/use-editor-feedback';
 import { MapEntity } from '@/entites/map-entity';
-import { container, DiHttp } from '@/lib/di';
+import { useCurrentUser } from '@/lib/auth/use-current-user';
+import { container, DiHttp, DiUser } from '@/lib/di';
 import { useHttpClient } from '@/lib/http';
 import { Engine, Tileset } from '@/lib/quill';
 import { EngineConfig, EngineMode } from '@/lib/quill/core/engine-config';
@@ -15,6 +16,7 @@ export const useMapEditor = (map: MapEntity) => {
 	const elRef = useRef(document.getElementById('root') as HTMLDivElement);
 	const tileset = useTileset();
 	const http = useHttpClient();
+	const user = useCurrentUser();
 	const { createSaveToast } = useEditorFeedback();
 
 	useDataObserver(MapEvent.MapSaved, createSaveToast);
@@ -32,6 +34,7 @@ export const useMapEditor = (map: MapEntity) => {
 
 		container.register(Tileset, { value: tileset });
 		container.register(DiHttp, { value: http });
+		container.register(DiUser, { value: user });
 
 		const engine = container.resolve<Engine>(Engine);
 		engine.tileMap.load(map.atlas);
