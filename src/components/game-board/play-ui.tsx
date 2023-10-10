@@ -3,6 +3,7 @@ import {
 	Box,
 	Button,
 	Flex,
+	IconButton,
 	Image,
 	SimpleGrid,
 	Text,
@@ -13,9 +14,12 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { Path } from '@/config/routes';
+import { useRelay } from '@/lib/events';
+import { RenderEvent } from '@/lib/quill';
 import { useTokenset } from '@/lib/quill/hooks/use-tokenset';
 import { quillStore } from '@/lib/quill/store';
 
+import { ZoomInIcon, ZoomOutIcon } from '../icon';
 import { usePlayState } from './hooks/use-play-state';
 import { SelectMapModal } from './select-map-modal';
 
@@ -25,6 +29,7 @@ export const PlayUI: FC = () => {
 	const navigate = useNavigate();
 	const { t } = useTranslation();
 	const { selectedToken } = usePlayState();
+	const { send } = useRelay();
 
 	const handleClickDone = async () => {
 		navigate(Path.GameSessions);
@@ -50,6 +55,19 @@ export const PlayUI: FC = () => {
 						<Text color="text.body" fontSize="xl">
 							Play
 						</Text>
+
+						<Flex columnGap={2} direction="row" mb={2}>
+							<IconButton
+								aria-label={t('editor.zoomOut')}
+								icon={<ZoomOutIcon />}
+								onClick={() => send(RenderEvent.ChangeZoom, -10)}
+							/>
+							<IconButton
+								aria-label={t('editor.zoomIn')}
+								icon={<ZoomInIcon />}
+								onClick={() => send(RenderEvent.ChangeZoom, 10)}
+							/>
+						</Flex>
 
 						<SimpleGrid columns={3} spacing={2} mb={2}>
 							{tokenset.all.map((token) => (

@@ -15,6 +15,7 @@ import { findOrCreateByKey } from '@/utils/map';
 import { clamp } from '@/utils/number';
 
 import { Subscriber } from '../comms/subscriber';
+import { Token } from '../map/token';
 import { Highlighter } from './highlighter';
 import { Interactor } from './interactor';
 import { RenderStack } from './render-stack';
@@ -56,6 +57,22 @@ export class Renderer extends Subscriber {
 		this.onEvent(RenderEvent.ChangeZoom, (value: number) => {
 			this.changeZoom(value);
 		});
+
+		this.onEvent(RenderEvent.AddToken, (token: Token) => {
+			this.addToken(token);
+		});
+	}
+
+	private initializeListeners() {
+		this.keydown = (e: KeyboardEvent) => {
+			const dir = ScrollEventMap.get(e.key);
+
+			if (dir) {
+				this.scrollMap(dir);
+			}
+		};
+
+		document.addEventListener('keydown', this.keydown);
 	}
 
 	destroy() {
@@ -114,6 +131,11 @@ export class Renderer extends Subscriber {
 		node?.remove(change.tile.id);
 	}
 
+	private addToken(token: Token) {
+		const node = this.findOrCreateNodeByPosition(token.position);
+		node.add(RenderObject.fromToken(token));
+	}
+
 	private connectStack() {
 		this.stack.setHitArea(this.app.screen);
 
@@ -122,18 +144,6 @@ export class Renderer extends Subscriber {
 		this.stack.map.y = 300;
 
 		this.app.stage.addChild(this.stack.main);
-	}
-
-	private initializeListeners() {
-		this.keydown = (e: KeyboardEvent) => {
-			const dir = ScrollEventMap.get(e.key);
-
-			if (dir) {
-				this.scrollMap(dir);
-			}
-		};
-
-		document.addEventListener('keydown', this.keydown);
 	}
 
 	private changeZoom(value: number) {

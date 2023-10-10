@@ -1,6 +1,8 @@
-import { Container, Sprite } from 'pixi.js';
+import { Container, Sprite, Texture } from 'pixi.js';
 
 import { Direction, Tile, TileType } from '@/lib/quill';
+
+import { Token } from '../map/token';
 
 // TODO: Move height data to tile/token
 // NOTE: Offset is to account for sprite height of 512 while only 128 are the actual tile at bottom of image
@@ -8,6 +10,16 @@ import { Direction, Tile, TileType } from '@/lib/quill';
 // TODO: Get from config or something
 const TILE_BASE = 128;
 const TILE_IMAGE_HEIGHT = TILE_BASE * 4;
+
+enum Order {
+	Bottom = 0,
+	Low = 1,
+	Mid = 2,
+	Top = 3,
+}
+
+// TODO: Where to put this?
+const baseTexture = Texture.from('/images/bases/base_stone.png');
 
 export class RenderObject {
 	constructor(
@@ -24,14 +36,14 @@ export class RenderObject {
 		if (tile.type === TileType.Floor) {
 			// TODO: Get from config?
 			baseThickness = 20;
-			order = 0;
+			order = Order.Bottom;
 		} else if (tile.type === TileType.Object) {
-			order = 2;
+			order = Order.Mid;
 		} else {
 			if (tile.direction === Direction.E || tile.direction === Direction.S) {
-				order = 1;
+				order = Order.Low;
 			} else {
-				order = 3;
+				order = Order.Top;
 			}
 		}
 
@@ -42,5 +54,23 @@ export class RenderObject {
 		sprite.anchor.set(0.5, buffer / TILE_IMAGE_HEIGHT);
 
 		return new RenderObject(tile.id, sprite, order);
+	}
+
+	public static fromToken(token: Token) {
+		const container = new Container();
+		// TODO: Load static textures in single file
+		const texture = Texture.from(token.frameImage);
+		const frame = new Sprite(texture);
+		const base = new Sprite(baseTexture);
+
+		// TODO: Clean this up
+		const buffer = TILE_BASE * 3 - 10;
+		frame.scale.set(0.6, 0.6);
+		frame.anchor.set(0.5, buffer / TILE_IMAGE_HEIGHT);
+		base.anchor.set(0.5, buffer / TILE_IMAGE_HEIGHT);
+
+		container.addChild(base, frame);
+
+		return new RenderObject(token.id, container, Order.Mid);
 	}
 }

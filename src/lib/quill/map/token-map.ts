@@ -2,7 +2,7 @@ import { User } from '@/entites/user';
 import { container, Lifespan } from '@/lib/di';
 
 import { Subscriber } from '../comms/subscriber';
-import { StoryEvent } from '../types/event';
+import { RenderEvent, StoryEvent } from '../types/event';
 import { Position } from '../utility/position';
 import { Token } from './token';
 
@@ -30,6 +30,8 @@ export class TokenMap extends Subscriber {
 		const token = new Token(user, id, position);
 
 		this.tokens.set(token.id, token);
+
+		this.send(RenderEvent.AddToken, token);
 	}
 }
 
