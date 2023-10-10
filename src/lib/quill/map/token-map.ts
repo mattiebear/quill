@@ -28,7 +28,6 @@ export class TokenMap extends Subscriber {
 
 	private placeToken({ id, position, user }: PlaceTokenEvent) {
 		if (this.hasTokenAtPosition(position)) {
-			console.log('already exists');
 			return false;
 		}
 
