@@ -6,7 +6,8 @@ import { getToken } from '@/lib/auth';
 import { container, inject, Lifespan } from '@/lib/di';
 
 import { EngineConfig } from '../core/engine-config';
-import { StoryEvent } from '../types/event';
+import { Token } from '../map/token';
+import { RenderEvent, SendBroadcast, StoryEvent } from '../types/event';
 import { Subscriber } from './subscriber';
 
 logger.enabled = Application.isDevelopment();
@@ -50,10 +51,17 @@ export class Broadcast extends Subscriber {
 	}
 
 	initRelay() {
-		this.onEvent(StoryEvent.SelectMap, (event: { map: MapEntity }) => {
+		this.onEvent(StoryEvent.SelectMap, (map: MapEntity) => {
 			this.connection.send({
 				event: StoryEvent.SelectMap,
-				data: { id: event.map.id },
+				data: { mapId: map.id },
+			});
+		});
+
+		this.onEvent(RenderEvent.AddToken, (token: Token) => {
+			this.connection.send({
+				event: SendBroadcast.AddToken,
+				data: token.toJSON(),
 			});
 		});
 	}

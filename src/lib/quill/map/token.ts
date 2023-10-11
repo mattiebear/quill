@@ -25,4 +25,15 @@ export class Token {
 	private generateUniqueId() {
 		return Crypto.uniqueId();
 	}
+
+	toJSON() {
+		return {
+			id: this.id,
+			userId: this.user.id,
+			tokenId: this.tokenId,
+			x: this.position.x,
+			y: this.position.y,
+			z: this.position.z,
+		};
+	}
 }

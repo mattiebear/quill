@@ -1,5 +1,3 @@
-import { MapEntity } from '@/entites/map-entity';
-
 // TODO: Clean these up somehow?
 export enum RenderEvent {
 	ChangeZoom = 'render-change-zoom',
@@ -18,11 +16,11 @@ export enum StoryEvent {
 	PlaceToken = 'place-token',
 }
 
+export enum SendBroadcast {
+	AddToken = 'add-token',
+}
+
 // Websocket event types
 export type CurrentStateData = {
-	map: string | null;
-};
-
-export type SelectMapData = {
-	map: MapEntity;
+	mapId: string | null;
 };
