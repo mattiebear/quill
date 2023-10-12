@@ -1,8 +1,7 @@
 import { container, DiHttp, inject, Lifespan } from '@/lib/di';
-import { Channel, relay } from '@/lib/events';
 import { HttpClient } from '@/lib/http/types';
 import { EngineConfig, MapEvent } from '@/lib/quill';
-import { Atlas } from '@/lib/quill/map/atlas';
+import { TileMap } from '@/lib/quill/map/tile-map';
 import { DynamicPath } from '@/lib/url';
 
 import { Subscriber } from './subscriber';
@@ -15,14 +14,14 @@ export class Sync extends Subscriber {
 	constructor(
 		private config: EngineConfig,
 		private http: HttpClient,
-		private atlas: Atlas
+		private tileMap: TileMap
 	) {
 		super();
 		this.initRelay();
 	}
 
 	initRelay() {
-		this.onEvent(Channel.Editor, MapEvent.PlaceTile, () => {
+		this.onEvent(MapEvent.PlaceTile, () => {
 			if (this.persistTimeout) {
 				clearTimeout(this.persistTimeout);
 			}
@@ -38,14 +37,14 @@ export class Sync extends Subscriber {
 		const url = new DynamicPath('/maps/:id').for(this.config.map).toString();
 		const atlas = Object.assign({}, this.config.map.atlas);
 
-		atlas.data = this.atlas.toJSON();
+		atlas.data = this.tileMap.toJSON();
 
 		await this.http.patch(url, { atlas });
 
-		relay.send(MapEvent.MapSaved).to(Channel.Data);
+		this.send(MapEvent.MapSaved);
 	}
 }
 
-inject(Sync, [EngineConfig, DiHttp, Atlas]);
+inject(Sync, [EngineConfig, DiHttp, TileMap]);
 
 container.register(Sync, { class: Sync, lifespan: Lifespan.Resolution });

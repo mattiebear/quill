@@ -21,17 +21,16 @@ interface PlaceTileEvent {
 	position: Position;
 }
 
-export class Atlas extends Subscriber {
+export class TileMap extends Subscriber {
 	private nodes = new Map<string, MapNode>();
 
 	constructor(private tileset: Tileset) {
 		super();
-		this.initRelay();
+		this.init();
 	}
 
-	initRelay() {
+	init() {
 		this.onEvent(
-			Channel.Editor,
 			MapEvent.PlaceTile,
 			({ blueprint, direction, position }: PlaceTileEvent) => {
 				this.add(position, blueprint, direction);
@@ -81,7 +80,7 @@ export class Atlas extends Subscriber {
 	}
 
 	private sendChangeset(changeset: Changeset) {
-		relay.send(MapEvent.MapAltered, changeset).to(Channel.Editor);
+		relay.send(MapEvent.MapAltered, changeset).to(Channel.Quill);
 	}
 
 	private findOrCreateNodeByPosition(position: Position) {
@@ -90,6 +89,6 @@ export class Atlas extends Subscriber {
 	}
 }
 
-inject(Atlas, [Tileset]);
+inject(TileMap, [Tileset]);
 
-container.register(Atlas, { class: Atlas, lifespan: Lifespan.Resolution });
+container.register(TileMap, { class: TileMap, lifespan: Lifespan.Resolution });

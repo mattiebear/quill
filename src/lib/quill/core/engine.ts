@@ -2,8 +2,9 @@ import { container, inject } from '@/lib/di';
 
 import { Broadcast } from '../comms/broadcast';
 import { Sync } from '../comms/sync';
-import { Atlas } from '../map/atlas';
 import { MapLoader } from '../map/map-loader';
+import { TileMap } from '../map/tile-map';
+import { TokenMap } from '../map/token-map';
 import { Renderer } from '../renderer';
 import { Store } from '../store/store';
 import { EngineConfig } from './engine-config';
@@ -12,7 +13,8 @@ export class Engine {
 	constructor(
 		public config: EngineConfig,
 		public renderer: Renderer,
-		public atlas: Atlas,
+		public tileMap: TileMap,
+		public tokenMap: TokenMap,
 		public sync: Sync,
 		public broadcast: Broadcast,
 		public loader: MapLoader,
@@ -29,7 +31,7 @@ export class Engine {
 		this.renderer.destroy();
 		this.broadcast.destroy();
 		this.store.destroy();
-		this.atlas.destroy();
+		this.tileMap.destroy();
 		this.sync.destroy();
 	}
 }
@@ -37,7 +39,8 @@ export class Engine {
 inject(Engine, [
 	EngineConfig,
 	Renderer,
-	Atlas,
+	TileMap,
+	TokenMap,
 	Sync,
 	Broadcast,
 	MapLoader,

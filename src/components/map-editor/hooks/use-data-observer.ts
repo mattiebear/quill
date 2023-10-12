@@ -1,3 +1,3 @@
 import { Channel, createUseObserver } from '@/lib/events';
 
-export const useDataObserver = createUseObserver(Channel.Data);
+export const useDataObserver = createUseObserver(Channel.Quill);

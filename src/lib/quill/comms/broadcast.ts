@@ -4,10 +4,10 @@ import { MapEntity } from '@/entites/map-entity';
 import { Application } from '@/lib/application';
 import { getToken } from '@/lib/auth';
 import { container, inject, Lifespan } from '@/lib/di';
-import { Channel, relay } from '@/lib/events';
 
 import { EngineConfig } from '../core/engine-config';
-import { StoryEvent } from '../types/event';
+import { Token } from '../map/token';
+import { RenderEvent, SendBroadcast, StoryEvent } from '../types/event';
 import { Subscriber } from './subscriber';
 
 logger.enabled = Application.isDevelopment();
@@ -44,23 +44,26 @@ export class Broadcast extends Subscriber {
 			},
 			{
 				received: (event: { event: string; data: unknown }) => {
-					relay.channel(Channel.Story).send(event.event, event.data);
+					this.send(event.event, event.data);
 				},
 			}
 		);
 	}
 
 	initRelay() {
-		this.onEvent(
-			Channel.Story,
-			StoryEvent.SelectMap,
-			(event: { map: MapEntity }) => {
-				this.connection.send({
-					event: StoryEvent.SelectMap,
-					data: { id: event.map.id },
-				});
-			}
-		);
+		this.onEvent(StoryEvent.SelectMap, (map: MapEntity) => {
+			this.connection.send({
+				event: StoryEvent.SelectMap,
+				data: { mapId: map.id },
+			});
+		});
+
+		this.onEvent(RenderEvent.AddToken, (token: Token) => {
+			this.connection.send({
+				event: SendBroadcast.AddToken,
+				data: token.toJSON(),
+			});
+		});
 	}
 
 	destroy() {

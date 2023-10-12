@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js';
 
 import { container, inject, Lifespan } from '@/lib/di';
-import { Channel, relay } from '@/lib/events';
 import {
 	Changeset,
 	EngineConfig,
@@ -11,14 +10,14 @@ import {
 	RenderEvent,
 	RenderNode,
 	RenderObject,
-	Tileset,
 } from '@/lib/quill';
 import { findOrCreateByKey } from '@/utils/map';
 import { clamp } from '@/utils/number';
 
 import { Subscriber } from '../comms/subscriber';
-import { quillStore } from '../store';
+import { Token } from '../map/token';
 import { Highlighter } from './highlighter';
+import { Interactor } from './interactor';
 import { RenderStack } from './render-stack';
 
 const ScrollEventMap = new Map([
@@ -38,9 +37,9 @@ export class Renderer extends Subscriber {
 
 	constructor(
 		public config: EngineConfig,
-		private tileset: Tileset,
 		private stack: RenderStack,
-		private highlighter: Highlighter
+		private highlighter: Highlighter,
+		private interactor: Interactor
 	) {
 		super();
 
@@ -51,23 +50,37 @@ export class Renderer extends Subscriber {
 	}
 
 	initRelay() {
-		this.onEvent(
-			Channel.Editor,
-			MapEvent.MapAltered,
-			(changeset: Changeset) => {
-				this.drawChangeset(changeset);
-			}
-		);
+		this.onEvent(MapEvent.MapAltered, (changeset: Changeset) => {
+			this.drawChangeset(changeset);
+		});
 
-		this.onEvent(Channel.Editor, RenderEvent.ChangeZoom, (value: number) => {
+		this.onEvent(RenderEvent.ChangeZoom, (value: number) => {
 			this.changeZoom(value);
 		});
+
+		this.onEvent(RenderEvent.AddToken, (token: Token) => {
+			this.addToken(token);
+		});
+	}
+
+	private initializeListeners() {
+		this.keydown = (e: KeyboardEvent) => {
+			const dir = ScrollEventMap.get(e.key);
+
+			if (dir) {
+				this.scrollMap(dir);
+			}
+		};
+
+		document.addEventListener('keydown', this.keydown);
 	}
 
 	destroy() {
 		this.unsubscribeAll();
 		this.app.destroy(true);
+
 		this.highlighter.destroy();
+		this.interactor.destroy();
 
 		if (this.keydown) {
 			document.removeEventListener('keydown', this.keydown);
@@ -118,6 +131,11 @@ export class Renderer extends Subscriber {
 		node?.remove(change.tile.id);
 	}
 
+	private addToken(token: Token) {
+		const node = this.findOrCreateNodeByPosition(token.position);
+		node.add(RenderObject.fromToken(token));
+	}
+
 	private connectStack() {
 		this.stack.setHitArea(this.app.screen);
 
@@ -126,38 +144,6 @@ export class Renderer extends Subscriber {
 		this.stack.map.y = 300;
 
 		this.app.stage.addChild(this.stack.main);
-	}
-
-	private initializeListeners() {
-		this.stack.main.on('mousedown', (e) => {
-			const { x, y } = this.stack.map.toLocal(e.global);
-
-			const position = Position.atPoint(x, y, 0);
-
-			const { selectedBlueprint: id, selectedDirection: direction } =
-				quillStore.getState();
-
-			if (id) {
-				const blueprint = this.tileset.get(id);
-				const channel = relay.channel(Channel.Editor);
-
-				channel.send(MapEvent.PlaceTile, {
-					blueprint,
-					direction,
-					position,
-				});
-			}
-		});
-
-		this.keydown = (e: KeyboardEvent) => {
-			const dir = ScrollEventMap.get(e.key);
-
-			if (dir) {
-				this.scrollMap(dir);
-			}
-		};
-
-		document.addEventListener('keydown', this.keydown);
 	}
 
 	private changeZoom(value: number) {
@@ -190,7 +176,7 @@ export class Renderer extends Subscriber {
 	}
 }
 
-inject(Renderer, [EngineConfig, Tileset, RenderStack, Highlighter]);
+inject(Renderer, [EngineConfig, RenderStack, Highlighter, Interactor]);
 
 container.register(Renderer, {
 	class: Renderer,

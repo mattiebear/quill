@@ -27,6 +27,10 @@ export class Position {
 		return [this.x, this.y, this.z].join(':');
 	}
 
+	equals(position: Position) {
+		return this.toString() === position.toString();
+	}
+
 	get zIndex() {
 		return this.x + this.y;
 	}

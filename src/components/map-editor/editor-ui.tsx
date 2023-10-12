@@ -22,7 +22,7 @@ import {
 } from '@/components/icon';
 import { useMap } from '@/components/map-editor/hooks/use-map';
 import { Path } from '@/config/routes';
-import { Channel, useChannel } from '@/lib/events';
+import { useRelay } from '@/lib/events';
 import { RenderEvent } from '@/lib/quill';
 import { useTileset } from '@/lib/quill/hooks/use-tileset';
 import { quillStore } from '@/lib/quill/store';
@@ -37,7 +37,7 @@ export const EditorUI: FC = () => {
 	const invalidate = useInvalidateMap(map);
 	const navigate = useNavigate();
 	const tileset = useTileset();
-	const { send } = useChannel(Channel.Editor);
+	const { send } = useRelay();
 	const { rotateLeft, rotateRight } = useRotateTile();
 
 	const { selectedBlueprint, selectedDirection } = useEditorState();

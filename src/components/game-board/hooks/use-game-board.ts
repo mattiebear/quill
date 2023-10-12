@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { GameSession } from '@/entites/game-session';
-import { container, DiHttp } from '@/lib/di';
+import { useCurrentUser } from '@/lib/auth/use-current-user';
+import { container, DiHttp, DiUser } from '@/lib/di';
 import { useHttpClient } from '@/lib/http';
 import { Engine, Tileset } from '@/lib/quill';
 import { EngineConfig, EngineMode } from '@/lib/quill/core/engine-config';
 import { useTileset } from '@/lib/quill/hooks/use-tileset';
-import { resetQuillStore } from '@/lib/quill/store';
 
 export const useGameBoard = (gameSession: GameSession) => {
 	const elRef = useRef(document.getElementById('root') as HTMLDivElement);
 	const tileset = useTileset();
 	const http = useHttpClient();
+	const user = useCurrentUser();
 
 	const [engine] = useState(() => {
 		const config = new EngineConfig({
@@ -20,15 +21,13 @@ export const useGameBoard = (gameSession: GameSession) => {
 			mode: EngineMode.Play,
 		});
 
-		// TODO: Move to resolution callback
-		resetQuillStore();
-
 		container.register(EngineConfig, {
 			value: config,
 		});
 
-		container.register(Tileset, { value: tileset });
 		container.register(DiHttp, { value: http });
+		container.register(DiUser, { value: user });
+		container.register(Tileset, { value: tileset });
 
 		return container.resolve<Engine>(Engine).initialize();
 	});
