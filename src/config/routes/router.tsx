@@ -1,12 +1,6 @@
 import { SignIn, SignUp } from '@clerk/clerk-react';
 import { createBrowserRouter } from 'react-router-dom';
 
-import { fetchConnectionsList } from '@/api/connections';
-import { fetchGameSessionsList } from '@/api/game-sessions';
-import { fetchGameSessionDetail } from '@/api/game-sessions/detail';
-import { fetchMapDetail, fetchMapsList } from '@/api/maps';
-import { fetchTileManifest } from '@/api/tiles/meta';
-import { fetchTokenManifest } from '@/api/tokens/meta';
 import { ErrorBoundary } from '@/components/error';
 import { FriendsIndex } from '@/components/friends';
 import { GameBoard } from '@/components/game-board';
@@ -17,6 +11,13 @@ import { MapEditor } from '@/components/map-editor';
 import { MapsIndex, MapsNew } from '@/components/maps';
 import { Protected } from '@/lib/auth';
 
+import {
+	friendsLoader,
+	gameSessionLoader,
+	gameSessionsLoader,
+	mapEditorLoader,
+	mapsLoader,
+} from './loaders';
 import { Path } from './path';
 
 export const router = createBrowserRouter([
@@ -39,14 +40,7 @@ export const router = createBrowserRouter([
 						<MapEditor />
 					</Protected>
 				),
-				// TODO: Fix this typing. Also, how should we handle the loader for this route?
-				// TODO: Move loaders to separate file
-				loader: ({ params }) => {
-					return Promise.all([
-						fetchMapDetail(params.id as string),
-						fetchTileManifest(),
-					]);
-				},
+				loader: mapEditorLoader,
 			},
 			{
 				path: Path.GameSession,
@@ -55,13 +49,7 @@ export const router = createBrowserRouter([
 						<GameBoard />
 					</Protected>
 				),
-				loader: ({ params }) => {
-					return Promise.all([
-						fetchGameSessionDetail(params.id as string),
-						fetchTileManifest(),
-						fetchTokenManifest(),
-					]);
-				},
+				loader: gameSessionLoader,
 			},
 			{
 				path: '/',
@@ -78,7 +66,7 @@ export const router = createBrowserRouter([
 					{
 						path: Path.Maps,
 						element: <MapsIndex />,
-						loader: () => fetchMapsList(),
+						loader: mapsLoader,
 					},
 					{
 						path: Path.NewMap,
@@ -87,17 +75,12 @@ export const router = createBrowserRouter([
 					{
 						path: Path.Friends,
 						element: <FriendsIndex />,
-						loader: () => fetchConnectionsList(),
+						loader: friendsLoader,
 					},
 					{
 						path: Path.GameSessions,
 						element: <GameSessionsIndex />,
-						loader: () => {
-							return Promise.all([
-								fetchConnectionsList(),
-								fetchGameSessionsList(),
-							]);
-						},
+						loader: gameSessionsLoader,
 					},
 				],
 			},
