@@ -22,6 +22,8 @@ export class Interactor extends Subscriber {
 	}
 
 	init() {
+		// TODO: Change this to track and emit general events with position information
+		// Then send MouseClick, MouseStartDrag, MouseMoveDrag, MouseMove, MouseStopDrag events
 		this.stack.main.on('mousedown', (e) => {
 			const { x, y } = this.stack.map.toLocal(e.global);
 

@@ -36,6 +36,7 @@ export class Highlighter extends Subscriber {
 	}
 
 	private initListeners() {
+		// TODO: Change to recieve MouseMove event
 		this.stack.main.on('mousemove', (e) => {
 			const { x, y } = this.stack.map.toLocal(e.global);
 
