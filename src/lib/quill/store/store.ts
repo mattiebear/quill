@@ -32,9 +32,9 @@ export class Store extends Subscriber {
 			});
 		});
 
-		this.onEvent(SelectMap, (message) => {
+		this.onEvent(SelectMap, ({ map }) => {
 			store.setState({
-				mapId: message.map.id,
+				mapId: map.id,
 			});
 		});
 	}

@@ -14,6 +14,8 @@ logger.enabled = Application.isDevelopment();
 
 type Connection = { send: (data: any) => void; unsubscribe: VoidFunction };
 
+const CHANNEL_NAME = 'StoryChannel';
+
 export class Broadcast extends Subscriber {
 	connection: Connection;
 	consumer: ReturnType<typeof createConsumer>;
@@ -39,7 +41,7 @@ export class Broadcast extends Subscriber {
 
 		this.connection = this.consumer.subscriptions.create(
 			{
-				channel: 'StoryChannel',
+				channel: CHANNEL_NAME,
 				story: this.config.gameSession.id,
 			},
 			{
@@ -56,18 +58,11 @@ export class Broadcast extends Subscriber {
 
 	initRelay() {
 		this.onEvent(SelectMap, (message) => {
-			// TODO: message.toJSON()
-			this.connection.send({
-				event: 'select-map',
-				data: { mapId: message.map.id },
-			});
+			this.connection.send(message.toJSON());
 		});
 
 		this.onEvent(AddToken, (message) => {
-			this.connection.send({
-				event: 'add-token',
-				data: message.token.toJSON(),
-			});
+			this.connection.send(message.toJSON());
 		});
 	}
 

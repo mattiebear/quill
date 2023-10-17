@@ -7,7 +7,7 @@ export class CurrentStoryState extends Message {
 		super();
 	}
 
-	public static fromJSON(data: any) {
+	public static fromJSON(data: { mapId: string }) {
 		return new CurrentStoryState(data.mapId);
 	}
 }
