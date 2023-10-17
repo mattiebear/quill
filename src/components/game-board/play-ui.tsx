@@ -14,9 +14,9 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { Path } from '@/config/routes';
-import { useRelay } from '@/lib/events';
-import { RenderEvent } from '@/lib/quill';
+import { useRelay } from '@/lib/messaging';
 import { useTokenset } from '@/lib/quill/hooks/use-tokenset';
+import { ChangeZoom } from '@/lib/quill/messages/change-zoom';
 import { quillStore } from '@/lib/quill/store';
 
 import { ZoomInIcon, ZoomOutIcon } from '../icon';
@@ -60,12 +60,12 @@ export const PlayUI: FC = () => {
 							<IconButton
 								aria-label={t('editor.zoomOut')}
 								icon={<ZoomOutIcon />}
-								onClick={() => send(RenderEvent.ChangeZoom, -10)}
+								onClick={() => send(new ChangeZoom(-10))}
 							/>
 							<IconButton
 								aria-label={t('editor.zoomIn')}
 								icon={<ZoomInIcon />}
-								onClick={() => send(RenderEvent.ChangeZoom, 10)}
+								onClick={() => send(new ChangeZoom(10))}
 							/>
 						</Flex>
 

@@ -1,9 +1,11 @@
 import { container, DiHttp, inject, Lifespan } from '@/lib/di';
 import { HttpClient } from '@/lib/http/types';
-import { EngineConfig, MapEvent } from '@/lib/quill';
+import { EngineConfig } from '@/lib/quill';
 import { TileMap } from '@/lib/quill/map/tile-map';
 import { DynamicPath } from '@/lib/url';
 
+import { PlaceTile } from '../messages/place-tile';
+import { SaveMap } from '../messages/save-map';
 import { Subscriber } from './subscriber';
 
 const PERSIST_DEBOUNCE = 3000;
@@ -21,7 +23,7 @@ export class Sync extends Subscriber {
 	}
 
 	initRelay() {
-		this.onEvent(MapEvent.PlaceTile, () => {
+		this.onEvent(PlaceTile, () => {
 			if (this.persistTimeout) {
 				clearTimeout(this.persistTimeout);
 			}
@@ -41,7 +43,7 @@ export class Sync extends Subscriber {
 
 		await this.http.patch(url, { atlas });
 
-		this.send(MapEvent.MapSaved);
+		this.send(SaveMap);
 	}
 }
 

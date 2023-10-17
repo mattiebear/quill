@@ -1,10 +1,8 @@
 import { Atlas as AtlasEntity, PersistedNode } from '@/entites/atlas';
 import { container, inject, Lifespan } from '@/lib/di';
-import { Channel, relay } from '@/lib/events';
 import {
 	Changeset,
 	Direction,
-	MapEvent,
 	MapNode,
 	Position,
 	TileBlueprint,
@@ -13,13 +11,8 @@ import { Tileset } from '@/lib/quill/map/tileset';
 import { findOrCreateByKey } from '@/utils/map';
 
 import { Subscriber } from '../comms/subscriber';
-
-// TODO: Need to come up with a better system to link events
-interface PlaceTileEvent {
-	blueprint: TileBlueprint;
-	direction: Direction;
-	position: Position;
-}
+import { MapAltered } from '../messages/map-altered';
+import { PlaceTile } from '../messages/place-tile';
 
 export class TileMap extends Subscriber {
 	private nodes = new Map<string, MapNode>();
@@ -30,12 +23,9 @@ export class TileMap extends Subscriber {
 	}
 
 	init() {
-		this.onEvent(
-			MapEvent.PlaceTile,
-			({ blueprint, direction, position }: PlaceTileEvent) => {
-				this.add(position, blueprint, direction);
-			}
-		);
+		this.onEvent(PlaceTile, ({ blueprint, direction, position }) => {
+			this.add(position, blueprint, direction);
+		});
 	}
 
 	add(position: Position, blueprint: TileBlueprint, direction: Direction) {
@@ -80,7 +70,7 @@ export class TileMap extends Subscriber {
 	}
 
 	private sendChangeset(changeset: Changeset) {
-		relay.send(MapEvent.MapAltered, changeset).to(Channel.Quill);
+		this.send(new MapAltered(changeset));
 	}
 
 	private findOrCreateNodeByPosition(position: Position) {

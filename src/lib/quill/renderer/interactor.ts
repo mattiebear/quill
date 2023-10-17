@@ -5,8 +5,9 @@ import { Direction } from '@/lib/quill/types/map';
 import { Subscriber } from '../comms/subscriber';
 import { EngineConfig } from '../core/engine-config';
 import { Tileset } from '../map/tileset';
+import { PlaceTile } from '../messages/place-tile';
+import { PlaceToken } from '../messages/place-token';
 import { quillStore } from '../store';
-import { MapEvent, StoryEvent } from '../types/event';
 import { Position } from '../utility/position';
 import { RenderStack } from './render-stack';
 
@@ -22,6 +23,8 @@ export class Interactor extends Subscriber {
 	}
 
 	init() {
+		// TODO: Change this to track and emit general events with position information
+		// Then send MouseClick, MouseStartDrag, MouseMoveDrag, MouseMove, MouseStopDrag events
 		this.stack.main.on('mousedown', (e) => {
 			const { x, y } = this.stack.map.toLocal(e.global);
 
@@ -43,19 +46,13 @@ export class Interactor extends Subscriber {
 	private placeTile(id: string, direction: Direction, position: Position) {
 		const blueprint = this.tileset.get(id);
 
-		this.send(MapEvent.PlaceTile, {
-			blueprint,
-			direction,
-			position,
-		});
+		if (blueprint) {
+			this.send(new PlaceTile(blueprint, direction, position));
+		}
 	}
 
 	private placeToken(id: string, position: Position) {
-		this.send(StoryEvent.PlaceToken, {
-			id,
-			position,
-			user: this.user,
-		});
+		this.send(new PlaceToken(id, position, this.user));
 	}
 }
 

@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
 
 import { MapEntity } from '@/entites/map-entity';
-import { Channel, relay } from '@/lib/events';
-import { StoryEvent } from '@/lib/quill/types/event';
+import { relay } from '@/lib/messaging';
+import { SelectMap } from '@/lib/quill/messages/select-map';
 
 export const useSelectMap = (map: MapEntity) => {
 	return useCallback(() => {
-		relay.send(StoryEvent.SelectMap, map).to(Channel.Quill);
+		relay.send(new SelectMap(map));
 	}, [map]);
 };

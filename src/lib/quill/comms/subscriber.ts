@@ -1,4 +1,5 @@
-import { Channel, relay } from '@/lib/events';
+import { Observer, relay } from '@/lib/messaging';
+import { Message } from '@/lib/messaging/message';
 
 import { quillStore, QuillStoreValue } from '../store';
 
@@ -13,8 +14,11 @@ export class Subscriber {
 		this._subs.forEach((unsub) => unsub());
 	}
 
-	onEvent(event: string, handler: (data: any) => void) {
-		this._subs.push(this.channel.on(event, handler));
+	onEvent<T extends Message>(
+		type: new (...args: any[]) => T,
+		handler: Observer<T>
+	) {
+		this._subs.push(this.relay.on(type, handler));
 	}
 
 	onState<T extends keyof QuillStoreValue>(
@@ -30,16 +34,8 @@ export class Subscriber {
 		);
 	}
 
-	getChannel(channel: string) {
-		return relay.channel(channel);
-	}
-
-	send(event: string, data?: any) {
-		this.channel.send(event, data);
-	}
-
-	private get channel() {
-		return this.relay.channel(Channel.Quill);
+	send(message: Message) {
+		this.relay.send(message);
 	}
 
 	private get relay() {

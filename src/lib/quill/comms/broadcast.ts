@@ -1,13 +1,13 @@
 import { createConsumer, logger } from '@rails/actioncable';
 
-import { MapEntity } from '@/entites/map-entity';
 import { Application } from '@/lib/application';
 import { getToken } from '@/lib/auth';
 import { container, inject, Lifespan } from '@/lib/di';
 
 import { EngineConfig } from '../core/engine-config';
-import { Token } from '../map/token';
-import { RenderEvent, SendBroadcast, StoryEvent } from '../types/event';
+import { AddToken } from '../messages/add-token';
+import { CurrentStoryState } from '../messages/current-story-state';
+import { SelectMap } from '../messages/select-map';
 import { Subscriber } from './subscriber';
 
 logger.enabled = Application.isDevelopment();
@@ -43,25 +43,36 @@ export class Broadcast extends Subscriber {
 				story: this.config.gameSession.id,
 			},
 			{
-				received: (event: { event: string; data: unknown }) => {
-					this.send(event.event, event.data);
+				received: (event: { event: string; data: any }) => {
+					// TODO: Create message from factory
+					let message;
+
+					switch (event.event) {
+						case 'current-story-state':
+							message = new CurrentStoryState(event.data.mapId);
+					}
+
+					if (message) {
+						this.send(message);
+					}
 				},
 			}
 		);
 	}
 
 	initRelay() {
-		this.onEvent(StoryEvent.SelectMap, (map: MapEntity) => {
+		this.onEvent(SelectMap, (message) => {
+			// TODO: message.toJSON()
 			this.connection.send({
-				event: StoryEvent.SelectMap,
-				data: { mapId: map.id },
+				event: 'select-map',
+				data: { mapId: message.map.id },
 			});
 		});
 
-		this.onEvent(RenderEvent.AddToken, (token: Token) => {
+		this.onEvent(AddToken, (message) => {
 			this.connection.send({
-				event: SendBroadcast.AddToken,
-				data: token.toJSON(),
+				event: 'add-token',
+				data: message.token.toJSON(),
 			});
 		});
 	}

@@ -4,10 +4,8 @@ import { container, inject, Lifespan } from '@/lib/di';
 import {
 	Changeset,
 	EngineConfig,
-	MapEvent,
 	NodeChange,
 	Position,
-	RenderEvent,
 	RenderNode,
 	RenderObject,
 } from '@/lib/quill';
@@ -16,6 +14,9 @@ import { clamp } from '@/utils/number';
 
 import { Subscriber } from '../comms/subscriber';
 import { Token } from '../map/token';
+import { AddToken } from '../messages/add-token';
+import { ChangeZoom } from '../messages/change-zoom';
+import { MapAltered } from '../messages/map-altered';
 import { Highlighter } from './highlighter';
 import { Interactor } from './interactor';
 import { RenderStack } from './render-stack';
@@ -50,15 +51,15 @@ export class Renderer extends Subscriber {
 	}
 
 	initRelay() {
-		this.onEvent(MapEvent.MapAltered, (changeset: Changeset) => {
+		this.onEvent(MapAltered, ({ changeset }) => {
 			this.drawChangeset(changeset);
 		});
 
-		this.onEvent(RenderEvent.ChangeZoom, (value: number) => {
-			this.changeZoom(value);
+		this.onEvent(ChangeZoom, ({ amount }) => {
+			this.changeZoom(amount);
 		});
 
-		this.onEvent(RenderEvent.AddToken, (token: Token) => {
+		this.onEvent(AddToken, ({ token }) => {
 			this.addToken(token);
 		});
 	}

@@ -1,16 +1,10 @@
-import { User } from '@/entites/user';
 import { container, Lifespan } from '@/lib/di';
 
 import { Subscriber } from '../comms/subscriber';
-import { RenderEvent, StoryEvent } from '../types/event';
+import { AddToken } from '../messages/add-token';
+import { PlaceToken } from '../messages/place-token';
 import { Position } from '../utility/position';
 import { Token } from './token';
-
-interface PlaceTokenEvent {
-	id: string;
-	position: Position;
-	user: User;
-}
 
 export class TokenMap extends Subscriber {
 	private tokens = new Map<string, Token>();
@@ -21,21 +15,17 @@ export class TokenMap extends Subscriber {
 	}
 
 	init() {
-		this.onEvent(StoryEvent.PlaceToken, (data: PlaceTokenEvent) =>
-			this.placeToken(data)
-		);
+		this.onEvent(PlaceToken, (data) => this.placeToken(data));
 	}
 
-	private placeToken({ id, position, user }: PlaceTokenEvent) {
+	private placeToken({ id, position, user }: PlaceToken) {
 		if (this.hasTokenAtPosition(position)) {
 			return false;
 		}
 
 		const token = new Token(user, id, position);
-
 		this.tokens.set(token.id, token);
-
-		this.send(RenderEvent.AddToken, token);
+		this.send(new AddToken(token));
 	}
 
 	private hasTokenAtPosition(position: Position) {
