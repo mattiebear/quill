@@ -2,9 +2,9 @@ import { Message } from '@/lib/messaging/message';
 
 import { Token } from '../../map/token';
 
-// Adds a token to the token map and renderer
-export class AddToken extends Message {
-	public static name = 'add-token';
+// Broadcast event to request adding a token to a tile
+export class RequestAddToken extends Message {
+	public static name = 'request-add-token';
 
 	constructor(public token: Token) {
 		super();
@@ -12,7 +12,7 @@ export class AddToken extends Message {
 
 	toJSON() {
 		return {
-			event: AddToken.name,
+			event: RequestAddToken.name,
 			data: this.token.toJSON(),
 		};
 	}

@@ -5,6 +5,7 @@ import { Position } from '@/lib/quill';
 import { Subscriber } from '../comms/subscriber';
 import { MouseUp } from '../messages/interaction/mouse-up';
 import { AddToken } from '../messages/story/add-token';
+import { RequestAddToken } from '../messages/story/request-add-token';
 import { quillStore } from '../store';
 import { Token } from './token';
 import { TokenMap } from './token-map';
@@ -30,8 +31,8 @@ export class TokenMapDistributor extends Subscriber {
 			return;
 		}
 
-		const token = new Token(this.user, id, position);
-		this.send(new AddToken(token));
+		const token = new Token(this.user.id, id, position);
+		this.send(new RequestAddToken(token));
 	}
 }
 
