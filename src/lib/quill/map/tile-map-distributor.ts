@@ -4,7 +4,7 @@ import { Tileset } from '@/lib/quill/map/tileset';
 
 import { Subscriber } from '../comms/subscriber';
 import { MouseUp } from '../messages/interaction/mouse-up';
-import { PlaceTile } from '../messages/place-tile';
+import { PlaceTile } from '../messages/map/place-tile';
 import { quillStore } from '../store';
 
 export class TileMapDistributor extends Subscriber {

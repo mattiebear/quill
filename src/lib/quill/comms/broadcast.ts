@@ -6,8 +6,8 @@ import { container, inject, Lifespan } from '@/lib/di';
 import { factory } from '@/lib/messaging/factory';
 
 import { EngineConfig } from '../core/engine-config';
-import { AddToken } from '../messages/add-token';
-import { SelectMap } from '../messages/select-map';
+import { AddToken } from '../messages/story/add-token';
+import { SelectMap } from '../messages/story/select-map';
 import { Subscriber } from './subscriber';
 
 logger.enabled = Application.isDevelopment();

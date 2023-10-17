@@ -3,8 +3,8 @@ import { container, DiUser, inject, Lifespan } from '@/lib/di';
 import { Position } from '@/lib/quill';
 
 import { Subscriber } from '../comms/subscriber';
-import { AddToken } from '../messages/add-token';
 import { MouseUp } from '../messages/interaction/mouse-up';
+import { AddToken } from '../messages/story/add-token';
 import { quillStore } from '../store';
 import { Token } from './token';
 import { TokenMap } from './token-map';

@@ -11,8 +11,8 @@ import { Tileset } from '@/lib/quill/map/tileset';
 import { findOrCreateByKey } from '@/utils/map';
 
 import { Subscriber } from '../comms/subscriber';
-import { MapAltered } from '../messages/map-altered';
-import { PlaceTile } from '../messages/place-tile';
+import { MapAltered } from '../messages/map/map-altered';
+import { PlaceTile } from '../messages/map/place-tile';
 
 export class TileMap extends Subscriber {
 	private nodes = new Map<string, MapNode>();

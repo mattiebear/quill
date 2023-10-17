@@ -1,8 +1,8 @@
 import { container, Lifespan } from '@/lib/di';
 
 import { Subscriber } from '../comms/subscriber';
-import { CurrentStoryState } from '../messages/current-story-state';
-import { SelectMap } from '../messages/select-map';
+import { CurrentStoryState } from '../messages/story/current-story-state';
+import { SelectMap } from '../messages/story/select-map';
 import { resetQuillStore, quillStore as store } from './quill-store';
 import { LoadingState } from './types';
 

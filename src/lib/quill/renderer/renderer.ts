@@ -14,9 +14,9 @@ import { clamp } from '@/utils/number';
 
 import { Subscriber } from '../comms/subscriber';
 import { Token } from '../map/token';
-import { AddToken } from '../messages/add-token';
-import { ChangeZoom } from '../messages/change-zoom';
-import { MapAltered } from '../messages/map-altered';
+import { MapAltered } from '../messages/map/map-altered';
+import { ChangeZoom } from '../messages/rendering/change-zoom';
+import { AddToken } from '../messages/story/add-token';
 import { Highlighter } from './highlighter';
 import { Interactor } from './interactor';
 import { RenderStack } from './render-stack';
