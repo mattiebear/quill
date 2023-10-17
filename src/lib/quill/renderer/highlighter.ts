@@ -5,6 +5,7 @@ import { degToRad } from '@/utils/math';
 
 import { Subscriber } from '../comms/subscriber';
 import { EngineConfig } from '../core/engine-config';
+import { MouseMove } from '../messages/interaction/mouse-move';
 import { Position } from '../utility/position';
 import { RenderStack } from './render-stack';
 
@@ -15,7 +16,7 @@ export class Highlighter extends Subscriber {
 		super();
 
 		this.createHighlight();
-		this.initListeners();
+		this.init();
 	}
 
 	private createHighlight() {
@@ -35,13 +36,9 @@ export class Highlighter extends Subscriber {
 		this.stack.ui.addChild(this.highlight);
 	}
 
-	private initListeners() {
-		// TODO: Change to recieve MouseMove event
-		this.stack.main.on('mousemove', (e) => {
-			const { x, y } = this.stack.map.toLocal(e.global);
-
-			const pos = Position.atPoint(x, y, 0);
-			this.setHighlightPosition(pos);
+	private init() {
+		this.onEvent(MouseMove, ({ position }) => {
+			this.setHighlightPosition(position);
 		});
 
 		// TODO: Figure out a way to add selectors
