@@ -4,7 +4,9 @@ import { Broadcast } from '../comms/broadcast';
 import { Sync } from '../comms/sync';
 import { MapLoader } from '../map/map-loader';
 import { TileMap } from '../map/tile-map';
+import { TileMapDistributor } from '../map/tile-map-distributor';
 import { TokenMap } from '../map/token-map';
+import { TokenMapDistributor } from '../map/token-map-distributor';
 import { Renderer } from '../renderer';
 import { Store } from '../store/store';
 import { EngineConfig } from './engine-config';
@@ -18,7 +20,9 @@ export class Engine {
 		public sync: Sync,
 		public broadcast: Broadcast,
 		public loader: MapLoader,
-		public store: Store
+		public store: Store,
+		public tileDistributor: TileMapDistributor,
+		public tokenDistributor: TokenMapDistributor
 	) {}
 
 	initialize() {
@@ -33,6 +37,8 @@ export class Engine {
 		this.store.destroy();
 		this.tileMap.destroy();
 		this.sync.destroy();
+		this.tileDistributor.destroy();
+		this.tokenDistributor.destroy();
 	}
 }
 
@@ -45,6 +51,8 @@ inject(Engine, [
 	Broadcast,
 	MapLoader,
 	Store,
+	TileMapDistributor,
+	TokenMapDistributor,
 ]);
 
 container.register(Engine);
