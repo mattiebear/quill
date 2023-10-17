@@ -1,7 +1,7 @@
 import { container, Lifespan } from '@/lib/di';
 
 import { Subscriber } from '../comms/subscriber';
-import { AddToken } from '../messages/add-token';
+import { AddToken } from '../messages/story/add-token';
 import { Position } from '../utility/position';
 import { Token } from './token';
 

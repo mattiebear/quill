@@ -3,16 +3,18 @@ import { createConsumer, logger } from '@rails/actioncable';
 import { Application } from '@/lib/application';
 import { getToken } from '@/lib/auth';
 import { container, inject, Lifespan } from '@/lib/di';
+import { factory } from '@/lib/messaging/factory';
 
 import { EngineConfig } from '../core/engine-config';
-import { AddToken } from '../messages/add-token';
-import { CurrentStoryState } from '../messages/current-story-state';
-import { SelectMap } from '../messages/select-map';
+import { AddToken } from '../messages/story/add-token';
+import { SelectMap } from '../messages/story/select-map';
 import { Subscriber } from './subscriber';
 
 logger.enabled = Application.isDevelopment();
 
 type Connection = { send: (data: any) => void; unsubscribe: VoidFunction };
+
+const CHANNEL_NAME = 'StoryChannel';
 
 export class Broadcast extends Subscriber {
 	connection: Connection;
@@ -39,18 +41,12 @@ export class Broadcast extends Subscriber {
 
 		this.connection = this.consumer.subscriptions.create(
 			{
-				channel: 'StoryChannel',
+				channel: CHANNEL_NAME,
 				story: this.config.gameSession.id,
 			},
 			{
 				received: (event: { event: string; data: any }) => {
-					// TODO: Create message from factory
-					let message;
-
-					switch (event.event) {
-						case 'current-story-state':
-							message = new CurrentStoryState(event.data.mapId);
-					}
+					const message = factory.build(event);
 
 					if (message) {
 						this.send(message);
@@ -62,18 +58,11 @@ export class Broadcast extends Subscriber {
 
 	initRelay() {
 		this.onEvent(SelectMap, (message) => {
-			// TODO: message.toJSON()
-			this.connection.send({
-				event: 'select-map',
-				data: { mapId: message.map.id },
-			});
+			this.connection.send(message.toJSON());
 		});
 
 		this.onEvent(AddToken, (message) => {
-			this.connection.send({
-				event: 'add-token',
-				data: message.token.toJSON(),
-			});
+			this.connection.send(message.toJSON());
 		});
 	}
 

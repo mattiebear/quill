@@ -24,7 +24,7 @@ import { useMap } from '@/components/map-editor/hooks/use-map';
 import { Path } from '@/config/routes';
 import { useRelay } from '@/lib/messaging';
 import { useTileset } from '@/lib/quill/hooks/use-tileset';
-import { ChangeZoom } from '@/lib/quill/messages/change-zoom';
+import { ChangeZoom } from '@/lib/quill/messages/rendering/change-zoom';
 import { quillStore } from '@/lib/quill/store';
 
 import { useEditorState } from './hooks/use-editor-state';
@@ -69,12 +69,12 @@ export const EditorUI: FC = () => {
 						<IconButton
 							aria-label={t('editor.zoomOut')}
 							icon={<ZoomOutIcon />}
-							onClick={() => send(new ChangeZoom(-10))}
+							onClick={() => send(new ChangeZoom('out'))}
 						/>
 						<IconButton
 							aria-label={t('editor.zoomIn')}
 							icon={<ZoomInIcon />}
-							onClick={() => send(new ChangeZoom(10))}
+							onClick={() => send(new ChangeZoom('in'))}
 						/>
 					</Flex>
 

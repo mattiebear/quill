@@ -9,7 +9,7 @@ import { useObserver } from '@/lib/messaging/hooks/use-observer';
 import { Engine, Tileset } from '@/lib/quill';
 import { EngineConfig, EngineMode } from '@/lib/quill/core/engine-config';
 import { useTileset } from '@/lib/quill/hooks/use-tileset';
-import { SaveMap } from '@/lib/quill/messages/save-map';
+import { SaveMap } from '@/lib/quill/messages/map/save-map';
 
 export const useMapEditor = (map: MapEntity) => {
 	const elRef = useRef(document.getElementById('root') as HTMLDivElement);
