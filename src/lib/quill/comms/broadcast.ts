@@ -3,10 +3,10 @@ import { createConsumer, logger } from '@rails/actioncable';
 import { Application } from '@/lib/application';
 import { getToken } from '@/lib/auth';
 import { container, inject, Lifespan } from '@/lib/di';
+import { factory } from '@/lib/messaging/factory';
 
 import { EngineConfig } from '../core/engine-config';
 import { AddToken } from '../messages/add-token';
-import { CurrentStoryState } from '../messages/current-story-state';
 import { SelectMap } from '../messages/select-map';
 import { Subscriber } from './subscriber';
 
@@ -44,13 +44,7 @@ export class Broadcast extends Subscriber {
 			},
 			{
 				received: (event: { event: string; data: any }) => {
-					// TODO: Create message from factory
-					let message;
-
-					switch (event.event) {
-						case 'current-story-state':
-							message = new CurrentStoryState(event.data.mapId);
-					}
+					const message = factory.build(event);
 
 					if (message) {
 						this.send(message);
