@@ -1,8 +1,8 @@
-import { MapEntity } from '@/entites/map-entity';
 import { container, Lifespan } from '@/lib/di';
 
 import { Subscriber } from '../comms/subscriber';
-import { CurrentStateData, StoryEvent } from '../types/event';
+import { CurrentStoryState } from '../messages/current-story-state';
+import { SelectMap } from '../messages/select-map';
 import { resetQuillStore, quillStore as store } from './quill-store';
 import { LoadingState } from './types';
 
@@ -25,16 +25,16 @@ export class Store extends Subscriber {
 	}
 
 	private initRelay() {
-		this.onEvent(StoryEvent.CurrentState, (data: CurrentStateData) => {
+		this.onEvent(CurrentStoryState, ({ mapId }) => {
 			store.setState({
 				initialDataState: LoadingState.Complete,
-				mapId: data.mapId,
+				mapId: mapId,
 			});
 		});
 
-		this.onEvent(StoryEvent.SelectMap, (map: MapEntity) => {
+		this.onEvent(SelectMap, (message) => {
 			store.setState({
-				mapId: map.id,
+				mapId: message.map.id,
 			});
 		});
 	}

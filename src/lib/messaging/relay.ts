@@ -1,11 +1,11 @@
 import { Message } from './message';
 
-type Observer<T extends Message = Message> = (message: T) => void;
+export type Observer<T extends Message = Message> = (message: T) => void;
 
 export class Relay {
 	private subscriptions = new Map<any, Observer[]>();
 
-	on<T extends Message>(type: new () => T, handler: Observer<T>) {
+	on<T extends Message>(type: new (...args: any[]) => T, handler: Observer<T>) {
 		const subs = this.ensure<T>(type);
 
 		subs.push(handler as any);

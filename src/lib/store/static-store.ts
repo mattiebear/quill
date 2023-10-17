@@ -1,8 +1,8 @@
-import { Relay } from '@space-station/relay';
 import { QueryClient } from '@tanstack/react-query';
 import { create } from 'zustand';
 
 import { HttpClient } from '../http/types';
+import { Relay } from '../messaging/relay';
 
 interface StaticStoreValue {
 	getToken: () => Promise<string | null>;

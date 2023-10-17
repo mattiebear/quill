@@ -5,12 +5,11 @@ import { MapEntity } from '@/entites/map-entity';
 import { useCurrentUser } from '@/lib/auth/use-current-user';
 import { container, DiHttp, DiUser } from '@/lib/di';
 import { useHttpClient } from '@/lib/http';
+import { useObserver } from '@/lib/messaging/hooks/use-observer';
 import { Engine, Tileset } from '@/lib/quill';
 import { EngineConfig, EngineMode } from '@/lib/quill/core/engine-config';
 import { useTileset } from '@/lib/quill/hooks/use-tileset';
-import { MapEvent } from '@/lib/quill/types/event';
-
-import { useDataObserver } from './use-data-observer';
+import { SaveMap } from '@/lib/quill/messages/save-map';
 
 export const useMapEditor = (map: MapEntity) => {
 	const elRef = useRef(document.getElementById('root') as HTMLDivElement);
@@ -19,7 +18,7 @@ export const useMapEditor = (map: MapEntity) => {
 	const user = useCurrentUser();
 	const { createSaveToast } = useEditorFeedback();
 
-	useDataObserver(MapEvent.MapSaved, createSaveToast);
+	useObserver(SaveMap, createSaveToast);
 
 	const [engine] = useState(() => {
 		const config = new EngineConfig({
