@@ -9,6 +9,6 @@ export const useObserver = <T extends Message>(
 	handler: Observer<T>
 ) => {
 	useLayoutEffect(() => {
-		return relay.on(type, handler);
+		relay.on(type, handler);
 	}, [handler, type]);
 };

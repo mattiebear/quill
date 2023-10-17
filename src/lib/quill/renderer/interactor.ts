@@ -1,62 +1,51 @@
-import { User } from '@/entites/user';
-import { container, DiUser, inject, Lifespan } from '@/lib/di';
-import { Direction } from '@/lib/quill/types/map';
+import { FederatedPointerEvent } from 'pixi.js';
+
+import { container, inject, Lifespan } from '@/lib/di';
 
 import { Subscriber } from '../comms/subscriber';
 import { EngineConfig } from '../core/engine-config';
-import { Tileset } from '../map/tileset';
-import { PlaceTile } from '../messages/place-tile';
-import { PlaceToken } from '../messages/place-token';
-import { quillStore } from '../store';
+import { MouseDown } from '../messages/interaction/mouse-down';
+import { MouseMove } from '../messages/interaction/mouse-move';
+import { MouseUp } from '../messages/interaction/mouse-up';
 import { Position } from '../utility/position';
 import { RenderStack } from './render-stack';
 
 export class Interactor extends Subscriber {
-	constructor(
-		public config: EngineConfig,
-		private stack: RenderStack,
-		private tileset: Tileset,
-		private user: User
-	) {
+	private isMouseDown = false;
+
+	constructor(public config: EngineConfig, private stack: RenderStack) {
 		super();
 		this.init();
 	}
 
 	init() {
-		// TODO: Change this to track and emit general events with position information
-		// Then send MouseClick, MouseStartDrag, MouseMoveDrag, MouseMove, MouseStopDrag events
 		this.stack.main.on('mousedown', (e) => {
-			const { x, y } = this.stack.map.toLocal(e.global);
+			this.isMouseDown = true;
 
-			const position = Position.atPoint(x, y, 0);
+			const position = this.currentPosition(e);
 
-			const { selectedBlueprint, selectedDirection, selectedToken } =
-				quillStore.getState();
+			this.send(new MouseDown(position));
+		});
 
-			if (selectedBlueprint) {
-				this.placeTile(selectedBlueprint, selectedDirection, position);
-			}
+		this.stack.main.on('mouseup', (e) => {
+			this.isMouseDown = false;
+			const position = this.currentPosition(e);
+			this.send(new MouseUp(position));
+		});
 
-			if (selectedToken) {
-				this.placeToken(selectedToken, position);
-			}
+		this.stack.main.on('mousemove', (e) => {
+			const position = this.currentPosition(e);
+			this.send(new MouseMove(position));
 		});
 	}
 
-	private placeTile(id: string, direction: Direction, position: Position) {
-		const blueprint = this.tileset.get(id);
-
-		if (blueprint) {
-			this.send(new PlaceTile(blueprint, direction, position));
-		}
-	}
-
-	private placeToken(id: string, position: Position) {
-		this.send(new PlaceToken(id, position, this.user));
+	currentPosition(e: FederatedPointerEvent) {
+		const { x, y } = this.stack.map.toLocal(e.global);
+		return Position.atPoint(x, y, 0);
 	}
 }
 
-inject(Interactor, [EngineConfig, RenderStack, Tileset, DiUser]);
+inject(Interactor, [EngineConfig, RenderStack]);
 
 container.register(Interactor, {
 	class: Interactor,
