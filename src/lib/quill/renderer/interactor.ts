@@ -11,8 +11,6 @@ import { Position } from '../utility/position';
 import { RenderStack } from './render-stack';
 
 export class Interactor extends Subscriber {
-	private isMouseDown = false;
-
 	constructor(public config: EngineConfig, private stack: RenderStack) {
 		super();
 		this.init();
@@ -20,15 +18,11 @@ export class Interactor extends Subscriber {
 
 	init() {
 		this.stack.main.on('mousedown', (e) => {
-			this.isMouseDown = true;
-
 			const position = this.currentPosition(e);
-
 			this.send(new MouseDown(position));
 		});
 
 		this.stack.main.on('mouseup', (e) => {
-			this.isMouseDown = false;
 			const position = this.currentPosition(e);
 			this.send(new MouseUp(position));
 		});

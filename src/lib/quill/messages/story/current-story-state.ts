@@ -3,7 +3,7 @@ import { Message } from '@/lib/messaging/message';
 import { TokenData } from '../types/tokens';
 
 export class CurrentStoryState extends Message {
-	public static name = 'current-story-state';
+	public static event = 'current-story-state';
 
 	constructor(public mapId: string, public tokens: TokenData[]) {
 		super();
