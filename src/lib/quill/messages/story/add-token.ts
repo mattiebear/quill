@@ -1,6 +1,7 @@
 import { Message } from '@/lib/messaging/message';
 
 import { Token } from '../../map/token';
+import { TokenData } from '../types/tokens';
 
 // Adds a token to the token map and renderer
 export class AddToken extends Message {
@@ -10,10 +11,7 @@ export class AddToken extends Message {
 		super();
 	}
 
-	toJSON() {
-		return {
-			event: AddToken.name,
-			data: this.token.toJSON(),
-		};
+	public static fromJSON(data: TokenData) {
+		return new AddToken(Token.fromJSON(data));
 	}
 }

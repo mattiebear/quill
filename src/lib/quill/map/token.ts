@@ -1,17 +1,13 @@
-import { Crypto } from '@/lib/crypto';
-
+import { TokenData } from '../messages/types/tokens';
 import { Position } from '../utility/position';
 
 export class Token {
-	public readonly id: string;
-
 	constructor(
+		public readonly id: string,
 		public readonly userId: string,
 		public readonly tokenId: string,
 		public position: Position
-	) {
-		this.id = this.generateUniqueId();
-	}
+	) {}
 
 	public get frameImage() {
 		return `/images/tokens/${this.tokenId}-frame.jpg`;
@@ -19,10 +15,6 @@ export class Token {
 
 	public get iconImage() {
 		return `/images/tokens/${this.tokenId}-icon.jpg`;
-	}
-
-	private generateUniqueId() {
-		return Crypto.uniqueId();
 	}
 
 	toJSON() {
@@ -34,5 +26,10 @@ export class Token {
 			y: this.position.y,
 			z: this.position.z,
 		};
+	}
+
+	static fromJSON(data: TokenData) {
+		const pos = new Position(data.x, data.y, data.z);
+		return new Token(data.id, data.userId, data.tokenId, pos);
 	}
 }

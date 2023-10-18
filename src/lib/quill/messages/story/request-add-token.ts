@@ -1,19 +1,27 @@
 import { Message } from '@/lib/messaging/message';
 
-import { Token } from '../../map/token';
+import { Position } from '../..';
 
 // Broadcast event to request adding a token to a tile
 export class RequestAddToken extends Message {
 	public static name = 'request-add-token';
 
-	constructor(public token: Token) {
+	constructor(
+		public tokenId: string,
+		public userId: string,
+		public position: Position
+	) {
 		super();
 	}
 
 	toJSON() {
 		return {
 			event: RequestAddToken.name,
-			data: this.token.toJSON(),
+			data: {
+				tokenId: this.tokenId,
+				userId: this.userId,
+				...this.position.toJSON(),
+			},
 		};
 	}
 }

@@ -1,1 +1,5 @@
-export class Message {}
+export class Message {
+	toJSON() {
+		return {};
+	}
+}

@@ -6,7 +6,7 @@ import { container, inject, Lifespan } from '@/lib/di';
 import { factory } from '@/lib/messaging/factory';
 
 import { EngineConfig } from '../core/engine-config';
-import { AddToken } from '../messages/story/add-token';
+import { RequestAddToken } from '../messages/story/request-add-token';
 import { SelectMap } from '../messages/story/select-map';
 import { Subscriber } from './subscriber';
 
@@ -57,13 +57,7 @@ export class Broadcast extends Subscriber {
 	}
 
 	initRelay() {
-		this.onEvent(SelectMap, (message) => {
-			this.connection.send(message.toJSON());
-		});
-
-		this.onEvent(AddToken, (message) => {
-			this.connection.send(message.toJSON());
-		});
+		this.connect(SelectMap, RequestAddToken);
 	}
 
 	destroy() {
@@ -76,6 +70,14 @@ export class Broadcast extends Subscriber {
 		url.searchParams.append('token', token);
 
 		return url.toString();
+	}
+
+	private connect(...messages: any[]) {
+		for (const ctor of messages) {
+			this.onEvent(ctor, (message) => {
+				this.connection.send(message.toJSON());
+			});
+		}
 	}
 }
 
