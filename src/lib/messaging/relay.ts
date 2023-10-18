@@ -17,9 +17,11 @@ export class Relay {
 	}
 
 	send<T extends Message>(message: T) {
-		const subs = this.ensure<T>(message.constructor as any);
+		const subs = this.subscriptions.get(message.constructor);
 
-		subs.forEach((sub) => sub(message));
+		if (subs) {
+			subs.forEach((sub) => sub(message));
+		}
 	}
 
 	private ensure<T>(type: new () => T): Observer[] {
