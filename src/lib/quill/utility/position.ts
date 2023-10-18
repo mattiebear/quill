@@ -24,7 +24,19 @@ export class Position {
 	) {}
 
 	toString() {
-		return [this.x, this.y, this.z].join(':');
+		return this.toArray().join(':');
+	}
+
+	toJSON() {
+		return {
+			x: this.x,
+			y: this.y,
+			z: this.z,
+		};
+	}
+
+	toArray(): [number, number, number] {
+		return [this.x, this.y, this.z];
 	}
 
 	equals(position: Position) {
