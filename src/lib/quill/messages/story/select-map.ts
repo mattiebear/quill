@@ -2,7 +2,7 @@ import { MapEntity } from '@/entites/map-entity';
 import { Message } from '@/lib/messaging/message';
 
 export class SelectMap extends Message {
-	public static name = 'select-map';
+	public static event = 'select-map';
 
 	constructor(public map: MapEntity) {
 		super();
@@ -10,7 +10,7 @@ export class SelectMap extends Message {
 
 	toJSON() {
 		return {
-			event: SelectMap.name,
+			event: SelectMap.event,
 			data: {
 				mapId: this.map.id,
 			},

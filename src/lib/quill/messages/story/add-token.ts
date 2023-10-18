@@ -5,7 +5,7 @@ import { TokenData } from '../types/tokens';
 
 // Adds a token to the token map and renderer
 export class AddToken extends Message {
-	public static name = 'add-token';
+	public static event = 'add-token';
 
 	constructor(public token: Token) {
 		super();

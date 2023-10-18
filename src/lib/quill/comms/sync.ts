@@ -43,7 +43,7 @@ export class Sync extends Subscriber {
 
 		await this.http.patch(url, { atlas });
 
-		this.send(SaveMap);
+		this.send(new SaveMap());
 	}
 }
 

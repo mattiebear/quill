@@ -4,7 +4,7 @@ import { Position } from '../..';
 
 // Broadcast event to request adding a token to a tile
 export class RequestAddToken extends Message {
-	public static name = 'request-add-token';
+	public static event = 'request-add-token';
 
 	constructor(
 		public tokenId: string,
@@ -16,7 +16,7 @@ export class RequestAddToken extends Message {
 
 	toJSON() {
 		return {
-			event: RequestAddToken.name,
+			event: RequestAddToken.event,
 			data: {
 				tokenId: this.tokenId,
 				userId: this.userId,

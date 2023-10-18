@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 
 import { relay } from '../instance';
 import { Message } from '../message';
@@ -8,7 +8,7 @@ export const useObserver = <T extends Message>(
 	type: new (...args: any[]) => T,
 	handler: Observer<T>
 ) => {
-	useLayoutEffect(() => {
-		relay.on(type, handler);
-	}, [handler, type]);
+	useEffect(() => {
+		return relay.on(type, handler);
+	}, [type, handler]);
 };
