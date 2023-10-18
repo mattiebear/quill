@@ -4,8 +4,11 @@ import { Position } from '@/lib/quill';
 
 import { Subscriber } from '../comms/subscriber';
 import { MouseUp } from '../messages/interaction/mouse-up';
+import { AddToken } from '../messages/story/add-token';
+import { CurrentStoryState } from '../messages/story/current-story-state';
 import { RequestAddToken } from '../messages/story/request-add-token';
 import { quillStore } from '../store';
+import { Token } from './token';
 
 export class TokenMapDistributor extends Subscriber {
 	constructor(private user: User) {
@@ -20,6 +23,12 @@ export class TokenMapDistributor extends Subscriber {
 			if (selectedToken) {
 				this.requestToken(selectedToken, position);
 			}
+		});
+
+		this.onEvent(CurrentStoryState, ({ tokens }) => {
+			tokens.forEach((data) => {
+				this.send(new AddToken(Token.fromJSON(data)));
+			});
 		});
 	}
 

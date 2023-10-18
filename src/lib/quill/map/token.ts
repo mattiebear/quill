@@ -1,3 +1,4 @@
+import { TokenData } from '../messages/types/tokens';
 import { Position } from '../utility/position';
 
 export class Token {
@@ -25,5 +26,10 @@ export class Token {
 			y: this.position.y,
 			z: this.position.z,
 		};
+	}
+
+	static fromJSON(data: TokenData) {
+		const pos = new Position(data.x, data.y, data.z);
+		return new Token(data.id, data.userId, data.tokenId, pos);
 	}
 }
