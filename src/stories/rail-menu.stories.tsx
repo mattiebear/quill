@@ -23,23 +23,19 @@ type Story = StoryObj<typeof meta>;
 const SimpleMenu = () => {
 	return (
 		<RailMenu>
-			<RailMenuFrame>
-				<RailMenuItem icon={<BookOpenIcon />} label="Read" />
-				<RailMenuItem icon={<HomeIcon />} label="Home" />
+			<RailMenuItem icon={<BookOpenIcon />} label="Read" />
+			<RailMenuItem icon={<HomeIcon />} label="Home" />
 
-				{/* <RailMenuItem icon={<BookOpenIcon />} label="More">
-					<RailMenuFrame>
-						<RailMenuItem icon={<BookOpenIcon />} label="Read" />
-						<RailMenuItem icon={<HomeIcon />} label="Home" />
+			{/* <RailMenuItem icon={<BookOpenIcon />} label="More">
+					<RailMenuItem icon={<BookOpenIcon />} label="Read" />
+					<RailMenuItem icon={<HomeIcon />} label="Home" />
 
-						<RailMenuItem icon={<BookOpenIcon />} label="Open">
-							<RailMenuContent>
-
-							</RailMenuContent>
-						</RailMenuItem>
-					</RailMenuFrame>
-				</RailMenuItem> */}
-			</RailMenuFrame>
+					<RailMenuItem icon={<BookOpenIcon />} label="Open">
+						<RailMenuContent>
+							
+						</RailMenuContent>
+					</RailMenuItem>
+			</RailMenuItem> */}
 		</RailMenu>
 	);
 };

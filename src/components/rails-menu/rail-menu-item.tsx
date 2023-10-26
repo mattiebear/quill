@@ -1,14 +1,18 @@
 import { BoxProps, Flex, Tooltip } from '@chakra-ui/react';
 import { cloneElement, FC, PropsWithChildren, ReactElement } from 'react';
 
+import { useRailMenuContext, useRailMenuItemContext } from './context';
+
 interface RailMenuItemProps extends PropsWithChildren, BoxProps {
 	icon: ReactElement;
 	label: string;
 }
 
 export const RailMenuItem: FC<RailMenuItemProps> = ({ icon, label }) => {
-	// TODO: Get from menu state
-	const isActive = false;
+	const { level, index } = useRailMenuItemContext();
+	const { getIsActive, selectItem } = useRailMenuContext();
+
+	const isActive = getIsActive(level, index);
 
 	return (
 		<Flex
@@ -19,6 +23,7 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({ icon, label }) => {
 			color={isActive ? 'text.cover.focus' : 'text.cover.peek'}
 			cursor="pointer"
 			justify="center"
+			onClick={() => selectItem(level, index)}
 			px={2}
 			transitionDuration="normal"
 			transitionProperty="common"
@@ -28,7 +33,6 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({ icon, label }) => {
 					color: 'text.cover.focus',
 				},
 			}}
-			// @ts-ignore
 			{...(isActive && { ['data-active']: true })}
 		>
 			<Tooltip label={label} gutter={12} placement="right" openDelay={500}>
