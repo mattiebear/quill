@@ -7,10 +7,10 @@ export const RailMenuFrame: FC<RailMenuFrameProps> = (props) => {
 	return (
 		<Flex
 			bg="background.cover"
-			borderRadius="3xl"
+			borderRadius="lg"
 			direction="column"
-			p={1.5}
-			rowGap={8}
+			py={3}
+			rowGap={4}
 			{...props}
 		/>
 	);
