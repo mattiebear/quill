@@ -1,6 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { RailMenu } from '../components/rails-menu';
+import { BookOpenIcon, HomeIcon } from '@/components/icon';
+
+import {
+	RailMenu,
+	RailMenuFrame,
+	RailMenuItem,
+} from '../components/rails-menu';
 
 const meta = {
 	title: 'Components/RailMenu',
@@ -15,7 +21,27 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const SimpleMenu = () => {
-	return <RailMenu>Menu</RailMenu>;
+	return (
+		<RailMenu>
+			<RailMenuFrame>
+				<RailMenuItem icon={<BookOpenIcon />} label="Read" />
+				<RailMenuItem icon={<HomeIcon />} label="Home" />
+
+				{/* <RailMenuItem icon={<BookOpenIcon />} label="More">
+					<RailMenuFrame>
+						<RailMenuItem icon={<BookOpenIcon />} label="Read" />
+						<RailMenuItem icon={<HomeIcon />} label="Home" />
+
+						<RailMenuItem icon={<BookOpenIcon />} label="Open">
+							<RailMenuContent>
+
+							</RailMenuContent>
+						</RailMenuItem>
+					</RailMenuFrame>
+				</RailMenuItem> */}
+			</RailMenuFrame>
+		</RailMenu>
+	);
 };
 
 export const Primary: Story = {
