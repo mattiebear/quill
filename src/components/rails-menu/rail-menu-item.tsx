@@ -13,7 +13,6 @@ import {
 	useRailMenuItemContext,
 } from './context';
 import { RailMenuFrame } from './rail-menu-frame';
-import { useKeyBinding } from './use-key-binding';
 
 interface RailMenuItemProps extends PropsWithChildren {
 	action?: string;
@@ -32,8 +31,6 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({
 	const { location } = useRailMenuItemContext();
 	const { containerRef, getFrameProps, getIsActive, selectItem } =
 		useRailMenuContext();
-
-	useKeyBinding(keyBinding, location, action);
 
 	const isActive = getIsActive(location);
 	const tooltipLabel = keyBinding ? `${label} (${keyBinding})` : label;
@@ -62,7 +59,7 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({
 			>
 				<Tooltip
 					label={tooltipLabel}
-					gutter={12}
+					gutter={14}
 					placement="right"
 					openDelay={800}
 				>

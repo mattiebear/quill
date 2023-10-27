@@ -11,6 +11,7 @@ export const useRailMenu = ({ onSelect }: UseRailMenuConfig) => {
 
 	const selectItem = useCallback(
 		(location: number[], action?: string) => {
+			console.log('SELECT');
 			setStack(location);
 
 			if (onSelect && action) {
