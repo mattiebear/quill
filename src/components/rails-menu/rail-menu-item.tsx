@@ -42,7 +42,7 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({
 		<>
 			<Flex
 				as="button"
-				borderRightColor={isActive ? 'text.link.active' : 'transparent'}
+				borderRightColor={isActive ? 'menu.active' : 'transparent'}
 				borderRightStyle="solid"
 				borderRightWidth={2}
 				color={isActive ? 'text.cover.focus' : 'text.cover.peek'}
@@ -72,7 +72,7 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({
 
 			{children && (
 				<Portal containerRef={containerRef}>
-					<SlideFade in={isActive}>
+					<SlideFade in={isActive} unmountOnExit>
 						<RailMenuFrame {...getFrameProps(location.length)}>
 							{Children.map(children, (child, index) => {
 								return (

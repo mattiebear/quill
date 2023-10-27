@@ -10,6 +10,7 @@ export const RailMenuFrame: FC<RailMenuFrameProps> = (props) => {
 			borderRadius="lg"
 			direction="column"
 			py={3}
+			px={0.5}
 			rowGap={4}
 			position="absolute"
 			{...props}

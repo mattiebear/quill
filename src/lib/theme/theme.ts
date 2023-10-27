@@ -53,6 +53,13 @@ export const theme = extendTheme({
 				},
 			},
 
+			// Menu
+			menu: {
+				active: {
+					default: 'green.300',
+				},
+			},
+
 			// Typography
 			text: {
 				body: {
