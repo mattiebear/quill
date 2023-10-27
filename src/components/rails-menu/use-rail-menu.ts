@@ -17,7 +17,7 @@ export const useRailMenu = ({ onSelect }: UseRailMenuConfig) => {
 				onSelect(action);
 			}
 		},
-		[onSelect, stack, setStack]
+		[onSelect, setStack]
 	);
 
 	const getIsActive = useCallback(
@@ -29,14 +29,11 @@ export const useRailMenu = ({ onSelect }: UseRailMenuConfig) => {
 		[stack]
 	);
 
-	const getFrameProps = useCallback(
-		(level: number): StyleProps => {
-			return {
-				left: `${3 * level}rem`,
-			};
-		},
-		[stack]
-	);
+	const getFrameProps = useCallback((level: number): StyleProps => {
+		return {
+			left: `${3 * level}rem`,
+		};
+	}, []);
 
 	return {
 		containerRef,

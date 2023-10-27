@@ -10,9 +10,9 @@ export const [RailMenuContext, useRailMenuContext] =
 	createBoundContext<RailMenuContextValue>({
 		defaultValue: {
 			containerRef: createRef(),
-			getIsActive: (..._) => false,
-			getFrameProps: (..._) => ({}),
-			selectItem: (..._) => void 0,
+			getIsActive: () => false,
+			getFrameProps: () => ({}),
+			selectItem: () => void 0,
 		},
 	});
 
