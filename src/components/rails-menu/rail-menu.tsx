@@ -1,4 +1,4 @@
-import { BoxProps } from '@chakra-ui/react';
+import { Box, BoxProps } from '@chakra-ui/react';
 import { Children, FC, PropsWithChildren } from 'react';
 
 import { RailMenuContext, RailMenuItemContext } from './context';
@@ -21,15 +21,17 @@ export const RailMenu: FC<RailMenuProps> = ({ children }) => {
 
 	return (
 		<RailMenuContext value={menu}>
-			<RailMenuFrame>
-				{Children.map(children, (child, index) => {
-					return (
-						<RailMenuItemContext value={{ level: 0, index }}>
-							{child}
-						</RailMenuItemContext>
-					);
-				})}
-			</RailMenuFrame>
+			<Box position="relative" ref={menu.containerRef}>
+				<RailMenuFrame>
+					{Children.map(children, (child, index) => {
+						return (
+							<RailMenuItemContext value={{ level: 0, index }}>
+								{child}
+							</RailMenuItemContext>
+						);
+					})}
+				</RailMenuFrame>
+			</Box>
 		</RailMenuContext>
 	);
 };

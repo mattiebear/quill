@@ -11,6 +11,7 @@ export const RailMenuFrame: FC<RailMenuFrameProps> = (props) => {
 			direction="column"
 			py={3}
 			rowGap={4}
+			position="absolute"
 			{...props}
 		/>
 	);

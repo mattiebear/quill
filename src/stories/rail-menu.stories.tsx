@@ -1,12 +1,14 @@
+import { Box } from '@chakra-ui/react';
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { BookOpenIcon, HomeIcon } from '@/components/icon';
-
 import {
-	RailMenu,
-	RailMenuFrame,
-	RailMenuItem,
-} from '../components/rails-menu';
+	BookOpenIcon,
+	HomeIcon,
+	MapIcon,
+	PlusCircleIcon,
+} from '@/components/icon';
+
+import { RailMenu, RailMenuItem } from '../components/rails-menu';
 
 const meta = {
 	title: 'Components/RailMenu',
@@ -22,21 +24,24 @@ type Story = StoryObj<typeof meta>;
 
 const SimpleMenu = () => {
 	return (
-		<RailMenu>
-			<RailMenuItem icon={<BookOpenIcon />} label="Read" />
-			<RailMenuItem icon={<HomeIcon />} label="Home" />
-
-			{/* <RailMenuItem icon={<BookOpenIcon />} label="More">
-					<RailMenuItem icon={<BookOpenIcon />} label="Read" />
+		<Box h="15rem">
+			<RailMenu>
+				<RailMenuItem icon={<HomeIcon />} label="Home" />
+				<RailMenuItem icon={<BookOpenIcon />} label="Read" />
+				<RailMenuItem icon={<MapIcon />} label="Maps" />
+				<RailMenuItem icon={<PlusCircleIcon />} label="Actions">
 					<RailMenuItem icon={<HomeIcon />} label="Home" />
+					<RailMenuItem icon={<BookOpenIcon />} label="Read" />
+					<RailMenuItem icon={<MapIcon />} label="Maps" />
 
-					<RailMenuItem icon={<BookOpenIcon />} label="Open">
-						<RailMenuContent>
-							
-						</RailMenuContent>
+					<RailMenuItem icon={<PlusCircleIcon />} label="Actions">
+						<RailMenuItem icon={<HomeIcon />} label="Home" />
+						<RailMenuItem icon={<BookOpenIcon />} label="Read" />
+						<RailMenuItem icon={<MapIcon />} label="Maps" />
 					</RailMenuItem>
-			</RailMenuItem> */}
-		</RailMenu>
+				</RailMenuItem>
+			</RailMenu>
+		</Box>
 	);
 };
 

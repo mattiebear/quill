@@ -1,6 +1,8 @@
-import { useCallback, useState } from 'react';
+import { StyleProps } from '@chakra-ui/react';
+import { useCallback, useRef, useState } from 'react';
 
 export const useRailMenu = () => {
+	const containerRef = useRef<HTMLDivElement>(null);
 	const [stack, setStack] = useState<number[]>([]);
 
 	const selectItem = useCallback(
@@ -21,7 +23,18 @@ export const useRailMenu = () => {
 		[stack]
 	);
 
+	const getFrameProps = useCallback(
+		(level: number): StyleProps => {
+			return {
+				left: `${3 * level}rem`,
+			};
+		},
+		[stack]
+	);
+
 	return {
+		containerRef,
+		getFrameProps,
 		getIsActive,
 		selectItem,
 	};
