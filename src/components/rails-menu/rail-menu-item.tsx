@@ -34,6 +34,7 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({
 	useKeyBinding(keyBinding, location);
 
 	const isActive = getIsActive(location);
+	const tooltipLabel = keyBinding ? `${label} (${keyBinding})` : label;
 
 	return (
 		<>
@@ -57,7 +58,12 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({
 				}}
 				{...(isActive && { ['data-active']: true })}
 			>
-				<Tooltip label={label} gutter={12} placement="right" openDelay={1500}>
+				<Tooltip
+					label={tooltipLabel}
+					gutter={12}
+					placement="right"
+					openDelay={800}
+				>
 					{cloneElement(icon, { boxSize: 6 })}
 				</Tooltip>
 			</Flex>
