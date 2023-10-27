@@ -8,7 +8,6 @@ import { useRailMenu } from './use-rail-menu';
 interface RailMenuProps extends PropsWithChildren, BoxProps {}
 
 // TODO: Think of a way to sync active action with store
-// TODO: Add button handlers
 
 export const RailMenu: FC<RailMenuProps> = ({ children }) => {
 	const menu = useRailMenu();
@@ -19,9 +18,7 @@ export const RailMenu: FC<RailMenuProps> = ({ children }) => {
 				<RailMenuFrame>
 					{Children.map(children, (child, index) => {
 						return (
-							<RailMenuItemContext
-								value={{ level: 0, index, location: [index] }}
-							>
+							<RailMenuItemContext value={{ location: [index] }}>
 								{child}
 							</RailMenuItemContext>
 						);

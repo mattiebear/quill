@@ -18,16 +18,12 @@ export const [RailMenuContext, useRailMenuContext] =
 	});
 
 interface RailMenuItemContextValue {
-	level: number;
 	location: number[];
-	index: number;
 }
 
 export const [RailMenuItemContext, useRailMenuItemContext] =
 	createBoundContext<RailMenuItemContextValue>({
 		defaultValue: {
-			level: 0,
 			location: [],
-			index: 0,
 		},
 	});

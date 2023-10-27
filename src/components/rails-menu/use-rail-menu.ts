@@ -6,19 +6,17 @@ export const useRailMenu = () => {
 	const [stack, setStack] = useState<number[]>([]);
 
 	const selectItem = useCallback(
-		(level: number, index: number) => {
-			if (stack[level] === index) {
-				return;
-			}
-
-			setStack(stack.slice(0, level).concat(index));
+		(location: number[]) => {
+			setStack(location);
 		},
 		[stack, setStack]
 	);
 
 	const getIsActive = useCallback(
-		(level: number, index: number) => {
-			return stack[level] === index;
+		(location: number[]) => {
+			return location.every((value, index) => {
+				return stack[index] === value;
+			});
 		},
 		[stack]
 	);
@@ -37,6 +35,5 @@ export const useRailMenu = () => {
 		getFrameProps,
 		getIsActive,
 		selectItem,
-		setStack,
 	};
 };

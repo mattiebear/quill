@@ -27,13 +27,13 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({
 	keyBinding,
 	label,
 }) => {
-	const { level, location, index } = useRailMenuItemContext();
+	const { location } = useRailMenuItemContext();
 	const { containerRef, getFrameProps, getIsActive, selectItem } =
 		useRailMenuContext();
 
 	useKeyBinding(keyBinding, location);
 
-	const isActive = getIsActive(level, index);
+	const isActive = getIsActive(location);
 
 	return (
 		<>
@@ -45,7 +45,7 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({
 				color={isActive ? 'text.cover.focus' : 'text.cover.peek'}
 				cursor="pointer"
 				justify="center"
-				onClick={() => selectItem(level, index)}
+				onClick={() => selectItem(location)}
 				px={2}
 				transitionDuration="normal"
 				transitionProperty="common"
@@ -65,15 +65,11 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({
 			{children && (
 				<Portal containerRef={containerRef}>
 					<SlideFade in={isActive}>
-						<RailMenuFrame {...getFrameProps(level + 1)}>
+						<RailMenuFrame {...getFrameProps(location.length)}>
 							{Children.map(children, (child, index) => {
 								return (
 									<RailMenuItemContext
-										value={{
-											level: level + 1,
-											index,
-											location: [...location, index],
-										}}
+										value={{ location: [...location, index] }}
 									>
 										{child}
 									</RailMenuItemContext>
