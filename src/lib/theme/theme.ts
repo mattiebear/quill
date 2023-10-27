@@ -65,6 +65,9 @@ export const theme = extendTheme({
 					peek: {
 						default: 'gray.500',
 					},
+					shine: {
+						default: 'gray.400',
+					},
 					focus: {
 						default: 'gray.200',
 					},
