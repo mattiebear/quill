@@ -1,16 +1,16 @@
-import { Box, BoxProps } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { Children, FC, PropsWithChildren } from 'react';
 
 import { RailMenuContext, RailMenuItemContext } from './context';
 import { RailMenuFrame } from './rail-menu-frame';
 import { useRailMenu } from './use-rail-menu';
 
-interface RailMenuProps extends PropsWithChildren, BoxProps {}
+interface RailMenuProps extends PropsWithChildren {
+	onSelect?: (action: string) => void;
+}
 
-// TODO: Think of a way to sync active action with store
-
-export const RailMenu: FC<RailMenuProps> = ({ children }) => {
-	const menu = useRailMenu();
+export const RailMenu: FC<RailMenuProps> = ({ children, onSelect }) => {
+	const menu = useRailMenu({ onSelect });
 
 	return (
 		<RailMenuContext value={menu}>

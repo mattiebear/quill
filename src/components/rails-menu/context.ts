@@ -13,7 +13,6 @@ export const [RailMenuContext, useRailMenuContext] =
 			getIsActive: (..._) => false,
 			getFrameProps: (..._) => ({}),
 			selectItem: (..._) => void 0,
-			setStack: (..._) => void 0,
 		},
 	});
 

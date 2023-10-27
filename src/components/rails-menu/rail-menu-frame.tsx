@@ -1,7 +1,7 @@
-import { BoxProps, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { FC, PropsWithChildren } from 'react';
 
-interface RailMenuFrameProps extends PropsWithChildren, BoxProps {}
+interface RailMenuFrameProps extends PropsWithChildren {}
 
 export const RailMenuFrame: FC<RailMenuFrameProps> = (props) => {
 	return (

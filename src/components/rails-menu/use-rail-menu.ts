@@ -1,15 +1,23 @@
 import { StyleProps } from '@chakra-ui/react';
 import { useCallback, useRef, useState } from 'react';
 
-export const useRailMenu = () => {
+interface UseRailMenuConfig {
+	onSelect?: (action: string) => void;
+}
+
+export const useRailMenu = ({ onSelect }: UseRailMenuConfig) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [stack, setStack] = useState<number[]>([]);
 
 	const selectItem = useCallback(
-		(location: number[]) => {
+		(location: number[], action?: string) => {
 			setStack(location);
+
+			if (onSelect && action) {
+				onSelect(action);
+			}
 		},
-		[stack, setStack]
+		[onSelect, stack, setStack]
 	);
 
 	const getIsActive = useCallback(

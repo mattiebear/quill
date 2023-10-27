@@ -2,7 +2,11 @@ import { useEffect } from 'react';
 
 import { useRailMenuContext } from './context';
 
-export const useKeyBinding = (key: string | undefined, location: number[]) => {
+export const useKeyBinding = (
+	key: string | undefined,
+	location: number[],
+	action?: string
+) => {
 	const { selectItem } = useRailMenuContext();
 
 	useEffect(() => {
@@ -12,7 +16,7 @@ export const useKeyBinding = (key: string | undefined, location: number[]) => {
 
 		const listener = (e: KeyboardEvent) => {
 			if (e.key === key.toLowerCase()) {
-				selectItem(location);
+				selectItem(location, action);
 			}
 		};
 
@@ -21,5 +25,5 @@ export const useKeyBinding = (key: string | undefined, location: number[]) => {
 		return () => {
 			document.removeEventListener('keyup', listener);
 		};
-	}, [key, location, selectItem]);
+	}, [action, key, location, selectItem]);
 };

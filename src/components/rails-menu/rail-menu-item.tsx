@@ -1,4 +1,4 @@
-import { BoxProps, Flex, Portal, SlideFade, Tooltip } from '@chakra-ui/react';
+import { Flex, Portal, SlideFade, Tooltip } from '@chakra-ui/react';
 import {
 	Children,
 	cloneElement,
@@ -15,13 +15,15 @@ import {
 import { RailMenuFrame } from './rail-menu-frame';
 import { useKeyBinding } from './use-key-binding';
 
-interface RailMenuItemProps extends PropsWithChildren, BoxProps {
+interface RailMenuItemProps extends PropsWithChildren {
+	action?: string;
 	icon: ReactElement;
 	keyBinding?: string;
 	label: string;
 }
 
 export const RailMenuItem: FC<RailMenuItemProps> = ({
+	action,
 	children,
 	icon,
 	keyBinding,
@@ -31,7 +33,7 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({
 	const { containerRef, getFrameProps, getIsActive, selectItem } =
 		useRailMenuContext();
 
-	useKeyBinding(keyBinding, location);
+	useKeyBinding(keyBinding, location, action);
 
 	const isActive = getIsActive(location);
 	const tooltipLabel = keyBinding ? `${label} (${keyBinding})` : label;
@@ -46,7 +48,7 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({
 				color={isActive ? 'text.cover.focus' : 'text.cover.peek'}
 				cursor="pointer"
 				justify="center"
-				onClick={() => selectItem(location)}
+				onClick={() => selectItem(location, action)}
 				px={2}
 				transitionDuration="normal"
 				transitionProperty="common"

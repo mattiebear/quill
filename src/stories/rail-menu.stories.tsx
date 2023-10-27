@@ -27,12 +27,16 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const onSelect = (action: string) => {
+	console.log('action:', action);
+};
+
 const SimpleMenu = () => {
 	return (
 		<Box h="15rem">
-			<RailMenu>
+			<RailMenu onSelect={onSelect}>
 				<RailMenuItem icon={<HomeIcon />} label="Home" keyBinding="C" />
-				<RailMenuItem icon={<BookOpenIcon />} label="Read" />
+				<RailMenuItem action="read" icon={<BookOpenIcon />} label="Read" />
 				<RailMenuItem icon={<MapIcon />} label="Maps" />
 				<RailMenuItem icon={<PlusCircleIcon />} label="Actions">
 					<RailMenuItem icon={<HomeIcon />} label="Home" />
@@ -45,7 +49,12 @@ const SimpleMenu = () => {
 						<RailMenuItem icon={<MapIcon />} label="Maps" />
 					</RailMenuItem>
 
-					<RailMenuItem icon={<TrashIcon />} label="Stuff" keyBinding="Z">
+					<RailMenuItem
+						action="stuff"
+						icon={<TrashIcon />}
+						label="Stuff"
+						keyBinding="Z"
+					>
 						<RailMenuContent>
 							<Button>Other stuff</Button>
 						</RailMenuContent>
