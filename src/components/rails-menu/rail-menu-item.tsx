@@ -13,7 +13,6 @@ import {
 	useRailMenuItemContext,
 } from './context';
 import { RailMenuFrame } from './rail-menu-frame';
-import { useKeyBinding } from './use-key-binding';
 
 interface RailMenuItemProps extends PropsWithChildren {
 	action?: string;
@@ -33,16 +32,15 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({
 	const { containerRef, getFrameProps, getIsActive, selectItem } =
 		useRailMenuContext();
 
-	useKeyBinding(keyBinding, location, action);
-
 	const isActive = getIsActive(location);
 	const tooltipLabel = keyBinding ? `${label} (${keyBinding})` : label;
 
 	return (
 		<>
 			<Flex
+				aria-label={label}
 				as="button"
-				borderRightColor={isActive ? 'text.link.active' : 'transparent'}
+				borderRightColor={isActive ? 'menu.active' : 'transparent'}
 				borderRightStyle="solid"
 				borderRightWidth={2}
 				color={isActive ? 'text.cover.focus' : 'text.cover.peek'}
@@ -62,7 +60,7 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({
 			>
 				<Tooltip
 					label={tooltipLabel}
-					gutter={12}
+					gutter={14}
 					placement="right"
 					openDelay={800}
 				>
@@ -72,7 +70,7 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({
 
 			{children && (
 				<Portal containerRef={containerRef}>
-					<SlideFade in={isActive}>
+					<SlideFade in={isActive} unmountOnExit>
 						<RailMenuFrame {...getFrameProps(location.length)}>
 							{Children.map(children, (child, index) => {
 								return (
