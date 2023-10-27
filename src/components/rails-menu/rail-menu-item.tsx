@@ -38,6 +38,7 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({
 	return (
 		<>
 			<Flex
+				aria-label={label}
 				as="button"
 				borderRightColor={isActive ? 'menu.active' : 'transparent'}
 				borderRightStyle="solid"
