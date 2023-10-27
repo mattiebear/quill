@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Button } from '@chakra-ui/react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import {
@@ -6,9 +6,14 @@ import {
 	HomeIcon,
 	MapIcon,
 	PlusCircleIcon,
+	TrashIcon,
 } from '@/components/icon';
 
-import { RailMenu, RailMenuItem } from '../components/rails-menu';
+import {
+	RailMenu,
+	RailMenuContent,
+	RailMenuItem,
+} from '../components/rails-menu';
 
 const meta = {
 	title: 'Components/RailMenu',
@@ -38,6 +43,12 @@ const SimpleMenu = () => {
 						<RailMenuItem icon={<HomeIcon />} label="Home" />
 						<RailMenuItem icon={<BookOpenIcon />} label="Read" />
 						<RailMenuItem icon={<MapIcon />} label="Maps" />
+					</RailMenuItem>
+
+					<RailMenuItem icon={<TrashIcon />} label="Stuff">
+						<RailMenuContent>
+							<Button>Other stuff</Button>
+						</RailMenuContent>
 					</RailMenuItem>
 				</RailMenuItem>
 			</RailMenu>

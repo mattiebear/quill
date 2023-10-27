@@ -7,12 +7,12 @@ import {
 	ReactElement,
 } from 'react';
 
-import { RailMenuFrame } from '.';
 import {
 	RailMenuItemContext,
 	useRailMenuContext,
 	useRailMenuItemContext,
 } from './context';
+import { RailMenuFrame } from './rail-menu-frame';
 
 interface RailMenuItemProps extends PropsWithChildren, BoxProps {
 	icon: ReactElement;
