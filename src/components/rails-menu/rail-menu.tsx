@@ -7,14 +7,8 @@ import { useRailMenu } from './use-rail-menu';
 
 interface RailMenuProps extends PropsWithChildren, BoxProps {}
 
-/*
-NEEDS
-
-on click item, check if it has children. If it does, display another frame
-active item needs to be stored in state if it's the last one
-otherwise menu can control own state
-
-*/
+// TODO: Think of a way to sync active action with store
+// TODO: Add button handlers
 
 export const RailMenu: FC<RailMenuProps> = ({ children }) => {
 	const menu = useRailMenu();
@@ -25,7 +19,9 @@ export const RailMenu: FC<RailMenuProps> = ({ children }) => {
 				<RailMenuFrame>
 					{Children.map(children, (child, index) => {
 						return (
-							<RailMenuItemContext value={{ level: 0, index }}>
+							<RailMenuItemContext
+								value={{ level: 0, index, location: [index] }}
+							>
 								{child}
 							</RailMenuItemContext>
 						);

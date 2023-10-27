@@ -37,5 +37,6 @@ export const useRailMenu = () => {
 		getFrameProps,
 		getIsActive,
 		selectItem,
+		setStack,
 	};
 };

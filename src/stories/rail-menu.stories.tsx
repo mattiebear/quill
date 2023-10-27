@@ -37,7 +37,7 @@ const SimpleMenu = () => {
 				<RailMenuItem icon={<PlusCircleIcon />} label="Actions">
 					<RailMenuItem icon={<HomeIcon />} label="Home" />
 					<RailMenuItem icon={<BookOpenIcon />} label="Read" />
-					<RailMenuItem icon={<MapIcon />} label="Maps" />
+					<RailMenuItem icon={<MapIcon />} label="Maps" keyBinding="A" />
 
 					<RailMenuItem icon={<PlusCircleIcon />} label="Actions">
 						<RailMenuItem icon={<HomeIcon />} label="Home" />
@@ -45,7 +45,7 @@ const SimpleMenu = () => {
 						<RailMenuItem icon={<MapIcon />} label="Maps" />
 					</RailMenuItem>
 
-					<RailMenuItem icon={<TrashIcon />} label="Stuff">
+					<RailMenuItem icon={<TrashIcon />} label="Stuff" keyBinding="Z">
 						<RailMenuContent>
 							<Button>Other stuff</Button>
 						</RailMenuContent>

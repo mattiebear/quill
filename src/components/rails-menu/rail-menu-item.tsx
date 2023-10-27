@@ -13,20 +13,25 @@ import {
 	useRailMenuItemContext,
 } from './context';
 import { RailMenuFrame } from './rail-menu-frame';
+import { useKeyBinding } from './use-key-binding';
 
 interface RailMenuItemProps extends PropsWithChildren, BoxProps {
 	icon: ReactElement;
+	keyBinding?: string;
 	label: string;
 }
 
 export const RailMenuItem: FC<RailMenuItemProps> = ({
 	children,
 	icon,
+	keyBinding,
 	label,
 }) => {
-	const { level, index } = useRailMenuItemContext();
+	const { level, location, index } = useRailMenuItemContext();
 	const { containerRef, getFrameProps, getIsActive, selectItem } =
 		useRailMenuContext();
+
+	useKeyBinding(keyBinding, location);
 
 	const isActive = getIsActive(level, index);
 
@@ -52,7 +57,7 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({
 				}}
 				{...(isActive && { ['data-active']: true })}
 			>
-				<Tooltip label={label} gutter={12} placement="right" openDelay={500}>
+				<Tooltip label={label} gutter={12} placement="right" openDelay={1500}>
 					{cloneElement(icon, { boxSize: 6 })}
 				</Tooltip>
 			</Flex>
@@ -63,7 +68,13 @@ export const RailMenuItem: FC<RailMenuItemProps> = ({
 						<RailMenuFrame {...getFrameProps(level + 1)}>
 							{Children.map(children, (child, index) => {
 								return (
-									<RailMenuItemContext value={{ level: level + 1, index }}>
+									<RailMenuItemContext
+										value={{
+											level: level + 1,
+											index,
+											location: [...location, index],
+										}}
+									>
 										{child}
 									</RailMenuItemContext>
 								);
