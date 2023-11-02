@@ -4,7 +4,7 @@ import { fetchMapDetail } from '@/api/maps';
 import { MapEntity } from '@/entites/map-entity';
 import { container, inject, Lifespan } from '@/lib/di';
 
-import { quillStore } from '../store';
+import { EngineStore } from '../store';
 import { Store } from '../store/store';
 import { TileMap } from './tile-map';
 
@@ -26,7 +26,7 @@ export class MapLoader {
 	}
 
 	private init() {
-		quillStore.subscribe((state, prev) => {
+		EngineStore.subscribe((state, prev) => {
 			if (state.mapId && state.mapId !== prev.mapId) {
 				this.load(state.mapId);
 			}

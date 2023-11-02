@@ -17,7 +17,7 @@ import { Path } from '@/config/routes';
 import { useRelay } from '@/lib/messaging';
 import { useTokenset } from '@/lib/quill/hooks/use-tokenset';
 import { ChangeZoom } from '@/lib/quill/messages/rendering/change-zoom';
-import { quillStore } from '@/lib/quill/store';
+import { EngineStore } from '@/lib/quill/store';
 
 import { ZoomInIcon, ZoomOutIcon } from '../icon';
 import { usePlayState } from './hooks/use-play-state';
@@ -76,7 +76,7 @@ export const PlayUI: FC = () => {
 									h="auto"
 									p={2}
 									onClick={() =>
-										quillStore.setState({ selectedToken: token.id })
+										EngineStore.setState({ selectedToken: token.id })
 									}
 									{...(token.id === selectedToken && {
 										// TODO: Use semantic value

@@ -5,7 +5,7 @@ import { Tileset } from '@/lib/quill/map/tileset';
 import { Subscriber } from '../comms/subscriber';
 import { MouseUp } from '../messages/interaction/mouse-up';
 import { PlaceTile } from '../messages/map/place-tile';
-import { quillStore } from '../store';
+import { EngineStore } from '../store';
 
 export class TileMapDistributor extends Subscriber {
 	constructor(private tileset: Tileset) {
@@ -15,7 +15,7 @@ export class TileMapDistributor extends Subscriber {
 
 	init() {
 		this.onEvent(MouseUp, ({ position }) => {
-			const { selectedBlueprint, selectedDirection } = quillStore.getState();
+			const { selectedBlueprint, selectedDirection } = EngineStore.getState();
 
 			if (selectedBlueprint) {
 				this.placeTile(selectedBlueprint, selectedDirection, position);

@@ -1,7 +1,7 @@
 import { Observer, relay } from '@/lib/messaging';
 import { Message } from '@/lib/messaging/message';
 
-import { quillStore, QuillStoreValue } from '../store';
+import { EngineStore, EngineStoreValue } from '../store';
 
 export class Subscriber {
 	public _subs: VoidFunction[] = [];
@@ -21,12 +21,12 @@ export class Subscriber {
 		this._subs.push(this.relay.on(type, handler));
 	}
 
-	onState<T extends keyof QuillStoreValue>(
+	onState<T extends keyof EngineStoreValue>(
 		slice: T,
-		handler: (data: QuillStoreValue[T]) => void
+		handler: (data: EngineStoreValue[T]) => void
 	) {
 		this._subs.push(
-			quillStore.subscribe((state, prev) => {
+			EngineStore.subscribe((state, prev) => {
 				if (state[slice] !== prev[slice]) {
 					handler(state[slice]);
 				}

@@ -1,10 +1,10 @@
 import { useCurrentUser } from '@/lib/auth/use-current-user';
-import { LoadingState, useQuillStore } from '@/lib/quill/store';
+import { LoadingState, useEngineStore } from '@/lib/quill/store';
 
 import { useGameSession } from './use-game-session';
 
 export const usePlayState = () => {
-	const state = useQuillStore(
+	const state = useEngineStore(
 		({ initialDataState, mapDataState, mapId, selectedToken }) => ({
 			initialDataState,
 			mapDataState,

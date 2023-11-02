@@ -7,7 +7,7 @@ import { MouseUp } from '../messages/interaction/mouse-up';
 import { AddToken } from '../messages/story/add-token';
 import { CurrentStoryState } from '../messages/story/current-story-state';
 import { RequestAddToken } from '../messages/story/request-add-token';
-import { quillStore } from '../store';
+import { EngineStore } from '../store';
 import { Token } from './token';
 
 export class TokenMapDistributor extends Subscriber {
@@ -18,7 +18,7 @@ export class TokenMapDistributor extends Subscriber {
 
 	init() {
 		this.onEvent(MouseUp, ({ position }) => {
-			const { selectedToken } = quillStore.getState();
+			const { selectedToken } = EngineStore.getState();
 
 			if (selectedToken) {
 				this.requestToken(selectedToken, position);

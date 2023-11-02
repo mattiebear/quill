@@ -1,5 +1,5 @@
 import { Action } from './action';
-import { ActionStore } from './store';
+import { ActionStore, resetActionStore } from './store';
 import { Constructor } from './types';
 
 export class ActionManager {
@@ -43,5 +43,9 @@ export class ActionManager {
 		}
 
 		return (state as any)[state.current] as Action;
+	}
+
+	reset() {
+		resetActionStore();
 	}
 }

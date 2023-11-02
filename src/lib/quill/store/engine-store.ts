@@ -5,7 +5,7 @@ import { Direction } from '@/lib/quill/types/map';
 
 import { LoadingState } from './types';
 
-export interface QuillStoreValue {
+export interface EngineStoreValue {
 	initialDataState: LoadingState;
 	mapDataState: LoadingState;
 	mapId: string | null;
@@ -14,7 +14,7 @@ export interface QuillStoreValue {
 	selectedToken: string | null;
 }
 
-const quillStore = createWithEqualityFn<QuillStoreValue>(
+const EngineStore = createWithEqualityFn<EngineStoreValue>(
 	() => ({
 		initialDataState: LoadingState.Pending,
 		mapDataState: LoadingState.Pending,
@@ -26,12 +26,12 @@ const quillStore = createWithEqualityFn<QuillStoreValue>(
 	shallow
 );
 
-const defaultState = quillStore.getState();
+const defaultState = EngineStore.getState();
 
-const resetQuillStore = () => {
-	quillStore.setState(defaultState, true);
+const resetEngineStore = () => {
+	EngineStore.setState(defaultState, true);
 };
 
-const useQuillStore = quillStore;
+const useEngineStore = EngineStore;
 
-export { resetQuillStore, quillStore, useQuillStore };
+export { resetEngineStore, EngineStore, useEngineStore };
