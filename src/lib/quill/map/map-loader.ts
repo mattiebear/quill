@@ -10,7 +10,7 @@ import { TileMap } from './tile-map';
 
 export class MapLoader {
 	constructor(private tileMap: TileMap, private store: Store) {
-		this.initStoreSubscription();
+		this.init();
 	}
 
 	async load(mapId: string) {
@@ -25,7 +25,7 @@ export class MapLoader {
 		this.tileMap.load(map.atlas);
 	}
 
-	private initStoreSubscription() {
+	private init() {
 		quillStore.subscribe((state, prev) => {
 			if (state.mapId && state.mapId !== prev.mapId) {
 				this.load(state.mapId);
