@@ -25,10 +25,8 @@ import { Path } from '@/config/routes';
 import { useRelay } from '@/lib/messaging';
 import { useTileset } from '@/lib/quill/hooks/use-tileset';
 import { ChangeZoom } from '@/lib/quill/messages/rendering/change-zoom';
-import { quillStore } from '@/lib/quill/store';
 
-import { useEditorState } from './hooks/use-editor-state';
-import { useRotateTile } from './hooks/use-rotate-tile';
+import { usePlaceTileAction } from './hooks/use-place-tile-action';
 
 export const EditorUI: FC = () => {
 	const nodeRef = useRef<HTMLDivElement>(null);
@@ -38,9 +36,7 @@ export const EditorUI: FC = () => {
 	const navigate = useNavigate();
 	const tileset = useTileset();
 	const { send } = useRelay();
-	const { rotateLeft, rotateRight } = useRotateTile();
-
-	const { selectedBlueprint, selectedDirection } = useEditorState();
+	const { action, rotateLeft, rotateRight, selectTile } = usePlaceTileAction();
 
 	const handleClickDone = async () => {
 		await invalidate();
@@ -97,10 +93,8 @@ export const EditorUI: FC = () => {
 								key={blueprint.id}
 								h="auto"
 								p={2}
-								onClick={() =>
-									quillStore.setState({ selectedBlueprint: blueprint.id })
-								}
-								{...(blueprint.id === selectedBlueprint && {
+								onClick={() => selectTile(blueprint.id)}
+								{...(blueprint.id === action.id && {
 									// TODO: Use semantic value
 									bg: 'green.500',
 									_hover: {
@@ -111,7 +105,7 @@ export const EditorUI: FC = () => {
 								<AspectRatio w="full" ratio={1}>
 									<Image
 										objectPosition="bottom center"
-										src={blueprint.sprite.source(selectedDirection)}
+										src={blueprint.sprite.source(action.direction)}
 									/>
 								</AspectRatio>
 							</Button>
