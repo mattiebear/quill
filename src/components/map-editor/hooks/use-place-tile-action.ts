@@ -18,7 +18,7 @@ export const usePlaceTileAction = () => {
 
 			actions.update(action.clone({ direction }));
 		},
-		[action]
+		[action, actions]
 	);
 
 	const rotateLeft = useCallback(() => rotate(-1), [rotate]);
@@ -28,7 +28,7 @@ export const usePlaceTileAction = () => {
 		(id: string) => {
 			actions.activate(action.clone({ id }));
 		},
-		[actions]
+		[action, actions]
 	);
 
 	return { action, rotateLeft, rotateRight, selectTile };

@@ -12,7 +12,7 @@ export const usePlaceTileAction = () => {
 		(id: string) => {
 			actions.activate(action.clone({ id }));
 		},
-		[actions]
+		[action, actions]
 	);
 
 	return { action, selectToken };
