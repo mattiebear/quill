@@ -50,7 +50,7 @@ export const EditorUI: FC = () => {
 	};
 
 	return (
-		<Box p={2}>
+		<Box position="absolute" p={2}>
 			<RailMenu>
 				<RailMenuItem icon={<CursorArrowRaysIcon />} label="Select" />
 				<RailMenuItem icon={<ArrowsPointingOutIcon />} label="Move" />
