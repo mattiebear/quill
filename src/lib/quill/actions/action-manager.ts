@@ -1,4 +1,4 @@
-import { Action } from './action';
+import { Action } from './actions/action';
 import { ActionStore, resetActionStore } from './store';
 import { Constructor } from './types';
 

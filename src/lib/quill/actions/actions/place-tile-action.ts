@@ -1,4 +1,4 @@
-import { Direction } from '../types/map';
+import { Direction } from '../../types/map';
 import { Action } from './action';
 
 export class PlaceTileAction extends Action {

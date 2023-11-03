@@ -1,8 +1,8 @@
 import { shallow } from 'zustand/shallow';
 import { createWithEqualityFn } from 'zustand/traditional';
 
-import { NoAction } from './no-action';
-import { PlaceTileAction } from './place-tile-action';
+import { NoAction } from './actions/no-action';
+import { PlaceTileAction } from './actions/place-tile-action';
 
 const actions = [NoAction, PlaceTileAction];
 

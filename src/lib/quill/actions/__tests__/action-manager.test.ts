@@ -2,7 +2,7 @@ import { expect, it, vi } from 'vitest';
 
 import { Direction } from '../../types/map';
 import { ActionManager } from '../action-manager';
-import { PlaceTileAction } from '../place-tile-action';
+import { PlaceTileAction } from '../actions/place-tile-action';
 import { ActionStore, resetActionStore } from '../store';
 
 beforeEach(() => {
