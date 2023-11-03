@@ -3,6 +3,7 @@ import { Container, Graphics } from 'pixi.js';
 import { container, inject, Lifespan } from '@/lib/di';
 import { degToRad } from '@/utils/math';
 
+import { PlaceTileAction } from '../actions';
 import { Subscriber } from '../comms/subscriber';
 import { EngineConfig } from '../core/engine-config';
 import { MouseMove } from '../messages/interaction/mouse-move';
@@ -41,9 +42,8 @@ export class Highlighter extends Subscriber {
 			this.setHighlightPosition(position);
 		});
 
-		// TODO: Figure out a way to add selectors
-		this.onState('selectedBlueprint', (selected) => {
-			this.setHighlightVisibility(!!selected);
+		this.onAction(PlaceTileAction, (action) => {
+			this.setHighlightVisibility(action.isTileSelected);
 		});
 
 		this.onState('selectedToken', (selected) => {

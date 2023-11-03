@@ -7,6 +7,8 @@ import { container, DiHttp, DiUser } from '@/lib/di';
 import { useHttpClient } from '@/lib/http';
 import { useObserver } from '@/lib/messaging/hooks/use-observer';
 import { Engine, Tileset } from '@/lib/quill';
+import { ActionManager } from '@/lib/quill/actions';
+import { ActionStore } from '@/lib/quill/actions/store';
 import { EngineConfig, EngineMode } from '@/lib/quill/core/engine-config';
 import { useTileset } from '@/lib/quill/hooks/use-tileset';
 import { SaveMap } from '@/lib/quill/messages/map/save-map';
@@ -29,6 +31,12 @@ export const useMapEditor = (map: MapEntity) => {
 
 		container.register(EngineConfig, {
 			value: config,
+		});
+
+		const actions = new ActionManager(ActionStore);
+
+		container.register(ActionManager, {
+			value: actions,
 		});
 
 		container.register(Tileset, { value: tileset });

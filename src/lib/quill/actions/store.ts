@@ -1,9 +1,10 @@
 import { shallow } from 'zustand/shallow';
 import { createWithEqualityFn } from 'zustand/traditional';
 
+import { NoAction } from './no-action';
 import { PlaceTileAction } from './place-tile-action';
 
-const actions = [PlaceTileAction];
+const actions = [NoAction, PlaceTileAction];
 
 const initialActionState = actions.reduce<{}>((acc, ctor) => {
 	return {
@@ -13,12 +14,12 @@ const initialActionState = actions.reduce<{}>((acc, ctor) => {
 }, {});
 
 export interface ActionStoreValue {
-	current: null | string;
+	current: string;
 }
 
 const ActionStore = createWithEqualityFn<ActionStoreValue>(
 	() => ({
-		current: null,
+		current: NoAction.name,
 		...initialActionState,
 	}),
 	shallow

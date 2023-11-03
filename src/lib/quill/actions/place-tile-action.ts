@@ -8,4 +8,8 @@ export class PlaceTileAction extends Action {
 	) {
 		super();
 	}
+
+	get isTileSelected() {
+		return !!this.id;
+	}
 }

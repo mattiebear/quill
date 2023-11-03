@@ -38,10 +38,6 @@ export class ActionManager {
 	active() {
 		const state = this.store.getState();
 
-		if (state.current === null) {
-			return null;
-		}
-
 		return (state as any)[state.current] as Action;
 	}
 
