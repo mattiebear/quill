@@ -17,10 +17,9 @@ import { Path } from '@/config/routes';
 import { useRelay } from '@/lib/messaging';
 import { useTokenset } from '@/lib/quill/hooks/use-tokenset';
 import { ChangeZoom } from '@/lib/quill/messages/rendering/change-zoom';
-import { EngineStore } from '@/lib/quill/store';
 
 import { ZoomInIcon, ZoomOutIcon } from '../icon';
-import { usePlayState } from './hooks/use-play-state';
+import { usePlaceTileAction } from './hooks/use-place-token-action';
 import { SelectMapModal } from './select-map-modal';
 
 export const PlayUI: FC = () => {
@@ -28,8 +27,8 @@ export const PlayUI: FC = () => {
 	const tokenset = useTokenset();
 	const navigate = useNavigate();
 	const { t } = useTranslation();
-	const { selectedToken } = usePlayState();
 	const { send } = useRelay();
+	const { action, selectToken } = usePlaceTileAction();
 
 	const handleClickDone = async () => {
 		navigate(Path.GameSessions);
@@ -75,10 +74,8 @@ export const PlayUI: FC = () => {
 									key={token.id}
 									h="auto"
 									p={2}
-									onClick={() =>
-										EngineStore.setState({ selectedToken: token.id })
-									}
-									{...(token.id === selectedToken && {
+									onClick={() => selectToken(token.id)}
+									{...(token.id === action.id && {
 										// TODO: Use semantic value
 										bg: 'green.500',
 										_hover: {

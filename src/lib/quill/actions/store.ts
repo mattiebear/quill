@@ -3,10 +3,11 @@ import { createWithEqualityFn } from 'zustand/traditional';
 
 import { NoAction } from './actions/no-action';
 import { PlaceTileAction } from './actions/place-tile-action';
+import { PlaceTokenAction } from './actions/place-token-action';
 
-const actions = [NoAction, PlaceTileAction];
+const actions = [NoAction, PlaceTileAction, PlaceTokenAction];
 
-const initialActionState = actions.reduce<{}>((acc, ctor) => {
+const initialActionState = actions.reduce((acc, ctor) => {
 	return {
 		...acc,
 		[ctor.name]: new ctor(),

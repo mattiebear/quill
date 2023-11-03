@@ -4,14 +4,11 @@ import { LoadingState, useEngineStore } from '@/lib/quill/store';
 import { useGameSession } from './use-game-session';
 
 export const usePlayState = () => {
-	const state = useEngineStore(
-		({ initialDataState, mapDataState, mapId, selectedToken }) => ({
-			initialDataState,
-			mapDataState,
-			mapId,
-			selectedToken,
-		})
-	);
+	const state = useEngineStore(({ initialDataState, mapDataState, mapId }) => ({
+		initialDataState,
+		mapDataState,
+		mapId,
+	}));
 
 	const currentUser = useCurrentUser();
 	const gameSession = useGameSession();

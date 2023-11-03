@@ -1,5 +1,6 @@
 import { container, Lifespan } from '@/lib/di';
 
+import { resetActionStore } from '../actions/store';
 import { Subscriber } from '../comms/subscriber';
 import { CurrentStoryState } from '../messages/story/current-story-state';
 import { SelectMap } from '../messages/story/select-map';
@@ -13,6 +14,7 @@ export class Store extends Subscriber {
 	}
 
 	reset() {
+		resetActionStore();
 		resetEngineStore();
 	}
 

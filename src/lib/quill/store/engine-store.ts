@@ -7,7 +7,6 @@ export interface EngineStoreValue {
 	initialDataState: LoadingState;
 	mapDataState: LoadingState;
 	mapId: string | null;
-	selectedToken: string | null;
 }
 
 const EngineStore = createWithEqualityFn<EngineStoreValue>(
@@ -15,7 +14,6 @@ const EngineStore = createWithEqualityFn<EngineStoreValue>(
 		initialDataState: LoadingState.Pending,
 		mapDataState: LoadingState.Pending,
 		mapId: null,
-		selectedToken: null,
 	}),
 	shallow
 );
