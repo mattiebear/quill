@@ -1,9 +1,10 @@
 import { container, Lifespan } from '@/lib/di';
 
+import { resetActionStore } from '../actions/store';
 import { Subscriber } from '../comms/subscriber';
 import { CurrentStoryState } from '../messages/story/current-story-state';
 import { SelectMap } from '../messages/story/select-map';
-import { resetQuillStore, quillStore as store } from './quill-store';
+import { resetEngineStore, EngineStore as store } from './engine-store';
 import { LoadingState } from './types';
 
 export class Store extends Subscriber {
@@ -13,7 +14,8 @@ export class Store extends Subscriber {
 	}
 
 	reset() {
-		resetQuillStore();
+		resetActionStore();
+		resetEngineStore();
 	}
 
 	loadMap() {

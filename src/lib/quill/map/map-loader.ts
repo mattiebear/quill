@@ -4,13 +4,13 @@ import { fetchMapDetail } from '@/api/maps';
 import { MapEntity } from '@/entites/map-entity';
 import { container, inject, Lifespan } from '@/lib/di';
 
-import { quillStore } from '../store';
+import { EngineStore } from '../store';
 import { Store } from '../store/store';
 import { TileMap } from './tile-map';
 
 export class MapLoader {
 	constructor(private tileMap: TileMap, private store: Store) {
-		this.initStoreSubscription();
+		this.init();
 	}
 
 	async load(mapId: string) {
@@ -25,8 +25,8 @@ export class MapLoader {
 		this.tileMap.load(map.atlas);
 	}
 
-	private initStoreSubscription() {
-		quillStore.subscribe((state, prev) => {
+	private init() {
+		EngineStore.subscribe((state, prev) => {
 			if (state.mapId && state.mapId !== prev.mapId) {
 				this.load(state.mapId);
 			}

@@ -2,23 +2,23 @@ import { container, inject, Lifespan } from '@/lib/di';
 import { Direction, Position } from '@/lib/quill';
 import { Tileset } from '@/lib/quill/map/tileset';
 
+import { ActionManager, PlaceTileAction } from '../actions';
 import { Subscriber } from '../comms/subscriber';
 import { MouseUp } from '../messages/interaction/mouse-up';
 import { PlaceTile } from '../messages/map/place-tile';
-import { quillStore } from '../store';
 
 export class TileMapDistributor extends Subscriber {
-	constructor(private tileset: Tileset) {
+	constructor(private tileset: Tileset, private actions: ActionManager) {
 		super();
 		this.init();
 	}
 
 	init() {
 		this.onEvent(MouseUp, ({ position }) => {
-			const { selectedBlueprint, selectedDirection } = quillStore.getState();
+			const action = this.actions.active();
 
-			if (selectedBlueprint) {
-				this.placeTile(selectedBlueprint, selectedDirection, position);
+			if (action.is(PlaceTileAction) && action.id) {
+				this.placeTile(action.id, action.direction, position);
 			}
 		});
 	}
@@ -32,7 +32,7 @@ export class TileMapDistributor extends Subscriber {
 	}
 }
 
-inject(TileMapDistributor, [Tileset]);
+inject(TileMapDistributor, [Tileset, ActionManager]);
 
 container.register(TileMapDistributor, {
 	class: TileMapDistributor,

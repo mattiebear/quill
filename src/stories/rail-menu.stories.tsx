@@ -13,7 +13,7 @@ import {
 	RailMenu,
 	RailMenuContent,
 	RailMenuItem,
-} from '../components/rails-menu';
+} from '../components/rail-menu';
 
 const meta = {
 	title: 'Components/RailMenu',
