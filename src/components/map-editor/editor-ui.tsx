@@ -15,8 +15,13 @@ import { useNavigate } from 'react-router-dom';
 
 import { useInvalidateMap } from '@/api/maps';
 import {
+	ArrowsPointingOutIcon,
 	ArrowUturnLeftIcon,
 	ArrowUturnRightIcon,
+	Cog6ToothIcon,
+	CursorArrowRaysIcon,
+	PaintBrushIcon,
+	TrashIcon,
 	ZoomInIcon,
 	ZoomOutIcon,
 } from '@/components/icon';
@@ -26,6 +31,7 @@ import { useRelay } from '@/lib/messaging';
 import { useTileset } from '@/lib/quill/hooks/use-tileset';
 import { ChangeZoom } from '@/lib/quill/messages/rendering/change-zoom';
 
+import { RailMenu, RailMenuItem } from '../rail-menu';
 import { usePlaceTileAction } from './hooks/use-place-tile-action';
 
 export const EditorUI: FC = () => {
@@ -44,83 +50,92 @@ export const EditorUI: FC = () => {
 	};
 
 	return (
-		<Box position="absolute">
-			{/* TODO: Create a menu component that encapsulates all of this */}
-			{/* TODO: Save position to local storage */}
-			<Draggable defaultPosition={{ x: 40, y: 40 }} nodeRef={nodeRef}>
-				<Flex
-					ref={nodeRef}
-					bg="background.float"
-					borderRadius="3xl"
-					cursor="grab"
-					direction="column"
-					minW="22rem"
-					p={4}
-				>
-					<Text color="text.body" fontSize="xl">
-						Build
-					</Text>
-
-					<Flex columnGap={2} direction="row" mb={2}>
-						<IconButton
-							aria-label={t('editor.zoomOut')}
-							icon={<ZoomOutIcon />}
-							onClick={() => send(new ChangeZoom('out'))}
-						/>
-						<IconButton
-							aria-label={t('editor.zoomIn')}
-							icon={<ZoomInIcon />}
-							onClick={() => send(new ChangeZoom('in'))}
-						/>
-					</Flex>
-
-					<Flex columnGap={2} direction="row" mb={2}>
-						<IconButton
-							aria-label={t('editor.rotateLeft')}
-							icon={<ArrowUturnRightIcon />}
-							onClick={rotateRight}
-						/>
-						<IconButton
-							aria-label={t('editor.rotateRight')}
-							icon={<ArrowUturnLeftIcon />}
-							onClick={rotateLeft}
-						/>
-					</Flex>
-
-					<SimpleGrid columns={3} spacing={2} mb={2}>
-						{tileset.all.map((blueprint) => (
-							<Button
-								key={blueprint.id}
-								h="auto"
-								p={2}
-								onClick={() => selectTile(blueprint.id)}
-								{...(blueprint.id === action.id && {
-									// TODO: Use semantic value
-									bg: 'green.500',
-									_hover: {
-										bg: 'green.500',
-									},
-								})}
-							>
-								<AspectRatio w="full" ratio={1}>
-									<Image
-										objectPosition="bottom center"
-										src={blueprint.sprite.source(action.direction)}
-									/>
-								</AspectRatio>
-							</Button>
-						))}
-					</SimpleGrid>
-
-					<Button
-						colorScheme="green"
-						variant="outline"
-						onClick={handleClickDone}
-					>
-						{t('common.done')}
-					</Button>
-				</Flex>
-			</Draggable>
+		<Box p={2}>
+			<RailMenu>
+				<RailMenuItem icon={<CursorArrowRaysIcon />} label="Select" />
+				<RailMenuItem icon={<ArrowsPointingOutIcon />} label="Move" />
+				<RailMenuItem icon={<PaintBrushIcon />} label="Create" />
+				<RailMenuItem icon={<TrashIcon />} label="Remove" />
+				<RailMenuItem icon={<Cog6ToothIcon />} label="Settings" />
+			</RailMenu>
 		</Box>
+		// <Box position="absolute">
+		// 	{/* TODO: Create a menu component that encapsulates all of this */}
+		// 	{/* TODO: Save position to local storage */}
+		// 	<Draggable defaultPosition={{ x: 40, y: 40 }} nodeRef={nodeRef}>
+		// 		<Flex
+		// 			ref={nodeRef}
+		// 			bg="background.float"
+		// 			borderRadius="3xl"
+		// 			cursor="grab"
+		// 			direction="column"
+		// 			minW="22rem"
+		// 			p={4}
+		// 		>
+		// 			<Text color="text.body" fontSize="xl">
+		// 				Build
+		// 			</Text>
+
+		// 			<Flex columnGap={2} direction="row" mb={2}>
+		// 				<IconButton
+		// 					aria-label={t('editor.zoomOut')}
+		// 					icon={<ZoomOutIcon />}
+		// 					onClick={() => send(new ChangeZoom('out'))}
+		// 				/>
+		// 				<IconButton
+		// 					aria-label={t('editor.zoomIn')}
+		// 					icon={<ZoomInIcon />}
+		// 					onClick={() => send(new ChangeZoom('in'))}
+		// 				/>
+		// 			</Flex>
+
+		// 			<Flex columnGap={2} direction="row" mb={2}>
+		// 				<IconButton
+		// 					aria-label={t('editor.rotateLeft')}
+		// 					icon={<ArrowUturnRightIcon />}
+		// 					onClick={rotateRight}
+		// 				/>
+		// 				<IconButton
+		// 					aria-label={t('editor.rotateRight')}
+		// 					icon={<ArrowUturnLeftIcon />}
+		// 					onClick={rotateLeft}
+		// 				/>
+		// 			</Flex>
+
+		// 			<SimpleGrid columns={3} spacing={2} mb={2}>
+		// 				{tileset.all.map((blueprint) => (
+		// 					<Button
+		// 						key={blueprint.id}
+		// 						h="auto"
+		// 						p={2}
+		// 						onClick={() => selectTile(blueprint.id)}
+		// 						{...(blueprint.id === action.id && {
+		// 							// TODO: Use semantic value
+		// 							bg: 'green.500',
+		// 							_hover: {
+		// 								bg: 'green.500',
+		// 							},
+		// 						})}
+		// 					>
+		// 						<AspectRatio w="full" ratio={1}>
+		// 							<Image
+		// 								objectPosition="bottom center"
+		// 								src={blueprint.sprite.source(action.direction)}
+		// 							/>
+		// 						</AspectRatio>
+		// 					</Button>
+		// 				))}
+		// 			</SimpleGrid>
+
+		// 			<Button
+		// 				colorScheme="green"
+		// 				variant="outline"
+		// 				onClick={handleClickDone}
+		// 			>
+		// 				{t('common.done')}
+		// 			</Button>
+		// 		</Flex>
+		// 	</Draggable>
+		// </Box>
 	);
 };
