@@ -3,7 +3,9 @@ import { useMemo } from 'react';
 import { useTileManifest } from '@/api/tiles/meta';
 import { Tileset } from '@/lib/quill/map/tileset';
 
-export const useTileset = () => {
+import { TileType } from '../map';
+
+export const useTileset = (type?: TileType) => {
 	const { data } = useTileManifest();
 
 	return useMemo(() => {
@@ -11,6 +13,11 @@ export const useTileset = () => {
 			throw new Error('No tileset data found');
 		}
 
-		return Tileset.from(data.data, { imageBaseURL: '/images/tiles' });
-	}, [data]);
+		const filteredData =
+			type !== undefined
+				? data.data.filter((tile) => tile.type === type)
+				: data.data;
+
+		return Tileset.from(filteredData, { imageBaseURL: '/images/tiles' });
+	}, [data, type]);
 };

@@ -57,8 +57,8 @@ dependencies:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
   react-draggable:
-    specifier: ^4.4.5
-    version: 4.4.5(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^4.4.6
+    version: 4.4.6(react-dom@18.2.0)(react@18.2.0)
   react-hook-form:
     specifier: ^7.45.2
     version: 7.45.2(react@18.2.0)
@@ -9477,8 +9477,8 @@ packages:
       react: 18.2.0
       scheduler: 0.23.0
 
-  /react-draggable@4.4.5(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-OMHzJdyJbYTZo4uQE393fHcqqPYsEtkjfMgvCHr6rejT+Ezn4OZbNyGH50vv+SunC1RMvwOTSWkEODQLzw1M9g==}
+  /react-draggable@4.4.6(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-LtY5Xw1zTPqHkVmtM3X8MUOxNDOUhv/khTgBgrUvwaS064bwVvxT+q5El0uUFNx5IEPKXuRejr7UqLwBIg5pdw==}
     peerDependencies:
       react: '>= 16.3.0'
       react-dom: '>= 16.3.0'

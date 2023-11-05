@@ -12,6 +12,7 @@ import {
 import { findOrCreateByKey } from '@/utils/map';
 import { clamp } from '@/utils/number';
 
+import { ActionManager, PlaceTileAction } from '../actions';
 import { Subscriber } from '../comms/subscriber';
 import { Token } from '../map/token';
 import { MapAltered } from '../messages/map/map-altered';
@@ -22,10 +23,10 @@ import { Interactor } from './interactor';
 import { RenderStack } from './render-stack';
 
 const ScrollEventMap = new Map([
-	['w', 'up'],
-	['a', 'left'],
-	['s', 'down'],
-	['d', 'right'],
+	['ArrowUp', 'up'],
+	['ArrowLeft', 'left'],
+	['ArrowDown', 'down'],
+	['ArrowRight', 'right'],
 ]);
 
 export class Renderer extends Subscriber {
@@ -40,7 +41,8 @@ export class Renderer extends Subscriber {
 		public config: EngineConfig,
 		private stack: RenderStack,
 		private highlighter: Highlighter,
-		private interactor: Interactor
+		private interactor: Interactor,
+		private actions: ActionManager
 	) {
 		super();
 
@@ -64,12 +66,25 @@ export class Renderer extends Subscriber {
 		});
 	}
 
+	// TODO: Move this to interactor or something
 	private initializeListeners() {
 		this.keydown = (e: KeyboardEvent) => {
 			const dir = ScrollEventMap.get(e.key);
 
 			if (dir) {
 				this.scrollMap(dir);
+			}
+
+			if (e.key === '=') {
+				this.send(new ChangeZoom('in'));
+			}
+
+			if (e.key === '-') {
+				this.send(new ChangeZoom('out'));
+			}
+
+			if (e.key === 'r' && this.actions.isActive(PlaceTileAction)) {
+				console.log('rotate');
 			}
 		};
 
@@ -177,7 +192,13 @@ export class Renderer extends Subscriber {
 	}
 }
 
-inject(Renderer, [EngineConfig, RenderStack, Highlighter, Interactor]);
+inject(Renderer, [
+	EngineConfig,
+	RenderStack,
+	Highlighter,
+	Interactor,
+	ActionManager,
+]);
 
 container.register(Renderer, {
 	class: Renderer,

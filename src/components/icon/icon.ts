@@ -5,6 +5,7 @@ import {
 	ArrowUturnRightIcon as ArrowUturnRightIconBase,
 	BookOpenIcon as BookOpenIconBase,
 	Cog6ToothIcon as Cog6ToothIconBase,
+	CubeIcon as CubeIconBase,
 	CursorArrowRaysIcon as CursorArrowRaysIconBase,
 	EllipsisHorizontalIcon as EllipsisHorizontalIconBase,
 	HomeIcon as HomeIconBase,
@@ -25,6 +26,7 @@ export const ArrowUturnLeftIcon = chakra(ArrowUturnLeftIconBase);
 export const ArrowUturnRightIcon = chakra(ArrowUturnRightIconBase);
 export const BookOpenIcon = chakra(BookOpenIconBase);
 export const Cog6ToothIcon = chakra(Cog6ToothIconBase);
+export const CubeIcon = chakra(CubeIconBase);
 export const CursorArrowRaysIcon = chakra(CursorArrowRaysIconBase);
 export const EllipsisHorizontalIcon = chakra(EllipsisHorizontalIconBase);
 export const HomeIcon = chakra(HomeIconBase);
