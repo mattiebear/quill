@@ -19,7 +19,7 @@ import { useTokenset } from '@/lib/quill/hooks/use-tokenset';
 import { ChangeZoom } from '@/lib/quill/messages/rendering/change-zoom';
 
 import { ZoomInIcon, ZoomOutIcon } from '../icon';
-import { usePlaceTileAction } from './hooks/use-place-token-action';
+import { usePlaceTokenAction } from './hooks/use-place-token-action';
 import { SelectMapModal } from './select-map-modal';
 
 export const PlayUI: FC = () => {
@@ -28,7 +28,7 @@ export const PlayUI: FC = () => {
 	const navigate = useNavigate();
 	const { t } = useTranslation();
 	const { send } = useRelay();
-	const { action, selectToken } = usePlaceTileAction();
+	const { action, selectToken } = usePlaceTokenAction();
 
 	const handleClickDone = async () => {
 		navigate(Path.GameSessions);

@@ -11,7 +11,14 @@ export class Action {
 	) {
 		const instance = new (this.constructor as any)();
 
-		Object.assign(instance, data);
+		const initial = Object.getOwnPropertyNames(this).reduce((props, name) => {
+			return {
+				...props,
+				[name]: (this as any)[name],
+			};
+		}, {});
+
+		Object.assign(instance, initial, data);
 
 		return instance;
 	}
