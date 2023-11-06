@@ -145,11 +145,18 @@
 			"header": "Select map"
 		},
 		"editor": {
-			"zoomIn": "Zoom in",
-			"zoomOut": "Zoom out",
-			"rotateRight": "Rotate right",
-			"rotateLeft": "Rotate left",
-			"mapSaved": "Map saved"
+			"mapSaved": "Map saved",
+			"menuLabel": {
+				"select": "Select",
+				"move": "Move",
+				"create": "Create",
+				"floors": "Floors",
+				"walls": "Walls",
+				"objects": "Objects",
+				"remove": "Remove",
+				"settings": "Settings",
+				"tokens": "Tokens"
+			}
 		}
 	}
 }

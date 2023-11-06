@@ -33,29 +33,51 @@ export const EditorUI: FC = () => {
 	return (
 		<Box position="absolute" p={2}>
 			<RailMenu>
-				<RailMenuItem icon={<CursorArrowRaysIcon />} label="Select" />
-				<RailMenuItem icon={<ArrowsPointingOutIcon />} label="Move" />
-				<RailMenuItem icon={<PaintBrushIcon />} label="Create" keyBinding="C">
-					<RailMenuItem icon={<CubeIcon />} label="Floors">
+				<RailMenuItem
+					icon={<CursorArrowRaysIcon />}
+					label={t('editor.menuLabel.select')}
+				/>
+				<RailMenuItem
+					icon={<ArrowsPointingOutIcon />}
+					label={t('editor.menuLabel.move')}
+				/>
+				<RailMenuItem
+					icon={<PaintBrushIcon />}
+					label={t('editor.menuLabel.create')}
+					keyBinding="C"
+				>
+					<RailMenuItem
+						icon={<CubeIcon />}
+						label={t('editor.menuLabel.floors')}
+					>
 						<RailMenuContent>
 							<TileSelector type={TileType.Floor} />
 						</RailMenuContent>
 					</RailMenuItem>
 
-					<RailMenuItem icon={<CubeIcon />} label="Walls">
+					<RailMenuItem icon={<CubeIcon />} label={t('editor.menuLabel.walls')}>
 						<RailMenuContent>
 							<TileSelector type={TileType.Wall} />
 						</RailMenuContent>
 					</RailMenuItem>
 
-					<RailMenuItem icon={<CubeIcon />} label="Objects">
+					<RailMenuItem
+						icon={<CubeIcon />}
+						label={t('editor.menuLabel.objects')}
+					>
 						<RailMenuContent>
 							<TileSelector type={TileType.Object} />
 						</RailMenuContent>
 					</RailMenuItem>
 				</RailMenuItem>
-				<RailMenuItem icon={<TrashIcon />} label="Remove" />
-				<RailMenuItem icon={<Cog6ToothIcon />} label="Settings">
+				<RailMenuItem
+					icon={<TrashIcon />}
+					label={t('editor.menuLabel.remove')}
+				/>
+				<RailMenuItem
+					icon={<Cog6ToothIcon />}
+					label={t('editor.menuLabel.settings')}
+				>
 					<RailMenuContent>
 						<Button colorScheme="green" onClick={handleClickDone}>
 							{t('common.done')}
