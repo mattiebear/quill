@@ -17,7 +17,6 @@ import { Path } from '@/config/routes';
 import { TileType } from '@/lib/quill';
 
 import { RailMenu, RailMenuContent, RailMenuItem } from '../rail-menu';
-import { usePlaceTileAction } from './hooks/use-place-tile-action';
 import { TileSelector } from './tile-selector';
 
 export const EditorUI: FC = () => {
@@ -25,7 +24,6 @@ export const EditorUI: FC = () => {
 	const map = useMap();
 	const invalidate = useInvalidateMap(map);
 	const navigate = useNavigate();
-	// const { action, rotateLeft, rotateRight, selectTile } = usePlaceTileAction();
 
 	const handleClickDone = async () => {
 		await invalidate();
@@ -66,58 +64,5 @@ export const EditorUI: FC = () => {
 				</RailMenuItem>
 			</RailMenu>
 		</Box>
-		// <Box position="absolute">
-		// 	{/* TODO: Create a menu component that encapsulates all of this */}
-		// 	{/* TODO: Save position to local storage */}
-		// 	<Draggable defaultPosition={{ x: 40, y: 40 }} nodeRef={nodeRef}>
-		// 		<Flex
-		// 			ref={nodeRef}
-		// 			bg="background.float"
-		// 			borderRadius="3xl"
-		// 			cursor="grab"
-		// 			direction="column"
-		// 			minW="22rem"
-		// 			p={4}
-		// 		>
-		// 			<Text color="text.body" fontSize="xl">
-		// 				Build
-		// 			</Text>
-
-		// 			<Flex columnGap={2} direction="row" mb={2}>
-		// 				<IconButton
-		// 					aria-label={t('editor.zoomOut')}
-		// 					icon={<ZoomOutIcon />}
-		// 					onClick={() => send(new ChangeZoom('out'))}
-		// 				/>
-		// 				<IconButton
-		// 					aria-label={t('editor.zoomIn')}
-		// 					icon={<ZoomInIcon />}
-		// 					onClick={() => send(new ChangeZoom('in'))}
-		// 				/>
-		// 			</Flex>
-
-		// 			<Flex columnGap={2} direction="row" mb={2}>
-		// 				<IconButton
-		// 					aria-label={t('editor.rotateLeft')}
-		// 					icon={<ArrowUturnRightIcon />}
-		// 					onClick={rotateRight}
-		// 				/>
-		// 				<IconButton
-		// 					aria-label={t('editor.rotateRight')}
-		// 					icon={<ArrowUturnLeftIcon />}
-		// 					onClick={rotateLeft}
-		// 				/>
-		// 			</Flex>
-
-		// 			<Button
-		// 				colorScheme="green"
-		// 				variant="outline"
-		// 				onClick={handleClickDone}
-		// 			>
-		// 				{t('common.done')}
-		// 			</Button>
-		// 		</Flex>
-		// 	</Draggable>
-		// </Box>
 	);
 };
