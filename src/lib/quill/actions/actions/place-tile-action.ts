@@ -15,6 +15,10 @@ export class PlaceTileAction extends Action {
 		return !!this.id;
 	}
 
+	rotateClockwise() {
+		return this.rotate(1);
+	}
+
 	rotate(places: number) {
 		const directions = Object.values(Direction);
 

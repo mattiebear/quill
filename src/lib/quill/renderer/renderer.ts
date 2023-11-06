@@ -83,8 +83,9 @@ export class Renderer extends Subscriber {
 				this.send(new ChangeZoom('out'));
 			}
 
-			if (e.key === 'r' && this.actions.isActive(PlaceTileAction)) {
-				console.log('rotate');
+			if (e.key === 'r') {
+				const action = this.actions.get(PlaceTileAction);
+				this.actions.update(action.rotateClockwise());
 			}
 		};
 
