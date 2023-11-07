@@ -34,7 +34,7 @@ export const EditorUI: FC = () => {
 
 	return (
 		<Box position="absolute" p={2}>
-			<RailMenu onSelect={reset}>
+			<RailMenu onSelect={reset} resetOnEscape>
 				<RailMenuItem
 					icon={<CursorArrowRaysIcon />}
 					keyBinding="S"

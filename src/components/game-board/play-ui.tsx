@@ -30,7 +30,7 @@ export const PlayUI: FC = () => {
 			<SelectMapModal />
 
 			<Box position="absolute" p={2}>
-				<RailMenu onSelect={reset}>
+				<RailMenu onSelect={reset} resetOnEscape>
 					<RailMenuItem
 						icon={<CursorArrowRaysIcon />}
 						keyBinding="S"
