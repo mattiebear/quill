@@ -35,19 +35,24 @@ export const EditorUI: FC = () => {
 			<RailMenu>
 				<RailMenuItem
 					icon={<CursorArrowRaysIcon />}
+					keyBinding="S"
 					label={t('editor.menuLabel.select')}
 				/>
+
 				<RailMenuItem
 					icon={<ArrowsPointingOutIcon />}
+					keyBinding="M"
 					label={t('editor.menuLabel.move')}
 				/>
+
 				<RailMenuItem
 					icon={<PaintBrushIcon />}
-					label={t('editor.menuLabel.create')}
 					keyBinding="C"
+					label={t('editor.menuLabel.create')}
 				>
 					<RailMenuItem
 						icon={<CubeIcon />}
+						keyBinding="F"
 						label={t('editor.menuLabel.floors')}
 					>
 						<RailMenuContent>
@@ -55,7 +60,11 @@ export const EditorUI: FC = () => {
 						</RailMenuContent>
 					</RailMenuItem>
 
-					<RailMenuItem icon={<CubeIcon />} label={t('editor.menuLabel.walls')}>
+					<RailMenuItem
+						icon={<CubeIcon />}
+						keyBinding="W"
+						label={t('editor.menuLabel.walls')}
+					>
 						<RailMenuContent>
 							<TileSelector type={TileType.Wall} />
 						</RailMenuContent>
@@ -63,6 +72,7 @@ export const EditorUI: FC = () => {
 
 					<RailMenuItem
 						icon={<CubeIcon />}
+						keyBinding="O"
 						label={t('editor.menuLabel.objects')}
 					>
 						<RailMenuContent>
@@ -70,12 +80,16 @@ export const EditorUI: FC = () => {
 						</RailMenuContent>
 					</RailMenuItem>
 				</RailMenuItem>
+
 				<RailMenuItem
 					icon={<TrashIcon />}
+					keyBinding="X"
 					label={t('editor.menuLabel.remove')}
 				/>
+
 				<RailMenuItem
 					icon={<Cog6ToothIcon />}
+					keyBinding="P"
 					label={t('editor.menuLabel.settings')}
 				>
 					<RailMenuContent>
