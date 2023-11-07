@@ -17,3 +17,13 @@ export const shift =
 export const find = (array: any[], value: unknown) => {
 	return array.findIndex((index) => index === value);
 };
+
+export const equals = (a: any[], b: any[]): boolean => {
+	if (a.length !== b.length) {
+		return false;
+	}
+
+	return a.every((value, index) => {
+		return b[index] === value;
+	});
+};

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { shift } from '@/utils/array';
+import { equals, shift } from '@/utils/array';
 
 describe('shift()', () => {
 	it.each([
@@ -17,6 +17,22 @@ describe('shift()', () => {
 			const move = shift(array);
 
 			expect(move(start, places)).toBe(expected);
+		}
+	);
+});
+
+describe('equals()', () => {
+	it.each([
+		{ a: ['a', 'b', 'c'], b: ['a', 'b', 'c'], expected: true },
+		{ a: ['a', 'b', 'c'], b: ['a', 'b'], expected: false },
+		{ a: ['a', 'b'], b: ['a', 'b', 'c'], expected: false },
+		{ a: [1, 2], b: ['1', '2'], expected: false },
+		{ a: [{}], b: [{}], expected: false },
+		{ a: [], b: [], expected: true },
+	])(
+		'determines arrays $a and $b equal to be $expected',
+		({ a, b, expected }) => {
+			expect(equals(a, b)).toBe(expected);
 		}
 	);
 });
