@@ -31,23 +31,28 @@ export const PlayUI: FC = () => {
 				<RailMenu>
 					<RailMenuItem
 						icon={<CursorArrowRaysIcon />}
+						keyBinding="S"
 						label={t('editor.menuLabel.select')}
 					/>
 					<RailMenuItem
 						icon={<ArrowsPointingOutIcon />}
+						keyBinding="M"
 						label={t('editor.menuLabel.move')}
 					/>
 
 					<RailMenuItem
 						icon={<UserGroupIcon />}
+						keyBinding="T"
 						label={t('editor.menuLabel.tokens')}
 					>
 						<RailMenuContent>
 							<TokenSelector />
 						</RailMenuContent>
 					</RailMenuItem>
+
 					<RailMenuItem
 						icon={<Cog6ToothIcon />}
+						keyBinding="P"
 						label={t('editor.menuLabel.settings')}
 					>
 						<RailMenuContent>
