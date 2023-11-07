@@ -8,10 +8,15 @@ import { useRailMenu } from './use-rail-menu';
 
 interface RailMenuProps extends PropsWithChildren {
 	onSelect?: (action?: string) => void;
+	resetOnEscape?: boolean;
 }
 
-export const RailMenu: FC<RailMenuProps> = ({ children, onSelect }) => {
-	const menu = useRailMenu({ onSelect });
+export const RailMenu: FC<RailMenuProps> = ({
+	children,
+	onSelect,
+	resetOnEscape = false,
+}) => {
+	const menu = useRailMenu({ onSelect, resetOnEscape });
 
 	return (
 		<RailMenuContext value={menu}>

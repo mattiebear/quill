@@ -1,13 +1,14 @@
 import { StyleProps } from '@chakra-ui/react';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { equals } from '@/utils/array';
 
 interface UseRailMenuConfig {
 	onSelect?: (action?: string) => void;
+	resetOnEscape: boolean;
 }
 
-export const useRailMenu = ({ onSelect }: UseRailMenuConfig) => {
+export const useRailMenu = ({ onSelect, resetOnEscape }: UseRailMenuConfig) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [stack, setStack] = useState<number[]>([]);
 
@@ -40,6 +41,22 @@ export const useRailMenu = ({ onSelect }: UseRailMenuConfig) => {
 			left: `${3 * level}rem`,
 		};
 	}, []);
+
+	useEffect(() => {
+		if (!resetOnEscape) {
+			return;
+		}
+
+		const listener = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') {
+				selectItem([]);
+			}
+		};
+
+		document.addEventListener('keyup', listener);
+
+		return () => document.removeEventListener('keyup', listener);
+	}, [resetOnEscape, selectItem]);
 
 	return {
 		containerRef,
