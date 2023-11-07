@@ -7,7 +7,7 @@ import { RailMenuFrame } from './rail-menu-frame';
 import { useRailMenu } from './use-rail-menu';
 
 interface RailMenuProps extends PropsWithChildren {
-	onSelect?: (action: string) => void;
+	onSelect?: (action?: string) => void;
 }
 
 export const RailMenu: FC<RailMenuProps> = ({ children, onSelect }) => {

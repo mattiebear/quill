@@ -1,8 +1,10 @@
 import { StyleProps } from '@chakra-ui/react';
 import { useCallback, useRef, useState } from 'react';
 
+import { equals } from '@/utils/array';
+
 interface UseRailMenuConfig {
-	onSelect?: (action: string) => void;
+	onSelect?: (action?: string) => void;
 }
 
 export const useRailMenu = ({ onSelect }: UseRailMenuConfig) => {
@@ -11,13 +13,17 @@ export const useRailMenu = ({ onSelect }: UseRailMenuConfig) => {
 
 	const selectItem = useCallback(
 		(location: number[], action?: string) => {
+			if (equals(location, stack)) {
+				return;
+			}
+
 			setStack(location);
 
-			if (onSelect && action) {
+			if (onSelect) {
 				onSelect(action);
 			}
 		},
-		[onSelect, setStack]
+		[onSelect, setStack, stack]
 	);
 
 	const getIsActive = useCallback(

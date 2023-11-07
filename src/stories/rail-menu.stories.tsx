@@ -27,7 +27,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const onSelect = (action: string) => {
+const onSelect = (action?: string) => {
 	console.log('action:', action);
 };
 
