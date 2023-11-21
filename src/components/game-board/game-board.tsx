@@ -5,7 +5,7 @@ import { useIdParam } from '@/lib/router';
 import { assertPresence } from '@/utils/runtime';
 
 import { StoryContext } from './context';
-import { useGameBoard } from './hooks/use-game-board';
+// import { useGameBoard } from './hooks/use-game-board';
 import { PlayUI } from './play-ui';
 
 export const GameBoard: FC = () => {
@@ -14,7 +14,7 @@ export const GameBoard: FC = () => {
 
 	assertPresence(gameSession);
 
-	useGameBoard(gameSession);
+	// useGameBoard(gameSession);
 
 	return (
 		<StoryContext value={{ gameSession }}>

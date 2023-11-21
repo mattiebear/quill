@@ -2,17 +2,17 @@ import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { FC, Suspense } from 'react';
 
-import { useEditorTiles } from './hooks/use-editor-tiles';
+import { useMapTiles } from './hooks/use-map-tiles';
 
 export const MapRenderer: FC = () => {
-	const { floors } = useEditorTiles();
+	const { floors } = useMapTiles();
 
 	return (
 		<Suspense>
 			<Canvas camera={{ position: [4, 1, 0] }}>
 				<ambientLight intensity={8} />
 				<OrbitControls />
-				{...floors}
+				{floors}
 			</Canvas>
 		</Suspense>
 	);
