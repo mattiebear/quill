@@ -3,7 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { Suspense } from 'react';
 
 import { useMapDetail } from '@/api/maps';
-import { useMapEditor } from '@/components/map-editor/hooks/use-map-editor';
+// import { useMapEditor } from '@/components/map-editor/hooks/use-map-editor';
 import { useIdParam } from '@/lib/router';
 import { Floor1 } from '@/lib/tiles/floor-1';
 import { assertPresence } from '@/utils/runtime';
