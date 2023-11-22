@@ -8,18 +8,14 @@ const Tiles: Record<string, FC<JSX.IntrinsicElements['group']>> = {
 	'1': Floor1,
 };
 
-export const useMapTiles = () => {
-	const tiles = useTileStore(({ floors }) => ({
-		floors,
-	}));
+export const useFloorTiles = () => {
+	const floors = useTileStore((state) => state.floors);
 
-	const floors = useMemo(() => {
-		return tiles.floors.map((floor) => {
+	return useMemo(() => {
+		return floors.map((floor) => {
 			const Tile = Tiles[floor.tileId];
 
-			return <Tile key={floor.id} position={floor.position.toArray()} />;
+			return <Tile key={floor.id} position={floor.position.toCoords()} />;
 		});
-	}, [tiles.floors]);
-
-	return { floors };
+	}, [floors]);
 };

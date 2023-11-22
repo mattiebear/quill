@@ -2,17 +2,26 @@ import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { FC, Suspense } from 'react';
 
-import { useMapTiles } from './hooks/use-map-tiles';
+import { useFloorTiles } from './hooks/use-floor-tiles';
+import { useMapGrid } from './hooks/use-map-grid';
 
 export const MapRenderer: FC = () => {
-	const { floors } = useMapTiles();
+	const floors = useFloorTiles();
+	const grid = useMapGrid();
 
 	return (
 		<Suspense>
-			<Canvas camera={{ position: [4, 1, 0] }}>
+			<Canvas
+				orthographic
+				camera={{
+					zoom: 120,
+					position: [4, 4, 0],
+				}}
+			>
 				<ambientLight intensity={8} />
 				<OrbitControls />
 				{floors}
+				{grid}
 			</Canvas>
 		</Suspense>
 	);

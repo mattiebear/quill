@@ -31,6 +31,7 @@
 		"axios": "^1.4.0",
 		"framer-motion": "^10.13.1",
 		"i18next": "^22.5.1",
+		"immer": "^10.0.3",
 		"json2typescript": "^1.5.1",
 		"pixi.js": "^7.2.4",
 		"react": "^18.2.0",
