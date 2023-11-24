@@ -1,40 +1,43 @@
 import { AspectRatio, Button, Image, SimpleGrid } from '@chakra-ui/react';
+import { pick } from 'ramda';
 import { FC } from 'react';
 
-import { TileType } from '@/lib/quill';
-import { useTileset } from '@/lib/quill/hooks/use-tileset';
+import { useEditorStore } from '@/lib/engine/store/editor-store';
 
-import { usePlaceTileAction } from './hooks/use-place-tile-action';
+import { useTileset } from './hooks/use-tileset';
 
 interface TileSelectorProps {
-	type: TileType;
+	// TODO: Scope to allowed types
+	type: string;
 }
 
-export const TileSelector: FC<TileSelectorProps> = ({ type }) => {
-	const { action, selectTile } = usePlaceTileAction();
-	const tileset = useTileset(type);
+export const TileSelector: FC<TileSelectorProps> = () => {
+	const { beginPlaceFloor, placeTileId } = useEditorStore(
+		pick(['beginPlaceFloor', 'placeTileId'])
+	);
+	const tileset = useTileset();
 
 	return (
 		<SimpleGrid columns={3} spacing={2} mb={2} minW="15rem">
-			{tileset.all.map((blueprint) => (
+			{tileset.map((tile) => (
 				<Button
 					bg="none"
 					border="2px solid"
-					key={blueprint.id}
+					key={tile.id}
 					h="auto"
 					p={2}
-					onClick={() => selectTile(blueprint.id)}
+					onClick={() => beginPlaceFloor(tile.id)}
 					_hover={{
 						bg: 'gray.700',
 					}}
-					{...(blueprint.id === action.id && {
+					{...(tile.id === placeTileId && {
 						borderColor: 'menu.active',
 					})}
 				>
 					<AspectRatio w="full" ratio={1}>
 						<Image
 							objectPosition="bottom center"
-							src={blueprint.sprite.source(action.direction)}
+							src={`/images/${tile.image}`}
 						/>
 					</AspectRatio>
 				</Button>
