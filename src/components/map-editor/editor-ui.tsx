@@ -58,11 +58,11 @@ export const EditorUI: FC = () => {
 						label={t('editor.menuLabel.floors')}
 					>
 						<RailMenuContent>
-							<TileSelector type={TileType.Floor} />
+							<TileSelector type="floor" />
 						</RailMenuContent>
 					</RailMenuItem>
 
-					<RailMenuItem
+					{/* <RailMenuItem
 						icon={<CubeIcon />}
 						keyBinding="W"
 						label={t('editor.menuLabel.walls')}
@@ -80,7 +80,7 @@ export const EditorUI: FC = () => {
 						<RailMenuContent>
 							<TileSelector type={TileType.Object} />
 						</RailMenuContent>
-					</RailMenuItem>
+					</RailMenuItem> */}
 				</RailMenuItem>
 
 				<RailMenuItem

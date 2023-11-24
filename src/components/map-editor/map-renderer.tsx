@@ -2,11 +2,11 @@ import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { FC, Suspense } from 'react';
 
-import { useFloorTiles } from './hooks/use-floor-tiles';
+import { useMapFloors } from './hooks/use-map-floors';
 import { useMapGrid } from './hooks/use-map-grid';
 
 export const MapRenderer: FC = () => {
-	const floors = useFloorTiles();
+	const floors = useMapFloors();
 	const grid = useMapGrid();
 
 	return (

@@ -8,7 +8,7 @@ const Tiles: Record<string, FC<JSX.IntrinsicElements['group']>> = {
 	'1': Floor1,
 };
 
-export const useFloorTiles = () => {
+export const useMapFloors = () => {
 	const floors = useTileStore((state) => state.floors);
 
 	return useMemo(() => {
