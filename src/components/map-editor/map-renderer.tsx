@@ -4,10 +4,12 @@ import { FC, Suspense } from 'react';
 
 import { useMapFloors } from './hooks/use-map-floors';
 import { useMapGrid } from './hooks/use-map-grid';
+import { useTileGhost } from './hooks/use-tile-ghost';
 
 export const MapRenderer: FC = () => {
 	const floors = useMapFloors();
 	const grid = useMapGrid();
+	const ghost = useTileGhost();
 
 	return (
 		<Suspense>
@@ -22,6 +24,7 @@ export const MapRenderer: FC = () => {
 				<OrbitControls />
 				{floors}
 				{grid}
+				{ghost}
 			</Canvas>
 		</Suspense>
 	);

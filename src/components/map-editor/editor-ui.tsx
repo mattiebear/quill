@@ -14,7 +14,6 @@ import {
 } from '@/components/icon';
 import { useMap } from '@/components/map-editor/hooks/use-map';
 import { Path } from '@/config/routes';
-import { TileType } from '@/lib/quill';
 import { useResetAction } from '@/lib/quill/actions/hooks/use-reset-action';
 
 import { RailMenu, RailMenuContent, RailMenuItem } from '../rail-menu';
