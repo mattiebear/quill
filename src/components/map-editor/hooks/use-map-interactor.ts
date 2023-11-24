@@ -26,5 +26,18 @@ export const useMapInteractor = () => {
 		[placeFloor]
 	);
 
-	return { onClickGrid };
+	const onMoveGrid = useCallback((e: any) => {
+		const current = EditorStore.getState().pointerPosition;
+		const position = Position.fromPoint(e.point);
+
+		if (!current || !current.equals(position)) {
+			EditorStore.setState({ pointerPosition: position });
+		}
+	}, []);
+
+	const onLeaveGrid = useCallback(() => {
+		EditorStore.setState({ pointerPosition: null });
+	}, []);
+
+	return { onClickGrid, onLeaveGrid, onMoveGrid };
 };
