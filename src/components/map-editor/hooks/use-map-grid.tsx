@@ -10,6 +10,7 @@ export const useMapGrid = () => {
 			onPointerLeave={onLeaveGrid}
 			rotation-x={(Math.PI / 180) * -90}
 		>
+			{/* TODO: Make full size */}
 			<planeGeometry args={[3, 3]} />
 			<meshStandardMaterial opacity={0.1} transparent />
 		</mesh>
