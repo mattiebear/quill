@@ -18,15 +18,9 @@ export const fetchGameSessionDetail = async (id: string) => {
 	const http = await getHttpClient();
 	const queryClient = await getQueryClient();
 
-	return queryClient.fetchQuery(
-		buildKey(id),
-		() => {
-			return http.get(buildPath(id));
-		},
-		{
-			staleTime: Infinity,
-		}
-	);
+	return queryClient.fetchQuery(buildKey(id), () => {
+		return http.get(buildPath(id));
+	});
 };
 
 export const useGameSessionDetail = (id: string) => {
@@ -42,7 +36,6 @@ export const useGameSessionDetail = (id: string) => {
 				const convert = new JsonConvert();
 				return convert.deserializeObject(response.data, GameSession);
 			},
-			staleTime: Infinity,
 		}
 	);
 };
