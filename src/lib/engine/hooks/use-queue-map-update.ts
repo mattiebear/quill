@@ -6,7 +6,7 @@ import { TileStore } from '@/lib/engine/store/tile-store';
 import { useHttpClient } from '@/lib/http';
 import { DynamicPath } from '@/lib/url';
 
-import { useEditorContext } from '../context';
+import { useEditorContext } from '../../../components/map-editor/context';
 
 export const useQueueMapUpdate = () => {
 	const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
