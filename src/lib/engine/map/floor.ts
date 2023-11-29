@@ -7,4 +7,13 @@ export class Floor {
 		public tileId: string,
 		public rotation: number
 	) {}
+
+	toJSON() {
+		return {
+			id: this.id,
+			pos: this.position.toArray(),
+			tile: this.tileId,
+			rot: this.rotation,
+		};
+	}
 }
