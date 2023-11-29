@@ -12,6 +12,7 @@ export interface TileStoreValues {
 const TileStore = createWithEqualityFn<TileStoreValues>(
 	(set) => ({
 		floors: [],
+		// TODO: Maybe have this in a separate hook
 		placeFloor: (floor: Floor) => {
 			set(
 				produce<TileStoreValues>((state) => {

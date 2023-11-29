@@ -16,32 +16,20 @@ export const fetchTileManifest = async () => {
 	const http = await getHttpClient();
 	const queryClient = await getQueryClient();
 
-	return queryClient.fetchQuery(
-		buildKey(),
-		() => {
-			return http.get<TileSchema[]>(buildPath(), {
-				baseURL: '/',
-			});
-		},
-		{
-			staleTime: Infinity,
-		}
-	);
+	return queryClient.fetchQuery(buildKey(), () => {
+		return http.get<TileSchema[]>(buildPath(), {
+			baseURL: '/',
+		});
+	});
 };
 
 export const useTileManifest = () => {
 	const http = useHttpClient();
 
-	return useQuery(
-		buildKey(),
-		() => {
-			return http.get<TileSchema[]>(buildPath(), {
-				// TODO: Should this be a separate client?
-				baseURL: '/',
-			});
-		},
-		{
-			staleTime: Infinity,
-		}
-	);
+	return useQuery(buildKey(), () => {
+		return http.get<TileSchema[]>(buildPath(), {
+			// TODO: Should this be a separate client?
+			baseURL: '/',
+		});
+	});
 };

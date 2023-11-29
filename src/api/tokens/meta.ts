@@ -18,17 +18,11 @@ export const fetchTokenManifest = async () => {
 	const http = await getHttpClient();
 	const queryClient = await getQueryClient();
 
-	return queryClient.fetchQuery(
-		buildKey(),
-		() => {
-			return http.get<TokenSchema[]>(buildPath(), {
-				baseURL: '/',
-			});
-		},
-		{
-			staleTime: Infinity,
-		}
-	);
+	return queryClient.fetchQuery(buildKey(), () => {
+		return http.get<TokenSchema[]>(buildPath(), {
+			baseURL: '/',
+		});
+	});
 };
 
 export const useTokenManifest = () => {
@@ -47,7 +41,6 @@ export const useTokenManifest = () => {
 				const convert = new JsonConvert();
 				return convert.deserializeArray(response.data, TokenMeta);
 			},
-			staleTime: Infinity,
 		}
 	);
 };

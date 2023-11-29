@@ -20,5 +20,5 @@ export class Atlas {
 	version = '';
 
 	@JsonProperty('data', Any)
-	data: PersistedNode[] = [];
+	data: any = {};
 }

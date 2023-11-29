@@ -1,12 +1,16 @@
 import { useCallback } from 'react';
 
+import { Crypto } from '@/lib/crypto';
 import { Floor } from '@/lib/engine/map/floor';
 import { Position } from '@/lib/engine/map/position';
 import { EditorAction, EditorStore } from '@/lib/engine/store/editor-store';
 import { useTileStore } from '@/lib/engine/store/tile-store';
 
+import { useQueueMapUpdate } from './use-queue-map-update';
+
 export const useMapInteractor = () => {
 	const { placeFloor } = useTileStore();
+	const queue = useQueueMapUpdate();
 
 	const onClickGrid = useCallback(
 		(e: any) => {
@@ -14,16 +18,17 @@ export const useMapInteractor = () => {
 
 			if (state.action === EditorAction.PlaceFloor && state.placeTileId) {
 				const floor = new Floor(
-					Math.random().toString(),
+					Crypto.uniqueId(),
 					Position.fromPoint(e.point),
 					state.placeTileId,
 					0
 				);
 
 				placeFloor(floor);
+				queue();
 			}
 		},
-		[placeFloor]
+		[placeFloor, queue]
 	);
 
 	const onMoveGrid = useCallback((e: any) => {

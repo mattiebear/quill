@@ -20,6 +20,6 @@ export class MapEntity {
 	@JsonProperty('atlas', Atlas, PropertyConvertingMode.IGNORE_NULLABLE)
 	atlas: Atlas = {
 		version: '1',
-		data: [],
+		data: {},
 	};
 }
