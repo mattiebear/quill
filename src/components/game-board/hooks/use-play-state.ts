@@ -1,24 +1,20 @@
+import { pick } from 'ramda';
+
 import { useCurrentUser } from '@/lib/auth/use-current-user';
-import { LoadingState, useEngineStore } from '@/lib/quill/store';
+import { usePlayStore } from '@/lib/engine/store/play-store';
 
 import { useGameSession } from './use-game-session';
 
 export const usePlayState = () => {
-	const state = useEngineStore(({ initialDataState, mapDataState, mapId }) => ({
-		initialDataState,
-		mapDataState,
-		mapId,
-	}));
+	const state = usePlayStore(pick(['isLoaded', 'mapId']));
 
 	const currentUser = useCurrentUser();
 	const gameSession = useGameSession();
 
 	const isUserOwner = gameSession.owner.id === currentUser.id;
-
-	const hasInitialData = state.initialDataState === LoadingState.Complete;
 	const isMapSelected = !!state.mapId;
 
-	const isMapSelectorOpen = isUserOwner && hasInitialData && !isMapSelected;
+	const isMapSelectorOpen = isUserOwner && state.isLoaded && !isMapSelected;
 
 	return { isLoadingMap: false, isMapSelectorOpen, ...state };
 };

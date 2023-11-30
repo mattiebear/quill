@@ -2,9 +2,8 @@ import { AspectRatio, Button, Image, SimpleGrid } from '@chakra-ui/react';
 import { pick } from 'ramda';
 import { FC } from 'react';
 
+import { useTileset } from '@/lib/engine/hooks/use-tileset';
 import { useEditorStore } from '@/lib/engine/store/editor-store';
-
-import { useTileset } from './hooks/use-tileset';
 
 interface TileSelectorProps {
 	// TODO: Scope to allowed types

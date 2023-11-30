@@ -13,7 +13,6 @@ import {
 	UserGroupIcon,
 } from '../icon';
 import { RailMenu, RailMenuContent, RailMenuItem } from '../rail-menu';
-import { SelectMapModal } from './select-map-modal';
 import { TokenSelector } from './token-selector';
 
 export const PlayUI: FC = () => {
@@ -26,45 +25,41 @@ export const PlayUI: FC = () => {
 	};
 
 	return (
-		<>
-			<SelectMapModal />
+		<Box position="absolute" p={2} top={0}>
+			<RailMenu onSelect={reset} resetOnEscape>
+				<RailMenuItem
+					icon={<CursorArrowRaysIcon />}
+					keyBinding="S"
+					label={t('editor.menuLabel.select')}
+				/>
+				<RailMenuItem
+					icon={<ArrowsPointingOutIcon />}
+					keyBinding="M"
+					label={t('editor.menuLabel.move')}
+				/>
 
-			<Box position="absolute" p={2}>
-				<RailMenu onSelect={reset} resetOnEscape>
-					<RailMenuItem
-						icon={<CursorArrowRaysIcon />}
-						keyBinding="S"
-						label={t('editor.menuLabel.select')}
-					/>
-					<RailMenuItem
-						icon={<ArrowsPointingOutIcon />}
-						keyBinding="M"
-						label={t('editor.menuLabel.move')}
-					/>
+				<RailMenuItem
+					icon={<UserGroupIcon />}
+					keyBinding="T"
+					label={t('editor.menuLabel.tokens')}
+				>
+					<RailMenuContent>
+						<TokenSelector />
+					</RailMenuContent>
+				</RailMenuItem>
 
-					<RailMenuItem
-						icon={<UserGroupIcon />}
-						keyBinding="T"
-						label={t('editor.menuLabel.tokens')}
-					>
-						<RailMenuContent>
-							<TokenSelector />
-						</RailMenuContent>
-					</RailMenuItem>
-
-					<RailMenuItem
-						icon={<Cog6ToothIcon />}
-						keyBinding="P"
-						label={t('editor.menuLabel.settings')}
-					>
-						<RailMenuContent>
-							<Button colorScheme="green" onClick={handleClickDone}>
-								{t('common.done')}
-							</Button>
-						</RailMenuContent>
-					</RailMenuItem>
-				</RailMenu>
-			</Box>
-		</>
+				<RailMenuItem
+					icon={<Cog6ToothIcon />}
+					keyBinding="P"
+					label={t('editor.menuLabel.settings')}
+				>
+					<RailMenuContent>
+						<Button colorScheme="green" onClick={handleClickDone}>
+							{t('common.done')}
+						</Button>
+					</RailMenuContent>
+				</RailMenuItem>
+			</RailMenu>
+		</Box>
 	);
 };

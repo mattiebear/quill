@@ -1,5 +1,4 @@
 import { useMapDetail } from '@/api/maps';
-// import { useMapEditor } from '@/components/map-editor/hooks/use-map-editor';
 import { useIdParam } from '@/lib/router';
 import { assertPresence } from '@/utils/runtime';
 
@@ -12,8 +11,6 @@ export const MapEditor = () => {
 	const { data: map } = useMapDetail(id);
 
 	assertPresence(map);
-
-	// useMapEditor(map);
 
 	return (
 		<EditorContext value={{ map }}>
