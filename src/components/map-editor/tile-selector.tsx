@@ -2,19 +2,18 @@ import { AspectRatio, Button, Image, SimpleGrid } from '@chakra-ui/react';
 import { pick } from 'ramda';
 import { FC } from 'react';
 
-import { useTileset } from '@/lib/engine/hooks/use-tileset';
+import { TileType, useTileset } from '@/lib/engine/hooks/use-tileset';
 import { useEditorStore } from '@/lib/engine/store/editor-store';
 
 interface TileSelectorProps {
-	// TODO: Scope to allowed types
-	type: string;
+	type: TileType;
 }
 
-export const TileSelector: FC<TileSelectorProps> = () => {
+export const TileSelector: FC<TileSelectorProps> = ({ type }) => {
 	const { beginPlaceFloor, placeTileId } = useEditorStore(
 		pick(['beginPlaceFloor', 'placeTileId'])
 	);
-	const tileset = useTileset();
+	const tileset = useTileset(type);
 
 	return (
 		<SimpleGrid columns={3} spacing={2} mb={2} minW="15rem">

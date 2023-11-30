@@ -1,19 +1,28 @@
 import { useMemo } from 'react';
 
+export type TileType = 'floor' | 'wall';
+
 interface Tile {
 	id: string;
 	image: string;
-	type: 'floor';
+	type: TileType;
 }
 
-export const useTileset = () => {
+const manifest: Tile[] = [
+	{
+		id: '1',
+		image: 'floor-1.png',
+		type: 'floor',
+	},
+	{
+		id: '2',
+		image: 'wall-1.png',
+		type: 'wall',
+	},
+];
+
+export const useTileset = (filter?: TileType) => {
 	return useMemo<Tile[]>(() => {
-		return [
-			{
-				id: '1',
-				image: 'floor-1.png',
-				type: 'floor',
-			},
-		];
-	}, []);
+		return manifest.filter(({ type }) => (filter ? type === filter : true));
+	}, [filter]);
 };

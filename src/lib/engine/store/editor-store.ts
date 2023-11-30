@@ -5,6 +5,7 @@ import { Position } from '../map/position';
 
 export enum EditorAction {
 	PlaceFloor,
+	PlaceWall,
 }
 
 export interface EditorStoreValues {

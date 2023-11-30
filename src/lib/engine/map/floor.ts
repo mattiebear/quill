@@ -1,4 +1,4 @@
-import { Position } from './position';
+import { GridPosition } from './grid-position';
 
 interface FloorData {
 	id: string;
@@ -10,7 +10,7 @@ interface FloorData {
 export class Floor {
 	constructor(
 		public id: string,
-		public position: Position,
+		public position: GridPosition,
 		public tileId: string,
 		public rotation: number
 	) {}
@@ -25,6 +25,11 @@ export class Floor {
 	}
 
 	static from(data: FloorData): Floor {
-		return new Floor(data.id, new Position(...data.pos), data.tile, data.rot);
+		return new Floor(
+			data.id,
+			new GridPosition(...data.pos),
+			data.tile,
+			data.rot
+		);
 	}
 }
