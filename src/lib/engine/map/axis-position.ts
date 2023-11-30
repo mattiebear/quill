@@ -1,3 +1,4 @@
+import { Point } from './point';
 import { Position } from './position';
 
 const FLOOR_OFFSET = 0.2;
@@ -7,20 +8,22 @@ const WALL_HEIGHT = 1.5;
 
 const normalize = (value: number) => Math.round(value) + 0;
 
+export type Axis = 'x' | 'y';
+
 export class AxisPosition implements Position {
 	constructor(
 		public x: number,
 		public y: number,
 		public z: number,
-		axis: 'x' | 'y'
+		public axis: Axis
 	) {}
 
 	toString() {
 		return this.toArray().join(':');
 	}
 
-	toArray(): [number, number, number] {
-		return [this.x, this.y, this.z];
+	toArray(): [number, number, number, Axis] {
+		return [this.x, this.y, this.z, this.axis];
 	}
 
 	toCoords(): [number, number, number] {
@@ -31,7 +34,7 @@ export class AxisPosition implements Position {
 		return this.toString() === position.toString();
 	}
 
-	public static fromPoint(point: { x: number; y: number; z: number }) {
+	public static fromPoint(point: Point) {
 		const { x, y, z } = point;
 
 		return new AxisPosition(

@@ -5,7 +5,8 @@ import { Floor } from '@/lib/engine/map/floor';
 import { EditorAction, EditorStore } from '@/lib/engine/store/editor-store';
 import { useTileStore } from '@/lib/engine/store/tile-store';
 
-import { AxisPosition, GridPosition, Position } from '../map';
+import { GridPosition } from '../map';
+import { Point } from '../map/point';
 import { useQueueMapUpdate } from './use-queue-map-update';
 
 export const useMapInteractor = () => {
@@ -32,31 +33,8 @@ export const useMapInteractor = () => {
 	);
 
 	const onMoveGrid = useCallback((e: any) => {
-		const action = EditorStore.getState().action;
-
-		if (action === null) {
-			return;
-		}
-
-		const current = EditorStore.getState().pointerPosition;
-
-		// let position: Position;
-
-		// switch (action) {
-		// 	case EditorAction.PlaceFloor:
-		// 		position = GridPosition.fromPoint(e.point);
-		// 		break;
-
-		// 	case EditorAction.PlaceWall:
-		// 		position = AxisPosition.fromPoint(e.point);
-		// 		break;
-		// }
-
-		const position = GridPosition.fromPoint(e.point);
-
-		if (!current || !current.equals(position)) {
-			EditorStore.setState({ pointerPosition: position });
-		}
+		const { x, y, z } = e.point;
+		EditorStore.setState({ pointerPosition: new Point(x, y, z) });
 	}, []);
 
 	const onLeaveGrid = useCallback(() => {

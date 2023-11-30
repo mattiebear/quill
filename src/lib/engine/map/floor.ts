@@ -1,4 +1,5 @@
 import { GridPosition } from './grid-position';
+import { Point } from './point';
 
 interface FloorData {
 	id: string;
@@ -31,5 +32,9 @@ export class Floor {
 			data.tile,
 			data.rot
 		);
+	}
+
+	static position(point: Point): GridPosition {
+		return GridPosition.fromPoint(point);
 	}
 }

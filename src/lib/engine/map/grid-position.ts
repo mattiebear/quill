@@ -1,3 +1,4 @@
+import { Point } from './point';
 import { Position } from './position';
 
 const TILE_HEIGHT = 0.2;
@@ -25,7 +26,7 @@ export class GridPosition implements Position {
 		return this.toString() === position.toString();
 	}
 
-	public static fromPoint(point: { x: number; y: number; z: number }) {
+	public static fromPoint(point: Point) {
 		const { x, y, z } = point;
 
 		return new GridPosition(

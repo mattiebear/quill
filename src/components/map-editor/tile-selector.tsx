@@ -10,10 +10,20 @@ interface TileSelectorProps {
 }
 
 export const TileSelector: FC<TileSelectorProps> = ({ type }) => {
-	const { beginPlaceFloor, placeTileId } = useEditorStore(
-		pick(['beginPlaceFloor', 'placeTileId'])
+	const { beginPlaceFloor, beginPlaceWall, placeTileId } = useEditorStore(
+		pick(['beginPlaceFloor', 'beginPlaceWall', 'placeTileId'])
 	);
 	const tileset = useTileset(type);
+
+	const handleClickTile = (id: string) => {
+		if (type === 'floor') {
+			return beginPlaceFloor(id);
+		}
+
+		if (type === 'wall') {
+			return beginPlaceWall(id);
+		}
+	};
 
 	return (
 		<SimpleGrid columns={3} spacing={2} mb={2} minW="15rem">
@@ -24,7 +34,7 @@ export const TileSelector: FC<TileSelectorProps> = ({ type }) => {
 					key={tile.id}
 					h="auto"
 					p={2}
-					onClick={() => beginPlaceFloor(tile.id)}
+					onClick={() => handleClickTile(tile.id)}
 					_hover={{
 						bg: 'gray.700',
 					}}
