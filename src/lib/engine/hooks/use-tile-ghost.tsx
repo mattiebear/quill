@@ -39,7 +39,7 @@ export const useTileGhost = () => {
 
 		if (action === EditorAction.PlaceWall) {
 			const position = Wall.position(pos);
-			const rotation = position.axis === 'z' ? 0 : MathUtils.DEG2RAD * 90;
+			const rotation = position.axis === 'x' ? 0 : MathUtils.DEG2RAD * 90;
 
 			return <Tile position={position.toCoords()} rotation-y={rotation} />;
 		}

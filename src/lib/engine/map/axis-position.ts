@@ -4,24 +4,25 @@ import { Position } from './position';
 const FLOOR_OFFSET = 0.2;
 const WALL_HEIGHT = 1.5;
 
+// TODO: Clean all of this up. Optimize somehow. Maybe use bitshifiting
 const normalize = (value: number) => Math.round(value) + 0;
 const magnitude = (value: number) => Math.abs(value % 1);
-
-const position = ({ x, y, z }: Point): [number, number, number, Axis] => {
-	const axis = magnitude(x) > magnitude(z) ? 'x' : 'z';
-
-	let localX = x;
-	let localZ = z;
-
-	if (axis === 'x') {
-		localX = Math.round(x);
-		localZ = normalize(z);
-	} else {
-		localX = normalize(x);
-		localZ = Math.round(z);
+const level = (value: number) => {
+	if (!value) {
+		return 1;
 	}
 
-	return [localX, normalize(y), localZ, axis];
+	return Math.ceil(Math.abs(value)) * (value < 0 ? -1 : 1);
+};
+
+const position = ({ x, y, z }: Point): [number, number, number, Axis] => {
+	const axis = magnitude(x) > magnitude(z) ? 'z' : 'x';
+
+	if (axis === 'x') {
+		return [normalize(x), normalize(y), level(z), axis];
+	} else {
+		return [level(x), normalize(y), normalize(z), axis];
+	}
 };
 
 export type Axis = 'x' | 'z';
@@ -48,9 +49,9 @@ export class AxisPosition implements Position {
 		const y = this.y + FLOOR_OFFSET + WALL_HEIGHT / 2;
 
 		if (this.axis === 'x') {
-			return [x > 0 ? x - 0.5 : x + 0.5, y, this.z];
-		} else {
 			return [this.x, y, z > 0 ? z - 0.5 : z + 0.5];
+		} else {
+			return [x > 0 ? x - 0.5 : x + 0.5, y, this.z];
 		}
 	}
 
