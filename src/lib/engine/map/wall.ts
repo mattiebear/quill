@@ -1,3 +1,5 @@
+import { MathUtils } from 'three';
+
 import { Axis, AxisPosition } from './axis-position';
 import { Point } from './point';
 
@@ -13,6 +15,10 @@ export class Wall {
 		public position: AxisPosition,
 		public tileId: string
 	) {}
+
+	get rotation() {
+		return this.position.axis === 'x' ? MathUtils.DEG2RAD * 90 : 0;
+	}
 
 	toJSON(): WallData {
 		return {

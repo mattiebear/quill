@@ -20,7 +20,7 @@ export const mapEditorLoader: Loader = async ({ params }) => {
 
 	// TODO: Make some utility to do all of this, MapState.toJSON(), fromJSON()
 	TileStore.setState({
-		floors: floors.map((floor: any) => Floor.from(floor)),
+		floors: floors?.map((floor: any) => Floor.from(floor)) || [],
 	});
 
 	return data;

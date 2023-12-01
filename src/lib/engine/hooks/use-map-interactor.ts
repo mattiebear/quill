@@ -20,7 +20,7 @@ export const useMapInteractor = () => {
 			if (state.action === EditorAction.PlaceFloor && state.placeTileId) {
 				const floor = new Floor(
 					Crypto.uniqueId(),
-					GridPosition.fromPoint(e.point),
+					GridPosition.fromPoint(Point.at(e.point)),
 					state.placeTileId,
 					0
 				);
@@ -33,8 +33,7 @@ export const useMapInteractor = () => {
 	);
 
 	const onMoveGrid = useCallback((e: any) => {
-		const { x, y, z } = e.point;
-		EditorStore.setState({ pointerPosition: new Point(x, y, z) });
+		EditorStore.setState({ pointerPosition: Point.at(e.point) });
 	}, []);
 
 	const onLeaveGrid = useCallback(() => {

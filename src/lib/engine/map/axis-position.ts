@@ -4,11 +4,27 @@ import { Position } from './position';
 const FLOOR_OFFSET = 0.2;
 const WALL_HEIGHT = 1.5;
 
-// 1.1 x 0.2 x 1.5
-
 const normalize = (value: number) => Math.round(value) + 0;
+const magnitude = (value: number) => Math.abs(value % 1);
 
-export type Axis = 'x' | 'y';
+const position = ({ x, y, z }: Point): [number, number, number, Axis] => {
+	const axis = magnitude(x) > magnitude(z) ? 'x' : 'z';
+
+	let localX = x;
+	let localZ = z;
+
+	if (axis === 'x') {
+		localX = Math.round(x);
+		localZ = normalize(z);
+	} else {
+		localX = normalize(x);
+		localZ = Math.round(z);
+	}
+
+	return [localX, normalize(y), localZ, axis];
+};
+
+export type Axis = 'x' | 'z';
 
 export class AxisPosition implements Position {
 	constructor(
@@ -27,7 +43,15 @@ export class AxisPosition implements Position {
 	}
 
 	toCoords(): [number, number, number] {
-		return [this.y, this.z + FLOOR_OFFSET, this.x];
+		const x = this.x;
+		const z = this.z;
+		const y = this.y + FLOOR_OFFSET + WALL_HEIGHT / 2;
+
+		if (this.axis === 'x') {
+			return [x > 0 ? x - 0.5 : x + 0.5, y, this.z];
+		} else {
+			return [this.x, y, z > 0 ? z - 0.5 : z + 0.5];
+		}
 	}
 
 	equals(position: Position): boolean {
@@ -35,11 +59,6 @@ export class AxisPosition implements Position {
 	}
 
 	public static fromPoint(point: Point) {
-		const { x, y, z } = point;
-
-		return new AxisPosition(
-			...([z, x, y].map(normalize) as [number, number, number]),
-			'x'
-		);
+		return new AxisPosition(...position(point));
 	}
 }

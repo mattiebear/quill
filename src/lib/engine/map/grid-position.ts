@@ -3,8 +3,6 @@ import { Position } from './position';
 
 const TILE_HEIGHT = 0.2;
 
-const normalize = (value: number) => Math.round(value) + 0;
-
 export class GridPosition implements Position {
 	constructor(public x: number, public y: number, public z: number) {}
 
@@ -19,7 +17,7 @@ export class GridPosition implements Position {
 	toCoords(): [number, number, number] {
 		const heightOffset = TILE_HEIGHT / 2;
 
-		return [this.y, this.z + heightOffset, this.x];
+		return [this.x, this.y + heightOffset, this.z];
 	}
 
 	equals(position: Position): boolean {
@@ -27,10 +25,6 @@ export class GridPosition implements Position {
 	}
 
 	public static fromPoint(point: Point) {
-		const { x, y, z } = point;
-
-		return new GridPosition(
-			...([z, x, y].map(normalize) as [number, number, number])
-		);
+		return new GridPosition(...point.normalize());
 	}
 }

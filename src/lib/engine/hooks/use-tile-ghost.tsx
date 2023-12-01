@@ -1,5 +1,6 @@
 import { pick } from 'ramda';
 import { FC, useMemo } from 'react';
+import { MathUtils } from 'three';
 
 import { Floor1 } from '@/lib/engine/components/floor-1';
 import { EditorAction, useEditorStore } from '@/lib/engine/store/editor-store';
@@ -14,12 +15,14 @@ const Tiles: Record<string, FC<JSX.IntrinsicElements['group']>> = {
 };
 
 export const useTileGhost = () => {
-	const { action, placeTileId, pointerPosition } = useEditorStore(
-		pick(['action', 'placeTileId', 'pointerPosition'])
-	);
+	const {
+		action,
+		placeTileId,
+		pointerPosition: pos,
+	} = useEditorStore(pick(['action', 'placeTileId', 'pointerPosition']));
 
 	return useMemo(() => {
-		if (!placeTileId || !pointerPosition) {
+		if (!placeTileId || !pos) {
 			return null;
 		}
 
@@ -29,16 +32,16 @@ export const useTileGhost = () => {
 			return null;
 		}
 
+		// TODO: Make transparent somehow
 		if (action === EditorAction.PlaceFloor) {
-			const position = Floor.position(pointerPosition);
-			return <Tile position={position.toCoords()} />;
+			return <Tile position={Floor.position(pos).toCoords()} />;
 		}
 
 		if (action === EditorAction.PlaceWall) {
-			const position = Wall.position(pointerPosition);
-			return <Tile position={position.toCoords()} />;
-		}
+			const position = Wall.position(pos);
+			const rotation = position.axis === 'z' ? 0 : MathUtils.DEG2RAD * 90;
 
-		// TODO: Make transparent somehow
-	}, [action, placeTileId, pointerPosition]);
+			return <Tile position={position.toCoords()} rotation-y={rotation} />;
+		}
+	}, [action, placeTileId, pos]);
 };
