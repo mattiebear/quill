@@ -2,6 +2,8 @@ import { Card, CardBody, Center, Text } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useRouteError } from 'react-router-dom';
 
+import { Application } from '@/lib/application';
+
 const getErrorStatus = (error: unknown) => {
 	if (
 		error &&
@@ -18,6 +20,10 @@ const getErrorStatus = (error: unknown) => {
 export const ErrorBoundary: FC = () => {
 	const error = useRouteError();
 	const status = getErrorStatus(error);
+
+	if (Application.isDevelopment()) {
+		console.log({ error });
+	}
 
 	return (
 		<Center h="full">

@@ -28,6 +28,7 @@ export const useQueueMapUpdate = () => {
 
 			atlas.data = {
 				floors: state.floors.map((floor) => floor.toJSON()),
+				walls: state.walls.map((wall) => wall.toJSON()),
 			};
 
 			await http.patch(url, { atlas });
