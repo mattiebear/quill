@@ -17,7 +17,7 @@ export class GridPosition implements Position {
 	toCoords(): [number, number, number] {
 		const heightOffset = TILE_HEIGHT / 2;
 
-		return [this.x, this.y + heightOffset, this.z];
+		return [this.x, this.y - heightOffset, this.z];
 	}
 
 	equals(position: Position): boolean {

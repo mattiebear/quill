@@ -17,7 +17,7 @@ export class Wall {
 	) {}
 
 	get rotation() {
-		return this.position.axis === 'x' ? MathUtils.DEG2RAD * 90 : 0;
+		return this.position.axis === 'x' ? 0 : MathUtils.DEG2RAD * 90;
 	}
 
 	toJSON(): WallData {

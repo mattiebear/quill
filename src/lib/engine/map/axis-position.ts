@@ -1,7 +1,6 @@
 import { Point } from './point';
 import { Position } from './position';
 
-const FLOOR_OFFSET = 0.2;
 const WALL_HEIGHT = 1.5;
 
 // TODO: Clean all of this up. Optimize somehow. Maybe use bitshifiting
@@ -46,7 +45,7 @@ export class AxisPosition implements Position {
 	toCoords(): [number, number, number] {
 		const x = this.x;
 		const z = this.z;
-		const y = this.y + FLOOR_OFFSET + WALL_HEIGHT / 2;
+		const y = this.y + WALL_HEIGHT / 2;
 
 		if (this.axis === 'x') {
 			return [this.x, y, z > 0 ? z - 0.5 : z + 0.5];

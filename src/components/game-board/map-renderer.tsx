@@ -4,10 +4,12 @@ import { FC, Suspense } from 'react';
 import { useMapCamera } from '@/lib/engine/hooks/use-map-camera';
 import { useMapFloors } from '@/lib/engine/hooks/use-map-floors';
 import { useMapLight } from '@/lib/engine/hooks/use-map-light';
+import { useMapWalls } from '@/lib/engine/hooks/use-map-walls';
 
 export const MapRenderer: FC = () => {
 	const camera = useMapCamera();
 	const floors = useMapFloors();
+	const walls = useMapWalls();
 	const light = useMapLight();
 
 	return (
@@ -22,6 +24,7 @@ export const MapRenderer: FC = () => {
 				{light}
 				{camera}
 				{floors}
+				{walls}
 			</Canvas>
 		</Suspense>
 	);

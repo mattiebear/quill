@@ -5,11 +5,13 @@ import { useMapCamera } from '@/lib/engine/hooks/use-map-camera';
 import { useMapFloors } from '@/lib/engine/hooks/use-map-floors';
 import { useMapGrid } from '@/lib/engine/hooks/use-map-grid';
 import { useMapLight } from '@/lib/engine/hooks/use-map-light';
+import { useMapWalls } from '@/lib/engine/hooks/use-map-walls';
 import { useTileGhost } from '@/lib/engine/hooks/use-tile-ghost';
 
 export const MapRenderer: FC = () => {
 	const camera = useMapCamera();
 	const floors = useMapFloors();
+	const walls = useMapWalls();
 	const grid = useMapGrid();
 	const ghost = useTileGhost();
 	const light = useMapLight();
@@ -28,6 +30,7 @@ export const MapRenderer: FC = () => {
 				{grid}
 				{ghost}
 				{floors}
+				{walls}
 			</Canvas>
 		</Suspense>
 	);
