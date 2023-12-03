@@ -1,7 +1,7 @@
 import { shallow } from 'zustand/shallow';
 import { createWithEqualityFn } from 'zustand/traditional';
 
-import { Point } from '../map/point';
+import { Point } from '../map/grid/point';
 
 export enum EditorAction {
 	PlaceFloor,

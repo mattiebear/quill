@@ -1,7 +1,8 @@
-import { GridPosition } from './grid-position';
-import { Point } from './point';
+import { GridPosition } from '../grid/grid-position';
+import { Point } from '../grid/point';
 
-interface FloorData {
+// TODO: Combine with map response data
+export interface FloorData {
 	id: string;
 	pos: [number, number, number];
 	tile: string;

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { fetchMapDetail } from '@/api/maps';
 
-import { Floor } from '../map/floor';
+import { TileState } from '../map/tile-state';
 import { usePlayStore } from '../store/play-store';
 import { TileStore } from '../store/tile-store';
 
@@ -13,12 +13,7 @@ export const useMapLoader = () => {
 		if (mapId) {
 			(async () => {
 				const data = await fetchMapDetail(mapId);
-				const { floors } = data.data.atlas.data;
-
-				// TODO: Combine with utility in loader
-				TileStore.setState({
-					floors: floors.map((floor: any) => Floor.from(floor)),
-				});
+				TileStore.setState(TileState.load(data.data).state());
 			})();
 			console.log('load map', { mapId });
 		}

@@ -1,9 +1,10 @@
 import { MathUtils } from 'three';
 
-import { Axis, AxisPosition } from './axis-position';
-import { Point } from './point';
+import { Axis, AxisPosition } from '../grid/axis-position';
+import { Point } from '../grid/point';
 
-interface WallData {
+// TODO: Combine with map response data
+export interface WallData {
 	id: string;
 	pos: [number, number, number, Axis];
 	tile: string;

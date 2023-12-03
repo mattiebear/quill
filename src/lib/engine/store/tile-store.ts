@@ -3,7 +3,7 @@ import { shallow } from 'zustand/shallow';
 import { createWithEqualityFn } from 'zustand/traditional';
 
 import { Wall } from '../map';
-import { Floor } from '../map/floor';
+import { Floor } from '../map/tiles/floor';
 
 export interface TileStoreValues {
 	floors: Floor[];

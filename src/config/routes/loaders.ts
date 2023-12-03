@@ -4,8 +4,7 @@ import { fetchGameSessionDetail } from '@/api/game-sessions/detail';
 import { fetchMapDetail, fetchMapsList } from '@/api/maps';
 import { fetchTileManifest } from '@/api/tiles/meta';
 import { fetchTokenManifest } from '@/api/tokens/meta';
-import { Wall } from '@/lib/engine/map';
-import { Floor } from '@/lib/engine/map/floor';
+import { TileState } from '@/lib/engine/map/tile-state';
 import { resetEditorStore } from '@/lib/engine/store/editor-store';
 import { resetTileStore, TileStore } from '@/lib/engine/store/tile-store';
 
@@ -17,13 +16,7 @@ export const mapEditorLoader: Loader = async ({ params }) => {
 
 	const data = await fetchMapDetail(params.id);
 
-	const { floors, walls } = data.data.atlas.data;
-
-	// TODO: Make some utility to do all of this, MapState.toJSON(), fromJSON()
-	TileStore.setState({
-		floors: floors?.map((floor: any) => Floor.from(floor)) || [],
-		walls: walls?.map((wall: any) => Wall.from(wall)) || [],
-	});
+	TileStore.setState(TileState.load(data.data).state());
 
 	return data;
 };

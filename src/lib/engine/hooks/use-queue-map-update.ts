@@ -7,6 +7,7 @@ import { useHttpClient } from '@/lib/http';
 import { DynamicPath } from '@/lib/url';
 
 import { useEditorContext } from '../../../components/map-editor/context';
+import { TileState } from '../map/tile-state';
 
 export const useQueueMapUpdate = () => {
 	const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
@@ -24,12 +25,9 @@ export const useQueueMapUpdate = () => {
 			const state = TileStore.getState();
 
 			const url = new DynamicPath('/maps/:id').for(map).toString();
-			const atlas = Object.assign({}, map.atlas);
-
-			atlas.data = {
-				floors: state.floors.map((floor) => floor.toJSON()),
-				walls: state.walls.map((wall) => wall.toJSON()),
-			};
+			const atlas = Object.assign({}, map.atlas, {
+				data: new TileState(state).toJSON(),
+			});
 
 			await http.patch(url, { atlas });
 
