@@ -2,8 +2,8 @@ import { produce } from 'immer';
 import { shallow } from 'zustand/shallow';
 import { createWithEqualityFn } from 'zustand/traditional';
 
-import { Wall } from '../map';
-import { Floor } from '../map/floor';
+import { Position, Wall } from '../map';
+import { Floor } from '../map/tiles/floor';
 
 export interface TileStoreValues {
 	floors: Floor[];
@@ -12,6 +12,18 @@ export interface TileStoreValues {
 	walls: Wall[];
 }
 
+const replaceOrAdd = (array: any[], record: { position: Position }) => {
+	const index = array.findIndex((tile) =>
+		tile.position.equals(record.position)
+	);
+
+	if (index === -1) {
+		array.push(record);
+	} else {
+		array[index] = record;
+	}
+};
+
 const TileStore = createWithEqualityFn<TileStoreValues>(
 	(set) => ({
 		floors: [],
@@ -19,30 +31,14 @@ const TileStore = createWithEqualityFn<TileStoreValues>(
 		placeFloor: (floor: Floor) => {
 			set(
 				produce<TileStoreValues>((state) => {
-					const index = state.floors.findIndex((tile) =>
-						tile.position.equals(floor.position)
-					);
-
-					if (index === -1) {
-						state.floors.push(floor);
-					} else {
-						state.floors[index] = floor;
-					}
+					replaceOrAdd(state.floors, floor);
 				})
 			);
 		},
 		placeWall: (wall: Wall) => {
 			set(
 				produce<TileStoreValues>((state) => {
-					const index = state.walls.findIndex((tile) =>
-						tile.position.equals(wall.position)
-					);
-
-					if (index === -1) {
-						state.walls.push(wall);
-					} else {
-						state.walls[index] = wall;
-					}
+					replaceOrAdd(state.walls, wall);
 				})
 			);
 		},

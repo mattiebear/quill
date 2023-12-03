@@ -1,12 +1,12 @@
 import { useCallback } from 'react';
 
 import { Crypto } from '@/lib/crypto';
-import { Floor } from '@/lib/engine/map/floor';
+import { Floor } from '@/lib/engine/map/tiles/floor';
 import { EditorAction, EditorStore } from '@/lib/engine/store/editor-store';
 import { TileStore } from '@/lib/engine/store/tile-store';
 
 import { AxisPosition, GridPosition, Wall } from '../map';
-import { Point } from '../map/point';
+import { Point } from '../map/grid/point';
 import { useQueueMapUpdate } from './use-queue-map-update';
 
 export const useMapInteractor = () => {
