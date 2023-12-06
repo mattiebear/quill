@@ -7,6 +7,7 @@ import { EditorAction, useEditorStore } from '@/lib/engine/store/editor-store';
 
 import { Wall1 } from '../components/wall-1';
 import { Floor, Wall } from '../map';
+import { useUIStore } from '../store/ui-store';
 
 // TODO: Combine with useMapFloors() version
 const Tiles: Record<string, FC<JSX.IntrinsicElements['group']>> = {
@@ -15,11 +16,10 @@ const Tiles: Record<string, FC<JSX.IntrinsicElements['group']>> = {
 };
 
 export const useTileGhost = () => {
-	const {
-		action,
-		placeTileId,
-		pointerPosition: pos,
-	} = useEditorStore(pick(['action', 'placeTileId', 'pointerPosition']));
+	const { action, placeTileId } = useEditorStore(
+		pick(['action', 'placeTileId'])
+	);
+	const pos = useUIStore((state) => state.pointerPosition);
 
 	return useMemo(() => {
 		if (!placeTileId || !pos) {

@@ -1,8 +1,6 @@
 import { shallow } from 'zustand/shallow';
 import { createWithEqualityFn } from 'zustand/traditional';
 
-import { Point } from '../map/grid/point';
-
 export enum EditorAction {
 	PlaceFloor,
 	PlaceToken,
@@ -16,7 +14,6 @@ export interface EditorStoreValues {
 	beginPlaceWall: (placeTileId: string) => void;
 	placeTileId: string | null;
 	placeTokenId: string | null;
-	pointerPosition: null | Point;
 	setAction: (action: EditorAction) => void;
 }
 
@@ -31,7 +28,6 @@ const EditorStore = createWithEqualityFn<EditorStoreValues>(
 			set({ action: EditorAction.PlaceWall, placeTileId }),
 		placeTileId: null,
 		placeTokenId: null,
-		pointerPosition: null,
 		setAction: (action: EditorAction) => set({ action }),
 	}),
 	shallow

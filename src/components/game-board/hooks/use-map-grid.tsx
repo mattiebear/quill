@@ -1,7 +1,12 @@
-import { useMapInteractor } from './use-map-interactor';
+import { useMapInteractor } from '@/lib/engine/hooks/use-map-interactor';
+
+import { useGameBoardClick } from './use-game-board-click';
 
 export const useMapGrid = () => {
-	const { onClickGrid, onLeaveGrid, onMoveGrid } = useMapInteractor();
+	const onClick = useGameBoardClick();
+	const { onClickGrid, onLeaveGrid, onMoveGrid } = useMapInteractor({
+		onClick,
+	});
 
 	return (
 		<mesh

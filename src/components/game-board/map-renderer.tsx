@@ -6,10 +6,13 @@ import { useMapFloors } from '@/lib/engine/hooks/use-map-floors';
 import { useMapLight } from '@/lib/engine/hooks/use-map-light';
 import { useMapWalls } from '@/lib/engine/hooks/use-map-walls';
 
+import { useMapGrid } from './hooks/use-map-grid';
+
 export const MapRenderer: FC = () => {
 	const camera = useMapCamera();
 	const floors = useMapFloors();
 	const walls = useMapWalls();
+	const grid = useMapGrid();
 	const light = useMapLight();
 
 	return (
@@ -23,6 +26,7 @@ export const MapRenderer: FC = () => {
 			>
 				{light}
 				{camera}
+				{grid}
 				{floors}
 				{walls}
 			</Canvas>

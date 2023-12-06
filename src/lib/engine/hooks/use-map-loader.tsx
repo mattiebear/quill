@@ -15,7 +15,6 @@ export const useMapLoader = () => {
 				const data = await fetchMapDetail(mapId);
 				TileStore.setState(TileState.load(data.data).state());
 			})();
-			console.log('load map', { mapId });
 		}
 	}, [mapId]);
 };
