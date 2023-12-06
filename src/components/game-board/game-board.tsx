@@ -19,9 +19,9 @@ export const GameBoard: FC = () => {
 	return (
 		<StoryContext value={{ gameSession }}>
 			<GameState />
-			<PlayUI />
-			<MapRenderer />
 			<SelectMapModal />
+			<MapRenderer />
+			<PlayUI />
 		</StoryContext>
 	);
 };

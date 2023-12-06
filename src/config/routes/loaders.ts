@@ -22,11 +22,9 @@ export const mapEditorLoader: Loader = async ({ params }) => {
 };
 
 export const gameSessionLoader: Loader = ({ params }) => {
-	return Promise.all([
-		fetchGameSessionDetail(params.id),
-		fetchTileManifest(),
-		fetchTokenManifest(),
-	]);
+	resetEditorStore();
+
+	return fetchGameSessionDetail(params.id);
 };
 
 export const mapsLoader: Loader = () => fetchMapsList();

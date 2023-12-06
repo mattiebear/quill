@@ -18,7 +18,7 @@ import { TokenSelector } from './token-selector';
 export const PlayUI: FC = () => {
 	const navigate = useNavigate();
 	const { t } = useTranslation();
-	const reset = useResetAction();
+	// const reset = useResetAction();
 
 	const handleClickDone = async () => {
 		navigate(Path.GameSessions);
@@ -26,7 +26,7 @@ export const PlayUI: FC = () => {
 
 	return (
 		<Box position="absolute" p={2} top={0}>
-			<RailMenu onSelect={reset} resetOnEscape>
+			<RailMenu>
 				<RailMenuItem
 					icon={<CursorArrowRaysIcon />}
 					label={t('editor.menuLabel.select')}
