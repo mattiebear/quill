@@ -1,9 +1,10 @@
 import { useCallback } from 'react';
 
-import { eventManager } from '../events/register';
+import { getEventManager } from '../events/get-event-manager';
 
 export const useEventManager = () => {
-	const transmit = useCallback((event: any) => {
+	const transmit = useCallback(async (event: any) => {
+		const eventManager = await getEventManager();
 		eventManager.transmit(event);
 	}, []);
 
