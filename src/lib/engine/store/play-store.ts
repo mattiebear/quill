@@ -2,22 +2,30 @@ import { shallow } from 'zustand/shallow';
 import { createWithEqualityFn } from 'zustand/traditional';
 
 export enum PlayAction {
-	Thing,
+	PlaceToken,
+	SelectToken,
 }
 
 export interface PlayStoreValues {
 	action: PlayAction | null;
+	beginPlaceToken: (placeTokenId: string) => void;
 	connection: any;
 	isLoaded: boolean;
 	mapId: string | null;
+	placeTokenId: string | null;
+	setAction: (action: PlayAction | null) => void;
 }
 
 const PlayStore = createWithEqualityFn<PlayStoreValues>(
-	() => ({
+	(set) => ({
 		action: null,
+		beginPlaceToken: (placeTokenId) =>
+			set({ action: PlayAction.PlaceToken, placeTokenId }),
 		connection: null,
 		isLoaded: false,
 		mapId: null,
+		placeTokenId: null,
+		setAction: (action) => set({ action }),
 	}),
 	shallow
 );

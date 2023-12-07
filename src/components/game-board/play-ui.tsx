@@ -4,6 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { Path } from '@/config/routes';
+import {
+	PlayAction,
+	PlayStore,
+	resetPlayStore,
+	usePlayStore,
+} from '@/lib/engine/store/play-store';
 
 import {
 	ArrowsPointingOutIcon,
@@ -17,15 +23,29 @@ import { TokenSelector } from './token-selector';
 export const PlayUI: FC = () => {
 	const navigate = useNavigate();
 	const { t } = useTranslation();
+	const setAction = usePlayStore((state) => state.setAction);
 
 	const handleClickDone = async () => {
 		navigate(Path.GameSessions);
 	};
 
+	const handleAction = (action?: string) => {
+		switch (action) {
+			case 'select':
+				setAction(PlayAction.SelectToken);
+				break;
+
+			default:
+				setAction(null);
+				break;
+		}
+	};
+
 	return (
 		<Box position="absolute" p={2} top={0}>
-			<RailMenu>
+			<RailMenu onSelect={handleAction} resetOnEscape>
 				<RailMenuItem
+					action="select"
 					icon={<CursorArrowRaysIcon />}
 					label={t('editor.menuLabel.select')}
 				/>

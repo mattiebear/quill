@@ -5,7 +5,7 @@ import { RequestAddToken } from '@/lib/engine/events/outbound/request-add-token'
 import { useEventManager } from '@/lib/engine/hooks/use-event-manager';
 import { GridPosition } from '@/lib/engine/map';
 import { Point } from '@/lib/engine/map/grid/point';
-import { EditorAction, EditorStore } from '@/lib/engine/store/editor-store';
+import { PlayAction, PlayStore } from '@/lib/engine/store/play-store';
 
 export const useGameBoardClick = () => {
 	const { transmit } = useEventManager();
@@ -13,9 +13,9 @@ export const useGameBoardClick = () => {
 
 	return useCallback(
 		(e: any) => {
-			const { action, placeTokenId } = EditorStore.getState();
+			const { action, placeTokenId } = PlayStore.getState();
 
-			if (action === EditorAction.PlaceToken && placeTokenId) {
+			if (action === PlayAction.PlaceToken && placeTokenId) {
 				const pos = GridPosition.fromPoint(Point.at(e.point));
 				const event = new RequestAddToken(placeTokenId, user.id, pos);
 
