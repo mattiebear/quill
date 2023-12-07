@@ -2,11 +2,11 @@ import { useToast } from '@chakra-ui/react';
 import { useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { useEditorContext } from '@/components/map-editor/context';
 import { TileStore } from '@/lib/engine/store/tile-store';
 import { useHttpClient } from '@/lib/http';
 import { DynamicPath } from '@/lib/url';
 
-import { useEditorContext } from '../../../components/map-editor/context';
 import { TileState } from '../map/tile-state';
 
 export const useQueueMapUpdate = () => {
