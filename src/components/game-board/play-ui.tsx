@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { Path } from '@/config/routes';
-import { useResetAction } from '@/lib/quill/actions/hooks/use-reset-action';
 
 import {
 	ArrowsPointingOutIcon,
@@ -18,7 +17,6 @@ import { TokenSelector } from './token-selector';
 export const PlayUI: FC = () => {
 	const navigate = useNavigate();
 	const { t } = useTranslation();
-	// const reset = useResetAction();
 
 	const handleClickDone = async () => {
 		navigate(Path.GameSessions);
