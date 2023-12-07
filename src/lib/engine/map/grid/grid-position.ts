@@ -14,6 +14,7 @@ export class GridPosition implements Position {
 		return [this.x, this.y, this.z];
 	}
 
+	// TODO: This needs to work with tiles and tokens
 	toCoords(): [number, number, number] {
 		const heightOffset = TILE_HEIGHT / 2;
 

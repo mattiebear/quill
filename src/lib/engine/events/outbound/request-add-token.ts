@@ -1,4 +1,4 @@
-import { Position } from '../../map';
+import { GridPosition } from '../../map';
 
 export class RequestAddToken {
 	public static event = 'request-add-token';
@@ -6,16 +6,19 @@ export class RequestAddToken {
 	constructor(
 		public tokenId: string,
 		public userId: string,
-		public position: Position
+		public position: GridPosition
 	) {}
 
+	// TODO: Refactor to not change position structure
 	toJSON() {
 		return {
 			event: RequestAddToken.event,
 			data: {
 				tokenId: this.tokenId,
 				userId: this.userId,
-				...this.position.toJSON(),
+				x: this.position.x,
+				y: this.position.y,
+				z: this.position.z,
 			},
 		};
 	}

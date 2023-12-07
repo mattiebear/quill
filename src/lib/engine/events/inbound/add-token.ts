@@ -1,4 +1,5 @@
 import { Token, TokenData } from '../../map';
+import { TokenStore } from '../../store/token-store';
 
 export class AddToken {
 	public static event = 'add-token';
@@ -7,7 +8,7 @@ export class AddToken {
 
 	async run() {
 		const token = Token.from(this.data);
-		console.log('receive add token', { token });
+		TokenStore.getState().placeToken(token);
 	}
 
 	static fromJSON(data: TokenData) {
