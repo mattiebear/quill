@@ -32,9 +32,6 @@ dependencies:
   '@react-three/fiber':
     specifier: ^8.15.11
     version: 8.15.11(react-dom@18.2.0)(react@18.2.0)(three@0.158.0)
-  '@space-station/hotwire':
-    specifier: ^0.1.4
-    version: 0.1.4
   '@tanstack/react-query':
     specifier: ^4.32.0
     version: 4.32.0(react-dom@18.2.0)(react@18.2.0)
@@ -4484,10 +4481,6 @@ packages:
   /@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
-
-  /@space-station/hotwire@0.1.4:
-    resolution: {integrity: sha512-aN6TrUhxKRdtrqGfI7HdBqjv2M4Aw1zn2WivmqTibAd7UrQk9B/R8HTiO8QuVV+FhwwLIPPFvYldejO6hd6NXQ==}
-    dev: false
 
   /@storybook/addon-actions@7.5.1(@types/react-dom@18.2.7)(@types/react@18.2.16)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-GieD3ru6EslKvwol1cE4lvszQCLB/AkQdnLofnqy1nnYso+hRxmPAw9/O+pWfpUBFdjXsQ7GX09+wEUpOJzepw==}

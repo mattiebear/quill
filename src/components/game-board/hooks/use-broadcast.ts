@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import { Application } from '@/lib/application';
 import { getToken } from '@/lib/auth';
-import { eventManager } from '@/lib/engine/events/register';
+import { getEventManager } from '@/lib/engine/events/get-event-manager';
 import { PlayStore } from '@/lib/engine/store/play-store';
 
 import { useStoryContext } from '../context';
@@ -31,6 +31,7 @@ export const useBroadcast = () => {
 	useEffect(() => {
 		const init = async () => {
 			const url = await createURL();
+			const eventManager = await getEventManager();
 			const consumer = createConsumer(url);
 
 			const connection = consumer.subscriptions.create(

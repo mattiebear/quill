@@ -1,5 +1,5 @@
-import { staticStore } from '../store';
+import { StaticStore } from '../store';
 
 export const getToken = () => {
-	return staticStore.getState().getToken();
+	return StaticStore.getState().getToken();
 };

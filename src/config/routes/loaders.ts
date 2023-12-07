@@ -10,11 +10,15 @@ import { resetUIStore } from '@/lib/engine/store/ui-store';
 
 type Loader = (args: any) => Promise<any>;
 
-export const mapEditorLoader: Loader = async ({ params }) => {
+const resetStores = () => {
 	resetEditorStore();
 	resetPlayStore();
 	resetTileStore();
 	resetUIStore();
+};
+
+export const mapEditorLoader: Loader = async ({ params }) => {
+	resetStores();
 
 	const data = await fetchMapDetail(params.id);
 
@@ -24,10 +28,7 @@ export const mapEditorLoader: Loader = async ({ params }) => {
 };
 
 export const gameSessionLoader: Loader = ({ params }) => {
-	resetEditorStore();
-	resetPlayStore();
-	resetTileStore();
-	resetUIStore();
+	resetStores();
 
 	return fetchGameSessionDetail(params.id);
 };

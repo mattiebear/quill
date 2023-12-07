@@ -14,7 +14,6 @@ import {
 } from '@/components/icon';
 import { useMap } from '@/components/map-editor/hooks/use-map';
 import { Path } from '@/config/routes';
-import { useResetAction } from '@/lib/quill/actions/hooks/use-reset-action';
 
 import { RailMenu, RailMenuContent, RailMenuItem } from '../rail-menu';
 import { TileSelector } from './tile-selector';
@@ -24,7 +23,6 @@ export const EditorUI: FC = () => {
 	const map = useMap();
 	const invalidate = useInvalidateMap(map);
 	const navigate = useNavigate();
-	const reset = useResetAction();
 
 	const handleClickDone = async () => {
 		await invalidate();
@@ -33,7 +31,7 @@ export const EditorUI: FC = () => {
 
 	return (
 		<Box position="absolute" p={2} top={0}>
-			<RailMenu onSelect={reset} resetOnEscape>
+			<RailMenu>
 				<RailMenuItem
 					icon={<CursorArrowRaysIcon />}
 					label={t('editor.menuLabel.select')}

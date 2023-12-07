@@ -1,23 +1,23 @@
 import { QueryClient } from '@tanstack/react-query';
 import { create } from 'zustand';
 
+import { EventManager } from '../engine/events/event-manager';
 import { HttpClient } from '../http/types';
-import { Relay } from '../messaging/relay';
 
 interface StaticStoreValue {
+	eventManager: EventManager;
 	getToken: () => Promise<string | null>;
 	httpClient: HttpClient;
 	queryClient: QueryClient;
-	relay: Relay;
 }
 
-const staticStore = create<StaticStoreValue>(() => ({
+const StaticStore = create<StaticStoreValue>(() => ({
+	eventManager: null as unknown as EventManager,
 	getToken: () => Promise.resolve(''),
 	httpClient: null as unknown as HttpClient,
 	queryClient: null as unknown as QueryClient,
-	relay: new Relay(),
 }));
 
-const useStaticStore = staticStore;
+const useStaticStore = StaticStore;
 
-export { staticStore, useStaticStore };
+export { StaticStore, useStaticStore };
