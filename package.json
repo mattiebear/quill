@@ -25,7 +25,6 @@
 		"@rails/actioncable": "^7.0.8",
 		"@react-three/drei": "^9.88.17",
 		"@react-three/fiber": "^8.15.11",
-		"@space-station/hotwire": "^0.1.4",
 		"@tanstack/react-query": "^4.32.0",
 		"@tanstack/react-query-devtools": "^4.32.0",
 		"axios": "^1.4.0",

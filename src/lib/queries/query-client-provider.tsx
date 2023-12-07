@@ -4,10 +4,10 @@ import { FC, PropsWithChildren } from 'react';
 
 import { queryClient } from '@/lib/queries/query-client';
 
-import { staticStore } from '../store';
+import { StaticStore } from '../store';
 
 export const QueryClientProvider: FC<PropsWithChildren> = ({ children }) => {
-	staticStore.setState({ queryClient });
+	StaticStore.setState({ queryClient });
 
 	return (
 		<BaseProvider client={queryClient}>

@@ -1,15 +1,15 @@
-import { staticStore } from '../store';
+import { StaticStore } from '../store';
 import { HttpClient } from './types';
 
 export const getHttpClient = () => {
-	const client = staticStore.getState().httpClient;
+	const client = StaticStore.getState().httpClient;
 
 	if (client) {
 		return client;
 	}
 
 	return new Promise<HttpClient>((resolve) => {
-		const unsubscribe = staticStore.subscribe((state) => {
+		const unsubscribe = StaticStore.subscribe((state) => {
 			if (state.httpClient) {
 				unsubscribe();
 				resolve(state.httpClient);
