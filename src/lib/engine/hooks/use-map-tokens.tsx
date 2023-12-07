@@ -1,11 +1,36 @@
-import { useMemo } from 'react';
+import { ThreeEvent } from '@react-three/fiber';
+import { pick } from 'ramda';
+import { useCallback, useMemo } from 'react';
+import { Color } from 'three';
 
+import { Token } from '../map';
+import { PagePosition } from '../map/grid/page-position';
+import { PlayAction, PlayStore, usePlayStore } from '../store/play-store';
 import { useTokenStore } from '../store/token-store';
 
 const height = 1.2;
 
 export const useMapTokens = () => {
 	const tokens = useTokenStore((state) => state.tokens);
+	const { action, selectedToken } = usePlayStore(
+		pick(['action', 'selectedToken'])
+	);
+
+	const handleClick = useCallback(
+		(e: ThreeEvent<MouseEvent>, token: Token) => {
+			e.stopPropagation();
+
+			if (action === PlayAction.SelectToken) {
+				const pos = PagePosition.fromEvent(e);
+
+				PlayStore.setState({
+					interactionPosition: pos,
+					selectedToken: token,
+				});
+			}
+		},
+		[action]
+	);
 
 	return useMemo(() => {
 		return tokens.map((token) => {
@@ -15,12 +40,18 @@ export const useMapTokens = () => {
 				token.position.z,
 			];
 
+			const color = token === selectedToken ? 'green' : new Color(0x544b4d);
+
 			return (
-				<mesh key={token.id} position={pos}>
+				<mesh
+					key={token.id}
+					position={pos}
+					onClick={(e) => handleClick(e, token)}
+				>
 					<boxGeometry args={[0.5, height, 0.5]} />
-					<meshStandardMaterial color="green" />
+					<meshStandardMaterial color={color} />
 				</mesh>
 			);
 		});
-	}, [tokens]);
+	}, [handleClick, selectedToken, tokens]);
 };

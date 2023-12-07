@@ -3,10 +3,10 @@ import { pick } from 'ramda';
 import { FC } from 'react';
 
 import { useTokenset } from '@/lib/engine/hooks/use-tokenset';
-import { useEditorStore } from '@/lib/engine/store/editor-store';
+import { usePlayStore } from '@/lib/engine/store/play-store';
 
 export const TokenSelector: FC = () => {
-	const { beginPlaceToken, placeTokenId } = useEditorStore(
+	const { beginPlaceToken, placeTokenId } = usePlayStore(
 		pick(['beginPlaceToken', 'placeTokenId'])
 	);
 	const tokens = useTokenset();

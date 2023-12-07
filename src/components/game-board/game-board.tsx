@@ -9,6 +9,7 @@ import { GameState } from './game-state';
 import { MapRenderer } from './map-renderer';
 import { PlayUI } from './play-ui';
 import { SelectMapModal } from './select-map-modal';
+import TokenMenu from './token-menu';
 
 export const GameBoard: FC = () => {
 	const id = useIdParam();
@@ -21,6 +22,7 @@ export const GameBoard: FC = () => {
 			<GameState />
 			<SelectMapModal />
 			<MapRenderer />
+			<TokenMenu />
 			<PlayUI />
 		</StoryContext>
 	);
