@@ -1,33 +1,35 @@
-import { AspectRatio, Button, Image, SimpleGrid } from '@chakra-ui/react';
+import { AspectRatio, Box, Button, SimpleGrid } from '@chakra-ui/react';
+import { pick } from 'ramda';
 import { FC } from 'react';
 
-import { useTokenset } from '@/lib/quill/hooks/use-tokenset';
-
-import { usePlaceTokenAction } from './hooks/use-place-token-action';
+import { useTokenset } from '@/lib/engine/hooks/use-tokenset';
+import { useEditorStore } from '@/lib/engine/store/editor-store';
 
 export const TokenSelector: FC = () => {
-	const { action, selectToken } = usePlaceTokenAction();
-	const tokenset = useTokenset();
+	const { beginPlaceToken, placeTokenId } = useEditorStore(
+		pick(['beginPlaceToken', 'placeTokenId'])
+	);
+	const tokens = useTokenset();
 
 	return (
 		<SimpleGrid columns={3} spacing={2} mb={2} minW="15rem">
-			{tokenset.all.map((token) => (
+			{tokens.map((token) => (
 				<Button
 					bg="none"
 					border="2px solid"
 					key={token.id}
 					h="auto"
 					p={2}
-					onClick={() => selectToken(token.id)}
+					onClick={() => beginPlaceToken(token.id)}
 					_hover={{
 						bg: 'gray.700',
 					}}
-					{...(token.id === action.id && {
+					{...(token.id === placeTokenId && {
 						borderColor: 'menu.active',
 					})}
 				>
 					<AspectRatio w="full" ratio={1}>
-						<Image objectPosition="bottom center" src={token.iconSrc} />
+						<Box boxSize="full" bg="green.700" />
 					</AspectRatio>
 				</Button>
 			))}

@@ -35,10 +35,10 @@ export class AxisPosition implements Position {
 	) {}
 
 	toString() {
-		return this.toArray().join(':');
+		return this.toJSON().join(':');
 	}
 
-	toArray(): [number, number, number, Axis] {
+	toJSON(): [number, number, number, Axis] {
 		return [this.x, this.y, this.z, this.axis];
 	}
 
