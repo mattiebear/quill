@@ -1,5 +1,7 @@
 import { ThreeEvent } from '@react-three/fiber';
+import { pick } from 'ramda';
 import { useCallback, useMemo } from 'react';
+import { Color } from 'three';
 
 import { Token } from '../map';
 import { PagePosition } from '../map/grid/page-position';
@@ -10,7 +12,9 @@ const height = 1.2;
 
 export const useMapTokens = () => {
 	const tokens = useTokenStore((state) => state.tokens);
-	const action = usePlayStore((state) => state.action);
+	const { action, selectedToken } = usePlayStore(
+		pick(['action', 'selectedToken'])
+	);
 
 	const handleClick = useCallback(
 		(e: ThreeEvent<MouseEvent>, token: Token) => {
@@ -36,6 +40,8 @@ export const useMapTokens = () => {
 				token.position.z,
 			];
 
+			const color = token === selectedToken ? 'green' : new Color(0x544b4d);
+
 			return (
 				<mesh
 					key={token.id}
@@ -43,9 +49,9 @@ export const useMapTokens = () => {
 					onClick={(e) => handleClick(e, token)}
 				>
 					<boxGeometry args={[0.5, height, 0.5]} />
-					<meshStandardMaterial color="green" />
+					<meshStandardMaterial color={color} />
 				</mesh>
 			);
 		});
-	}, [handleClick, tokens]);
+	}, [handleClick, selectedToken, tokens]);
 };

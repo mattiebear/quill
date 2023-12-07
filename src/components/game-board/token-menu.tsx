@@ -38,6 +38,7 @@ const TokenMenu: FC = () => {
 
 			<PopoverContent
 				bg="background.cover"
+				border="none"
 				borderRadius="lg"
 				p={3}
 				pos="relative"
