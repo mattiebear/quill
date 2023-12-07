@@ -1,36 +1,41 @@
 import { GridPosition } from '../grid/grid-position';
 import { Point } from '../grid/point';
 
-// TODO: Combine with map response data
 export interface TokenData {
 	id: string;
-	pos: [number, number, number];
-	tile: string;
 	rot: number;
+	userId: string;
+	tokenId: string;
+	x: number;
+	y: number;
+	z: number;
 }
 
 export class Token {
 	constructor(
 		public id: string,
+		public userId: string,
 		public position: GridPosition,
-		public tileId: string,
-		public rotation: number
+		public tokenId: string,
+		public rot: number
 	) {}
 
 	toJSON(): TokenData {
 		return {
 			id: this.id,
-			pos: this.position.toArray(),
-			tile: this.tileId,
-			rot: this.rotation,
+			rot: this.rot,
+			tokenId: this.tokenId,
+			userId: this.userId,
+			...this.position,
 		};
 	}
 
 	static from(data: TokenData): Token {
 		return new Token(
 			data.id,
-			new GridPosition(...data.pos),
-			data.tile,
+			data.userId,
+			new GridPosition(data.x, data.y, data.z),
+			data.tokenId,
 			data.rot
 		);
 	}

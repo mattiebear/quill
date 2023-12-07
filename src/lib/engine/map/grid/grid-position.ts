@@ -7,10 +7,10 @@ export class GridPosition implements Position {
 	constructor(public x: number, public y: number, public z: number) {}
 
 	toString() {
-		return this.toArray().join(':');
+		return this.toJSON().join(':');
 	}
 
-	toArray(): [number, number, number] {
+	toJSON(): [number, number, number] {
 		return [this.x, this.y, this.z];
 	}
 
