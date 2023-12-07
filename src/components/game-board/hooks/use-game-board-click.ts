@@ -1,3 +1,4 @@
+import { ThreeEvent } from '@react-three/fiber';
 import { useCallback } from 'react';
 
 import { useCurrentUser } from '@/lib/auth/use-current-user';
@@ -12,7 +13,9 @@ export const useGameBoardClick = () => {
 	const user = useCurrentUser();
 
 	return useCallback(
-		(e: any) => {
+		(e: ThreeEvent<MouseEvent>) => {
+			e.stopPropagation();
+
 			const { action, placeTokenId } = PlayStore.getState();
 
 			if (action === PlayAction.PlaceToken && placeTokenId) {

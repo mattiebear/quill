@@ -157,6 +157,10 @@
 				"settings": "Settings",
 				"tokens": "Tokens"
 			}
+		},
+		"tokenMenu": {
+			"move": "Move",
+			"remove": "Remove"
 		}
 	}
 }
