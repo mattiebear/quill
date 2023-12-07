@@ -4,12 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { Path } from '@/config/routes';
-import {
-	PlayAction,
-	PlayStore,
-	resetPlayStore,
-	usePlayStore,
-} from '@/lib/engine/store/play-store';
+import { PlayAction, usePlayStore } from '@/lib/engine/store/play-store';
 
 import {
 	ArrowsPointingOutIcon,
