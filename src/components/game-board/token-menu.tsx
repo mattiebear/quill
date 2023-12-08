@@ -10,10 +10,13 @@ import { pick } from 'ramda';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { RequestRemoveToken } from '@/lib/engine/events/outbound/request-remove-token';
+import { useEventManager } from '@/lib/engine/hooks/use-event-manager';
 import { PlayStore, usePlayStore } from '@/lib/engine/store/play-store';
 
 const TokenMenu: FC = () => {
 	const { t } = useTranslation();
+	const { transmit } = useEventManager();
 	const { interactionPosition, selectedToken } = usePlayStore(
 		pick(['interactionPosition', 'selectedToken'])
 	);
@@ -22,6 +25,13 @@ const TokenMenu: FC = () => {
 
 	const handleClose = () => {
 		PlayStore.setState({ selectedToken: null, interactionPosition: null });
+	};
+
+	const handleClickRemove = () => {
+		if (selectedToken) {
+			transmit(new RequestRemoveToken(selectedToken));
+			handleClose();
+		}
 	};
 
 	return (
@@ -48,7 +58,7 @@ const TokenMenu: FC = () => {
 					<Button boxShadow="md" colorScheme="blue">
 						{t('tokenMenu.move')}
 					</Button>
-					<Button boxShadow="md" colorScheme="red">
+					<Button boxShadow="md" colorScheme="red" onClick={handleClickRemove}>
 						{t('tokenMenu.remove')}
 					</Button>
 				</HStack>

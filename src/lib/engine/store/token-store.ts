@@ -8,6 +8,7 @@ import { replaceOrAdd } from './utils/replace-or-add';
 export interface TokenStoreValues {
 	tokens: Token[];
 	placeToken: (token: Token) => void;
+	removeToken: (id: string) => void;
 }
 
 const TokenStore = createWithEqualityFn<TokenStoreValues>(
@@ -18,6 +19,17 @@ const TokenStore = createWithEqualityFn<TokenStoreValues>(
 			set(
 				produce<TokenStoreValues>((state) => {
 					replaceOrAdd(state.tokens, token);
+				})
+			);
+		},
+		removeToken: (id: string) => {
+			set(
+				produce<TokenStoreValues>((state) => {
+					const index = state.tokens.findIndex((t) => t.id === id);
+
+					if (index !== -1) {
+						state.tokens.splice(index, 1);
+					}
 				})
 			);
 		},
