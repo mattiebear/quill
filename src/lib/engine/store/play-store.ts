@@ -5,6 +5,7 @@ import { Token } from '../map';
 import { PagePosition } from '../map/grid/page-position';
 
 export enum PlayAction {
+	MoveToken,
 	PlaceToken,
 	SelectToken,
 }

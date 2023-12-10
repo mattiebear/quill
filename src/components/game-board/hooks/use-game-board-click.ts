@@ -16,13 +16,22 @@ export const useGameBoardClick = () => {
 		(e: ThreeEvent<MouseEvent>) => {
 			e.stopPropagation();
 
-			const { action, placeTokenId } = PlayStore.getState();
+			const { action, placeTokenId, selectedToken, setAction } =
+				PlayStore.getState();
+			const point = Point.at(e.point);
 
 			if (action === PlayAction.PlaceToken && placeTokenId) {
-				const pos = GridPosition.fromPoint(Point.at(e.point));
+				const pos = GridPosition.fromPoint(point);
 				const event = new RequestAddToken(placeTokenId, user.id, pos);
 
 				transmit(event);
+			}
+
+			// FIXME: selected token is being set to null
+
+			if (action === PlayAction.MoveToken && selectedToken) {
+				setAction(PlayAction.SelectToken);
+				console.log('move token to', selectedToken, point);
 			}
 		},
 		[transmit, user]

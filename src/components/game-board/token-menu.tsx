@@ -12,7 +12,11 @@ import { useTranslation } from 'react-i18next';
 
 import { RequestRemoveToken } from '@/lib/engine/events/outbound/request-remove-token';
 import { useEventManager } from '@/lib/engine/hooks/use-event-manager';
-import { PlayStore, usePlayStore } from '@/lib/engine/store/play-store';
+import {
+	PlayAction,
+	PlayStore,
+	usePlayStore,
+} from '@/lib/engine/store/play-store';
 
 const TokenMenu: FC = () => {
 	const { t } = useTranslation();
@@ -31,6 +35,12 @@ const TokenMenu: FC = () => {
 		if (selectedToken) {
 			transmit(new RequestRemoveToken(selectedToken));
 			handleClose();
+		}
+	};
+
+	const handleClickMove = () => {
+		if (selectedToken) {
+			PlayStore.getState().setAction(PlayAction.MoveToken);
 		}
 	};
 
@@ -55,7 +65,7 @@ const TokenMenu: FC = () => {
 				w="auto"
 			>
 				<HStack>
-					<Button boxShadow="md" colorScheme="blue">
+					<Button boxShadow="md" colorScheme="blue" onClick={handleClickMove}>
 						{t('tokenMenu.move')}
 					</Button>
 					<Button boxShadow="md" colorScheme="red" onClick={handleClickRemove}>
