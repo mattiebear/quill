@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 
 import { useCurrentUser } from '@/lib/auth/use-current-user';
 import { RequestAddToken } from '@/lib/engine/events/outbound/request-add-token';
+import { RequestMoveToken } from '@/lib/engine/events/outbound/request-move-token';
 import { useEventManager } from '@/lib/engine/hooks/use-event-manager';
 import { GridPosition } from '@/lib/engine/map';
 import { Point } from '@/lib/engine/map/grid/point';
@@ -27,11 +28,13 @@ export const useGameBoardClick = () => {
 				transmit(event);
 			}
 
-			// FIXME: selected token is being set to null
-
 			if (action === PlayAction.MoveToken && selectedToken) {
 				setAction(PlayAction.SelectToken);
-				console.log('move token to', selectedToken, point);
+
+				const pos = GridPosition.fromPoint(point);
+				const event = new RequestMoveToken(selectedToken, pos);
+
+				transmit(event);
 			}
 		},
 		[transmit, user]

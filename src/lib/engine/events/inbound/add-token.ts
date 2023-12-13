@@ -10,8 +10,4 @@ export class AddToken {
 		const token = Token.from(this.data);
 		TokenStore.getState().placeToken(token);
 	}
-
-	static fromJSON(data: TokenData) {
-		return new AddToken(data);
-	}
 }

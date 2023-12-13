@@ -1,4 +1,3 @@
-import { TokenData } from '../../map';
 import { TokenStore } from '../../store/token-store';
 
 interface RemoveTokenData {
@@ -12,9 +11,5 @@ export class RemoveToken {
 
 	async run() {
 		TokenStore.getState().removeToken(this.data.tokenId);
-	}
-
-	static fromJSON(data: TokenData) {
-		return new RemoveToken(data);
 	}
 }

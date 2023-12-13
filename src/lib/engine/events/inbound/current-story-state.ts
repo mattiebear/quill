@@ -22,8 +22,4 @@ export class CurrentStoryState {
 			placeToken(token);
 		});
 	}
-
-	public static fromJSON(data: CurrentStoryStateData) {
-		return new CurrentStoryState(data);
-	}
 }

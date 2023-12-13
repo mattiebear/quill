@@ -13,7 +13,7 @@ export class EventManager {
 		const ctor = this.inbound.find((ctor) => ctor.event === event.event);
 
 		if (ctor) {
-			ctor.fromJSON(event.data).run();
+			new ctor(event.data).run();
 		}
 	}
 
