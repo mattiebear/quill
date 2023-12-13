@@ -20,6 +20,10 @@ export class Token {
 		public rot: number
 	) {}
 
+	clone() {
+		return Token.from(this.toJSON());
+	}
+
 	toJSON(): TokenData {
 		return {
 			id: this.id,

@@ -12,30 +12,36 @@ import { useTranslation } from 'react-i18next';
 
 import { RequestRemoveToken } from '@/lib/engine/events/outbound/request-remove-token';
 import { useEventManager } from '@/lib/engine/hooks/use-event-manager';
-import { PlayStore, usePlayStore } from '@/lib/engine/store/play-store';
+import {
+	PlayAction,
+	PlayStore,
+	usePlayStore,
+} from '@/lib/engine/store/play-store';
 
 const TokenMenu: FC = () => {
 	const { t } = useTranslation();
 	const { transmit } = useEventManager();
-	const { interactionPosition, selectedToken } = usePlayStore(
-		pick(['interactionPosition', 'selectedToken'])
+	const { interactionPosition, isTokenMenuOpen, selectedToken } = usePlayStore(
+		pick(['interactionPosition', 'isTokenMenuOpen', 'selectedToken'])
 	);
-
-	const isOpen = !!interactionPosition && !!selectedToken;
-
-	const handleClose = () => {
-		PlayStore.setState({ selectedToken: null, interactionPosition: null });
-	};
 
 	const handleClickRemove = () => {
 		if (selectedToken) {
 			transmit(new RequestRemoveToken(selectedToken));
-			handleClose();
+		}
+	};
+
+	const handleClickMove = () => {
+		if (selectedToken) {
+			PlayStore.setState({
+				action: PlayAction.MoveToken,
+				isTokenMenuOpen: false,
+			});
 		}
 	};
 
 	return (
-		<Popover isOpen={isOpen} onClose={handleClose}>
+		<Popover isOpen={isTokenMenuOpen}>
 			<PopoverAnchor>
 				<Box
 					pos="absolute"
@@ -55,7 +61,7 @@ const TokenMenu: FC = () => {
 				w="auto"
 			>
 				<HStack>
-					<Button boxShadow="md" colorScheme="blue">
+					<Button boxShadow="md" colorScheme="blue" onClick={handleClickMove}>
 						{t('tokenMenu.move')}
 					</Button>
 					<Button boxShadow="md" colorScheme="red" onClick={handleClickRemove}>

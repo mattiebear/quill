@@ -5,6 +5,7 @@ import { Token } from '../map';
 import { PagePosition } from '../map/grid/page-position';
 
 export enum PlayAction {
+	MoveToken,
 	PlaceToken,
 	SelectToken,
 }
@@ -15,6 +16,7 @@ export interface PlayStoreValues {
 	connection: any;
 	interactionPosition: PagePosition | null;
 	isLoaded: boolean;
+	isTokenMenuOpen: boolean;
 	mapId: string | null;
 	placeTokenId: string | null;
 	selectedToken: Token | null;
@@ -29,6 +31,7 @@ const PlayStore = createWithEqualityFn<PlayStoreValues>(
 		connection: null,
 		interactionPosition: null,
 		isLoaded: false,
+		isTokenMenuOpen: false,
 		mapId: null,
 		placeTokenId: null,
 		selectedToken: null,

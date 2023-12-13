@@ -25,6 +25,7 @@ export const useMapTokens = () => {
 
 				PlayStore.setState({
 					interactionPosition: pos,
+					isTokenMenuOpen: true,
 					selectedToken: token,
 				});
 			}

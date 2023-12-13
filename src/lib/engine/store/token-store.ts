@@ -2,11 +2,12 @@ import { produce } from 'immer';
 import { shallow } from 'zustand/shallow';
 import { createWithEqualityFn } from 'zustand/traditional';
 
-import { Token } from '../map';
+import { GridPosition, Token } from '../map';
 import { replaceOrAdd } from './utils/replace-or-add';
 
 export interface TokenStoreValues {
 	tokens: Token[];
+	moveToken: (tokenId: string, pos: GridPosition) => void;
 	placeToken: (token: Token) => void;
 	removeToken: (id: string) => void;
 }
@@ -14,7 +15,21 @@ export interface TokenStoreValues {
 const TokenStore = createWithEqualityFn<TokenStoreValues>(
 	(set) => ({
 		tokens: [],
-		// TODO: Maybe have this in a separate hook
+		moveToken: (tokenId: string, pos: GridPosition) => {
+			set(
+				produce<TokenStoreValues>((state) => {
+					// For some reason we need to clone the token here. The renderer was not updating
+					// when we simply changed the position of the token in the array.
+					const index = state.tokens.findIndex((t) => t.id === tokenId);
+
+					if (index !== -1) {
+						const token = state.tokens[index].clone();
+						token.position = pos;
+						state.tokens[index] = token;
+					}
+				})
+			);
+		},
 		placeToken: (token: Token) => {
 			set(
 				produce<TokenStoreValues>((state) => {
