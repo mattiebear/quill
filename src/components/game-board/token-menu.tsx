@@ -21,31 +21,27 @@ import {
 const TokenMenu: FC = () => {
 	const { t } = useTranslation();
 	const { transmit } = useEventManager();
-	const { interactionPosition, selectedToken } = usePlayStore(
-		pick(['interactionPosition', 'selectedToken'])
+	const { interactionPosition, isTokenMenuOpen, selectedToken } = usePlayStore(
+		pick(['interactionPosition', 'isTokenMenuOpen', 'selectedToken'])
 	);
-
-	const isOpen = !!interactionPosition && !!selectedToken;
-
-	const handleClose = () => {
-		PlayStore.setState({ selectedToken: null, interactionPosition: null });
-	};
 
 	const handleClickRemove = () => {
 		if (selectedToken) {
 			transmit(new RequestRemoveToken(selectedToken));
-			handleClose();
 		}
 	};
 
 	const handleClickMove = () => {
 		if (selectedToken) {
-			PlayStore.getState().setAction(PlayAction.MoveToken);
+			PlayStore.setState({
+				action: PlayAction.MoveToken,
+				isTokenMenuOpen: false,
+			});
 		}
 	};
 
 	return (
-		<Popover isOpen={isOpen} onClose={handleClose}>
+		<Popover isOpen={isTokenMenuOpen}>
 			<PopoverAnchor>
 				<Box
 					pos="absolute"

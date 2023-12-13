@@ -1,6 +1,7 @@
 import { Canvas } from '@react-three/fiber';
 import { FC, Suspense } from 'react';
 
+import { useCanvasStyle } from '@/lib/engine/hooks/use-canvas-style';
 import { useMapCamera } from '@/lib/engine/hooks/use-map-camera';
 import { useMapFloors } from '@/lib/engine/hooks/use-map-floors';
 import { useMapLight } from '@/lib/engine/hooks/use-map-light';
@@ -16,6 +17,7 @@ export const MapRenderer: FC = () => {
 	const grid = useMapGrid();
 	const light = useMapLight();
 	const tokens = useMapTokens();
+	const style = useCanvasStyle();
 
 	return (
 		<Suspense>
@@ -25,6 +27,7 @@ export const MapRenderer: FC = () => {
 					zoom: 120,
 					position: [4, 4, 4],
 				}}
+				style={style}
 			>
 				{light}
 				{camera}
