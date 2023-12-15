@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 
 import { MapEntity } from '@/entites/map-entity';
 
-import { usePlayState } from './hooks/use-play-state';
 import { useSelectMap } from './hooks/use-select-map';
 
 interface SelectMapRowProps {
@@ -13,7 +12,6 @@ interface SelectMapRowProps {
 
 export const SelectMapRow: FC<SelectMapRowProps> = ({ map }) => {
 	const { t } = useTranslation();
-	const { isLoadingMap } = usePlayState();
 	const loadMap = useSelectMap(map);
 
 	return (
@@ -25,12 +23,7 @@ export const SelectMapRow: FC<SelectMapRowProps> = ({ map }) => {
 			<Td pr={0}>
 				<HStack>
 					<Spacer />
-					<Button
-						colorScheme="purple"
-						isLoading={isLoadingMap}
-						onClick={loadMap}
-						size="sm"
-					>
+					<Button colorScheme="purple" onClick={loadMap} size="sm">
 						{t('common.select')}
 					</Button>
 				</HStack>

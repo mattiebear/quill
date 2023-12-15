@@ -3,6 +3,8 @@ import { pick } from 'ramda';
 import { useCallback, useMemo } from 'react';
 import { Color } from 'three';
 
+import { useCurrentUser } from '@/lib/auth/use-current-user';
+
 import { Token } from '../map';
 import { PagePosition } from '../map/grid/page-position';
 import { PlayAction, PlayStore, usePlayStore } from '../store/play-store';
@@ -11,6 +13,7 @@ import { useTokenStore } from '../store/token-store';
 const height = 1.2;
 
 export const useMapTokens = () => {
+	const user = useCurrentUser();
 	const tokens = useTokenStore((state) => state.tokens);
 	const { action, selectedToken } = usePlayStore(
 		pick(['action', 'selectedToken'])
@@ -41,7 +44,13 @@ export const useMapTokens = () => {
 				token.position.z,
 			];
 
-			const color = token === selectedToken ? 'green' : new Color(0x544b4d);
+			let color: Color | string = new Color(0x544b4d);
+
+			if (token === selectedToken) {
+				color = 'green';
+			} else if (token.userId === user.id) {
+				color = 'blue';
+			}
 
 			return (
 				<mesh
@@ -54,5 +63,5 @@ export const useMapTokens = () => {
 				</mesh>
 			);
 		});
-	}, [handleClick, selectedToken, tokens]);
+	}, [handleClick, selectedToken, tokens, user]);
 };

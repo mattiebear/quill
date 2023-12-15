@@ -144,6 +144,9 @@
 		"selectMap": {
 			"header": "Select map"
 		},
+		"selectToken": {
+			"header": "Select your character"
+		},
 		"editor": {
 			"mapSaved": "Map saved",
 			"menuLabel": {

@@ -2,13 +2,13 @@ import { useMemo } from 'react';
 
 export type TileType = 'floor' | 'wall';
 
-interface Tile {
+interface TileSchema {
 	id: string;
 	image: string;
 	type: TileType;
 }
 
-const manifest: Tile[] = [
+const manifest: TileSchema[] = [
 	{
 		id: '1',
 		image: 'floor-1.png',
@@ -22,7 +22,7 @@ const manifest: Tile[] = [
 ];
 
 export const useTileset = (filter?: TileType) => {
-	return useMemo<Tile[]>(() => {
+	return useMemo<TileSchema[]>(() => {
 		return manifest.filter(({ type }) => (filter ? type === filter : true));
 	}, [filter]);
 };

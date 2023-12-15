@@ -1,9 +1,9 @@
-interface Token {
+export interface TokenSchema {
 	id: string;
 	image: string;
 }
 
-const manifest: Token[] = [
+const manifest: TokenSchema[] = [
 	{
 		id: '1',
 		image: '',
