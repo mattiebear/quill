@@ -1,3 +1,4 @@
+import { PlayStore } from '../../store/play-store';
 import { TokenStore } from '../../store/token-store';
 
 interface RemoveTokenData {
@@ -11,5 +12,6 @@ export class RemoveToken {
 
 	async run() {
 		TokenStore.getState().removeToken(this.data.tokenId);
+		PlayStore.setState({ isTokenMenuOpen: false });
 	}
 }
