@@ -5,7 +5,6 @@ export class RequestAddToken {
 
 	constructor(public tokenId: string, public position: GridPosition) {}
 
-	// TODO: Refactor to not change position structure
 	toJSON() {
 		return {
 			event: RequestAddToken.event,
