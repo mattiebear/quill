@@ -15,6 +15,8 @@ export class CurrentStoryState {
 	async run() {
 		const placeToken = TokenStore.getState().placeToken;
 
+		console.log('data is', this.data);
+
 		PlayStore.setState({ isLoaded: true, mapId: this.data.mapId || null });
 
 		this.data.tokens.forEach((data) => {

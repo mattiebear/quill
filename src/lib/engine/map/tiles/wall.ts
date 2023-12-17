@@ -24,7 +24,7 @@ export class Wall {
 	toJSON(): WallData {
 		return {
 			id: this.id,
-			pos: this.position.toArray(),
+			pos: this.position.toJSON(),
 			tile: this.tileId,
 		};
 	}

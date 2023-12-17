@@ -16,9 +16,7 @@ export class RequestAddToken {
 			data: {
 				tokenId: this.tokenId,
 				userId: this.userId,
-				x: this.position.x,
-				y: this.position.y,
-				z: this.position.z,
+				pos: this.position.toJSON(),
 			},
 		};
 	}
