@@ -24,6 +24,7 @@ export const useGameBoardClick = () => {
 			if (action === PlayAction.PlaceToken && placeTokenId) {
 				const pos = GridPosition.fromPoint(point);
 				const event = new RequestAddToken(placeTokenId, user.id, pos);
+				PlayStore.setState({ placeTokenId: null });
 
 				transmit(event);
 			}

@@ -8,20 +8,22 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import { usePlayState } from './hooks/use-play-state';
-import { SelectMapTable } from './select-map-table';
+import { SelectTokenTable } from './select-token-table';
 
-export const SelectMapModal = () => {
+export const SelectTokenModal = () => {
 	const { t } = useTranslation();
-	const { isMapSelectorOpen } = usePlayState();
+	const { isTokenSelectorOpen } = usePlayState();
 
 	return (
-		<Modal isOpen={isMapSelectorOpen} onClose={() => void 0}>
+		<Modal isOpen={isTokenSelectorOpen} onClose={() => void 0}>
 			<ModalOverlay />
 			<ModalContent bg="background.cover">
-				<ModalHeader color="text.heading">{t('selectMap.header')}</ModalHeader>
+				<ModalHeader color="text.heading">
+					{t('selectToken.header')}
+				</ModalHeader>
 
 				<ModalBody>
-					<SelectMapTable />
+					<SelectTokenTable />
 				</ModalBody>
 			</ModalContent>
 		</Modal>
