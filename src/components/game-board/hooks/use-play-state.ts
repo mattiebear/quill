@@ -33,6 +33,8 @@ export const usePlayState = () => {
 			isLoaded: state.isLoaded,
 			isMapSelectorOpen,
 			isTokenSelectorOpen,
+			isUserOwner,
+			isUserPlayer,
 			mapId: state.mapId,
 		};
 	}, [

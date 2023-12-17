@@ -6,16 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { Path } from '@/config/routes';
 import { PlayAction, usePlayStore } from '@/lib/engine/store/play-store';
 
-import {
-	ArrowsPointingOutIcon,
-	Cog6ToothIcon,
-	CursorArrowRaysIcon,
-	UserGroupIcon,
-} from '../icon';
-import { RailMenu, RailMenuContent, RailMenuItem } from '../rail-menu';
-import { TokenSelector } from './token-selector';
+import { Cog6ToothIcon, CursorArrowRaysIcon, UserGroupIcon } from '../../icon';
+import { RailMenu, RailMenuContent, RailMenuItem } from '../../rail-menu';
+import { TokenSelector } from '../token-selector';
 
-export const PlayUI: FC = () => {
+export const OwnerMenu: FC = () => {
 	const navigate = useNavigate();
 	const { t } = useTranslation();
 	const setAction = usePlayStore((state) => state.setAction);
@@ -44,11 +39,6 @@ export const PlayUI: FC = () => {
 					icon={<CursorArrowRaysIcon />}
 					label={t('editor.menuLabel.select')}
 				/>
-				<RailMenuItem
-					icon={<ArrowsPointingOutIcon />}
-					label={t('editor.menuLabel.move')}
-				/>
-
 				<RailMenuItem
 					icon={<UserGroupIcon />}
 					label={t('editor.menuLabel.tokens')}
