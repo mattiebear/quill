@@ -3,12 +3,10 @@ import { Point } from '../grid/point';
 
 export interface TokenData {
 	id: string;
+	pos: [number, number, number];
 	rot: number;
-	userId: string;
 	tokenId: string;
-	x: number;
-	y: number;
-	z: number;
+	userId: string;
 }
 
 export class Token {
@@ -17,7 +15,7 @@ export class Token {
 		public userId: string,
 		public position: GridPosition,
 		public tokenId: string,
-		public rot: number
+		public rotation: number
 	) {}
 
 	clone() {
@@ -27,10 +25,10 @@ export class Token {
 	toJSON(): TokenData {
 		return {
 			id: this.id,
-			rot: this.rot,
+			pos: this.position.toJSON(),
+			rot: this.rotation,
 			tokenId: this.tokenId,
 			userId: this.userId,
-			...this.position,
 		};
 	}
 
@@ -38,7 +36,7 @@ export class Token {
 		return new Token(
 			data.id,
 			data.userId,
-			new GridPosition(data.x, data.y, data.z),
+			new GridPosition(...data.pos),
 			data.tokenId,
 			data.rot
 		);

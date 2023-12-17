@@ -10,9 +10,7 @@ export class RequestMoveToken {
 			event: RequestMoveToken.event,
 			data: {
 				tokenId: this.token.id,
-				x: this.position.x,
-				y: this.position.y,
-				z: this.position.z,
+				pos: this.position.toJSON(),
 			},
 		};
 	}

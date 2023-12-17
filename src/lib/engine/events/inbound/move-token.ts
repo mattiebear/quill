@@ -1,12 +1,9 @@
 import { GridPosition } from '../../map';
-import { Point } from '../../map/grid/point';
 import { TokenStore } from '../../store/token-store';
 
 interface MoveTokenData {
 	tokenId: string;
-	x: number;
-	y: number;
-	z: number;
+	pos: [number, number, number];
 }
 
 export class MoveToken {
@@ -15,7 +12,7 @@ export class MoveToken {
 	constructor(public data: MoveTokenData) {}
 
 	async run() {
-		const pos = GridPosition.fromPoint(Point.at(this.data));
+		const pos = new GridPosition(...this.data.pos);
 		TokenStore.getState().moveToken(this.data.tokenId, pos);
 	}
 }

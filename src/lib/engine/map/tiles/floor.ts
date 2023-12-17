@@ -20,7 +20,7 @@ export class Floor {
 	toJSON(): FloorData {
 		return {
 			id: this.id,
-			pos: this.position.toArray(),
+			pos: this.position.toJSON(),
 			tile: this.tileId,
 			rot: this.rotation,
 		};
