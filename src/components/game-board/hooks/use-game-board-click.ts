@@ -1,7 +1,6 @@
 import { ThreeEvent } from '@react-three/fiber';
 import { useCallback } from 'react';
 
-import { useCurrentUser } from '@/lib/auth/use-current-user';
 import { RequestAddToken } from '@/lib/engine/events/outbound/request-add-token';
 import { RequestMoveToken } from '@/lib/engine/events/outbound/request-move-token';
 import { useEventManager } from '@/lib/engine/hooks/use-event-manager';
@@ -11,7 +10,6 @@ import { PlayAction, PlayStore } from '@/lib/engine/store/play-store';
 
 export const useGameBoardClick = () => {
 	const { transmit } = useEventManager();
-	const user = useCurrentUser();
 
 	return useCallback(
 		(e: ThreeEvent<MouseEvent>) => {
@@ -23,7 +21,7 @@ export const useGameBoardClick = () => {
 
 			if (action === PlayAction.PlaceToken && placeTokenId) {
 				const pos = GridPosition.fromPoint(point);
-				const event = new RequestAddToken(placeTokenId, user.id, pos);
+				const event = new RequestAddToken(placeTokenId, pos);
 				PlayStore.setState({ placeTokenId: null });
 
 				transmit(event);
@@ -38,6 +36,6 @@ export const useGameBoardClick = () => {
 				transmit(event);
 			}
 		},
-		[transmit, user]
+		[transmit]
 	);
 };

@@ -1,14 +1,11 @@
 import { GridPosition } from '../grid/grid-position';
 import { Point } from '../grid/point';
 
-export interface TokenJSON {
+export interface TokenData {
 	id: string;
 	pos: [number, number, number];
 	rot: number;
 	tokenId: string;
-}
-
-export interface TokenData extends TokenJSON {
 	userId: string;
 }
 
@@ -22,21 +19,16 @@ export class Token {
 	) {}
 
 	clone() {
-		return Token.from({
-			id: this.id,
-			pos: this.position.toJSON(),
-			rot: this.rotation,
-			tokenId: this.tokenId,
-			userId: this.userId,
-		});
+		return Token.from(this.toJSON());
 	}
 
-	toJSON(): TokenJSON {
+	toJSON(): TokenData {
 		return {
 			id: this.id,
 			pos: this.position.toJSON(),
 			rot: this.rotation,
 			tokenId: this.tokenId,
+			userId: this.userId,
 		};
 	}
 
