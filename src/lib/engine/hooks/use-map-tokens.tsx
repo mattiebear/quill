@@ -23,6 +23,10 @@ export const useMapTokens = () => {
 		(e: ThreeEvent<MouseEvent>, token: Token) => {
 			e.stopPropagation();
 
+			if (user.id !== token.userId) {
+				return;
+			}
+
 			if (action === PlayAction.SelectToken) {
 				const pos = PagePosition.fromEvent(e);
 
@@ -33,7 +37,7 @@ export const useMapTokens = () => {
 				});
 			}
 		},
-		[action]
+		[action, user]
 	);
 
 	return useMemo(() => {
