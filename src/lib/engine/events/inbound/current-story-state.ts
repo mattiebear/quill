@@ -13,13 +13,14 @@ export class CurrentStoryState {
 	constructor(public data: CurrentStoryStateData) {}
 
 	async run() {
-		const placeToken = TokenStore.getState().placeToken;
+		const { clearTokens, placeToken } = TokenStore.getState();
+
+		clearTokens();
 
 		PlayStore.setState({ isLoaded: true, mapId: this.data.mapId || null });
 
 		this.data.tokens.forEach((data) => {
-			const token = Token.from(data);
-			placeToken(token);
+			placeToken(Token.from(data));
 		});
 	}
 }

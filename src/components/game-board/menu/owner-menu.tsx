@@ -1,12 +1,21 @@
-import { Box, Button } from '@chakra-ui/react';
+import { Box, Button, Stack } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { Path } from '@/config/routes';
-import { PlayAction, usePlayStore } from '@/lib/engine/store/play-store';
+import {
+	PlayAction,
+	PlayStore,
+	usePlayStore,
+} from '@/lib/engine/store/play-store';
 
-import { Cog6ToothIcon, CursorArrowRaysIcon, UserGroupIcon } from '../../icon';
+import {
+	Cog6ToothIcon,
+	CursorArrowRaysIcon,
+	MapIcon,
+	UserGroupIcon,
+} from '../../icon';
 import { RailMenu, RailMenuContent, RailMenuItem } from '../../rail-menu';
 import { TokenSelector } from '../token-selector';
 
@@ -17,6 +26,10 @@ export const OwnerMenu: FC = () => {
 
 	const handleClickDone = async () => {
 		navigate(Path.GameSessions);
+	};
+
+	const handleChangeMap = () => {
+		PlayStore.setState({ isChangeMapOpen: true });
 	};
 
 	const handleAction = (action?: string) => {
@@ -37,11 +50,12 @@ export const OwnerMenu: FC = () => {
 				<RailMenuItem
 					action="select"
 					icon={<CursorArrowRaysIcon />}
-					label={t('editor.menuLabel.select')}
+					label={t('play.menuLabel.select')}
 				/>
+
 				<RailMenuItem
 					icon={<UserGroupIcon />}
-					label={t('editor.menuLabel.tokens')}
+					label={t('play.menuLabel.tokens')}
 				>
 					<RailMenuContent>
 						<TokenSelector />
@@ -49,8 +63,20 @@ export const OwnerMenu: FC = () => {
 				</RailMenuItem>
 
 				<RailMenuItem
+					action="map"
+					icon={<MapIcon />}
+					label={t('play.menuLabel.map')}
+				>
+					<RailMenuContent>
+						<Button colorScheme="blue" onClick={handleChangeMap}>
+							{t('play.menuLabel.changeMap')}
+						</Button>
+					</RailMenuContent>
+				</RailMenuItem>
+
+				<RailMenuItem
 					icon={<Cog6ToothIcon />}
-					label={t('editor.menuLabel.settings')}
+					label={t('play.menuLabel.settings')}
 				>
 					<RailMenuContent>
 						<Button colorScheme="green" onClick={handleClickDone}>

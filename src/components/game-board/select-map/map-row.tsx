@@ -4,15 +4,13 @@ import { useTranslation } from 'react-i18next';
 
 import { MapEntity } from '@/entites/map-entity';
 
-import { useSelectMap } from './hooks/use-select-map';
-
-interface SelectMapRowProps {
+interface MapRowProps {
 	map: MapEntity;
+	onSelectMap: (map: MapEntity) => void;
 }
 
-export const SelectMapRow: FC<SelectMapRowProps> = ({ map }) => {
+export const MapRow: FC<MapRowProps> = ({ map, onSelectMap }) => {
 	const { t } = useTranslation();
-	const loadMap = useSelectMap(map);
 
 	return (
 		<Tr>
@@ -23,7 +21,11 @@ export const SelectMapRow: FC<SelectMapRowProps> = ({ map }) => {
 			<Td pr={0}>
 				<HStack>
 					<Spacer />
-					<Button colorScheme="purple" onClick={loadMap} size="sm">
+					<Button
+						colorScheme="purple"
+						onClick={() => onSelectMap(map)}
+						size="sm"
+					>
 						{t('common.select')}
 					</Button>
 				</HStack>

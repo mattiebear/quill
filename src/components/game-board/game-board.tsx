@@ -8,7 +8,8 @@ import { StoryContext } from './context';
 import { GameState } from './game-state';
 import { MapRenderer } from './map-renderer';
 import { PlayUI } from './menu/play-ui';
-import { SelectMapModal } from './select-map-modal';
+import { ChangeMapModal } from './select-map/change-map-modal';
+import { SelectMapModal } from './select-map/select-map-modal';
 import { SelectTokenModal } from './select-token-modal';
 import TokenMenu from './token-menu';
 
@@ -22,6 +23,7 @@ export const GameBoard: FC = () => {
 		<StoryContext value={{ gameSession }}>
 			<GameState />
 			<SelectMapModal />
+			<ChangeMapModal />
 			<SelectTokenModal />
 			<MapRenderer />
 			<TokenMenu />
