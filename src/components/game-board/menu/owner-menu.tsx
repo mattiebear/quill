@@ -1,4 +1,4 @@
-import { Box, Button } from '@chakra-ui/react';
+import { Box, Button, Stack } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -26,6 +26,10 @@ export const OwnerMenu: FC = () => {
 
 	const handleClickDone = async () => {
 		navigate(Path.GameSessions);
+	};
+
+	const handleClickComplete = () => {
+		PlayStore.setState({ isConfirmCompleteOpen: true });
 	};
 
 	const handleChangeMap = () => {
@@ -79,9 +83,15 @@ export const OwnerMenu: FC = () => {
 					label={t('play.menuLabel.settings')}
 				>
 					<RailMenuContent>
-						<Button colorScheme="green" onClick={handleClickDone}>
-							{t('common.done')}
-						</Button>
+						<Stack>
+							<Button colorScheme="green" onClick={handleClickDone}>
+								{t('common.done')}
+							</Button>
+
+							<Button colorScheme="blue" onClick={handleClickComplete}>
+								Complete story
+							</Button>
+						</Stack>
 					</RailMenuContent>
 				</RailMenuItem>
 			</RailMenu>

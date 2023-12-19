@@ -16,6 +16,7 @@ export interface PlayStoreValues {
 	connection: any;
 	interactionPosition: PagePosition | null;
 	isChangeMapOpen: boolean;
+	isConfirmCompleteOpen: boolean;
 	isLoaded: boolean;
 	isTokenMenuOpen: boolean;
 	mapId: string | null;
@@ -32,6 +33,7 @@ const PlayStore = createWithEqualityFn<PlayStoreValues>(
 		connection: null,
 		interactionPosition: null,
 		isChangeMapOpen: false,
+		isConfirmCompleteOpen: false,
 		isLoaded: false,
 		isTokenMenuOpen: false,
 		mapId: null,

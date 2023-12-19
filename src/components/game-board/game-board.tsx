@@ -4,6 +4,7 @@ import { useGameSessionDetail } from '@/api/game-sessions/detail';
 import { useIdParam } from '@/lib/router';
 import { assertPresence } from '@/utils/runtime';
 
+import { CompleteStoryConfirmation } from './complete-story-confirmation';
 import { StoryContext } from './context';
 import { GameState } from './game-state';
 import { MapRenderer } from './map-renderer';
@@ -24,6 +25,7 @@ export const GameBoard: FC = () => {
 			<GameState />
 			<SelectMapModal />
 			<ChangeMapModal />
+			<CompleteStoryConfirmation />
 			<SelectTokenModal />
 			<MapRenderer />
 			<TokenMenu />
