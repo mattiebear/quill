@@ -36,11 +36,11 @@ export const PlayerMenu: FC = () => {
 				<RailMenuItem
 					action="select"
 					icon={<CursorArrowRaysIcon />}
-					label={t('editor.menuLabel.select')}
+					label={t('play.menuLabel.select')}
 				/>
 				<RailMenuItem
 					icon={<Cog6ToothIcon />}
-					label={t('editor.menuLabel.settings')}
+					label={t('play.menuLabel.settings')}
 				>
 					<RailMenuContent>
 						<Button colorScheme="green" onClick={handleClickDone}>

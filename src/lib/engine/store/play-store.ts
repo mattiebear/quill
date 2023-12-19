@@ -15,6 +15,7 @@ export interface PlayStoreValues {
 	beginPlaceToken: (placeTokenId: string) => void;
 	connection: any;
 	interactionPosition: PagePosition | null;
+	isChangeMapOpen: boolean;
 	isLoaded: boolean;
 	isTokenMenuOpen: boolean;
 	mapId: string | null;
@@ -30,6 +31,7 @@ const PlayStore = createWithEqualityFn<PlayStoreValues>(
 			set({ action: PlayAction.PlaceToken, placeTokenId }),
 		connection: null,
 		interactionPosition: null,
+		isChangeMapOpen: false,
 		isLoaded: false,
 		isTokenMenuOpen: false,
 		mapId: null,

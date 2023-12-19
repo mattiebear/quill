@@ -5,14 +5,17 @@ import {
 	ModalHeader,
 	ModalOverlay,
 } from '@chakra-ui/react';
+import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { usePlayState } from './hooks/use-play-state';
-import { SelectMapTable } from './select-map-table';
+import { usePlayState } from '../hooks/use-play-state';
+import { useSelectMap } from '../hooks/use-select-map';
+import { MapTable } from './map-table';
 
-export const SelectMapModal = () => {
+export const SelectMapModal: FC = () => {
 	const { t } = useTranslation();
 	const { isMapSelectorOpen } = usePlayState();
+	const handleSelectMap = useSelectMap();
 
 	return (
 		<Modal isOpen={isMapSelectorOpen} onClose={() => void 0}>
@@ -21,7 +24,7 @@ export const SelectMapModal = () => {
 				<ModalHeader color="text.heading">{t('selectMap.header')}</ModalHeader>
 
 				<ModalBody>
-					<SelectMapTable />
+					<MapTable onSelectMap={handleSelectMap} />
 				</ModalBody>
 			</ModalContent>
 		</Modal>

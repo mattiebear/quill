@@ -7,6 +7,7 @@ import { replaceOrAdd } from './utils/replace-or-add';
 
 export interface TokenStoreValues {
 	tokens: Token[];
+	clearTokens: VoidFunction;
 	moveToken: (tokenId: string, pos: GridPosition) => void;
 	placeToken: (token: Token) => void;
 	removeToken: (id: string) => void;
@@ -15,6 +16,9 @@ export interface TokenStoreValues {
 const TokenStore = createWithEqualityFn<TokenStoreValues>(
 	(set) => ({
 		tokens: [],
+		clearTokens: () => {
+			set({ tokens: [] });
+		},
 		moveToken: (tokenId: string, pos: GridPosition) => {
 			set(
 				produce<TokenStoreValues>((state) => {

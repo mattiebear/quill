@@ -144,6 +144,9 @@
 		"selectMap": {
 			"header": "Select map"
 		},
+		"changeMap": {
+			"header": "Change the selected map"
+		},
 		"selectToken": {
 			"header": "Select your character"
 		},
@@ -151,12 +154,18 @@
 			"mapSaved": "Map saved",
 			"menuLabel": {
 				"select": "Select",
-				"move": "Move",
 				"create": "Create",
 				"floors": "Floors",
 				"walls": "Walls",
 				"objects": "Objects",
-				"remove": "Remove",
+				"settings": "Settings"
+			}
+		},
+		"play": {
+			"menuLabel": {
+				"changeMap": "Change map",
+				"map": "Map",
+				"select": "Select",
 				"settings": "Settings",
 				"tokens": "Tokens"
 			}
