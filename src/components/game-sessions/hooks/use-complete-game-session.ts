@@ -7,7 +7,14 @@ import { GameSession, GameSessionStatus } from '@/entites/game-session';
 import { useHttpClient } from '@/lib/http';
 import { DynamicPath } from '@/lib/url';
 
-export const useCompleteGameSession = (session: GameSession) => {
+interface Options {
+	onSuccess?: VoidFunction;
+}
+
+export const useCompleteGameSession = (
+	session: GameSession,
+	{ onSuccess }: Options = {}
+) => {
 	const { t } = useTranslation();
 	const http = useHttpClient();
 	const toast = useToast();
@@ -31,6 +38,8 @@ export const useCompleteGameSession = (session: GameSession) => {
 					description: t('gameSessions.complete.description'),
 					status: 'success',
 				});
+
+				onSuccess?.();
 			},
 			onError: () => {
 				toast({
