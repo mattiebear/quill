@@ -13,9 +13,7 @@ export class CurrentStoryState {
 	constructor(public data: CurrentStoryStateData) {}
 
 	async run() {
-		const { clearTokens, placeToken } = TokenStore.getState();
-
-		clearTokens();
+		const placeToken = TokenStore.getState().placeToken;
 
 		PlayStore.setState({ isLoaded: true, mapId: this.data.mapId || null });
 
