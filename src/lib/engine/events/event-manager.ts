@@ -3,9 +3,6 @@ import { PlayStore } from '../store/play-store';
 export class EventManager {
 	private inbound: any[] = [];
 
-	// TODO: This will be removed for a hook-based approach
-	constructor(private context: any) {}
-
 	// Register an inbound event
 	register(...events: any[]) {
 		this.inbound.push(...events);
@@ -16,7 +13,7 @@ export class EventManager {
 		const ctor = this.inbound.find((ctor) => ctor.event === event.event);
 
 		if (ctor) {
-			new ctor(event.data, this.context).run();
+			new ctor(event.data).run();
 		}
 	}
 

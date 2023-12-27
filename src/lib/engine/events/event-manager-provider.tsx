@@ -1,5 +1,4 @@
 import { FC, PropsWithChildren, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { StaticStore } from '@/lib/store';
 
@@ -12,10 +11,8 @@ import { MoveToken } from './inbound/move-token';
 import { RemoveToken } from './inbound/remove-token';
 
 export const EventManagerProvider: FC<PropsWithChildren> = ({ children }) => {
-	const navigate = useNavigate();
-
 	const eventManager = useMemo(() => {
-		const manager = new EventManager({ navigate });
+		const manager = new EventManager();
 
 		manager.register(
 			AddToken,
