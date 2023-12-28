@@ -5,6 +5,7 @@ import { StaticStore } from '@/lib/store';
 import { EventManager } from './event-manager';
 import { AddToken } from './inbound/add-token';
 import { ChangeMap } from './inbound/change-map';
+import { CompleteStory } from './inbound/complete-story';
 import { CurrentStoryState } from './inbound/current-story-state';
 import { MoveToken } from './inbound/move-token';
 import { RemoveToken } from './inbound/remove-token';
@@ -16,6 +17,7 @@ export const EventManagerProvider: FC<PropsWithChildren> = ({ children }) => {
 		manager.register(
 			AddToken,
 			ChangeMap,
+			CompleteStory,
 			CurrentStoryState,
 			MoveToken,
 			RemoveToken
