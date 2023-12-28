@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react';
 
 import { useTileStore } from '@/lib/engine/store/tile-store';
 
-import { Wall1 } from '../components/wall-1';
+import { Wall1 } from '../../components/wall-1';
 
 // TODO: Make some resolver class to do this
 const Tiles: Record<string, FC<JSX.IntrinsicElements['group']>> = {

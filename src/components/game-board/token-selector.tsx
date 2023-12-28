@@ -2,7 +2,7 @@ import { AspectRatio, Box, Button, SimpleGrid } from '@chakra-ui/react';
 import { pick } from 'ramda';
 import { FC } from 'react';
 
-import { useTokenset } from '@/lib/engine/hooks/use-tokenset';
+import { useTokenset } from '@/lib/engine/map/hooks/use-tokenset';
 import { usePlayStore } from '@/lib/engine/store/play-store';
 
 export const TokenSelector: FC = () => {

@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 
 import { fetchMapDetail } from '@/api/maps';
 
-import { TileState } from '../map/tile-state';
-import { usePlayStore } from '../store/play-store';
-import { TileStore } from '../store/tile-store';
+import { usePlayStore } from '../../store/play-store';
+import { TileStore } from '../../store/tile-store';
+import { TileState } from '../tile-state';
 
 export const useMapLoader = () => {
 	const mapId = usePlayStore((state) => state.mapId);

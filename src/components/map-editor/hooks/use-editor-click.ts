@@ -5,9 +5,9 @@ import { Floor } from '@/lib/engine/map/tiles/floor';
 import { EditorAction, EditorStore } from '@/lib/engine/store/editor-store';
 import { TileStore } from '@/lib/engine/store/tile-store';
 
-import { useQueueMapUpdate } from '../../../lib/engine/hooks/use-queue-map-update';
 import { AxisPosition, GridPosition, Wall } from '../../../lib/engine/map';
 import { Point } from '../../../lib/engine/map/grid/point';
+import { useQueueMapUpdate } from '../../../lib/engine/map/hooks/use-queue-map-update';
 
 export const useEditorClick = () => {
 	const queue = useQueueMapUpdate();

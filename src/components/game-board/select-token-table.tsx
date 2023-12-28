@@ -1,6 +1,6 @@
 import { Table, TableContainer, Tbody } from '@chakra-ui/react';
 
-import { useTokenset } from '@/lib/engine/hooks/use-tokenset';
+import { useTokenset } from '@/lib/engine/map/hooks/use-tokenset';
 
 import { SelectTokenRow } from './select-token-row';
 

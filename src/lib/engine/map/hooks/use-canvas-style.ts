@@ -1,4 +1,4 @@
-import { PlayAction, usePlayStore } from '../store/play-store';
+import { PlayAction, usePlayStore } from '../../store/play-store';
 
 export const useCanvasStyle = () => {
 	const action = usePlayStore((state) => state.action);
