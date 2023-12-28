@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
-import { Point } from '../map/grid/point';
-import { UIStore } from '../store/ui-store';
+import { UIStore } from '../../store/ui-store';
+import { Point } from '../grid/point';
 
 export const useMapInteractor = ({ onClick }: { onClick(e: any): void }) => {
 	const onClickGrid = useCallback(

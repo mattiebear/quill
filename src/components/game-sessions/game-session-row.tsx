@@ -13,11 +13,13 @@ import {
 	Text,
 	Tr,
 	useDisclosure,
+	useToast,
 } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import { useInvalidateGameSessions } from '@/api/game-sessions';
 import { GameSession } from '@/entites/game-session';
 
 import { ConfirmationDialogue } from '../confirmation';
@@ -33,14 +35,26 @@ interface GameSessionsRowProps {
 }
 
 export const GameSessionRow: FC<GameSessionsRowProps> = ({ session }) => {
+	const toast = useToast();
 	const { t } = useTranslation();
+	const invalidate = useInvalidateGameSessions();
 	const { name, path, isEditable, isCompletable, isJoinable, isStartable } =
 		useGameSessionRow(session);
 	const completeConfirm = useDisclosure();
-	const completeRequest = useCompleteGameSession(session);
 	const removeConfirm = useDisclosure();
 	const removeRequest = useRemoveGameSession(session);
 	const startSession = useStartGameSession(session);
+	const completeRequest = useCompleteGameSession(session, {
+		onSuccess: async () => {
+			await invalidate();
+
+			toast({
+				title: t('gameSessions.complete.title'),
+				description: t('gameSessions.complete.description'),
+				status: 'success',
+			});
+		},
+	});
 
 	const isAnyLoading =
 		completeRequest.isLoading ||

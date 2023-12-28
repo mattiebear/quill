@@ -5,10 +5,10 @@ import { Color } from 'three';
 
 import { useCurrentUser } from '@/lib/auth/use-current-user';
 
-import { Token } from '../map';
-import { PagePosition } from '../map/grid/page-position';
-import { PlayAction, PlayStore, usePlayStore } from '../store/play-store';
-import { useTokenStore } from '../store/token-store';
+import { Token } from '..';
+import { PlayAction, PlayStore, usePlayStore } from '../../store/play-store';
+import { useTokenStore } from '../../store/token-store';
+import { PagePosition } from '../grid/page-position';
 
 const height = 1.2;
 

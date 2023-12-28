@@ -3,10 +3,9 @@ import { useEffect } from 'react';
 
 import { Application } from '@/lib/application';
 import { getToken } from '@/lib/auth';
-import { getEventManager } from '@/lib/engine/events/get-event-manager';
 import { PlayStore } from '@/lib/engine/store/play-store';
 
-import { useStoryContext } from '../context';
+import { useEventDispatch } from './use-event-dispatch';
 
 const CHANNEL_NAME = 'StoryChannel';
 
@@ -25,24 +24,23 @@ const createURL = async () => {
 	return url.toString();
 };
 
-export const useBroadcast = () => {
-	const { gameSession } = useStoryContext();
+export const useEventInit = (gameSessionId: string) => {
+	const dispatch = useEventDispatch();
 
 	useEffect(() => {
 		const init = async () => {
 			const url = await createURL();
-			const eventManager = await getEventManager();
 			const consumer = createConsumer(url);
 
 			const connection = consumer.subscriptions.create(
 				{
 					channel: CHANNEL_NAME,
-					story: gameSession.id,
+					story: gameSessionId,
 				},
 
 				{
 					received: (event: { event: string; data: any }) => {
-						eventManager.dispatch(event);
+						dispatch(event);
 					},
 				}
 			);
@@ -59,5 +57,5 @@ export const useBroadcast = () => {
 				connection.unsubscribe();
 			}
 		};
-	}, [gameSession]);
+	}, [dispatch, gameSessionId]);
 };

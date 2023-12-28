@@ -1,7 +1,6 @@
 import { FC } from 'react';
 
 import { AuthProvider } from '@/lib/auth';
-import { EventManagerProvider } from '@/lib/engine/events';
 import { HttpClientProvider } from '@/lib/http';
 import { I18nProvider } from '@/lib/i18n';
 import { QueryClientProvider } from '@/lib/queries';
@@ -15,9 +14,7 @@ export const App: FC = () => {
 				<QueryClientProvider>
 					<AuthProvider>
 						<HttpClientProvider>
-							<EventManagerProvider>
-								<RouterProvider />
-							</EventManagerProvider>
+							<RouterProvider />
 						</HttpClientProvider>
 					</AuthProvider>
 				</QueryClientProvider>

@@ -2,7 +2,7 @@ import { Button, HStack, Spacer, Td, Text, Tr } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { TokenSchema } from '@/lib/engine/hooks/use-tokenset';
+import { TokenSchema } from '@/lib/engine/map/hooks/use-tokenset';
 import { usePlayStore } from '@/lib/engine/store/play-store';
 
 interface SelectTokenRowProps {

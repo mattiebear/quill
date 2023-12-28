@@ -5,9 +5,9 @@ import { MathUtils } from 'three';
 import { Floor1 } from '@/lib/engine/components/floor-1';
 import { EditorAction, useEditorStore } from '@/lib/engine/store/editor-store';
 
-import { Wall1 } from '../components/wall-1';
-import { Floor, Wall } from '../map';
-import { useUIStore } from '../store/ui-store';
+import { Floor, Wall } from '..';
+import { Wall1 } from '../../components/wall-1';
+import { useUIStore } from '../../store/ui-store';
 
 // TODO: Combine with useMapFloors() version
 const Tiles: Record<string, FC<JSX.IntrinsicElements['group']>> = {

@@ -10,8 +10,8 @@ import { pick } from 'ramda';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { RequestRemoveToken } from '@/lib/engine/events/outbound/request-remove-token';
-import { useEventManager } from '@/lib/engine/hooks/use-event-manager';
+import { useTransmit } from '@/lib/engine/events/hooks/use-transmit';
+import { RequestRemoveToken } from '@/lib/engine/events/structs/request-remove-token';
 import {
 	PlayAction,
 	PlayStore,
@@ -20,7 +20,7 @@ import {
 
 const TokenMenu: FC = () => {
 	const { t } = useTranslation();
-	const { transmit } = useEventManager();
+	const transmit = useTransmit();
 	const { interactionPosition, isTokenMenuOpen, selectedToken } = usePlayStore(
 		pick(['interactionPosition', 'isTokenMenuOpen', 'selectedToken'])
 	);

@@ -1,4 +1,4 @@
-import { useMapInteractor } from '@/lib/engine/hooks/use-map-interactor';
+import { useMapInteractor } from '@/lib/engine/map/hooks/use-map-interactor';
 
 import { useGameBoardClick } from './use-game-board-click';
 

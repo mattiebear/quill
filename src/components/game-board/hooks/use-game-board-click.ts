@@ -1,15 +1,15 @@
 import { ThreeEvent } from '@react-three/fiber';
 import { useCallback } from 'react';
 
-import { RequestAddToken } from '@/lib/engine/events/outbound/request-add-token';
-import { RequestMoveToken } from '@/lib/engine/events/outbound/request-move-token';
-import { useEventManager } from '@/lib/engine/hooks/use-event-manager';
+import { useTransmit } from '@/lib/engine/events/hooks/use-transmit';
+import { RequestAddToken } from '@/lib/engine/events/structs/request-add-token';
+import { RequestMoveToken } from '@/lib/engine/events/structs/request-move-token';
 import { GridPosition } from '@/lib/engine/map';
 import { Point } from '@/lib/engine/map/grid/point';
 import { PlayAction, PlayStore } from '@/lib/engine/store/play-store';
 
 export const useGameBoardClick = () => {
-	const { transmit } = useEventManager();
+	const transmit = useTransmit();
 
 	return useCallback(
 		(e: ThreeEvent<MouseEvent>) => {

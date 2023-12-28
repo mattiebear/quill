@@ -2,7 +2,6 @@ import { useToast } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
-import { useInvalidateGameSessions } from '@/api/game-sessions';
 import { GameSession, GameSessionStatus } from '@/entites/game-session';
 import { useHttpClient } from '@/lib/http';
 import { DynamicPath } from '@/lib/url';
@@ -18,7 +17,6 @@ export const useCompleteGameSession = (
 	const { t } = useTranslation();
 	const http = useHttpClient();
 	const toast = useToast();
-	const invalidate = useInvalidateGameSessions();
 
 	return useMutation(
 		() => {
@@ -31,14 +29,6 @@ export const useCompleteGameSession = (
 		},
 		{
 			onSuccess: async () => {
-				await invalidate();
-
-				toast({
-					title: t('gameSessions.complete.title'),
-					description: t('gameSessions.complete.description'),
-					status: 'success',
-				});
-
 				onSuccess?.();
 			},
 			onError: () => {

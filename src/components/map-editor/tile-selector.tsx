@@ -2,7 +2,7 @@ import { AspectRatio, Button, Image, SimpleGrid } from '@chakra-ui/react';
 import { pick } from 'ramda';
 import { FC } from 'react';
 
-import { TileType, useTileset } from '@/lib/engine/hooks/use-tileset';
+import { TileType, useTileset } from '@/lib/engine/map/hooks/use-tileset';
 import { useEditorStore } from '@/lib/engine/store/editor-store';
 
 interface TileSelectorProps {
