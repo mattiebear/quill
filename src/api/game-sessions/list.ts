@@ -11,7 +11,7 @@ import { Resource } from '../types';
 const buildKey = () => [Resource.GameSession];
 
 const buildPath = () => {
-	return 'game_sessions';
+	return 'sessions';
 };
 
 export const fetchGameSessionsList = async () => {

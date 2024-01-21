@@ -17,8 +17,8 @@ export class Connection {
 	@JsonProperty('status', String)
 	status = ConnectionStatus.Pending;
 
-	@JsonProperty('connectionUsers', [ConnectionUser])
-	connectionUsers: ConnectionUser[] = [];
+	@JsonProperty('users', [ConnectionUser])
+	users: ConnectionUser[] = [];
 
 	get recipient() {
 		return this.getUserByRole(ConnectionUserRole.Recipient);
@@ -33,7 +33,7 @@ export class Connection {
 	}
 
 	private getUserByRole(role: ConnectionUserRole): User {
-		const user = this.connectionUsers.find((cu) => cu.role === role);
+		const user = this.users.find((cu) => cu.role === role);
 
 		assertPresence(user);
 
