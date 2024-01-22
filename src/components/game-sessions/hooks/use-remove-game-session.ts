@@ -16,7 +16,7 @@ export const useRemoveGameSession = (session: GameSession) => {
 	return useMutation(
 		() => {
 			return http.delete(
-				new DynamicPath('/game_sessions/:id').for(session).toString()
+				new DynamicPath('/sessions/:id').for(session).toString()
 			);
 		},
 		{
