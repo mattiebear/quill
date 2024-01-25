@@ -1,7 +1,7 @@
 import { fetchConnectionsList } from '@/api/connections';
-import { fetchGameSessionsList } from '@/api/game-sessions';
-import { fetchGameSessionDetail } from '@/api/game-sessions/detail';
 import { fetchMapDetail, fetchMapsList } from '@/api/maps';
+import { fetchGameSessionsList } from '@/api/sessions';
+import { fetchGameSessionDetail } from '@/api/sessions/detail';
 import { TileState } from '@/lib/engine/map/tile-state';
 import { resetEditorStore } from '@/lib/engine/store/editor-store';
 import { resetPlayStore } from '@/lib/engine/store/play-store';

@@ -2,7 +2,7 @@ import { useToast } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
-import { useInvalidateGameSessions } from '@/api/game-sessions';
+import { useInvalidateGameSessions } from '@/api/sessions';
 import { getHttpError, isHttpErrorResponse, useHttpClient } from '@/lib/http';
 
 interface FormState {

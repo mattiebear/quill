@@ -11,7 +11,7 @@ import { Resource } from '../types';
 const buildKey = () => [Resource.Connection];
 
 const buildPath = () => {
-	return 'connections';
+	return '/network/connections';
 };
 
 export const fetchConnectionsList = async () => {

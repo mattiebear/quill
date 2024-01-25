@@ -11,7 +11,7 @@ import { Resource } from '../types';
 const buildKey = () => [Resource.Map];
 
 const buildPath = () => {
-	return 'maps';
+	return '/game/maps';
 };
 
 export const fetchMapsList = async () => {

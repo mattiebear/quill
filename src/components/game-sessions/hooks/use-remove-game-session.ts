@@ -2,7 +2,7 @@ import { useToast } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
-import { useInvalidateGameSessions } from '@/api/game-sessions';
+import { useInvalidateGameSessions } from '@/api/sessions';
 import { GameSession } from '@/entites/game-session';
 import { useHttpClient } from '@/lib/http';
 import { DynamicPath } from '@/lib/url';
