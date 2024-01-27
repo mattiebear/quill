@@ -16,7 +16,7 @@ export const useAcceptInvitation = (connection: Connection) => {
 	return useMutation(
 		() => {
 			return http.patch(
-				new DynamicPath('/connections/:id').for(connection).toString(),
+				new DynamicPath('/network/connections/:id').for(connection).toString(),
 				{ status: ConnectionStatus.Accepted }
 			);
 		},

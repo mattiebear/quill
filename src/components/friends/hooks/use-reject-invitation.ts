@@ -16,7 +16,7 @@ export const useRejectInvitation = (connection: Connection) => {
 	return useMutation(
 		() => {
 			return http.delete(
-				new DynamicPath('/connections/:id').for(connection).toString()
+				new DynamicPath('/network/connections/:id').for(connection).toString()
 			);
 		},
 		{
