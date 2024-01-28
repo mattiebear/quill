@@ -39,7 +39,7 @@ export const MapsNew: FC = () => {
 
 	const { mutate, isLoading } = useMutation(
 		(data: FormState) => {
-			return http.post('/maps', data);
+			return http.post('/game/maps', data);
 		},
 		{
 			onSuccess: async (_data, form) => {
@@ -52,7 +52,7 @@ export const MapsNew: FC = () => {
 					status: 'success',
 				});
 
-				navigate('/maps');
+				navigate('/game/maps');
 			},
 		}
 	);
