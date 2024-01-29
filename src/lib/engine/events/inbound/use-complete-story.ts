@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-import { useInvalidateGameSessions } from '@/api/game-sessions';
+import { useInvalidateGameSessions } from '@/api/sessions';
 import { Path } from '@/config/routes';
 
 import { ReceivedEvent } from '../types';

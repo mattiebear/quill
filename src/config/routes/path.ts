@@ -1,8 +1,8 @@
 export enum Path {
 	Home = '/',
-	Maps = '/maps',
-	Map = '/maps/:id',
-	NewMap = '/maps/new',
+	Maps = '/game/maps',
+	Map = '/game/maps/:id',
+	NewMap = '/game/maps/new',
 	Friends = '/friends',
 	GameSessions = '/stories',
 	GameSession = '/play/:id',

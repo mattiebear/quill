@@ -19,7 +19,7 @@ import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { useInvalidateGameSessions } from '@/api/game-sessions';
+import { useInvalidateGameSessions } from '@/api/sessions';
 import { GameSession } from '@/entites/game-session';
 
 import { ConfirmationDialogue } from '../confirmation';

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { useGameSessionDetail } from '@/api/game-sessions/detail';
+import { useGameSessionDetail } from '@/api/sessions/detail';
 import { useIdParam } from '@/lib/router';
 import { assertPresence } from '@/utils/runtime';
 

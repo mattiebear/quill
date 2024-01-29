@@ -11,7 +11,7 @@ import { Resource } from '../types';
 const buildKey = (id: string) => [Resource.GameSession, id];
 
 const buildPath = (id: string) => {
-	return new DynamicPath('/sessions/:id').for(id).toString();
+	return new DynamicPath('/game/sessions/:id').for(id).toString();
 };
 
 export const fetchGameSessionDetail = async (id: string) => {

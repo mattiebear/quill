@@ -24,7 +24,7 @@ export const useQueueMapUpdate = () => {
 		timeoutRef.current = setTimeout(async () => {
 			const state = TileStore.getState();
 
-			const url = new DynamicPath('/maps/:id').for(map).toString();
+			const url = new DynamicPath('/game/maps/:id').for(map).toString();
 			const atlas = Object.assign({}, map.atlas, {
 				data: new TileState(state).toJSON(),
 			});

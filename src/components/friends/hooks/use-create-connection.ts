@@ -21,7 +21,7 @@ export const useCreateConnection = ({
 
 	return useMutation(
 		(data: FormState) => {
-			return http.post('/connections', data);
+			return http.post('/network/connections', data);
 		},
 		{
 			onSuccess: async (_data, form) => {

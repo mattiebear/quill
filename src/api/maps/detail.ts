@@ -12,7 +12,7 @@ import { Resource } from '../types';
 const buildKey = (id: string) => [Resource.Map, id];
 
 const buildPath = (id: string) => {
-	return new DynamicPath('/maps/:id').for(id).toString();
+	return new DynamicPath('/game/maps/:id').for(id).toString();
 };
 
 export const fetchMapDetail = async (id: string) => {

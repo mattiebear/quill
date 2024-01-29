@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { useGameSessionsList } from '@/api/game-sessions';
+import { useGameSessionsList } from '@/api/sessions';
 import { GameSessionStatus } from '@/entites/game-session';
 
 export const useActiveGameSessions = () => {
