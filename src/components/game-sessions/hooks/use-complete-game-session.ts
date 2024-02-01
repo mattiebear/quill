@@ -21,7 +21,7 @@ export const useCompleteGameSession = (
 	return useMutation(
 		() => {
 			return http.patch(
-				new DynamicPath('/sessions/:id').for(session).toString(),
+				new DynamicPath('/game/sessions/:id').for(session).toString(),
 				{
 					status: GameSessionStatus.Complete,
 				}

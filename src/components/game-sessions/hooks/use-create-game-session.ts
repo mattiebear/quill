@@ -22,7 +22,7 @@ export const useCreateGameSession = ({
 
 	return useMutation(
 		(data: FormState) => {
-			return http.post('/sessions', data);
+			return http.post('/game/sessions', data);
 		},
 		{
 			onSuccess: async () => {
